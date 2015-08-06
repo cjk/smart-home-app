@@ -1,6 +1,8 @@
 import Component from '../../client/components/component.react';
 import React from 'react';
 
+import {GoogleFont, TypographyStyle} from './base-typography';
+
 export default class Html extends Component {
 
   static propTypes = {
@@ -26,6 +28,8 @@ export default class Html extends Component {
           <meta charSet="utf-8" />
           <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
           <title>{title}</title>
+          <GoogleFont />
+          <TypographyStyle />
           {linkStyles}
         </head>
         <body dangerouslySetInnerHTML={{__html: bodyHtml}} />

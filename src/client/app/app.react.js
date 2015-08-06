@@ -1,4 +1,4 @@
-import './app.styl';
+import './app.less';
 import Component from '../components/component.react';
 import Footer from './footer.react';
 import Header from './header.react';
