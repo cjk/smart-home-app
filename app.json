@@ -1,0 +1,10 @@
+{
+  "name": "bellicon-asia-app",
+  "description": "Next-generation website for Bellicon-Asia.",
+  "env": {
+   "NODE_ENV": "production"
+  },
+  "repository": "git@bitbucket.org:cjk/bellicon-ng.git",
+  "logo": "https://www.bellicon.de/skin/frontend/boilerplate/bellicon/images/logo.png",
+  "keywords": ["bellicon", "flux", "gulp", "immutable", "universal", "isomorphic", "node", "react", "webpack"]
+}
