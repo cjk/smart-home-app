@@ -3,6 +3,7 @@ import Component from '../components/component.react';
 import Footer from './footer.react';
 import Header from './header.react';
 import React from 'react';
+import fetch from 'isomorphic-fetch';
 import flux from '../lib/flux';
 import store from './store';
 import {RouteHandler} from 'react-router';
@@ -37,11 +38,17 @@ export default class App extends Component {
 
   createActions() {
     const {flux, msg} = this.props;
-    const validate = createValidate(msg);
-    this.actions = actions.reduce((actions, {feature, create}) => {
-      const dispatch = (action, payload) => flux.dispatch(action, payload, {feature});
-      const featureActions = create(dispatch, validate, msg[feature]);
-      return {...actions, [feature]: featureActions};
+    const state = () => flux.state.toObject();
+    const validate = createValidate(() => msg);
+
+    this.actions = actions.reduce((actions, {create, feature, inject}) => {
+      const dispatch = (action, payload) =>
+        flux.dispatch(action, payload, {feature});
+
+      const deps = [dispatch, validate, fetch, state];
+      const args = inject ? inject(...deps) : deps;
+      return {...actions, [feature]: create(...args)};
+
     }, {});
   }
 
@@ -51,7 +58,7 @@ export default class App extends Component {
 
     return (
       <AppCanvas>
-        {/* Pass only what's needed. Law of Demeter ftw. */}
+        {/* Pass only what is needed. The Law of Demeter ftw. */}
         <Header actions={actions} msg={msg} viewer={viewer} />
         <RouteHandler {...props} />
         <Footer msg={msg} />
