@@ -2,10 +2,10 @@ import Typography from 'typography';
 
 const BaseTypography = Typography(
   {
-    'baseFontSize': '16px',
-    'baseLineHeight': '24px',
+    'baseFontSize': '20px',
+    'baseLineHeight': '30px',
     'modularScales': [
-      'diminished fourth'
+      'perfect fifth'
     ],
     'googleFonts': [
       {
@@ -18,16 +18,20 @@ const BaseTypography = Typography(
         ]
       }
     ],
-    'headerFontFamily': 'Lato, sans-serif',
-    'bodyFontFamily': 'Lato, sans-serif',
-    'headerGray': 20,
+    'headerFontFamily': 'Open Sans',
+    'bodyFontFamily': 'Lora',
+    'headerGray': '25',
     'headerGrayHue': 0,
-    'bodyGray': 40,
+    'bodyGray': '25',
     'bodyGrayHue': 0,
-    'headerWeight': 400,
+    'headerWeight': '900',
     'bodyWeight': 400,
-    'boldWeight': 700
-  }
-);
+    'boldWeight': 700,
+    'fontFaces': [],
+    'googleBodyFont': 'Lora',
+    'bodyFont': 'Lora',
+    'googleHeaderFont': 'Open Sans',
+    'headerFont': 'Open Sans'
+  });
 
 export default BaseTypography;
