@@ -17,6 +17,10 @@ testem.log
 *.sublime-workspace
 .DS_Store
 .idea
+GPATH
+GRTAGS
+GTAGS
+.projectile
 
 # Credentials
 src/server/paypal-credentials.js
