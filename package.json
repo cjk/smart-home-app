@@ -56,7 +56,7 @@
     "karma-webpack": "^1.7.0",
     "less": "latest",
     "less-loader": "latest",
-    "material-ui": "^0.10.2",
+    "material-ui": "^0.7.5",
     "mocha": "^2.2.5",
     "nconf": "^0.7.1",
     "node-notifier": "^4.1.0",

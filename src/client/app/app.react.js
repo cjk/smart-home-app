@@ -8,12 +8,17 @@ import store from './store';
 import {RouteHandler} from 'react-router';
 import {createValidate} from '../validate';
 
+// import mui from '../components/mui.react';
+import {AppCanvas} from 'material-ui';
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
 import * as authActions from '../auth/actions';
 import * as todosActions from '../todos/actions';
 
 const actions = [authActions, todosActions];
 
 @flux(store)
+// @mui
 export default class App extends Component {
 
   static propTypes = {
@@ -24,6 +29,10 @@ export default class App extends Component {
 
   componentWillMount() {
     this.createActions();
+
+    /* Needed for onTouchTap. Can go away when react 1.0 release. Check this
+       repo: https://github.com/zilverline/react-tap-event-plugin */
+    injectTapEventPlugin();
   }
 
   createActions() {
@@ -41,12 +50,12 @@ export default class App extends Component {
     const {users: {viewer}, msg} = props;
 
     return (
-      <div className="page">
+      <AppCanvas>
         {/* Pass only what's needed. Law of Demeter ftw. */}
-        <Header msg={msg} viewer={viewer} />
+        <Header actions={actions} msg={msg} viewer={viewer} />
         <RouteHandler {...props} />
         <Footer msg={msg} />
-      </div>
+      </AppCanvas>
     );
   }
 

@@ -1,0 +1,48 @@
+@import "~material-ui/src/less/variables/colors.less";
+
+// Define mixin for navbar-icons on the right side
+.navbar-right-dockable-icon {
+  float: right;
+  color: @grey-800;
+}
+
+.navbar-button-defaults {
+  background-color: @grey-200;
+}
+
+// Top-Appbar styles
+.mui-app-bar {
+  background-color: @grey-200;
+  margin-bottom: 30px;
+
+  .active {
+    button {
+      background-color: @grey-300;
+    }
+  }
+
+  .appBar-link-button {
+    .navbar-button-defaults;
+    margin-bottom: 25px;
+  }
+
+  // How the shopping cart (there can only be one!) is displayed inside our
+  // navbar
+  #appBar-cart-container {
+    // Don't break out of the navbar
+    display: inline;
+
+    .appBar-cart-button {
+      .navbar-right-dockable-icon;
+    }
+  }
+
+  // How the login-icon (there can only be one!) is displayed inside our navbar
+  #appBar-login-container {
+    .navbar-right-dockable-icon;
+  }
+
+  img {
+    margin: 10px 75px auto auto;
+  }
+}
