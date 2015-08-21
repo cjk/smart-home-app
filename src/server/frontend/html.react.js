@@ -28,8 +28,16 @@ export default class Html extends Component {
           <meta charSet="utf-8" />
           <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
           <title>{title}</title>
+
+          {/* Keep the patched (by react-mdl) library local for now, later it could become s.th. like: */}
+          {/*<script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script> */}
+          <script src="/assets/js/material.js"></script>
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+
+          {/* Via Typography.js */}
           <GoogleFont />
           <TypographyStyle />
+
           {linkStyles}
         </head>
         <body dangerouslySetInnerHTML={{__html: bodyHtml}} />
