@@ -5,7 +5,7 @@ import React from 'react';
 
 import {Link} from 'react-router';
 
-import Layout, {Header, Drawer, Content} from 'react-mdl/lib/layout/Layout';
+import {HeaderRow} from 'react-mdl/lib/layout/Layout';
 
 // import Cart from './cart.react';
 
@@ -22,23 +22,12 @@ export default class Appbar extends Component {
     // const {actions, msg: {components: {cart: msg}}, cart} = this.props,
     // {cart: cartActions, auth: authActions} = actions;
     return (
-      <div style={{height: '300px', position: 'relative'}}>
-        <Layout fixedHeader={true}>
-          <Header title="Title">
-            <a href="">Link</a>
-            <a href="">Link</a>
-            <a href="">Link</a>
-            <a href="">Link</a>
-          </Header>
-          <Drawer title="Title">
-            <a href="">Link</a>
-            <a href="">Link</a>
-            <a href="">Link</a>
-            <a href="">Link</a>
-          </Drawer>
-          <Content />
-        </Layout>
-      </div>
+      <HeaderRow>
+        <a href="">Link</a>
+        <a href="">Link</a>
+        <a href="">Link</a>
+        <a href="">Link</a>
+      </HeaderRow>
     );
   }
 }

@@ -9,12 +9,12 @@ export default class Footer extends Component {
   }
 
   render() {
-    const {msg: {app: {footer}}} = this.props;
+    const {msg} = this.props;
 
     return (
       <footer>
         <p>
-          <FormattedHTMLMessage message={footer.madeByHtml} />
+          <FormattedHTMLMessage message={msg.madeByHtml} />
         </p>
       </footer>
     );
