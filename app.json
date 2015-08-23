@@ -1,10 +1,10 @@
 {
-  "name": "bellicon-asia-app",
-  "description": "Next-generation website for Bellicon-Asia.",
+  "name": "smart-home-app",
+  "description": "Next-generation smart-home controller app.",
   "env": {
-   "NODE_ENV": "production"
+    "NODE_ENV": "production"
   },
   "repository": "git@bitbucket.org:cjk/bellicon-ng.git",
   "logo": "https://www.bellicon.de/skin/frontend/boilerplate/bellicon/images/logo.png",
-  "keywords": ["bellicon", "flux", "gulp", "immutable", "universal", "isomorphic", "node", "react", "webpack"]
+  "keywords": ["home-automation", "smart-home", "knx", "flux", "gulp", "immutable", "universal", "isomorphic", "node", "react", "webpack"]
 }
