@@ -17,6 +17,8 @@ import {Link} from 'react-router';
 import * as authActions from '../auth/actions';
 import * as todosActions from '../todos/actions';
 
+import io from 'socket.io-client';
+
 const actions = [authActions, todosActions];
 
 @flux(store)
@@ -51,6 +53,14 @@ export default class App extends Component {
   render() {
     const props = {...this.props, actions: this.actions};
     const {users: {viewer}, msg: {app: msg}} = props;
+
+    const socket = io.connect('http://localhost:4001');
+    socket.emit('hello', {foo: 'whatever'});
+
+    socket.on('KNX-event', (event) => {
+      console.log('Received an event: ', event);
+      // socket.emit('newMessage', {msg: 'The client is the new king!'});
+    });
 
     return (
       <div style={{height: '300px', position: 'relative'}}>
