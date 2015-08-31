@@ -5,7 +5,7 @@ import React from 'react';
 
 import {Link} from 'react-router';
 
-import {AppBar, FlatButton} from 'material-ui';
+import {HeaderRow} from 'react-mdl/lib/layout/Layout';
 
 // import Cart from './cart.react';
 
@@ -22,17 +22,12 @@ export default class Appbar extends Component {
     // const {actions, msg: {components: {cart: msg}}, cart} = this.props,
     // {cart: cartActions, auth: authActions} = actions;
     return (
-      <AppBar
-          className='mui-dark-theme navbar-top'
-          showMenuIconButton={false}
-          title={<img alt='bellicon-logo' src={'/assets/img/logo.png'} />}
-          zDepth={1}>
-
-        <Link to='home'>
-          <FlatButton className='appBar-link-button' label='Home' secondary={false} />
-        </Link>
-
-      </AppBar>
+      <HeaderRow>
+        <a href="">Link</a>
+        <a href="">Link</a>
+        <a href="">Link</a>
+        <a href="">Link</a>
+      </HeaderRow>
     );
   }
 }
