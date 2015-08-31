@@ -25,6 +25,7 @@ function getRouterState(originalUrl) {
 function loadUserData(routerState, req) {
   // We can use params and routesAsPath to preload only current route, which is
   // convenient  if we are using higher order components for client loading.
+  // TODO: With the release of React 0.14 we can add true isomorphic server-fetching.
   // const {params, routes} = routerState;
   // const routesAsPath = routerState.routes
   //   .map(route => route.name)
