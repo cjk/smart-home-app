@@ -5,7 +5,7 @@ import Login from './auth/index.react';
 import Me from './me/index.react';
 import NotFound from './components/notfound.react';
 import React from 'react';
-import Todos from './todos/index.react';
+import Smarthome from './smarthome/index.react';
 import {DefaultRoute, NotFoundRoute, Route} from 'react-router';
 
 export default (
@@ -15,6 +15,6 @@ export default (
     {/*<Route handler={Examples} name="examples" />*/}
     <Route handler={Login} name="login" />
     <Route handler={Me} name="me" />
-    <Route handler={Todos} name="todos" />
+    <Route handler={Smarthome} name="smarthome" />
   </Route>
 );

@@ -23,7 +23,7 @@ export default class Appbar extends Component {
     // {cart: cartActions, auth: authActions} = actions;
     return (
       <HeaderRow>
-        <a href="">Link</a>
+        <Link to="smarthome">Events</Link>
         <a href="">Link</a>
         <a href="">Link</a>
         <a href="">Link</a>

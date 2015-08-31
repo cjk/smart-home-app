@@ -1,8 +1,8 @@
-<a href="http://linode.mine.nu:8000/"><img alt="Este.js" src="https://www.bellicon.de/skin/frontend/boilerplate/bellicon/images/logo.png" width="200"></a>
+<a href="http://linode.mine.nu:8000/"><img alt="Smart-Home" src="https://www.bellicon.de/skin/frontend/boilerplate/bellicon/images/logo.png" width="200"></a>
 
-## Next-generation Bellicon-Asia Website
+## Next-generation Smart-Home web-app
 
-A modern website for the high-quality rebounders made by Bellicon in Germany.
+A modern web-frontend for your home-automation services
 
 ## Credit
 

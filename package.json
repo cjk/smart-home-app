@@ -1,8 +1,8 @@
 {
-  "name": "bellicon-asia-app",
-  "description": "The next-generation website for Bellicon-Asia",
+  "name": "smart-home-app",
+  "description": "The next-generation frontend for your smart home",
   "author": "Claus Klingberg",
-  "version": "0.5.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "postinstall": "gulp build --production",

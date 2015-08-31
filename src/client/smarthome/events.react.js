@@ -1,6 +1,6 @@
 import Component from '../components/component.react';
 import React from 'react';
-import Todo from './todo.react';
+import Event from './event.react';
 
 export default class List extends Component {
 
@@ -20,7 +20,7 @@ export default class List extends Component {
     return (
       <ol className="todos">
         {list.map(todo =>
-          <Todo {...{actions, todo}} key={todo.id} />
+          <Event {...{actions, todo}} key={todo.id} />
         )}
       </ol>
     );

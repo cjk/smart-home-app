@@ -1,9 +1,7 @@
 export default {
-  add100: 'Add 100 Todos',
   clearAll: 'Clear All',
   emptyList: 'Nothing. Go outside and enjoy world.',
-  newTodoPlaceholder: 'What needs to be done?',
-  title: 'Todos',
+  title: 'Smarthome-Events',
   toCheck: {
     andMuchMore: '... and much more.',
     header: 'Things to Check',
