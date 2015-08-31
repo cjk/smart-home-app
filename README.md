@@ -1,11 +1,15 @@
-<a href="http://linode.mine.nu:8000/"><img alt="Smart-Home" src="https://www.bellicon.de/skin/frontend/boilerplate/bellicon/images/logo.png" width="200"></a>
+<a href="https://github.org/cjk/smart-home-app"><img alt="Smart-Home-Controller" src="http://i.imgur.com/Y4bMw.jpg" width="200"></a>
 
-## Next-generation Smart-Home web-app
+## Smart-Home web-app
 
 A modern web-frontend for your home-automation services
 
-## Credit
+- Provides the frontend to your <a href='https://github.com/cjk/smart-home-backend'>Home-Automation backend</a>
 
-The foundation of this app is based on <img alt="Este.js" src="https://cloud.githubusercontent.com/assets/66249/6515278/de638916-c388-11e4-8754-184f5b11e770.jpeg" width="200">
+- A modern, high performance universal web-app based on best-of-breed libraries including Este.js, React, Material-Design-Lite + Gulp / Webpack
 
-by Daniel Steigerwald, [twitter.com/steida](https://twitter.com/steida)
+- Uses Websockets for real-time communication with the backend
+
+## Credits
+
+This app is based on Este.js by Daniel Steigerwald
