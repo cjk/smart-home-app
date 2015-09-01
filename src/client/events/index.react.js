@@ -9,15 +9,15 @@ export default class Index extends Component {
 
   static propTypes = {
     actions: React.PropTypes.object.isRequired,
-    msg: React.PropTypes.object.isRequired,
-    smarthome: React.PropTypes.object.isRequired
+    events: React.PropTypes.object.isRequired,
+    msg: React.PropTypes.object.isRequired
   }
 
   render() {
     const {
-      smarthome: {list},
-      actions: {smarthome: actions},
-      msg: {smarthome: msg}
+      events: {list},
+      actions: {events: actions},
+      msg: {events: msg}
     } = this.props;
 
     return (

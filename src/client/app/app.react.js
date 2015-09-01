@@ -14,12 +14,11 @@ import {FormattedHTMLMessage} from 'react-intl';
 import Appbar from '../components/appbar.react';
 
 import * as authActions from '../auth/actions';
-import * as smarthomeActions from '../smarthome/actions';
+import * as eventActions from '../events/actions';
 
-const actions = [authActions, smarthomeActions];
+const actions = [authActions, eventActions];
 
 @flux(store)
-@smartHomeConnect
 export default class App extends Component {
 
   static propTypes = {
@@ -30,6 +29,11 @@ export default class App extends Component {
 
   componentWillMount() {
     this.createActions();
+  }
+
+  componentDidMount() {
+    // Start listening to events from our automation-backend
+    smartHomeConnect(this.actions.events);
   }
 
   createActions() {

@@ -2,7 +2,7 @@ import immutable from 'immutable';
 
 import authStore from '../auth/store';
 import intlStore from '../intl/store';
-import smarthomeStore from '../smarthome/store';
+import eventStore from '../events/store';
 import usersStore from '../users/store';
 
 export default function(state, action, payload) {
@@ -13,7 +13,7 @@ export default function(state, action, payload) {
   state = state
     .update('auth', (s) => authStore(s, action, payload))
     .update('intl', (s) => intlStore(s, action, payload))
-    .update('smarthome', (s) => smarthomeStore(s, action, payload))
+    .update('events', (s) => eventStore(s, action, payload))
     .update('users', (s) => usersStore(s, action, payload));
 
   // We can reduce and compose stores. Note we don't need no waitFor.

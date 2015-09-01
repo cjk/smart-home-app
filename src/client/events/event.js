@@ -1,7 +1,7 @@
 import {Record} from 'immutable';
 
 export default Record({
-  ts: Date,
+  created: null,
   action: null,
 	type: null,
 	src: null,

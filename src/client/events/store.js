@@ -16,10 +16,14 @@ export default function(state = initialState, action, payload) {
 
   switch (action) {
 
+  case actions.newEventReceived:
+    const newEvent = payload;
+    return state
+      .update('list', list => list.push(newEvent));
+
   case actions.clearAll:
     return state
       .update('list', list => list.clear());
-
   }
 
   return state;

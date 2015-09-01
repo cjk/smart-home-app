@@ -1,5 +1,5 @@
 export const actions = create();
-export const feature = 'smarthome';
+export const feature = 'events';
 
 // When everything is constant, who needs to SCREAM_CONSTANTS?
 const maxTitleLength = 42;
@@ -34,6 +34,10 @@ export function create(dispatch, validate) {
     // }
     // dispatch(actions.setNewTodoField, {name, value});
     // }
+
+    newEventReceived(event) {
+      dispatch(actions.newEventReceived, event);
+    },
 
     clearAll() {
       dispatch(actions.clearAll);
