@@ -57,31 +57,23 @@ export default class App extends Component {
     const {users: {viewer}, msg: {app: msg}} = props;
 
     return (
-      <div style={{height: '300px', position: 'relative'}}>
-        <Layout fixedHeader={true}>
-          <Header title={msg.title}>
-            <Appbar actions={actions} msg={msg} viewer={viewer}/>
-          </Header>
+      <Layout fixedHeader={true}>
+        <Header title={msg.title}>
+          <Appbar actions={actions} msg={msg} viewer={viewer}/>
+        </Header>
 
-          <Drawer title="Drawer-Title">
-            <a href="">Link #1</a>
-            <a href="">Link #2</a>
-            <a href="">Link #3</a>
-            <a href="">Link #4</a>
-          </Drawer>
+        <Drawer title="Drawer-Title">
+          <a href="">Link #1</a>
+          <a href="">Link #2</a>
+          <a href="">Link #3</a>
+          <a href="">Link #4</a>
+        </Drawer>
 
-          <Content>
-
-            <h1>
-              <FormattedHTMLMessage message='On to the home-page:' />
-            </h1>
-
-            <RouteHandler {...props} />
-          </Content>
-          <Footer msg={msg.footer} />
-        </Layout>
-      </div>
-
+        <Content>
+          <RouteHandler {...props} />
+        </Content>
+        <Footer msg={msg.footer} />
+      </Layout>
     );
   }
 }

@@ -1,8 +1,10 @@
 import Component from '../components/component.react';
+import {DataTable} from 'react-mdl';
+import {List, Map} from 'immutable';
+import moment from 'moment';
 import React from 'react';
-import Event from './event.react';
 
-export default class List extends Component {
+export default class EventList extends Component {
 
   static propTypes = {
     actions: React.PropTypes.object.isRequired,
@@ -13,16 +15,29 @@ export default class List extends Component {
   render() {
     const {actions, list, msg} = this.props;
 
+    const columns = List([
+      {name: 'created', label: 'Time'},
+      {name: 'action', label: 'Action'},
+      {name: 'dest', label: 'Address'},
+      {name: 'src', label: 'From'},
+      {name: 'type', label: 'Type'},
+      {name: 'value', label: 'Value'},
+    ]);
+
+    const data = list.map(event => {
+      return columns.reduce((row, col) => {
+        const colName = col.name,
+              content = (colName === 'created' ? moment(event[colName]).format('MMMM Do YYYY, HH:mm:ss') : event[colName]);
+        return row.merge({[colName]: content});
+      }, Map());
+    });
+
     if (!list.size) return (
       <p>{msg.emptyList}</p>
     );
 
     return (
-      <ol className="todos">
-        {list.map(todo =>
-          <Event {...{actions, todo}} key={todo.id} />
-        )}
-      </ol>
+      <DataTable columns={columns.toJS()} data={data.toJS()} />
     );
   }
 

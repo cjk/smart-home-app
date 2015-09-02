@@ -1,4 +1,5 @@
 import Event from './event';
+import getRandomString from '../lib/getrandomstring';
 import {Record} from 'immutable';
 import {actions} from './actions';
 
@@ -17,7 +18,7 @@ export default function(state = initialState, action, payload) {
   switch (action) {
 
   case actions.newEventReceived:
-    const newEvent = payload;
+    const newEvent = payload.merge({id: getRandomString()});
     return state
       .update('list', list => list.push(newEvent));
 

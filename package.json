@@ -57,6 +57,7 @@
     "less": "latest",
     "less-loader": "latest",
     "mocha": "^2.2.5",
+    "moment": "^2.10.6",
     "nconf": "^0.7.1",
     "node-notifier": "^4.1.0",
     "node-sass": "^3.1.2",

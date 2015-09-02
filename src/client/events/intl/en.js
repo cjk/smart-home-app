@@ -1,6 +1,6 @@
 export default {
   clearAll: 'Clear All',
-  emptyList: 'Nothing. Go outside and enjoy world.',
+  emptyList: 'No events captured yet',
   title: 'Smarthome-Events',
   toCheck: {
     andMuchMore: '... and much more.',
