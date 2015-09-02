@@ -15,6 +15,6 @@ export default (
     {/*<Route handler={Examples} name="examples" />*/}
     <Route handler={Login} name="login" />
     <Route handler={Me} name="me" />
-    <Route handler={Events} name="smarthome" />
+    <Route handler={Events} name="events" />
   </Route>
 );

@@ -7,8 +7,6 @@ import {Link} from 'react-router';
 
 import {HeaderRow} from 'react-mdl/lib/layout/Layout';
 
-// import Cart from './cart.react';
-
 export default class Appbar extends Component {
 
   static propTypes = {
@@ -23,7 +21,7 @@ export default class Appbar extends Component {
     // {cart: cartActions, auth: authActions} = actions;
     return (
       <HeaderRow>
-        <Link to="smarthome">Events</Link>
+        <Link to="events">Events</Link>
         <a href="">Link</a>
         <a href="">Link</a>
         <a href="">Link</a>
