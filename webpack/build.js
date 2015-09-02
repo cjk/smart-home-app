@@ -14,7 +14,7 @@ module.exports = function(webpackConfig) {
       // http://webpack.github.io/analyse or
       // https://github.com/robertknight/webpack-bundle-size-analyzer.
       // var fs = require('fs');
-      // fs.writeFileSync('./bundle-stats.json', JSON.stringify(jsonStats));
+      // fs.writeFileSync('/tmp/bundle-stats.json', JSON.stringify(jsonStats));
 
       var buildError = fatalError || jsonStats.errors[0] || jsonStats.warnings[0];
 
