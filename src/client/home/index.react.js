@@ -18,7 +18,7 @@ export default class Index extends Component {
         <div className="home-page">
           <p>
             <FormattedHTMLMessage message={msg.infoHtml} />{' '}
-            <Link to="home">{msg.empty}</Link>.
+            <Link to="events">{msg.empty}</Link>.
           </p>
         </div>
       </DocumentTitle>

@@ -3,6 +3,7 @@ import immutable from 'immutable';
 import authStore from '../auth/store';
 import intlStore from '../intl/store';
 import eventStore from '../events/store';
+import homeStore from '../home/store';
 import usersStore from '../users/store';
 
 export default function(state, action, payload) {
@@ -13,6 +14,7 @@ export default function(state, action, payload) {
   state = state
     .update('auth', (s) => authStore(s, action, payload))
     .update('intl', (s) => intlStore(s, action, payload))
+    .update('home', (s) => homeStore(s, action, payload))
     .update('events', (s) => eventStore(s, action, payload))
     .update('users', (s) => usersStore(s, action, payload));
 

@@ -10,13 +10,13 @@ import {RouteHandler} from 'react-router';
 import {createValidate} from '../validate';
 
 import Layout, {Header, Drawer, Content} from 'react-mdl/lib/layout/Layout';
-import {FormattedHTMLMessage} from 'react-intl';
 import Appbar from '../components/appbar.react';
 
 import * as authActions from '../auth/actions';
 import * as eventActions from '../events/actions';
+import * as addressActions from '../groupaddresses/actions';
 
-const actions = [authActions, eventActions];
+const actions = [authActions, eventActions, addressActions];
 
 @flux(store)
 export default class App extends Component {
@@ -32,8 +32,10 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    // Start listening to events from our automation-backend
-    smartHomeConnect(this.actions.events);
+    // Start listening to events from our automation-backend. Pass along actions
+    // that should fire when an event is received from the backend.
+    const {events: {newEventReceived}, addresses: {updateValue}} = this.actions;
+    smartHomeConnect([newEventReceived, updateValue]);
   }
 
   createActions() {
