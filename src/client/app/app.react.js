@@ -9,7 +9,7 @@ import store from './store';
 import {RouteHandler} from 'react-router';
 import {createValidate} from '../validate';
 
-import Layout, {Header, Drawer, Content} from 'react-mdl/lib/layout/Layout';
+import Layout, {Header, Drawer, Content, Navigation} from 'react-mdl/lib/layout/Layout';
 import Appbar from '../components/appbar.react';
 
 import * as authActions from '../auth/actions';
@@ -65,10 +65,12 @@ export default class App extends Component {
         </Header>
 
         <Drawer title="Drawer-Title">
-          <a href="">Link #1</a>
-          <a href="">Link #2</a>
-          <a href="">Link #3</a>
-          <a href="">Link #4</a>
+          <Navigation>
+            <a href="">Link #1</a>
+            <a href="">Link #2</a>
+            <a href="">Link #3</a>
+            <a href="">Link #4</a>
+          </Navigation>
         </Drawer>
 
         <Content>

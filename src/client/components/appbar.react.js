@@ -5,7 +5,7 @@ import React from 'react';
 
 import {Link} from 'react-router';
 
-import {HeaderRow} from 'react-mdl/lib/layout/Layout';
+import {HeaderRow, Navigation} from 'react-mdl/lib/layout/Layout';
 
 export default class Appbar extends Component {
 
@@ -21,10 +21,12 @@ export default class Appbar extends Component {
     // {cart: cartActions, auth: authActions} = actions;
     return (
       <HeaderRow>
-        <Link to="events">Events</Link>
-        <a href="">Link</a>
-        <a href="">Link</a>
-        <a href="">Link</a>
+        <Navigation>
+          <Link to="events">Events</Link>
+          <a href="">Link</a>
+          <a href="">Link</a>
+          <a href="">Link</a>
+        </Navigation>
       </HeaderRow>
     );
   }
