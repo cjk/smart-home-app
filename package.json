@@ -85,5 +85,8 @@
     "webpack": "latest",
     "webpack-dev-server": "latest",
     "yargs": "^3.3.1"
+  },
+  "devDependencies": {
+    "express-device": "^0.4.1"
   }
 }
