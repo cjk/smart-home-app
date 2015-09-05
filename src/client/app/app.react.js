@@ -2,33 +2,22 @@ import './app.less';
 import Component from '../components/component.react';
 import Footer from './footer.react';
 import React from 'react';
-import fetch from 'isomorphic-fetch';
+import createActions from './createactions';
 import flux from '../lib/flux';
 import smartHomeConnect from '../components/smart-home-connector.react';
 import store from './store';
 import {RouteHandler} from 'react-router';
-import {createValidate} from '../validate';
 
 import Layout, {Header, Drawer, Content, Navigation} from 'react-mdl/lib/layout/Layout';
 import Appbar from '../components/appbar.react';
 
-import * as authActions from '../auth/actions';
-import * as eventActions from '../events/actions';
-import * as addressActions from '../groupaddresses/actions';
-
-const actions = [authActions, eventActions, addressActions];
-
 @flux(store)
+@createActions
 export default class App extends Component {
 
   static propTypes = {
-    flux: React.PropTypes.object.isRequired,
     msg: React.PropTypes.object.isRequired,
     users: React.PropTypes.object.isRequired
-  }
-
-  componentWillMount() {
-    this.createActions();
   }
 
   componentDidMount() {
@@ -38,30 +27,13 @@ export default class App extends Component {
     smartHomeConnect([newEventReceived, updateValue]);
   }
 
-  createActions() {
-    const {flux, msg} = this.props;
-    const state = () => flux.state.toObject();
-    const validate = createValidate(() => msg);
-
-    this.actions = actions.reduce((actions, {create, feature, inject}) => {
-      const dispatch = (action, payload) =>
-        flux.dispatch(action, payload, {feature});
-
-      const deps = [dispatch, validate, fetch, state];
-      const args = inject ? inject(...deps) : deps;
-      return {...actions, [feature]: create(...args)};
-
-    }, {});
-  }
-
   render() {
-    const props = {...this.props, actions: this.actions};
-    const {users: {viewer}, msg: {app: msg}} = props;
+    const {users: {viewer}, msg: {app: msg}} = this.props;
 
     return (
       <Layout fixedHeader={true}>
         <Header title={msg.title}>
-          <Appbar actions={actions} msg={msg} viewer={viewer}/>
+          <Appbar msg={msg} viewer={viewer}/>
         </Header>
 
         <Drawer title="Drawer-Title">
@@ -74,7 +46,7 @@ export default class App extends Component {
         </Drawer>
 
         <Content>
-          <RouteHandler {...props} />
+          <RouteHandler {...this.props} />
         </Content>
         <Footer msg={msg.footer} />
       </Layout>
