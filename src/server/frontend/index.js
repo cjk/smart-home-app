@@ -15,7 +15,7 @@ app.use(compression());
 // app.use(favicon('_assets/img/favicon.ico?' + config.assetsHashes.favicon));
 
 // Serve the static assets. We can cache them as they include hashes.
-app.use('/assets/img', express.static('assets/img', {maxAge: '200d'}));
+app.use('/assets', express.static('assets', {maxAge: '200d'}));
 app.use('/_assets', express.static('build', {maxAge: '200d'}));
 
 // Intl
