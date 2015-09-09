@@ -1,5 +1,6 @@
 import Component from '../components/component.react';
 import DocumentTitle from 'react-document-title';
+import R from 'ramda';
 import React from 'react';
 import {FormattedHTMLMessage} from 'react-intl';
 import {Link} from 'react-router';
@@ -15,7 +16,7 @@ export default class HomeIndex extends Component {
     const {home, msg: {home: msg}} = this.props;
 
     const addrState = home.livestate.map(addr => {
-      return <li key={addr.id}>{addr.id} - {addr.name} - {addr.value || '???'}</li>;
+      return <li key={addr.id}>{addr.id} - {addr.name} - {R.isNil(addr.value) ? '???' : addr.value}</li>;
     });
 
     return (

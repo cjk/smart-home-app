@@ -63,6 +63,7 @@
     "node-notifier": "^4.1.0",
     "nyan-progress-webpack-plugin": "^1.0.0",
     "piping": "^0.2.0",
+    "ramda": "^0.17.1",
     "react": "^0.13.3",
     "react-document-title": "^2.0.0",
     "react-hot-loader": "^1.3.0",

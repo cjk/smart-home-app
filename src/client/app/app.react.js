@@ -24,14 +24,16 @@ export default class App extends Component {
   componentDidMount() {
     // Start listening to events from our automation-backend. Pass along actions
     // that should fire when an event is received from the backend.
-    const {events: {newEventReceived}, addresses: {updateValue}} = this.props.actions;
-    smartHomeConnect([newEventReceived, updateValue]);
+    const {events: {newEventReceived}, addresses: {updateValue, setInitialState}} = this.props.actions;
+    smartHomeConnect().setupEventlistener([newEventReceived, updateValue]);
+    smartHomeConnect().requestInitialState(setInitialState);
   }
 
   render() {
     const {users: {viewer}, msg: {app: msg}} = this.props;
 
     console.log('App-props: ', this.props);
+    console.log('Home-state: ', JSON.stringify(this.props.home.livestate));
 
     return (
       <Layout fixedHeader={true}>
