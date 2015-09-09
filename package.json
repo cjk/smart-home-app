@@ -2,7 +2,7 @@
   "name": "smart-home-app",
   "description": "The next-generation frontend for your smart home",
   "author": "Claus Klingberg",
-  "version": "0.1.0",
+  "version": "0.8.0",
   "private": true,
   "scripts": {
     "postinstall": "gulp build --production",
