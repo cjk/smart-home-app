@@ -10,7 +10,7 @@ import {HeaderRow, Navigation} from 'react-mdl/lib/layout/Layout';
 export default class Appbar extends Component {
 
   static propTypes = {
-    actions: React.PropTypes.array.isRequired,
+    actions: React.PropTypes.object.isRequired,
     msg: React.PropTypes.object.isRequired
     // cart: React.PropTypes.instanceOf(immutable.Map),
     // viewer: React.PropTypes.object.isRequired

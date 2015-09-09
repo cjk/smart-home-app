@@ -16,6 +16,7 @@ import Appbar from '../components/appbar.react';
 export default class App extends Component {
 
   static propTypes = {
+    actions: React.PropTypes.object.isRequired,
     msg: React.PropTypes.object.isRequired,
     users: React.PropTypes.object.isRequired
   }
@@ -23,7 +24,7 @@ export default class App extends Component {
   componentDidMount() {
     // Start listening to events from our automation-backend. Pass along actions
     // that should fire when an event is received from the backend.
-    const {events: {newEventReceived}, addresses: {updateValue}} = this.actions;
+    const {events: {newEventReceived}, addresses: {updateValue}} = this.props.actions;
     smartHomeConnect([newEventReceived, updateValue]);
   }
 
@@ -33,7 +34,7 @@ export default class App extends Component {
     return (
       <Layout fixedHeader={true}>
         <Header title={msg.title}>
-          <Appbar msg={msg} viewer={viewer}/>
+          <Appbar actions={this.props.actions.auth} msg={msg} viewer={viewer} />
         </Header>
 
         <Drawer title="Drawer-Title">
