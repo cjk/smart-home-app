@@ -7,11 +7,16 @@ import {Link} from 'react-router';
 export default class HomeIndex extends Component {
 
   static propTypes = {
-    msg: React.PropTypes.object.isRequired
+    home: React.PropTypes.object.isRequired,
+    msg: React.PropTypes.object.isRequired,
   }
 
   render() {
-    const {msg: {home: msg}} = this.props;
+    const {home, msg: {home: msg}} = this.props;
+
+    const addrState = home.livestate.map(addr => {
+      return <li key={addr.id}>{addr.id} - {addr.name} - {addr.value || '???'}</li>;
+    });
 
     return (
       <DocumentTitle title={msg.title}>
@@ -20,6 +25,9 @@ export default class HomeIndex extends Component {
             <FormattedHTMLMessage message={msg.infoHtml} />{' '}
             <Link to="events">{msg.empty}</Link>.
           </p>
+          <ul>
+            {addrState}
+          </ul>
         </div>
       </DocumentTitle>
     );

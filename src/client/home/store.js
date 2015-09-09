@@ -1,13 +1,13 @@
 import Addr from '../groupaddresses/address';
-import {Record, Map} from 'immutable';
+import {Record, List} from 'immutable';
 import {actions} from '../groupaddresses/actions';
 
 // Records are good. https://facebook.github.io/immutable-js/docs/#/Record
 const initialState = new (Record({
-  livestate: new Map({
-    '1/1/7'  : {id: '1/1/7', name: 'Licht-Decke-Keller-3', type: 'DPT1'},
-    '10/0/10': {id: '10/0/10', name: 'Kontakt-Fenster-Keller-2', type: 'DPT1'},
-  }),
+  livestate: new List([
+    {id: '1/1/7', name: 'Licht-Decke-Keller-3', type: 'DPT1', value: undefined},
+    {id: '10/0/10', name: 'Kontakt-Fenster-Keller-2', type: 'DPT1', value: undefined},
+  ]),
 }));
 
 const revive = state => initialState.merge({

@@ -48,14 +48,15 @@ function loadUserData(routerState, req) {
   );
 }
 
-// Simulate async action.
+// TODO / PENDING: Simulate async action.
 function loadTodos() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       const todos = {
         todos: {
           list: [
-            {id: 2, title: 'relax'}
+            {id: 2, title: 'relax'},
+            {id: 4, title: 'remove me, you don\'t need Todos anymore!'}
           ]
         }
       };

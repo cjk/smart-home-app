@@ -31,6 +31,8 @@ export default class App extends Component {
   render() {
     const {users: {viewer}, msg: {app: msg}} = this.props;
 
+    console.log('App-props: ', this.props);
+
     return (
       <Layout fixedHeader={true}>
         <Header title={msg.title}>
