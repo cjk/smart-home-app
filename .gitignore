@@ -37,3 +37,16 @@ local.properties
 node_modules/
 npm-debug.log
 webpack-assets.json
+
+# misc
+.tern-port
+/.sass-cache
+npm-debug.log
+*.log
+GPATH
+GRTAGS
+GTAGS
+.projectile
+
+# Credentials
+# src/server/paypal-credentials.js
