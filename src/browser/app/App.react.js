@@ -1,13 +1,15 @@
 import './App.styl';
 import Component from 'react-pure-render/component';
 import Footer from './Footer.react';
-import Header from './Header.react';
 import Helmet from 'react-helmet';
+import Appbar from './appbar.react';
 import React, {PropTypes} from 'react';
 import RouterHandler from '../../common/components/RouterHandler.react';
 import mapDispatchToProps from '../../common/app/mapDispatchToProps';
 import mapStateToProps from '../../common/app/mapStateToProps';
 import {connect} from 'react-redux';
+
+import Layout, {Header, Drawer, Content, Navigation} from 'react-mdl/lib/layout/Layout';
 
 class App extends Component {
 
@@ -21,6 +23,8 @@ class App extends Component {
   render() {
     const {location: {pathname}, msg, users: {viewer}} = this.props;
 
+    console.log('App-props: ', this.props);
+
     return (
       // Pass data-pathname to allow route specific styling.
       <div className="page" data-pathname={pathname}>
@@ -30,14 +34,32 @@ class App extends Component {
           ]}
           meta={[{
             name: 'description',
-            content: 'Dev stack and starter kit for functional and universal React web apps'
+            content: 'smart home control app'
           }]}
-          titleTemplate="%s - Este.js"
+          titleTemplate="%s - by CjK"
         />
-        {/* Pathname enforces rerender so activeClassName is updated. */}
-        <Header msg={msg} pathname={pathname} viewer={viewer} />
-        <RouterHandler {...this.props} />
-        <Footer msg={msg.app.footer} />
+
+        <Layout fixedHeader={true}>
+          {/* Pathname enforces rerender so activeClassName is updated. */}
+          <Header title={msg.title}>
+            <Appbar actions={true} msg={msg} pathname={pathname} viewer={viewer} />
+          </Header>
+
+          <Drawer title="Drawer-Title">
+            <Navigation>
+              <a href="">Link #1</a>
+              <a href="">Link #2</a>
+              <a href="">Link #3</a>
+              <a href="">Link #4</a>
+            </Navigation>
+          </Drawer>
+
+          <Content>
+            <RouterHandler {...this.props} />
+          </Content>
+
+          <Footer msg={msg.app.footer} />
+        </Layout>
       </div>
     );
   }
