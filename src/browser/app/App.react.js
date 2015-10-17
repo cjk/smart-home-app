@@ -1,8 +1,8 @@
-import './App.styl';
+import './App.less';
 import Component from 'react-pure-render/component';
 import Footer from './Footer.react';
 import Helmet from 'react-helmet';
-import Appbar from './appbar.react';
+import Appbar from './Appbar.react';
 import React, {PropTypes} from 'react';
 import RouterHandler from '../../common/components/RouterHandler.react';
 import mapDispatchToProps from '../../common/app/mapDispatchToProps';

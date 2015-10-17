@@ -1,3 +1,4 @@
+import {GoogleFont, TypographyStyle} from './baseTypography';
 import React, {Component, PropTypes} from 'react';
 
 export default class Html extends Component {
@@ -42,6 +43,14 @@ ga('create', '${googleAnalyticsId}', 'auto'); ga('send', 'pageview');`}}
           {helmet.meta.toComponent()}
           {helmet.link.toComponent()}
           {helmet.script.toComponent()}
+          {/* Keep the patched (by react-mdl) library local for now, later it could become s.th. like: */}
+          {/*<script src="https://storage.googleapis.com/code.getmdl.io/1.0.0/material.min.js"></script> */}
+          <script src="/assets/js/material.js"></script>
+          <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+          {/* Via Typography.js */}
+          <GoogleFont />
+          <TypographyStyle />
+          {/* Default Styles and GoogleFont-Analytics */}
           {linkStyles}
           {analytics}
         </head>
