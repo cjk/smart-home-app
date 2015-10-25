@@ -4,7 +4,7 @@ import {Link} from 'react-router';
 
 import {HeaderRow, Navigation} from 'react-mdl/lib/layout/Layout';
 
-export default class Header extends Component {
+export default class Appbar extends Component {
 
   static propTypes = {
     msg: PropTypes.object.isRequired,

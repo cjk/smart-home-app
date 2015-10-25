@@ -42,7 +42,7 @@ class App extends Component {
         <Layout fixedHeader={true}>
           {/* Pathname enforces rerender so activeClassName is updated. */}
           <Header title={msg.title}>
-            <Appbar actions={true} msg={msg} pathname={pathname} viewer={viewer} />
+            <Appbar msg={msg} pathname={pathname} viewer={viewer} />
           </Header>
 
           <Drawer title="Drawer-Title">
