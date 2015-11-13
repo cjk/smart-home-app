@@ -11,6 +11,7 @@ export default function injectDependencies(statics, dynamic = {}) {
     Object.keys(dynamic).forEach(key => {
       dependencies[key] = dynamic[key](getState());
     });
+    console.log('###### all-deps:', dependencies);
     return dispatch(action({...dependencies, getState, dispatch}));
   };
 }

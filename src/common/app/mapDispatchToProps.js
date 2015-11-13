@@ -1,12 +1,12 @@
 import * as authActions from '../auth/actions';
-import * as todosActions from '../todos/actions';
+import * as smartHomeActions from '../homeconnect/actions';
 import * as uiActions from '../ui/actions';
 import {Map} from 'immutable';
 import {bindActionCreators} from 'redux';
 
 const actions = [
   authActions,
-  todosActions,
+  smartHomeActions,
   uiActions
 ];
 
