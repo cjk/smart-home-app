@@ -1,5 +1,5 @@
 import * as authActions from '../auth/actions';
-import * as smartHomeActions from '../homeconnect/actions';
+import * as smartHomeActions from '../home/actions';
 import * as uiActions from '../ui/actions';
 import {Map} from 'immutable';
 import {bindActionCreators} from 'redux';

@@ -6,7 +6,7 @@ import {combineReducers} from 'redux';
 import auth from '../auth/reducer';
 import device from '../device/reducer';
 import intl from '../intl/reducer';
-import smartHome from '../homeconnect/reducer';
+import smartHome from '../home/reducer';
 import ui from '../ui/reducer';
 import users from '../users/reducer';
 

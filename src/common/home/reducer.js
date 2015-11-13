@@ -1,6 +1,5 @@
 import * as actions from './actions';
 import Addr from './address';
-import homeConnect from './connector';
 import {List, Record} from 'immutable';
 
 const InitialState = Record({
@@ -9,7 +8,6 @@ const InitialState = Record({
     {id: '10/0/10', name: 'Kontakt-Fenster-Keller-2', type: 'DPT1', value: undefined},
   ]),
   eventHistory: List([]),
-  homeConnector: homeConnect()
 });
 
 const initialState = new InitialState;
@@ -17,7 +15,6 @@ const initialState = new InitialState;
 // Note how JSON from server is revived to immutable record.
 const revive = ({livestate, homeConnector, eventHistory}) => initialState.merge({
   livestate: livestate.map(addr => new Addr(addr)),
-  homeConnector: homeConnector,
   eventHistory: eventHistory
 });
 
@@ -28,14 +25,17 @@ export default function connectHomeReducer(state = initialState, action) {
 
     case actions.WRITE_GROUP_ADDRESS: {
       const {addr} = action.payload;
-      const connector = state.homeConnector;
-      console.log('### REDUCER: WRITE_GROUP_ADDRESS');
-      connector.writeGroupAddr(addr);
+      console.log('### REDUCER: WRITE_GROUP_ADDRESS:', addr);
+      /*       connector.writeGroupAddr(addr); */
+      return state;
     }
 
     case actions.ADD_TO_EVENTHISTORY: {
-      console.log('### REDUCER: ADD_TO_EVENTHISTORY');
+      const {event} = action.payload;
+
+      console.log('### REDUCER: ADD_TO_EVENTHISTORY:', event);
       /* do more */
+      return state;
     }
 
   }
