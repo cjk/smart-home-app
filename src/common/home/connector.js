@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
 import Event from './event';
+import Promise from 'bluebird';
 
 const config = {
   host: 'zircon',
@@ -19,15 +20,17 @@ export function setupEventlistener(...actions) {
   });
 };
 
+export function fetchInitialState() {
+  const promise = new Promise((resolve) => {
+    socket.on('initialstate', (state) => resolve(state));
+  });
+
+  socket.emit('initialstate', {request: true});
+  return promise;
+};
+
 /* FIXME: Cleanup */
-/* function requestInitialState(actionToFire) {
-   socket.on('initialstate', (state) => actionToFire(state));
-   socket.emit('initialstate', {request: true});
-
-   return this;
-   };
-
-   function writeGroupAddr(addr) {
+/* function writeGroupAddr(addr) {
    socket.emit('writeToBus', addr);
    return this;
    };
@@ -37,4 +40,4 @@ export function setupEventlistener(...actions) {
    requestInitialState: requestInitialState,
    writeGroupAddr: writeGroupAddr,
    };
-*/
+ */

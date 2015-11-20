@@ -5,6 +5,7 @@ import {setupEventlistener} from '../../common/home/connector';
 import R from 'ramda';
 import React, {PropTypes} from 'react';
 import {Switch} from 'react-mdl';
+import {requestInitialState} from '../../common/home/actions';
 
 export default class Page extends Component {
 
@@ -15,6 +16,9 @@ export default class Page extends Component {
     msg: PropTypes.object,
     smartHome: PropTypes.object
   }
+
+  // Fetch initial state only server-side
+  static fetchActions = [requestInitialState];
 
   componentDidMount() {
     // Listen to events happening on the smartHome-BUS and collect them

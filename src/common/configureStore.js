@@ -1,6 +1,7 @@
 import appReducer from './app/reducer';
 import createFetch from './createFetch';
 import createLogger from 'redux-logger';
+import {fetchInitialState} from './home/connector';
 import promiseMiddleware from 'redux-promise-middleware';
 import shortid from 'shortid';
 import validate from './validate';
@@ -31,6 +32,7 @@ export default function configureStore({deps, /* engine, */ initialState}) {
   const middleware = [
     injectMiddleware({
       ...deps,
+      fetchInitialState,
       fetch: createFetch(webAddr),
       getUid: () => shortid.generate(),
       now: () => Date.now(),

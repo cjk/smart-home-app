@@ -38,6 +38,18 @@ export default function connectHomeReducer(state = initialState, action) {
       return state;
     }
 
+    case actions.REQUEST_INITIAL_STATE_START: {
+      console.log('### REDUCER: REQUEST_INITIAL_STATE_START:');
+      return state;
+    }
+
+    case actions.REQUEST_INITIAL_STATE_SUCCESS: {
+      console.log('### REDUCER: REQUEST_INITIAL_STATE_SUCCESS:', action.payload);
+      const livestate = List(action.payload);
+
+      return state.set('livestate', livestate);
+    }
+
   }
 
   return state;
