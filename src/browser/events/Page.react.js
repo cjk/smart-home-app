@@ -1,6 +1,6 @@
 import Component from 'react-pure-render/component';
-import DocumentTitle from 'react-document-title';
 import Events from './Events.react';
+import Helmet from 'react-helmet';
 
 import React, {PropTypes} from 'react';
 
@@ -16,11 +16,10 @@ export default class Page extends Component {
     const {actions, msg: {todos: msg}, events: {list}} = this.props;
 
     return (
-      <DocumentTitle title={msg.title}>
-        <div className="todos-page">
-          <Events {...{list, actions, msg}} />
-        </div>
-      </DocumentTitle>
+      <div className="todos-page">
+        <Helmet title={msg.title} />
+        <Events {...{list, actions, msg}} />
+      </div>
     );
   }
 
