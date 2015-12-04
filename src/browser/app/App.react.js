@@ -27,7 +27,7 @@ class App extends Component {
 
   componentDidMount() {
     // Listen to events happening on the smartHome-BUS and collect them
-    setupEventlistener(this.props.actions.addToEventhistory);
+    setupEventlistener(this.props.actions.processEvent);
   }
 
   render() {

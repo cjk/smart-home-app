@@ -14,7 +14,7 @@ const InitialState = Record({
 const initialState = new InitialState;
 
 // Note how JSON from server is revived to immutable record.
-const revive = ({livestate, homeConnector, eventHistory}) => initialState.merge({
+const revive = ({livestate, eventHistory}) => initialState.merge({
   livestate: livestate.map(addr => new Addr(addr)),
   eventHistory: eventHistory
 });
@@ -26,15 +26,15 @@ export default function connectHomeReducer(state = initialState, action) {
 
     case actions.WRITE_GROUP_ADDRESS: {
       const {addr} = action.payload;
-      console.log('### REDUCER: WRITE_GROUP_ADDRESS:', addr.toJS());
+      console.log('### HOME-REDUCER: WRITE_GROUP_ADDRESS:', addr.toJS());
       /*       connector.writeGroupAddr(addr); */
       return state;
     }
 
-    case actions.ADD_TO_EVENTHISTORY: {
+    case actions.PROCESS_EVENT: {
       const {event} = action.payload;
 
-      console.log('### REDUCER: ADD_TO_EVENTHISTORY:', event.toJS());
+      console.log('### HOME-REDUCER: PROCESS_EVENT:', event.toJS());
 
       const newEvent = event.merge({
         id: getRandomString()
@@ -47,12 +47,12 @@ export default function connectHomeReducer(state = initialState, action) {
     }
 
     case actions.REQUEST_INITIAL_STATE_START: {
-      console.log('### REDUCER: REQUEST_INITIAL_STATE_START:');
+      console.log('### HOME-REDUCER: REQUEST_INITIAL_STATE_START:');
       return state;
     }
 
     case actions.REQUEST_INITIAL_STATE_SUCCESS: {
-      console.log('### REDUCER: REQUEST_INITIAL_STATE_SUCCESS:', action.payload);
+      console.log('### HOME-REDUCER: REQUEST_INITIAL_STATE_SUCCESS:', action.payload);
       const livestate = List(action.payload);
 
       return state.set('livestate', livestate);

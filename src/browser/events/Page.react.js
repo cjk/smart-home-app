@@ -13,7 +13,6 @@ export default class Page extends Component {
   }
 
   render() {
-    console.log('Event-props: ', this.props);
     const {actions, msg: {todos: msg}, smartHome: {eventHistory: list}} = this.props;
 
     return (

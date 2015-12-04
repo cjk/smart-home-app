@@ -1,9 +1,8 @@
-export const WRITE_GROUP_ADDRESS = 'WRITE_GROUP_ADDRESS';
+export const PROCESS_EVENT = 'PROCESS_EVENT';
 export const REQUEST_INITIAL_STATE_ERROR = 'REQUEST_INITIAL_STATE_ERROR';
 export const REQUEST_INITIAL_STATE_START = 'REQUEST_INITIAL_STATE_START';
 export const REQUEST_INITIAL_STATE_SUCCESS = 'REQUEST_INITIAL_STATE_SUCCESS';
-
-export const ADD_TO_EVENTHISTORY = 'ADD_TO_EVENTHISTORY';
+export const WRITE_GROUP_ADDRESS = 'WRITE_GROUP_ADDRESS';
 
 export function writeGroupAddr(addr) {
   return {
@@ -26,9 +25,9 @@ export function requestInitialState({location, params}) {
 
 }
 
-export function addToEventhistory(event) {
+export function processEvent(event) {
   return {
-    type: ADD_TO_EVENTHISTORY,
+    type: PROCESS_EVENT,
     payload: {event}
   };
 }
