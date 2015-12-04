@@ -1,5 +1,6 @@
+/* TODO: Move to components- or lib-directory */
 import io from 'socket.io-client';
-import Event from './event';
+import Event from '../events/event';
 import Promise from 'bluebird';
 
 const config = {
@@ -29,15 +30,7 @@ export function fetchInitialState() {
   return promise;
 };
 
-/* FIXME: Cleanup */
-/* function writeGroupAddr(addr) {
-   socket.emit('writeToBus', addr);
-   return this;
-   };
-
-   return {
-   setupEventlistener: setupEventlistener,
-   requestInitialState: requestInitialState,
-   writeGroupAddr: writeGroupAddr,
-   };
- */
+export function writeGroupAddr(addr) {
+  console.log('Sending groupaddress write-request over the wire: ', addr);
+  return socket.emit('writeToBus', addr);
+};

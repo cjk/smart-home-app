@@ -1,7 +1,6 @@
 import './Home.less';
 import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
-import {setupEventlistener} from '../../common/home/connector';
 import R from 'ramda';
 import React, {PropTypes} from 'react';
 import {Switch} from 'react-mdl';
@@ -20,16 +19,16 @@ export default class Page extends Component {
   // Fetch initial state only server-side
   static fetchActions = [requestInitialState];
 
-  componentDidMount() {
-    // Listen to events happening on the smartHome-BUS and collect them
-    setupEventlistener(this.props.actions.addToEventhistory);
-  }
-
   render() {
+    console.log('Live-state: ', this.props.smartHome.livestate.toJS());
+
     const {msg: {home: msg}, smartHome: {livestate}, actions: {writeGroupAddr: updateAddr}} = this.props,
       toggleAddrVal = (addr) => addr.set('value', !addr.value | 0);
 
     const addrLine = livestate.map(addr => {
+      /* DEBUG */
+      /* console.log(`RENDER: ${addr.id} = ${addr.value} `); */
+
       /* TODO: This should be considered a HACK but works for now: */
       return (
         <section className='row' key={addr.id}>

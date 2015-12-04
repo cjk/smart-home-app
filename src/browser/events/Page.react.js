@@ -8,15 +8,16 @@ export default class Page extends Component {
 
   static propTypes = {
     actions: PropTypes.object,
-    events: PropTypes.object,
-    msg: PropTypes.object
+    msg: PropTypes.object,
+    smartHome: PropTypes.object,
   }
 
   render() {
-    const {actions, msg: {todos: msg}, events: {list}} = this.props;
+    console.log('Event-props: ', this.props);
+    const {actions, msg: {todos: msg}, smartHome: {eventHistory: list}} = this.props;
 
     return (
-      <div className="todos-page">
+      <div className='events-page' id='events'>
         <Helmet title={msg.title} />
         <Events {...{list, actions, msg}} />
       </div>
