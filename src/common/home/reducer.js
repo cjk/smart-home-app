@@ -35,11 +35,12 @@ export default function connectHomeReducer(state = initialState, action) {
       const {event} = action.payload;
 
       console.log('### REDUCER: ADD_TO_EVENTHISTORY:', event.toJS());
-      console.log('### REDUCER: UPDATE livestate:', state.livestate.toJS());
 
       const newEvent = event.merge({
         id: getRandomString()
       });
+
+      /* Update event-history AND livestate */
       return state
                   .update('eventHistory', list => list.push(newEvent))
                   .set('livestate', updateAddrValue(state.livestate, event.dest, event.value));

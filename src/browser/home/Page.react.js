@@ -3,7 +3,7 @@ import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
 import R from 'ramda';
 import React, {PropTypes} from 'react';
-import {Switch} from 'react-mdl';
+import {Switch} from 'react-mdl/lib';
 import {requestInitialState} from '../../common/home/actions';
 
 export default class Page extends Component {

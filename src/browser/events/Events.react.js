@@ -1,5 +1,5 @@
 import Component from 'react-pure-render/component';
-import {DataTable} from 'react-mdl';
+import {DataTable} from 'react-mdl/lib';
 import {List, Map} from 'immutable';
 import moment from 'moment';
 import React from 'react';

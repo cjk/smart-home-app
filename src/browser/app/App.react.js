@@ -10,7 +10,10 @@ import RouterHandler from '../../common/components/RouterHandler.react';
 
 import {connect} from 'react-redux';
 import {setupEventlistener} from '../../common/home/connector';
-import Layout, {Header, Drawer, Content, Navigation} from 'react-mdl/lib/layout/Layout';
+
+/* Material-Design-Lite imports */
+import Layout from 'react-mdl/lib/Layout/Layout';
+import {Content, Header, Drawer, Navigation} from 'react-mdl/lib/Layout';
 
 class App extends Component {
 
@@ -46,7 +49,7 @@ class App extends Component {
           titleTemplate="%s - by CjK"
         />
 
-        <Layout fixedHeader={true}>
+        <Layout fixedHeader>
           {/* Pathname enforces rerender so activeClassName is updated. */}
           <Header title={msg.title}>
             <Appbar msg={msg} pathname={pathname} viewer={viewer} />
