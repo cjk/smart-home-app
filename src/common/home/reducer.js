@@ -40,10 +40,15 @@ export default function connectHomeReducer(state = initialState, action) {
         id: getRandomString()
       });
 
-      /* Update event-history AND livestate */
-      return state
-                  .update('eventHistory', list => list.push(newEvent))
+      /* Update event-history and/or livestate */
+      const newState = state
+                  .update('eventHistory', list => list.push(newEvent));
+
+      if (event.action.match(/^(write|response)$/)) {
+        return newState
                   .set('livestate', updateAddrValue(state.livestate, event.dest, event.value));
+      };
+      return newState;
     }
 
     case actions.REQUEST_INITIAL_STATE_START: {
