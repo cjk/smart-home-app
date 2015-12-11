@@ -9,7 +9,7 @@ import React, {PropTypes} from 'react';
 import RouterHandler from '../../common/components/RouterHandler.react';
 
 import {connect} from 'react-redux';
-import {setupEventlistener} from '../../common/home/connector';
+import smartHomeConnect from '../../common/home/connector';
 
 /* Material-Design-Lite imports */
 import Layout from 'react-mdl/lib/Layout/Layout';
@@ -27,7 +27,8 @@ class App extends Component {
 
   componentDidMount() {
     // Listen to events happening on the smartHome-BUS and collect them
-    setupEventlistener(this.props.actions.processEvent);
+    // PENDING: Could we do this in the middleware instead?!
+    smartHomeConnect().setupEventlistener(this.props.actions.processEvent);
   }
 
   render() {

@@ -1,15 +1,17 @@
 import appReducer from './app/reducer';
 import createFetch from './createFetch';
 import createLogger from 'redux-logger';
-import {fetchInitialState} from './home/connector';
 import promiseMiddleware from 'redux-promise-middleware';
 import shortid from 'shortid';
+import smartHomeConnect from './home/connector';
 import validate from './validate';
 import {applyMiddleware, compose, createStore} from 'redux';
 
 const BROWSER_DEVELOPMENT =
   process.env.NODE_ENV !== 'production' &&
   process.env.IS_BROWSER;
+
+const homeConnect = smartHomeConnect();
 
 // TODO: Add example for browser/native redux-storage.
 // import storage from 'redux-storage';
@@ -30,9 +32,8 @@ export default function configureStore({deps, /* engine, */ initialState}) {
   };
 
   const middleware = [
-    injectMiddleware({
+    injectMiddleware(homeConnect, {
       ...deps,
-      fetchInitialState,
       fetch: createFetch(webAddr),
       getUid: () => shortid.generate(),
       now: () => Date.now(),

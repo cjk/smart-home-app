@@ -24,18 +24,8 @@ export default function connectHomeReducer(state = initialState, action) {
 
   switch (action.type) {
 
-    case actions.WRITE_GROUP_ADDRESS: {
-      const {addr} = action.payload;
-      console.log('### HOME-REDUCER: WRITE_GROUP_ADDRESS:', addr.toJS());
-      /*       connector.writeGroupAddr(addr); */
-      return state;
-    }
-
     case actions.PROCESS_EVENT: {
       const {event} = action.payload;
-
-      console.log('### HOME-REDUCER: PROCESS_EVENT:', event.toJS());
-
       const newEvent = event.merge({
         id: getRandomString()
       });
@@ -52,15 +42,24 @@ export default function connectHomeReducer(state = initialState, action) {
     }
 
     case actions.REQUEST_INITIAL_STATE_START: {
-      console.log('### HOME-REDUCER: REQUEST_INITIAL_STATE_START:');
+      /* Currently no state change on this event */
       return state;
     }
 
     case actions.REQUEST_INITIAL_STATE_SUCCESS: {
-      console.log('### HOME-REDUCER: REQUEST_INITIAL_STATE_SUCCESS:', action.payload);
       const livestate = List(action.payload);
 
       return state.set('livestate', livestate);
+    }
+
+    case actions.WRITE_GROUP_ADDRESS_START: {
+      /* Currently no state change on this event */
+      return state;
+    }
+
+    case actions.WRITE_GROUP_ADDRESS_SUCCESS: {
+      /* Currently no state change on this event */
+      return state;
     }
 
   }

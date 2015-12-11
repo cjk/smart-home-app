@@ -1,14 +1,20 @@
 export const PROCESS_EVENT = 'PROCESS_EVENT';
-export const REQUEST_INITIAL_STATE_ERROR = 'REQUEST_INITIAL_STATE_ERROR';
+
 export const REQUEST_INITIAL_STATE_START = 'REQUEST_INITIAL_STATE_START';
 export const REQUEST_INITIAL_STATE_SUCCESS = 'REQUEST_INITIAL_STATE_SUCCESS';
-export const WRITE_GROUP_ADDRESS = 'WRITE_GROUP_ADDRESS';
+export const REQUEST_INITIAL_STATE_ERROR = 'REQUEST_INITIAL_STATE_ERROR';
+
+export const WRITE_GROUP_ADDRESS_START = 'WRITE_GROUP_ADDRESS_START';
+export const WRITE_GROUP_ADDRESS_SUCCESS = 'WRITE_GROUP_ADDRESS_SUCCESS';
+export const WRITE_GROUP_ADDRESS_ERROR = 'WRITE_GROUP_ADDRESS_ERROR';
 
 export function writeGroupAddr(addr) {
-  return {
-    type: WRITE_GROUP_ADDRESS,
-    payload: {addr}
-  };
+  return ({writeGroupAddr}) => ({
+    type: 'WRITE_GROUP_ADDRESS',
+    payload: {
+      promise: writeGroupAddr(addr)
+    }
+  });
 }
 
 export function requestInitialState({location, params}) {

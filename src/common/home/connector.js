@@ -10,7 +10,7 @@ const config = {
 
 const socket = io.connect(`http://${config.host}:${config.port}`);
 
-export function setupEventlistener(...actions) {
+function setupEventlistener(...actions) {
   console.log('Setting up home-BUS event-listener with actions: ', actions);
   socket.on('knx-event', (event) => {
     console.log('Received an event from our KNX-backend: ', new Date(event.created), event);
@@ -21,7 +21,7 @@ export function setupEventlistener(...actions) {
   });
 };
 
-export function fetchInitialState() {
+function fetchInitialState() {
   const promise = new Promise((resolve) => {
     socket.on('initialstate', (state) => resolve(state));
   });
@@ -30,7 +30,19 @@ export function fetchInitialState() {
   return promise;
 };
 
-export function writeGroupAddr(addr) {
+function writeGroupAddr(addr) {
   console.log('Sending groupaddress write-request over the wire: ', addr);
-  return socket.emit('writeToBus', addr);
-};
+
+  const promise = new Promise((resolve) => {
+    socket.emit('writeToBus', addr, resolve(addr));
+  });
+  return promise;
+}
+
+export default function smartHomeConnect() {
+  return {
+    setupEventlistener: setupEventlistener,
+    fetchInitialState: fetchInitialState,
+    writeGroupAddr: writeGroupAddr
+  };
+}
