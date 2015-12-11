@@ -12,4 +12,4 @@ A modern web-frontend for your home-automation services
 
 ## Credits
 
-This app is based on Este.js by Daniel Steigerwald
+This app is based on Este.js by Daniel Steigerwald, et. al.
