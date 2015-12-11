@@ -1,6 +1,5 @@
 import * as actions from './actions';
 import Addr from './address';
-import getRandomString from '../lib/getRandomString';
 import {List, Record} from 'immutable';
 
 const InitialState = Record({
@@ -25,18 +24,15 @@ export default function connectHomeReducer(state = initialState, action) {
   switch (action.type) {
 
     case actions.PROCESS_EVENT: {
-      const {event} = action.payload;
-      const newEvent = event.merge({
-        id: getRandomString()
-      });
+      const {newEvent} = action.payload;
 
       /* Update event-history and/or livestate */
       const newState = state
                   .update('eventHistory', list => list.push(newEvent));
 
-      if (event.action.match(/^(write|response)$/)) {
+      if (newEvent.action.match(/^(write|response)$/)) {
         return newState
-                  .set('livestate', updateAddrValue(state.livestate, event.dest, event.value));
+                  .set('livestate', updateAddrValue(state.livestate, newEvent.dest, newEvent.value));
       };
       return newState;
     }

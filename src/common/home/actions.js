@@ -32,8 +32,14 @@ export function requestInitialState({location, params}) {
 }
 
 export function processEvent(event) {
-  return {
-    type: PROCESS_EVENT,
-    payload: {event}
+  return ({getUid, now}) => {
+    const newEvent = event.merge({
+      id: getUid()
+    });
+
+    return {
+      type: PROCESS_EVENT,
+      payload: {newEvent}
+    };
   };
 }

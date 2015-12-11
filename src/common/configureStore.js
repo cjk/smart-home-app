@@ -32,8 +32,9 @@ export default function configureStore({deps, /* engine, */ initialState}) {
   };
 
   const middleware = [
-    injectMiddleware(homeConnect, {
+    injectMiddleware({
       ...deps,
+      ...homeConnect,
       fetch: createFetch(webAddr),
       getUid: () => shortid.generate(),
       now: () => Date.now(),
