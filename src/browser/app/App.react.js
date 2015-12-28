@@ -65,7 +65,7 @@ class App extends Component {
             </Navigation>
           </Drawer>
 
-          <Content>
+          <Content id="page-content">
             <RouterHandler {...this.props} />
           </Content>
 

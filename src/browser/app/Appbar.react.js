@@ -18,9 +18,8 @@ export default class Appbar extends Component {
     return (
       <HeaderRow>
         <Navigation>
+          <Link to="/">Home</Link>
           <Link to="events">Events</Link>
-          <a href="">Link</a>
-          <a href="">Link</a>
           <a href="">Link</a>
         </Navigation>
       </HeaderRow>
