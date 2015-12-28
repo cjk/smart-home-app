@@ -26,8 +26,9 @@ export default class EventList extends Component {
 
     const data = list.map(event => {
       return columns.reduce((row, col) => {
-        const colName = col.name,
-              content = (colName === 'created' ? moment(event[colName]).format('MMMM Do YYYY, HH:mm:ss') : event[colName]);
+        const colName = col.name;
+        const content = (colName === 'created' ? moment(event[colName]).format('MMMM Do YYYY, HH:mm:ss') : event[colName]);
+
         return row.merge({[colName]: content});
       }, Map());
     });

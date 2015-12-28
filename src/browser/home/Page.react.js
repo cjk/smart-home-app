@@ -1,13 +1,12 @@
 import './Home.less';
 import AddressList from './AddressList.react';
-
 import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
 import React, {PropTypes} from 'react';
-
+import fetch from '../components/fetch';
 import {requestInitialState} from '../../common/home/actions';
 
-export default class Page extends Component {
+class Page extends Component {
 
   static propTypes = {
     // Why not PropTypes.object.isRequired? Because:
@@ -26,7 +25,7 @@ export default class Page extends Component {
     const {msg: {home: msg}, smartHome: {livestate: addressList}, actions} = this.props;
 
     return (
-      <div className='home-page' id='home'>
+      <div className="home-page" id="home">
         <Helmet title={msg.title} />
         <AddressList {...{actions, msg, addressList}} />
       </div>
@@ -34,3 +33,5 @@ export default class Page extends Component {
   }
 
 }
+
+export default fetch(requestInitialState)(Page);

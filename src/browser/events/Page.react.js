@@ -16,7 +16,7 @@ export default class Page extends Component {
     const {actions, msg: {todos: msg}, smartHome: {eventHistory: list}} = this.props;
 
     return (
-      <div className='events-page' id='events'>
+      <div className="events-page" id="events">
         <Helmet title={msg.title} />
         <Events {...{list, actions, msg}} />
       </div>

@@ -17,10 +17,8 @@ export function writeGroupAddr(addr) {
   });
 }
 
-export function requestInitialState({location, params}) {
-  /* The function returned here get's passed `dispatch` and `getState` as
-  parameters along with all the middleware-functions (in this case: `fetch` and
-  `validate`): */
+export function requestInitialState(/* {location, params} */) {
+  // We can use location and params to create custom endpoint.
   return ({fetchInitialState}) => ({
     type: 'REQUEST_INITIAL_STATE',
     payload: {

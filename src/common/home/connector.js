@@ -18,7 +18,7 @@ function setupEventlistener(...actions) {
     // Fire all given actions with an event-payload
     actions.forEach(action => action(e));
   });
-};
+}
 
 function fetchInitialState() {
   const promise = new Promise((resolve) => {
@@ -27,7 +27,7 @@ function fetchInitialState() {
 
   socket.emit('initialstate', {request: true});
   return promise;
-};
+}
 
 function writeGroupAddr(addr) {
   const promise = new Promise((resolve) => {

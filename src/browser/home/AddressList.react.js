@@ -16,7 +16,7 @@ export default class AddressList extends Component {
     const {actions, addressList, msg} = this.props;
 
     return (
-      <section className='device-switch-list'>
+      <section className="device-switch-list">
         {addressList.map(address =>
           <AddrLine {...{actions, msg, address}} key={address.id} />
          )

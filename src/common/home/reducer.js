@@ -33,7 +33,7 @@ export default function connectHomeReducer(state = initialState, action) {
       if (newEvent.action.match(/^(write|response)$/)) {
         return newState
                   .set('livestate', updateAddrValue(state.livestate, newEvent.dest, newEvent.value));
-      };
+      }
       return newState;
     }
 
@@ -64,7 +64,7 @@ export default function connectHomeReducer(state = initialState, action) {
 }
 
 function updateAddrValue(state, id, value) {
-  const addr = state.find(addr => addr.get('id') === id);
+  const addr = state.find(addr => addr.id === id);
   if (!addr)
     return state;
   return state.update(list => list.set(list.indexOf(addr), addr.set('value', value)));
