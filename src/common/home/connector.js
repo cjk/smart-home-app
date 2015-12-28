@@ -11,9 +11,8 @@ const config = {
 const socket = io.connect(`http://${config.host}:${config.port}`);
 
 function setupEventlistener(...actions) {
-  console.log('Setting up home-BUS event-listener with actions: ', actions);
   socket.on('knx-event', (event) => {
-    console.log('Received an event from our KNX-backend: ', new Date(event.created), event);
+    // console.log('Received an event from our KNX-backend: ', new Date(event.created), event);
     const e = new Event(event);
 
     // Fire all given actions with an event-payload
@@ -31,8 +30,6 @@ function fetchInitialState() {
 };
 
 function writeGroupAddr(addr) {
-  console.log('Sending groupaddress write-request over the wire: ', addr);
-
   const promise = new Promise((resolve) => {
     socket.emit('writeToBus', addr, resolve(addr));
   });

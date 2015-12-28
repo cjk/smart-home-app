@@ -5,4 +5,6 @@ export default Record({
   name: '',
   value: undefined,
   type: '',
+  story: null,
+  room: null,
 });
