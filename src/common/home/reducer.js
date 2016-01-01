@@ -43,7 +43,7 @@ export default function connectHomeReducer(state = initialState, action) {
     }
 
     case actions.REQUEST_INITIAL_STATE_SUCCESS: {
-      const livestate = List(action.payload);
+      const livestate = List(action.payload).map(addr => new Addr(addr));
 
       return state.set('livestate', livestate);
     }
