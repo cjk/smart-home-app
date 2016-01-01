@@ -4,7 +4,8 @@ export default Record({
   id: null,
   name: '',
   value: undefined,
-  type: '',
   story: null,
   room: null,
+  type: null,
+  func: null,
 });
