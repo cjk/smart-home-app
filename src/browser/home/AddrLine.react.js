@@ -16,7 +16,7 @@ export default class AddrLine extends Component {
 
     const {actions: {writeGroupAddr: updateAddr}, address: addr} = this.props;
     const toggleAddrVal = (addr) => addr.set('value', !addr.value | 0);
-    const switchable = (addr) => addr.type === 'switch';
+    const switchable = (addr) => addr.func === 'light';
 
     return (
       <section className="row">
