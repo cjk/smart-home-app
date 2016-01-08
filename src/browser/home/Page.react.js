@@ -16,9 +16,6 @@ class Page extends Component {
     smartHome: PropTypes.object
   }
 
-  // Fetch initial state only server-side
-  static fetchActions = [requestInitialState];
-
   render() {
     console.log('Live-state: ', this.props.smartHome.livestate.toJS());
 
