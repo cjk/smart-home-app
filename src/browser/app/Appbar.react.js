@@ -20,6 +20,7 @@ export default class Appbar extends Component {
         <Navigation>
           <Link to="/">Home</Link>
           <Link to="events">Events</Link>
+          <Link to="fermenter">Fermenter</Link>
           <a href="">Link</a>
         </Navigation>
       </HeaderRow>

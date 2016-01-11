@@ -7,6 +7,7 @@ import auth from '../auth/reducer';
 import device from '../device/reducer';
 import intl from '../intl/reducer';
 import smartHome from '../home/reducer';
+import fermenter from '../fermenter/reducer';
 import ui from '../ui/reducer';
 import users from '../users/reducer';
 
@@ -15,6 +16,7 @@ const appReducer = combineReducers({
   device,
   intl,
   smartHome,
+  fermenter,
   ui,
   users
 });

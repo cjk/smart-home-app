@@ -12,7 +12,6 @@ const socket = io.connect(`http://${config.host}:${config.port}`);
 
 function setupEventlistener(...actions) {
   socket.on('knx-event', (event) => {
-    // console.log('Received an event from our KNX-backend: ', new Date(event.created), event);
     const e = new Event(event);
 
     // Fire all given actions with an event-payload
@@ -36,10 +35,30 @@ function writeGroupAddr(addr) {
   return promise;
 }
 
+function fetchFermenterState() {
+  const promise = new Promise((resolve) => {
+    socket.on('fermenterstate', (state) => resolve(state));
+  });
+
+  socket.emit('fermenterstate', {request: true});
+  return promise;
+}
+
+function fetchFermenterHistory() {
+  const promise = new Promise((resolve) => {
+    socket.on('fermenterhistory', (state) => resolve(state));
+  });
+
+  socket.emit('fermenterhistory', {request: true});
+  return promise;
+}
+
 export default function smartHomeConnect() {
   return {
     setupEventlistener: setupEventlistener,
     fetchInitialState: fetchInitialState,
-    writeGroupAddr: writeGroupAddr
+    writeGroupAddr: writeGroupAddr,
+    fetchFermenterState: fetchFermenterState,
+    fetchFermenterHistory: fetchFermenterHistory,
   };
 }

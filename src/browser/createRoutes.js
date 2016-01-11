@@ -7,6 +7,7 @@ import Profile from './me/Profile.react';
 import React from 'react';
 import Settings from './me/Settings.react';
 import Events from './events/Page.react';
+import Fermenter from './fermenter/Page.react';
 import {IndexRoute, Route} from 'react-router';
 
 export default function createRoutes(getState) {
@@ -30,6 +31,7 @@ export default function createRoutes(getState) {
         <Route component={Settings} path="settings" />
       </Route>
       <Route component={Events} path="events" />
+      <Route component={Fermenter} path="fermenter" />
       <Route component={NotFound} path="*" />
     </Route>
   );
