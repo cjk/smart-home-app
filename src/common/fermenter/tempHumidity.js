@@ -1,9 +1,11 @@
 import {Record} from 'immutable';
 
 export default Record({
-  createdAt: Date.now(),
-  temperature: 0,
-  humidity: 0,
+  createdAt: null,
+  temperature: null,
+  humidity: null,
   isValid: false,
-  errors: 0
+  errors: 0,
+  heaterIsRunning: null,
+  humidifierIsRunning: null
 });

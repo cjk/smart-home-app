@@ -26,11 +26,13 @@ export default function fermenterReducer(state = initialState, action) {
       return state;
     }
 
-    case actions.FETCH_FERMENTER_STATE_SUCCESS: {
-      /*       const envHistory = Map(action.payload).map(tmpHumEntry => new TempHumEntry(tmpHumEntry)); */
-      const tempHumEntry = new TempHumEntry(action.payload);
+    case actions.FETCH_FERMENTER_STATE_ERROR: {
+      console.log('ERROR fetching fermenter-state: ', action.payload);
+      return state;
+    }
 
-      /*       return state.set('envHistory', envHistory); */
+    case actions.FETCH_FERMENTER_STATE_SUCCESS: {
+      const tempHumEntry = new TempHumEntry(action.payload.fermenterState);
       return state.set('currentState', tempHumEntry);
     }
 
