@@ -17,6 +17,8 @@ export default class EventList extends Component {
       <div>
         <p>Temperature: {fermenterState.currentState.temperature}</p>
         <p>Humidity: {fermenterState.currentState.humidity}</p>
+        <p>Heater: {fermenterState.currentState.heaterIsRunning ? 'running' : 'stopped'}</p>
+        <p>Humidifier: {fermenterState.currentState.humidifierIsRunning ? 'running' : 'stopped'}</p>
       </div>
     );
   }

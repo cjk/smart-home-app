@@ -16,8 +16,6 @@ class Page extends Component {
   render() {
     const {actions, msg: {todos: msg}, fermenter: fermenterState} = this.props;
 
-    console.log('>>>> ', JSON.stringify(fermenterState));
-
     return (
       <div className="events-page" id="events">
         <Helmet title={msg.title} />
