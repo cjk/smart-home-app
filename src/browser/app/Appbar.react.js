@@ -10,7 +10,7 @@ export default class Appbar extends Component {
     msg: PropTypes.object.isRequired,
     pathname: PropTypes.string.isRequired,
     viewer: PropTypes.object
-  }
+  };
 
   render() {
     const {msg, viewer} = this.props;

@@ -9,7 +9,7 @@ export default class AddressList extends Component {
     actions: PropTypes.object,
     addressList: PropTypes.object,
     msg: PropTypes.object,
-  }
+  };
 
   render() {
 

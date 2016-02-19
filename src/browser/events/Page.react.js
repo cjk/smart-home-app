@@ -10,7 +10,7 @@ export default class Page extends Component {
     actions: PropTypes.object,
     msg: PropTypes.object,
     smartHome: PropTypes.object,
-  }
+  };
 
   render() {
     const {actions, msg: {todos: msg}, smartHome: {eventHistory: list}} = this.props;

@@ -14,7 +14,7 @@ class Page extends Component {
     actions: PropTypes.object,
     msg: PropTypes.object,
     smartHome: PropTypes.object
-  }
+  };
 
   render() {
     console.log('Live-state: ', this.props.smartHome.livestate.toJS());

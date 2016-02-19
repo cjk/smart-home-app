@@ -11,7 +11,7 @@ class Page extends Component {
     actions: PropTypes.object,
     msg: PropTypes.object,
     fermenter: PropTypes.object,
-  }
+  };
 
   render() {
     const {actions, msg: {todos: msg}, fermenter: fermenterState} = this.props;

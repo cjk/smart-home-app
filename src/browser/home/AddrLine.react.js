@@ -9,8 +9,8 @@ export default class AddrLine extends Component {
   static propTypes = {
     actions: PropTypes.object,
     address: PropTypes.object,
-    msg: PropTypes.object,
-  }
+    msg: PropTypes.object
+  };
 
   render() {
 
