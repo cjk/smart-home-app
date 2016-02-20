@@ -1,20 +1,20 @@
-import Component from '../components/Component.react';
+import * as uiActions from '../../common/ui/actions';
+import Component from 'react-pure-render/component';
 import Header from './Header.react';
 import Menu from './Menu.react';
 import React, {Navigator, PropTypes, StatusBarIOS, View} from 'react-native';
 import SideMenu from 'react-native-side-menu';
-import mapDispatchToProps from '../../common/app/mapDispatchToProps';
-import mapStateToProps from '../../common/app/mapStateToProps';
 import routes from '../routes';
 import styles from './styles';
-import {connect} from 'react-redux/native';
+import {connect} from 'react-redux';
 
 class App extends Component {
 
   static propTypes = {
-    actions: PropTypes.object.isRequired,
     device: PropTypes.object.isRequired,
-    msg: PropTypes.object.isRequired,
+    links: PropTypes.object.isRequired,
+    onSideMenuChange: PropTypes.func.isRequired,
+    toggleSideMenu: PropTypes.func.isRequired,
     ui: PropTypes.object.isRequired
   };
 
@@ -33,24 +33,20 @@ class App extends Component {
     this.navigator = component;
   }
 
-  // TODO: Fluxify routing and make it universal with redux-router.
-  // Store current route in storage.
-  // https://github.com/rackt/redux-router/issues/63
   onRouteChange(route) {
-    const {actions} = this.props;
     this.navigator.replace(routes[route]);
-    actions.toggleSideMenu();
+    this.props.toggleSideMenu();
   }
 
   onSideMenuChange(isOpen) {
-    const {actions, device} = this.props;
+    const {device, onSideMenuChange} = this.props;
     if (device.platform === 'ios')
       StatusBarIOS.setHidden(isOpen, true);
-    actions.onSideMenuChange(isOpen);
+    onSideMenuChange(isOpen);
   }
 
   getTitle(route) {
-    const {msg: {app: {links}}} = this.props;
+    const {links} = this.props;
     switch (route) {
       case routes.home: return links.home;
       case routes.todos: return links.todos;
@@ -58,19 +54,19 @@ class App extends Component {
   }
 
   render() {
-    const {actions, msg, ui} = this.props;
+    const {links, toggleSideMenu, ui} = this.props;
 
     const renderScene = route =>
       <View style={[styles.sceneView, route.style]}>
         <Header
           title={this.getTitle(route)}
-          toggleSideMenu={actions.toggleSideMenu}
+          toggleSideMenu={toggleSideMenu}
         />
-        <route.Page {...this.props} />
+        <route.Page />
       </View>;
 
     const menu =
-      <Menu msg={msg} onRouteChange={this.onRouteChange} />;
+      <Menu links={links} onRouteChange={this.onRouteChange} />;
 
     return (
       <SideMenu
@@ -93,4 +89,10 @@ class App extends Component {
 
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+App = connect(state => ({
+  device: state.device,
+  links: state.intl.msg.app.links,
+  ui: state.ui
+}), uiActions)(App);
+
+export default App;

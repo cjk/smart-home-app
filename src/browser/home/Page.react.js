@@ -3,32 +3,38 @@ import AddressList from './AddressList.react';
 import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
 import React, {PropTypes} from 'react';
-import fetch from '../components/fetch';
+import fetch from '../../common/components/fetch';
 import {requestInitialState} from '../../common/home/actions';
+import {connect} from 'react-redux';
 
 class Page extends Component {
 
   static propTypes = {
-    // Why not PropTypes.object.isRequired? Because:
-    // https://github.com/rackt/react-router/issues/1505
-    actions: PropTypes.object,
-    msg: PropTypes.object,
-    smartHome: PropTypes.object
+    msg: PropTypes.object.isRequired,
+    smartHome: PropTypes.object.isRequired
   };
 
   render() {
     console.log('Live-state: ', this.props.smartHome.livestate.toJS());
 
-    const {msg: {home: msg}, smartHome: {livestate: addressList}, actions} = this.props;
+    const {msg: {title}, smartHome: {livestate: addressList}} = this.props;
 
     return (
       <div className="home-page" id="home">
-        <Helmet title={msg.title} />
-        <AddressList {...{actions, msg, addressList}} />
+        <Helmet title={title} />
+        <AddressList {...{addressList}} />
       </div>
     );
   }
-
 }
 
-export default fetch(requestInitialState)(Page);
+// Truly universal (not only isomorphic) data fetching.
+// One higher order component for browser, server, and mobile.
+/* MERGE-TODO */
+Page = fetch(requestInitialState)(Page);
+
+// export default fetch(requestInitialState)(Page);
+export default connect(state => ({
+  msg: state.intl.msg.home,
+  smartHome: state.smartHome
+}))(Page);

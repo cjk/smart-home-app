@@ -1,4 +1,3 @@
-import Todo from './todo';
 import {Range} from 'immutable';
 
 export const ADD_HUNDRED_TODOS = 'ADD_HUNDRED_TODOS';
@@ -9,38 +8,35 @@ export const DELETE_TODO = 'DELETE_TODO';
 export const FETCH_USER_TODOS_ERROR = 'FETCH_USER_TODOS_ERROR';
 export const FETCH_USER_TODOS_START = 'FETCH_USER_TODOS_START';
 export const FETCH_USER_TODOS_SUCCESS = 'FETCH_USER_TODOS_SUCCESS';
-export const ON_NEW_TODO_CHANGE = 'ON_NEW_TODO_CHANGE';
 export const TOGGLE_TODO_COMPLETED = 'TOGGLE_TODO_COMPLETED';
-
-const MAX_TODO_TITLE_LENGTH = 42;
 
 export function addHundredTodos() {
   // Note how dependency injection ensures pure action.
   return ({getUid, now}) => {
-    const todos = {};
-    Range(0, 100).forEach(() => {
+    const payload = Range(0, 100).map(() => {
       const id = getUid();
-      todos[id] = new Todo({createdAt: now(), id, title: `Item #${id}`});
-    });
+      return {
+        createdAt: now(),
+        id,
+        title: `Item #${id}`
+      };
+    }).toJS();
     return {
       type: ADD_HUNDRED_TODOS,
-      payload: {todos}
+      payload
     };
   };
 }
 
-export function addTodo(todo) {
-  return ({getUid, now}) => {
-    const newTodo = todo.merge({
+export function addTodo(title) {
+  return ({getUid, now}) => ({
+    type: ADD_TODO,
+    payload: {
       createdAt: now(),
       id: getUid(),
-      title: todo.title.trim()
-    });
-    return {
-      type: ADD_TODO,
-      payload: {newTodo}
-    };
-  };
+      title: title.trim()
+    }
+  });
 }
 
 export function clearAllCompletedTodos() {
@@ -62,8 +58,7 @@ export function deleteTodo(id) {
   };
 }
 
-export function fetchUserTodos(/* {location, params} */) {
-  // We can use location and params to create custom endpoint.
+export function fetchUserTodos() {
   return ({fetch}) => ({
     type: 'FETCH_USER_TODOS',
     payload: {
@@ -71,17 +66,6 @@ export function fetchUserTodos(/* {location, params} */) {
         .then(response => response.json())
     }
   });
-}
-
-export function onNewTodoChange(name, value) {
-  switch (name) {
-    case 'title':
-      value = value.slice(0, MAX_TODO_TITLE_LENGTH); break;
-  }
-  return {
-    type: ON_NEW_TODO_CHANGE,
-    payload: {name, value}
-  };
 }
 
 export function toggleTodoCompleted(todo) {

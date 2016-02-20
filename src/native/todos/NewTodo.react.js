@@ -1,9 +1,8 @@
-import Component from '../components/Component.react';
-import React from 'react-native';
-
-const {
-  PropTypes, StyleSheet, TextInput, View
-} = React;
+import * as todosActions from '../../common/todos/actions';
+import Component from 'react-pure-render/component';
+import React, {PropTypes, StyleSheet, TextInput, View} from 'react-native';
+import {connect} from 'react-redux';
+import {fields} from '../../common/lib/redux-fields';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,47 +21,51 @@ const styles = StyleSheet.create({
   }
 });
 
-
-export default class NewTodo extends Component {
+class NewTodo extends Component {
 
   static propTypes = {
-    actions: PropTypes.object.isRequired,
-    msg: PropTypes.object.isRequired,
-    todo: PropTypes.object.isRequired
+    addTodo: PropTypes.func.isRequired,
+    fields: PropTypes.object.isRequired,
+    msg: PropTypes.object.isRequired
   };
 
   constructor(props) {
     super(props);
-    this.onTextInputChangeText = this.onTextInputChangeText.bind(this);
     this.onTextInputEndEditing = this.onTextInputEndEditing.bind(this);
   }
 
-  onTextInputChangeText(text) {
-    const {actions} = this.props;
-    actions.onNewTodoChange('title', text);
-  }
-
   onTextInputEndEditing() {
-    const {actions, todo} = this.props;
-    actions.addTodo(todo);
+    const {addTodo, fields} = this.props;
+    if (!fields.title.value.trim()) return;
+    addTodo(fields.title.value);
+    fields.$reset();
   }
 
   render() {
-    const {msg, todo} = this.props;
+    const {fields, msg} = this.props;
+    const {title} = fields;
 
     return (
       <View style={styles.container}>
         <TextInput
-          // TODO: Use redux-form.
-          onChangeText={this.onTextInputChangeText}
+          maxLength={100} // React Native needs explicit maxLength.
           onEndEditing={this.onTextInputEndEditing}
           placeholder={msg.newTodoPlaceholder}
           placeholderTextColor={'#cce9f2'}
           style={styles.input}
-          value={todo.title}
+          {...title}
         />
       </View>
     );
   }
 
 }
+
+NewTodo = fields(NewTodo, {
+  path: 'newTodo',
+  fields: ['title']
+});
+
+export default connect(state => ({
+  msg: state.intl.msg.todos
+}), todosActions)(NewTodo);

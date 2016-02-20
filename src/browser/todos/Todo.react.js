@@ -1,22 +1,31 @@
-import './Todo.styl';
+import './Todo.scss';
 import Component from 'react-pure-render/component';
 import React, {PropTypes} from 'react';
+import cx from 'classnames';
 
+// Presentational component.
 export default class Todo extends Component {
 
   static propTypes = {
-    actions: PropTypes.object.isRequired,
-    todo: PropTypes.object.isRequired
+    deleteTodo: PropTypes.func.isRequired,
+    todo: PropTypes.object.isRequired,
+    toggleTodoCompleted: PropTypes.func.isRequired
   };
 
   constructor(props) {
     super(props);
     this.onButtonClick = this.onButtonClick.bind(this);
+    this.onTitleClick = this.onTitleClick.bind(this);
   }
 
   onButtonClick() {
-    const {actions, todo} = this.props;
-    actions.deleteTodo(todo.id);
+    const {deleteTodo, todo} = this.props;
+    deleteTodo(todo.id);
+  }
+
+  onTitleClick() {
+    const {todo, toggleTodoCompleted} = this.props;
+    toggleTodoCompleted(todo);
   }
 
   render() {
@@ -24,7 +33,10 @@ export default class Todo extends Component {
 
     return (
       <li className="todo">
-        <span className="view">{todo.title}</span>
+        <span
+          className={cx('view', {completed: todo.completed})}
+          onClick={this.onTitleClick}
+        >{todo.title}</span>
         <span
           className="button"
           onClick={this.onButtonClick}

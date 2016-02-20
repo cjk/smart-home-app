@@ -3,82 +3,87 @@ import Appbar from './Appbar.react';
 import Component from 'react-pure-render/component';
 import Footer from './Footer.react';
 import Helmet from 'react-helmet';
-import mapDispatchToProps from '../../common/app/mapDispatchToProps';
-import mapStateToProps from '../../common/app/mapStateToProps';
 import React, {PropTypes} from 'react';
-import RouterHandler from '../../common/components/RouterHandler.react';
-
 import {connect} from 'react-redux';
-import smartHomeConnect from '../../common/home/connector';
+
+/* MERGE-TODO: appActions should be refactored into ../../common/app/actions.js */
+import {onAppComponentDidMount} from '../../common/app/actions';
 
 /* Material-Design-Lite imports */
 import Layout from 'react-mdl/lib/Layout/Layout';
 import {Content, Header, Drawer, Navigation} from 'react-mdl/lib/Layout';
 
+/* Connector to receive (house-) events and send smart-home commands  */
+//import smartHomeConnect from '../../common/home/connector';
+
 class App extends Component {
 
   static propTypes = {
-    actions: PropTypes.object.isRequired,
+    processEvent: PropTypes.func.isRequired,
     children: PropTypes.object.isRequired,
-    location: PropTypes.object.isRequired,
-    msg: PropTypes.object.isRequired,
-    users: PropTypes.object.isRequired
+    dispatch: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired
   };
 
+  // Note pattern how actions related to app start are dispatched.
+  // componentDidMount is not called in ReactDOMServer.renderToString, so it's
+  // the right place to dispatch client only (e.g. Firebase) actions.
+  // Firebase can be used on the server as well, but it's over of this example.
   componentDidMount() {
+    const {dispatch} = this.props;
+    dispatch(onAppComponentDidMount());
+
     // Listen to events happening on the smartHome-BUS and collect them
     // PENDING: Could we do this in the middleware instead?!
-    smartHomeConnect().setupEventlistener(this.props.actions.processEvent);
+    /* MERGE-TODO: refactor to use #dispatch as seen above?! */
+    //smartHomeConnect().setupEventlistener(this.props.processEvent);
   }
 
   render() {
-    const {location: {pathname}, msg, users: {viewer}} = this.props;
-
     console.log('App-props: ', this.props);
+
+    const {children, location} = this.props;
 
     return (
       // Pass data-pathname to allow route specific styling.
-      <div className="page" data-pathname={pathname}>
-        <Helmet
-          link={[
-            {rel: 'shortcut icon', href: require('./favicon.ico')}
-          ]}
-          meta={[{
-            name: 'description',
-            content: 'smart home control app'
-          }]}
-          titleTemplate="%s - by CjK"
-        />
+      <div className="page" data-pathname={location.pathname}>
+      <Helmet
+      link={[
+        {rel: 'shortcut icon', href: require('./favicon.ico')}
+      ]}
+      meta={[{
+        name: 'description',
+        content: 'smart home control app'
+      }]}
+      titleTemplate="%s - by CjK"
+      />
 
-        <Layout fixedHeader>
-          {/* Pathname enforces rerender so activeClassName is updated. */}
-          <Header title={msg.title}>
-            <Appbar msg={msg} pathname={pathname} viewer={viewer} />
-          </Header>
+      <Layout fixedHeader>
+      {/* Pathname enforces rerender so activeClassName is updated. */}
+      <Header pathname={location.pathname}>
+      <Appbar pathname={location.pathname} />
+      </Header>
 
-          <Drawer title="Drawer-Title">
-            <Navigation>
-              <a href="">Link #1</a>
-              <a href="">Link #2</a>
-              <a href="">Link #3</a>
-              <a href="">Link #4</a>
-            </Navigation>
-          </Drawer>
+      <Drawer title="Drawer-Title">
+      <Navigation>
+      <a href="">Link #1</a>
+      <a href="">Link #2</a>
+      <a href="">Link #3</a>
+      <a href="">Link #4</a>
+      </Navigation>
+      </Drawer>
 
-          <Content id="page-content">
-            <RouterHandler {...this.props} />
-          </Content>
+      <Content id="page-content">
+      {children}
+      </Content>
 
-          <Footer msg={msg.app.footer} />
-        </Layout>
+      <Footer />
+      </Layout>
       </div>
     );
   }
 
 }
 
-// // logRenderTime is useful for app with huge UI to check render performance.
-// import logRenderTime from '../lib/logRenderTime';
-// App = logRenderTime(App)
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+// Just inject dispatch and don't listen to store.
+export default connect()(App);

@@ -1,5 +1,5 @@
 import Component from 'react-pure-render/component';
-import fetch from '../components/fetch';
+import fetch from '../../common/components/fetch';
 import {fetchState} from '../../common/fermenter/actions';
 import Helmet from 'react-helmet';
 import React, {PropTypes} from 'react';
@@ -18,8 +18,8 @@ class Page extends Component {
 
     return (
       <div className="events-page" id="events">
-        <Helmet title={msg.title} />
-        <TempHumidityInfo {...{fermenterState, actions, msg}} />
+      <Helmet title={msg.title} />
+      <TempHumidityInfo {...{fermenterState, actions, msg}} />
       </div>
     );
   }

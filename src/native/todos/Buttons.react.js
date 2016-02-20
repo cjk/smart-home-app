@@ -1,5 +1,7 @@
-import Component from '../components/Component.react';
+import * as todosActions from '../../common/todos/actions';
+import Component from 'react-pure-render/component';
 import React from 'react-native';
+import {connect} from 'react-redux';
 
 const {
   PropTypes, StyleSheet, Text, TouchableOpacity, View
@@ -23,38 +25,50 @@ const styles = StyleSheet.create({
   }
 });
 
-export default class TodoButtons extends Component {
+const Button = (props) =>
+  <TouchableOpacity
+    activeOpacity={.9}
+    onPress={props.onPress}
+    style={styles.listButton}
+  >
+    <Text style={styles.listButtonText}>{props.children}</Text>
+  </TouchableOpacity>;
+
+Button.propTypes = {
+  children: PropTypes.node.isRequired,
+  onPress: PropTypes.func.isRequired
+};
+
+class TodoButtons extends Component {
 
   static propTypes = {
-    actions: PropTypes.object.isRequired,
-    hasCompletedTodos: PropTypes.bool.isRequired,
-    msg: PropTypes.object.isRequired
+    addHundredTodos: PropTypes.func.isRequired,
+    clearAllCompletedTodos: PropTypes.func.isRequired,
+    clearAllTodos: PropTypes.func.isRequired,
+    msg: PropTypes.object.isRequired,
+    todos: PropTypes.object.isRequired
   };
 
   render() {
-    const {actions, hasCompletedTodos, msg} = this.props;
-    // TODO: Use React 0.14 component.
-    // https://github.com/facebook/react-native/issues/3369#issuecomment-147543147
-    const Button = (action, text) =>
-      <TouchableOpacity
-        activeOpacity={.9}
-        onPress={action}
-        style={styles.listButton}
-      >
-        <Text style={styles.listButtonText}>{text}</Text>
-      </TouchableOpacity>;
+    const {
+      addHundredTodos, clearAllCompletedTodos, clearAllTodos, msg, todos
+    } = this.props;
+    const hasCompletedTodos = todos.count(todo => todo.completed) > 0;
 
     return (
       <View style={styles.buttons}>
         {hasCompletedTodos
-          ? Button(actions.clearAllCompletedTodos, msg.clearCompleted)
-          : Button(actions.clearAllTodos, msg.clearAll)
+          ? <Button onPress={clearAllCompletedTodos}>{msg.clearCompleted}</Button>
+          : <Button onPress={clearAllTodos}>{msg.clearAll}</Button>
         }
-        {
-          Button(actions.addHundredTodos, msg.add100)
-        }
+        <Button onPress={addHundredTodos}>{msg.add100}</Button>
       </View>
     );
   }
 
 }
+
+export default connect(state => ({
+  msg: state.intl.msg.todos,
+  todos: state.todos.map
+}), todosActions)(TodoButtons);

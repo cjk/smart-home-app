@@ -4,9 +4,10 @@ export default {
       madeByHtml: 'written by <a href="https://twitter.com/cjk">CjK</a> based on <a href="https://github.com/este/este">Este.js</a>'
     },
     links: {
+      firebase: 'Firebase',
       home: 'Home',
       login: 'Login',
-      me: 'Me (protected)',
+      me: 'Me',
       todos: 'Todos'
     }
   },
@@ -17,7 +18,7 @@ export default {
         signup: 'Sign up'
       },
       hint: 'Hint: pass1',
-      legend: 'Login / Sign Up',
+      legend: 'classic XMLHttpRequest login',
       placeholder: {
         email: 'your@email.com',
         password: 'password'
@@ -44,30 +45,21 @@ export default {
     // // TODO: Android text.
     // androidInfoText: ``,
     infoHtml: '<a href="https://github.com/este/este">Este.js</a> dev stack.',
-    iosInfoText: `Este.js dev stack.
-      Open left menu and check todos!
-      Press CMD+R to reload.
-      Press CMD+D for debug menu.
+    iosInfoText: `
+      Este.js dev stack
+      Press CMD+R to reload
+      Press CMD+D for debug menu
     `,
     title: 'Este.js',
     toCheck: {
       andMuchMore: 'And much more :-)',
       h2: 'Things to Check',
       isomorphicPage: 'Isomorphic page',
-      // This is example of localized ordered list.
+      // Localized ordered list.
       list: [
-        {
-          key: 'source',
-          text: 'Server rendering'
-        },
-        {
-          key: 'development',
-          text: 'Hot reload for styles, components, etc.'
-        },
-        {
-          key: 'production',
-          text: 'Performance and size of production build (<code>gulp -p</code>)'
-        }
+        'Server rendering',
+        'Hot reloading',
+        'Performance and size of production build (<code>gulp -p</code>)'
       ]
     }
   },

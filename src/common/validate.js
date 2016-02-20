@@ -3,32 +3,31 @@ import ValidationError from './lib/ValidationError';
 import {format} from './intl/format';
 
 // Localized validation.
-export default function validate(state) {
+export default function validate(getState) {
 
-  const intl = state.intl;
-  const msg = intl.messages[intl.selectedLanguage];
+  const localizedValidate = json => {
+    const {msg} = getState().intl;
 
-  class LocalizedValidation extends Validation {
-
-    getRequiredMessage(prop) {
-      return format(msg.auth.validation.required, {prop});
+    class LocalizedValidation extends Validation {
+      getRequiredMessage(prop) {
+        return format(msg.auth.validation.required, {prop});
+      }
+      getEmailMessage(prop) {
+        return format(msg.auth.validation.email, {prop});
+      }
+      getSimplePasswordMessage(minLength) {
+        return format(msg.auth.validation.password, {minLength});
+      }
     }
 
-    getEmailMessage(prop) {
-      return format(msg.auth.validation.email, {prop});
-    }
+    return new LocalizedValidation(json);
+  };
 
-    getSimplePasswordMessage(minLength) {
-      return format(msg.auth.validation.password, {minLength});
-    }
+  localizedValidate.wrongPassword = prop => {
+    const {msg} = getState().intl;
+    return new ValidationError(msg.auth.form.wrongPassword, prop);
+  };
 
-  }
-
-  const validate = (object) => new LocalizedValidation(object);
-
-  validate.wrongPassword = prop =>
-    new ValidationError(msg.auth.form.wrongPassword, prop);
-
-  return validate;
+  return localizedValidate;
 
 }

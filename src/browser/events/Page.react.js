@@ -1,26 +1,29 @@
 import Component from 'react-pure-render/component';
 import Events from './Events.react';
 import Helmet from 'react-helmet';
-
 import React, {PropTypes} from 'react';
+import {connect} from 'react-redux';
 
-export default class Page extends Component {
+class Page extends Component {
 
   static propTypes = {
-    actions: PropTypes.object,
     msg: PropTypes.object,
     smartHome: PropTypes.object,
   };
 
   render() {
-    const {actions, msg: {todos: msg}, smartHome: {eventHistory: list}} = this.props;
+    const {msg, smartHome: {eventHistory: list}} = this.props;
 
     return (
       <div className="events-page" id="events">
-        <Helmet title={msg.title} />
-        <Events {...{list, actions, msg}} />
+      <Helmet title={msg.title} />
+      <Events {...{list, msg}} />
       </div>
     );
   }
-
 }
+
+export default connect(state => ({
+  msg: state.intl.msg.home,
+  smartHome: state.smartHome
+}))(Page);

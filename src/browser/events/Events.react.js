@@ -3,17 +3,17 @@ import {DataTable} from 'react-mdl/lib';
 import {List, Map} from 'immutable';
 import moment from 'moment';
 import React from 'react';
+import {connect} from 'react-redux';
 
-export default class EventList extends Component {
+class EventList extends Component {
 
   static propTypes = {
-    actions: React.PropTypes.object.isRequired,
     list: React.PropTypes.object.isRequired,
     msg: React.PropTypes.object.isRequired
   };
 
   render() {
-    const {actions, list, msg} = this.props;
+    const {list, msg} = this.props;
 
     const columns = List([
       {name: 'created', label: 'Time'},
@@ -43,3 +43,7 @@ export default class EventList extends Component {
   }
 
 }
+
+export default connect(state => ({
+  msg: state.intl.msg.home
+}))(EventList);

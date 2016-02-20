@@ -62,7 +62,7 @@ export default function makeConfig(isDevelopment) {
         test: /favicon\.ico$/
       }, {
         loader: 'url-loader?limit=100000',
-        test: /\.(eot|ttf|woff|woff2)$/
+        test: /\.(ttf|eot|woff(2)?)(\?[a-z0-9]+)?$/
       }, {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -94,9 +94,10 @@ export default function makeConfig(isDevelopment) {
       const plugins = [
         new webpack.DefinePlugin({
           'process.env': {
+            IS_BROWSER: true, // Because webpack is used only for browser code.
+            IS_REACT_NATIVE: false, // To strip off React Native code.
             NODE_ENV: JSON.stringify(isDevelopment ? 'development' : 'production'),
-            WEB_ADDR: JSON.stringify(process.env.WEB_ADDR || ''),
-            IS_BROWSER: true
+            SERVER_URL: JSON.stringify(process.env.SERVER_URL || '')
           }
         })
       ];
@@ -126,7 +127,7 @@ export default function makeConfig(isDevelopment) {
     })(),
     postcss: () => [autoprefixer({browsers: 'last 2 version'})],
     resolve: {
-      extensions: ['', '.js'],
+      extensions: ['', '.js'], // .json is ommited to ignore ./firebase.json
       modulesDirectories: ['src', 'node_modules'],
       root: constants.ABSOLUTE_BASE,
       alias: {

@@ -1,6 +1,6 @@
+import 'babel-polyfill';
 import Helmet from 'react-helmet';
 import Html from './Html.react';
-import Promise from 'bluebird';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import config from '../config';
@@ -10,43 +10,49 @@ import serialize from 'serialize-javascript';
 import {IntlProvider} from 'react-intl';
 import {Provider} from 'react-redux';
 import {RouterContext, match} from 'react-router';
-import {createMemoryHistory} from 'history';
+import {createMemoryHistory} from 'react-router';
 
 const fetchComponentDataAsync = async (dispatch, renderProps) => {
   const {components, location, params} = renderProps;
   const promises = components
     .reduce((actions, component) => {
-      return actions.concat(component.fetchActions || []);
+      if (typeof component === 'function') {
+        actions = actions.concat(component.fetchActions || []);
+      } else {
+        Object.keys(component).forEach(c => {
+          actions = actions.concat(component[c].fetchActions || []);
+        });
+      }
+      return actions;
     }, [])
-    .map(action => {
-      return dispatch(action({location, params})).payload.promise;
-    });
+    .map(action =>
+      // Server side fetching can use only router location and params props.
+      // There is no easy way how to support custom component props.
+      dispatch(action({location, params})).payload.promise
+    );
   await Promise.all(promises);
 };
 
-const getAppHtml = (store, renderProps) => {
-  return ReactDOMServer.renderToString(
+const getAppHtml = (store, renderProps) =>
+  ReactDOMServer.renderToString(
     <Provider store={store}>
       <IntlProvider>
         <RouterContext {...renderProps} />
       </IntlProvider>
     </Provider>
   );
-};
 
-const getScriptHtml = (state, headers, hostname, appJsFilename) => {
+const getScriptHtml = (state, headers, hostname, appJsFilename) =>
   // Note how app state is serialized. JSON.stringify is anti-pattern.
   // https://github.com/yahoo/serialize-javascript#user-content-automatic-escaping-of-html-characters
   // Note how we use cdn.polyfill.io, en is default, but can be changed later.
-  // This approach is great for server-less apps.
-  return `
+  `
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>
     <script>
       window.__INITIAL_STATE__ = ${serialize(state)};
     </script>
     <script src="${appJsFilename}"></script>
   `;
-};
 
 const renderPage = (store, renderProps, req) => {
   const state = store.getState();
@@ -61,7 +67,7 @@ const renderPage = (store, renderProps, req) => {
   if (!config.isProduction) {
     webpackIsomorphicTools.refresh();
   }
-  return '<!DOCTYPE html>' + ReactDOMServer.renderToStaticMarkup(
+  const docHtml = ReactDOMServer.renderToStaticMarkup(
     <Html
       appCssFilename={appCssFilename}
       bodyHtml={`<div id="app">${appHtml}</div>${scriptHtml}`}
@@ -70,6 +76,7 @@ const renderPage = (store, renderProps, req) => {
       isProduction={config.isProduction}
     />
   );
+  return `<!DOCTYPE html>${docHtml}`;
 };
 
 export default function render(req, res, next) {

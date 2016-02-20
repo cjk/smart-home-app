@@ -26,11 +26,13 @@ export function requestInitialState(/* {location, params} */) {
       promise: fetchInitialState()
     }
   });
-
 }
 
 export function processEvent(event) {
+  console.log(`Event: ${JSON.stringify(event)}`);
+
   return ({getUid, now}) => {
+    console.log(`now: ${JSON.stringify(now)}`);
     const newEvent = event.merge({
       id: getUid()
     });

@@ -1,15 +1,19 @@
-import './Login.styl';
+import './Login.scss';
+import * as authActions from '../../common/auth/actions';
 import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
 import React, {PropTypes} from 'react';
 import focusInvalidField from '../lib/focusInvalidField';
+import {connect} from 'react-redux';
+import {fields} from '../../common/lib/redux-fields';
 
-export default class Login extends Component {
+class Login extends Component {
 
   static propTypes = {
-    actions: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired,
+    fields: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
+    login: PropTypes.func.isRequired,
     msg: PropTypes.object.isRequired
   };
 
@@ -26,8 +30,8 @@ export default class Login extends Component {
 
   async onFormSubmit(e) {
     e.preventDefault();
-    const {actions, auth} = this.props;
-    const result = await actions.login(auth.form.fields).payload.promise;
+    const {login, fields} = this.props;
+    const result = await login(fields.$values()).payload.promise;
     if (result.error) {
       focusInvalidField(this, result.payload);
       return;
@@ -42,37 +46,32 @@ export default class Login extends Component {
   }
 
   render() {
-    const {actions, auth, msg} = this.props;
+    const {auth, fields, msg} = this.props;
 
     return (
       <div className="login">
         <Helmet title="Login" />
         <form onSubmit={this.onFormSubmit}>
-          <fieldset disabled={auth.form.disabled}>
-            <legend>{msg.auth.form.legend}</legend>
+          <fieldset disabled={auth.formDisabled}>
+            <legend>{msg.legend}</legend>
             <input
               autoFocus
-              name="email"
-              onChange={actions.onAuthFormFieldChange}
-              placeholder={msg.auth.form.placeholder.email}
-              value={auth.form.fields.email}
+              maxLength="100"
+              placeholder={msg.placeholder.email}
+              {...fields.email}
             />
             <br />
             <input
-              name="password"
-              onChange={actions.onAuthFormFieldChange}
-              placeholder={msg.auth.form.placeholder.password}
+              maxLength="300"
+              placeholder={msg.placeholder.password}
               type="password"
-              value={auth.form.fields.password}
+              {...fields.password}
             />
             <br />
-            <button
-              children={msg.auth.form.button.login}
-              type="submit"
-            />
-            <span className="hint">{msg.auth.form.hint}</span>
-            {auth.form.error &&
-              <p className="error-message">{auth.form.error.message}</p>
+            <button type="submit">{msg.button.login}</button>
+            <span className="hint">{msg.hint}</span>
+            {auth.formError &&
+              <p className="error-message">{auth.formError.message}</p>
             }
           </fieldset>
         </form>
@@ -81,3 +80,13 @@ export default class Login extends Component {
   }
 
 }
+
+Login = fields(Login, {
+  path: 'auth',
+  fields: ['email', 'password']
+});
+
+export default connect(state => ({
+  auth: state.auth,
+  msg: state.intl.msg.auth.form
+}), authActions)(Login);

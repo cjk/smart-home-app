@@ -1,13 +1,10 @@
 # Este
-#
 *.sublime-workspace
 
 # OSX
-#
 .DS_Store
 
 # Xcode
-#
 build/
 *.pbxuser
 !default.pbxuser
@@ -27,13 +24,11 @@ DerivedData
 project.xcworkspace
 
 # Android/IJ
-#
 .idea
 .gradle
 local.properties
 
 # node.js
-#
 node_modules/
 npm-debug.log
 webpack-assets.json
@@ -51,3 +46,6 @@ TAGS
 
 # Credentials
 # src/server/paypal-credentials.js
+
+# firebase
+firebase/rules.json

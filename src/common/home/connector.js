@@ -53,7 +53,7 @@ function fetchFermenterHistory() {
   return promise;
 }
 
-export default function smartHomeConnect() {
+export default function connector() {
   return {
     setupEventlistener: setupEventlistener,
     fetchInitialState: fetchInitialState,
