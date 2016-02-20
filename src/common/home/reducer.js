@@ -25,6 +25,7 @@ export default function connectHomeReducer(state = initialState, action) {
 
     case actions.PROCESS_EVENT: {
       const {newEvent} = action.payload;
+      console.log(`[reducer] - PROCESS_EVENT - ${action.payload}`);
 
       /* Update event-history and/or livestate */
       const newState = state

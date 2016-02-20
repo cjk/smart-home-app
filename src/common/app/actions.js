@@ -5,9 +5,9 @@ export const ON_APP_COMPONENT_DID_MOUNT = 'ON_APP_COMPONENT_DID_MOUNT';
 
 export function onAppComponentDidMount() {
   // Who injected firebase and store? Check configureStore.js injectMiddleware.
-  return ({firebase, store, homeConnect}) => {
+  return ({firebase, store}) => {
 
-    homeConnect.setupEventlistener(processEvent);
+    //homeConnect.setupEventlistener(processEvent);
 
     // Firebase has two methods to get user auth.
     //  - getAuth is sync, because it uses localStorage.
