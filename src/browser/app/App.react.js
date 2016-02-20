@@ -32,7 +32,6 @@ class App extends Component {
   componentDidMount() {
     const {dispatch} = this.props;
     dispatch(onAppComponentDidMount());
-
     // Listen to events happening on the smartHome-BUS and collect them
     // PENDING: Could we do this in the middleware instead?!
     /* MERGE-TODO: refactor to use #dispatch as seen above?! */
@@ -82,7 +81,6 @@ class App extends Component {
       </div>
     );
   }
-
 }
 
 // Just inject dispatch and don't listen to store.

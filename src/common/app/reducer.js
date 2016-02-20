@@ -1,5 +1,4 @@
 import {combineReducers} from 'redux';
-/* MERGE-TODO */
 import {reduxFields} from '../lib/redux-fields';
 
 import auth from '../auth/reducer';
