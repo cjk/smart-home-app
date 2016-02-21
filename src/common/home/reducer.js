@@ -25,15 +25,14 @@ export default function connectHomeReducer(state = initialState, action) {
 
     case actions.PROCESS_EVENT: {
       const {newEvent} = action.payload;
-      console.log(`[reducer] - PROCESS_EVENT - ${action.payload}`);
 
       /* Update event-history and/or livestate */
       const newState = state
                   .update('eventHistory', list => list.push(newEvent));
 
       if (newEvent.action.match(/^(write|response)$/)) {
-        return newState
-                  .set('livestate', updateAddrValue(state.livestate, newEvent.dest, newEvent.value));
+        return newState.set('livestate',
+                            updateAddrValue(state.livestate, newEvent.dest, newEvent.value));
       }
       return newState;
     }
@@ -58,7 +57,6 @@ export default function connectHomeReducer(state = initialState, action) {
       /* Currently no state change on this event */
       return state;
     }
-
   }
 
   return state;

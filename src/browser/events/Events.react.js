@@ -24,10 +24,12 @@ class EventList extends Component {
       {name: 'value', label: 'Value'},
     ]);
 
-    const data = list.map(event => {
+    const rows = list.map(event => {
       return columns.reduce((row, col) => {
         const colName = col.name;
-        const content = (colName === 'created' ? moment(event[colName]).format('MMMM Do YYYY, HH:mm:ss') : event[colName]);
+        const content = (colName === 'created' ?
+                         moment(event[colName]).format('MMMM Do YYYY, HH:mm:ss') :
+                         event[colName]);
 
         return row.merge({[colName]: content});
       }, Map());
@@ -38,7 +40,7 @@ class EventList extends Component {
     );
 
     return (
-      <DataTable columns={columns.toJS()} data={data.toJS()} />
+      <DataTable columns={columns.toJS()} rows={rows.toJS()} />
     );
   }
 

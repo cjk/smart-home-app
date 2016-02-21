@@ -13,13 +13,9 @@ import {onAppComponentDidMount} from '../../common/app/actions';
 import Layout from 'react-mdl/lib/Layout/Layout';
 import {Content, Header, Drawer, Navigation} from 'react-mdl/lib/Layout';
 
-/* Connector to receive (house-) events and send smart-home commands  */
-//import smartHomeConnect from '../../common/home/connector';
-
 class App extends Component {
 
   static propTypes = {
-    processEvent: PropTypes.func.isRequired,
     children: PropTypes.object.isRequired,
     dispatch: PropTypes.func.isRequired,
     location: PropTypes.object.isRequired
@@ -32,10 +28,6 @@ class App extends Component {
   componentDidMount() {
     const {dispatch} = this.props;
     dispatch(onAppComponentDidMount());
-    // Listen to events happening on the smartHome-BUS and collect them
-    // PENDING: Could we do this in the middleware instead?!
-    /* MERGE-TODO: refactor to use #dispatch as seen above?! */
-    //smartHomeConnect().setupEventlistener(this.props.processEvent);
   }
 
   render() {
@@ -47,33 +39,33 @@ class App extends Component {
       // Pass data-pathname to allow route specific styling.
       <div className="page" data-pathname={location.pathname}>
       <Helmet
-      link={[
-        {rel: 'shortcut icon', href: require('./favicon.ico')}
-      ]}
-      meta={[{
-        name: 'description',
-        content: 'smart home control app'
-      }]}
-      titleTemplate="%s - by CjK"
+        link={[
+          {rel: 'shortcut icon', href: require('./favicon.ico')}
+        ]}
+        meta={[{
+          name: 'description',
+          content: 'smart home control app'
+        }]}
+        titleTemplate="%s - by CjK"
       />
 
       <Layout fixedHeader>
       {/* Pathname enforces rerender so activeClassName is updated. */}
       <Header pathname={location.pathname}>
-      <Appbar pathname={location.pathname} />
+        <Appbar pathname={location.pathname} />
       </Header>
 
       <Drawer title="Drawer-Title">
-      <Navigation>
-      <a href="">Link #1</a>
-      <a href="">Link #2</a>
-      <a href="">Link #3</a>
-      <a href="">Link #4</a>
-      </Navigation>
+        <Navigation>
+          <a href="">Link #1</a>
+          <a href="">Link #2</a>
+          <a href="">Link #3</a>
+          <a href="">Link #4</a>
+        </Navigation>
       </Drawer>
 
       <Content id="page-content">
-      {children}
+        {children}
       </Content>
 
       <Footer />

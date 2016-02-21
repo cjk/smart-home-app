@@ -15,7 +15,7 @@ const appReducer = combineReducers({
   intl,
   smartHome,
   fermenter,
-  //reduxFields,
+  reduxFields,
   ui,
   users
 });

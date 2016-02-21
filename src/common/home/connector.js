@@ -10,12 +10,10 @@ const config = {
 
 const socket = io.connect(`http://${config.host}:${config.port}`);
 
-function setupEventlistener(...actions) {
+function setupEventlistener(eventAction) {
   socket.on('knx-event', (event) => {
     const e = new Event(event);
-
-    // Fire all given actions with an event-payload
-    actions.forEach(action => action(e));
+    eventAction(e);
   });
 }
 

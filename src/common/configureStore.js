@@ -15,7 +15,6 @@ export default function configureStore({deps, initialState}) {
 
   /* MERGE-TODO */
   const homeConnect = smartHomeConnect();
-  console.log(`deps: ${JSON.stringify(deps)}`);
 
   const firebase = new Firebase('https://este.firebaseio.com');
   // // Check whether connection works.

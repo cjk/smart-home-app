@@ -29,10 +29,7 @@ export function requestInitialState(/* {location, params} */) {
 }
 
 export function processEvent(event) {
-  console.log(`Event: ${JSON.stringify(event)}`);
-
-  return ({getUid, now}) => {
-    console.log(`now: ${JSON.stringify(now)}`);
+  return ({getUid}) => {
     const newEvent = event.merge({
       id: getUid()
     });
