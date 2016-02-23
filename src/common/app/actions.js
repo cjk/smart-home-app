@@ -1,5 +1,5 @@
 import * as authActions from '../auth/actions';
-import * as firebaseActions from '../lib/redux-firebase/actions';
+import {firebaseActions} from '../lib/redux-firebase';
 import {processEvent} from '../../common/home/actions';
 
 export const ON_APP_COMPONENT_DID_MOUNT = 'ON_APP_COMPONENT_DID_MOUNT';
