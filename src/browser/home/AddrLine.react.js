@@ -21,25 +21,25 @@ class AddrLine extends Component {
 
     return (
       <section className="row">
-      <div className="col-xs-2">
-      <span className="box">{addr.id}</span>
-      </div>
-      <div className="col-xs-6">
-      <span className="box">{addr.name}</span>
-      </div>
-      <div className="col-xs-1">
-      <span className="box">{R.isNil(addr.value) ? '???' : addr.value}</span>
-      </div>
-      <div className="col-xs-2">
-      <span className="box">
-      <Switch checked={!!addr.value} disabled={!switchable(addr)} id={addr.id} onChange={() => updateAddr(toggleAddrVal(addr.set('type', 'DPT3')))} />
-      </span>
-      </div>
+        <div className="col-xs-2">
+          <span className="box">{addr.id}</span>
+        </div>
+        <div className="col-xs-6">
+          <span className="box">{addr.name}</span>
+        </div>
+        <div className="col-xs-1">
+          <span className="box">{R.isNil(addr.value) ? '???' : addr.value}</span>
+        </div>
+        <div className="col-xs-2">
+          <span className="box">
+            <Switch checked={!!addr.value} disabled={!switchable(addr)} id={addr.id} onChange={() => updateAddr(toggleAddrVal(addr.set('type', 'DPT3')))} />
+          </span>
+        </div>
       </section>
     );
   }
 }
 
 export default connect(state => ({
-  msg: state.intl.msg.home,
+  msg: state.intl.msg.home
 }), addrLineActions)(AddrLine);

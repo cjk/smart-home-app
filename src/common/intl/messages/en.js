@@ -63,6 +63,9 @@ export default {
       ]
     }
   },
+  fermenter: {
+    title: 'Fermenter-Closet'
+  },
   me: {
     title: 'Me',
     welcome: 'Hi {email}. This is your secret page.'

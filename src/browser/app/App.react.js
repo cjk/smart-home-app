@@ -31,45 +31,43 @@ class App extends Component {
   }
 
   render() {
-    console.log('App-props: ', this.props);
-
     const {children, location} = this.props;
 
     return (
       // Pass data-pathname to allow route specific styling.
       <div className="page" data-pathname={location.pathname}>
-      <Helmet
-        link={[
-          {rel: 'shortcut icon', href: require('./favicon.ico')}
-        ]}
-        meta={[{
-          name: 'description',
-          content: 'smart home control app'
-        }]}
-        titleTemplate="%s - by CjK"
-      />
+        <Helmet
+            link={[
+              {rel: 'shortcut icon', href: require('./favicon.ico')}
+            ]}
+            meta={[{
+                name: 'description',
+                content: 'smart home control app'
+              }]}
+            titleTemplate="%s - by CjK"
+        />
 
-      <Layout fixedHeader>
-      {/* Pathname enforces rerender so activeClassName is updated. */}
-      <Header pathname={location.pathname}>
-        <Appbar pathname={location.pathname} />
-      </Header>
+        <Layout fixedHeader>
+          {/* Pathname enforces rerender so activeClassName is updated. */}
+          <Header pathname={location.pathname}>
+            <Appbar pathname={location.pathname} />
+          </Header>
 
-      <Drawer title="Drawer-Title">
-        <Navigation>
-          <a href="">Link #1</a>
-          <a href="">Link #2</a>
-          <a href="">Link #3</a>
-          <a href="">Link #4</a>
-        </Navigation>
-      </Drawer>
+          <Drawer title="Drawer-Title">
+            <Navigation>
+              <a href="">Link #1</a>
+              <a href="">Link #2</a>
+              <a href="">Link #3</a>
+              <a href="">Link #4</a>
+            </Navigation>
+          </Drawer>
 
-      <Content id="page-content">
-        {children}
-      </Content>
+          <Content id="page-content">
+            {children}
+          </Content>
 
-      <Footer />
-      </Layout>
+          <Footer />
+        </Layout>
       </div>
     );
   }

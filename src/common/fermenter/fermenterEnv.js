@@ -6,6 +6,4 @@ export default Record({
   humidity: null,
   isValid: false,
   errors: 0,
-  heaterIsRunning: null,
-  humidifierIsRunning: null
 });

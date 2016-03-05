@@ -18,12 +18,11 @@ class Appbar extends Component {
 
     return (
       <HeaderRow>
-      <Navigation>
-      <Link to="/">Home</Link>
-      <Link to="events">Events</Link>
-      <Link to="fermenter">Fermenter</Link>
-      <a href="">Link</a>
-      </Navigation>
+        <Navigation>
+          <Link activeClassName="active" to="/">Home</Link>
+          <Link activeClassName="active" to="/events">Events</Link>
+          <Link activeClassName="active" to="/fermenter">Fermenter</Link>
+        </Navigation>
       </HeaderRow>
     );
   }

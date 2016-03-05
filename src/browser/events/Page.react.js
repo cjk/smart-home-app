@@ -16,8 +16,8 @@ class Page extends Component {
 
     return (
       <div className="events-page" id="events">
-      <Helmet title={msg.title} />
-      <Events {...{list, msg}} />
+        <Helmet title={msg.title} />
+        <Events {...{list, msg}} />
       </div>
     );
   }

@@ -3,24 +3,25 @@ import AddrLine from './AddrLine.react';
 import React, {PropTypes} from 'react';
 import Component from 'react-pure-render/component';
 import {connect} from 'react-redux';
+import immutable from 'immutable';
+
 
 class AddressList extends Component {
 
   static propTypes = {
-    addressList: PropTypes.object,
+    addresses: PropTypes.object.isRequired,
     msg: PropTypes.object,
   };
 
   render() {
-
-    const {addressList, msg} = this.props;
+    const {addresses, msg} = this.props;
 
     return (
       <section className="device-switch-list">
-      {addressList.map(address =>
-        <AddrLine {...{msg, address}} key={address.id} />
-      )
-      }
+        {addresses.map(address =>
+          <AddrLine {...{msg, address}} key={address.id} />
+         )
+        }
       </section>
     );
   }

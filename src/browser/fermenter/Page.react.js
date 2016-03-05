@@ -4,26 +4,31 @@ import {fetchState} from '../../common/fermenter/actions';
 import Helmet from 'react-helmet';
 import React, {PropTypes} from 'react';
 import TempHumidityInfo from './TempHumidity.react';
+import {connect} from 'react-redux';
 
 class Page extends Component {
 
   static propTypes = {
-    actions: PropTypes.object,
-    msg: PropTypes.object,
+    msg: PropTypes.object.isRequired,
     fermenter: PropTypes.object,
   };
 
   render() {
-    const {actions, msg: {todos: msg}, fermenter: fermenterState} = this.props;
+    console.log(`Fermenter-Props: ${JSON.stringify(this.props)}`);
+    const {msg: {title}, fermenter: fermenterState} = this.props;
 
     return (
       <div className="events-page" id="events">
-      <Helmet title={msg.title} />
-      <TempHumidityInfo {...{fermenterState, actions, msg}} />
+        <Helmet title={title} />
+        <TempHumidityInfo {...{fermenterState}} />
       </div>
     );
   }
-
 }
 
-export default fetch(fetchState)(Page);
+Page = fetch(fetchState)(Page);
+
+export default connect(state => ({
+  msg: state.intl.msg.fermenter,
+  fermenter: state.fermenter
+}))(Page);

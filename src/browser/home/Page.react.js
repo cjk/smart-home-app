@@ -15,14 +15,14 @@ class Page extends Component {
   };
 
   render() {
-    console.log('Live-state: ', this.props.smartHome.livestate.toJS());
-
-    const {msg: {title}, smartHome: {livestate: addressList}} = this.props;
+    /*     console.log('Live-state: ', JSON.stringify(this.props.smartHome.livestate)); */
+    const {msg: {title}, smartHome: {livestate: addressMap}} = this.props,
+    addresses = addressMap.toList();
 
     return (
       <div className="home-page" id="home">
         <Helmet title={title} />
-        <AddressList {...{addressList}} />
+        <AddressList {...{addresses}} />
       </div>
     );
   }
@@ -30,10 +30,8 @@ class Page extends Component {
 
 // Truly universal (not only isomorphic) data fetching.
 // One higher order component for browser, server, and mobile.
-/* MERGE-TODO */
 Page = fetch(requestInitialState)(Page);
 
-// export default fetch(requestInitialState)(Page);
 export default connect(state => ({
   msg: state.intl.msg.home,
   smartHome: state.smartHome

@@ -1,9 +1,11 @@
 import * as actions from './actions';
-import TempHumEntry from './tempHumidity';
-import {List, Record} from 'immutable';
+import FermenterEnv from './fermenterEnv';
+import FermenterDev from './fermenterDev';
+import {List, Record, Map} from 'immutable';
 
 const InitialState = Record({
-  currentState: {},
+  env: {},
+  devices: Map(),
   envHistory: List(),
 });
 
@@ -11,9 +13,8 @@ const initialState = new InitialState;
 
 // Note how JSON from server is revived to immutable record.
 const revive = ({currentState, envHistory}) => initialState.merge({
-  /*   envHistory: envHistory.map(tmpHumEntry => new TempHumEntry(tmpHumEntry)) */
   envHistory: List(envHistory),
-  currentState: new TempHumEntry(currentState)
+  env: new FermenterEnv(currentState)
 });
 
 export default function fermenterReducer(state = initialState, action) {
@@ -32,8 +33,14 @@ export default function fermenterReducer(state = initialState, action) {
     }
 
     case actions.FETCH_FERMENTER_STATE_SUCCESS: {
-      const tempHumEntry = new TempHumEntry(action.payload.fermenterState);
-      return state.set('currentState', tempHumEntry);
+      const s = action.payload.fermenterState;
+      const env = new FermenterEnv(s.env);
+      /* TODO: Map into FermenterDev-struct */
+      const devices = s.devices;
+
+      return state
+               .set('env', env)
+               .set('devices', devices);
     }
 
   }
