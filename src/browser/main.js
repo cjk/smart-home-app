@@ -25,7 +25,7 @@ const routes = createRoutes(store.getState);
 
 ReactDOM.render(
   <Provider store={store}>
-    <IntlProvider>
+    <IntlProvider locale="en">
       <Router history={history}>
         {routes}
       </Router>

@@ -9,7 +9,7 @@ import { onAppComponentDidMount } from '../../common/app/actions';
 
 /* Material-Design-Lite imports */
 import Layout from 'react-mdl/lib/Layout/Layout';
-import {Content, Header, Drawer, Navigation} from 'react-mdl/lib/Layout';
+import { Content, Header, Drawer, Navigation } from 'react-mdl/lib/Layout';
 
 class App extends Component {
 
@@ -33,10 +33,10 @@ class App extends Component {
 
     return (
       <div className="page">
-        <Helmet
-          link={[
-            { rel: 'shortcut icon', href: require('./favicon.ico') }
-          ]}
+        <Helmet link={[
+          {
+            rel: 'shortcut icon', href: require('./favicon.ico') }
+        ]}
           meta={[{
             name: 'description',
             content: 'smart home control app'

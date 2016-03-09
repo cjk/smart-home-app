@@ -1,6 +1,6 @@
 import Component from 'react-pure-render/component';
 import React, { PropTypes } from 'react';
-import { FormattedHTMLMessage } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 
 class Footer extends Component {
@@ -15,7 +15,7 @@ class Footer extends Component {
     return (
       <footer>
         <p>
-          <FormattedHTMLMessage defaultMessage={msg.madeByHtml} />
+          <FormattedMessage id="madeBy" defaultMessage={msg.madeBy} />
         </p>
       </footer>
     );

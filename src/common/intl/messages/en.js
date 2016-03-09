@@ -1,7 +1,7 @@
 export default {
   app: {
     footer: {
-      madeByHtml: 'written by <a href="https://twitter.com/cjk">CjK</a> based on <a href="https://github.com/este/este">Este.js</a>'
+      madeBy: 'written by CjK based on Daniel Steigerwald\'s Este.js'
     },
     links: {
       firebase: 'Firebase',
