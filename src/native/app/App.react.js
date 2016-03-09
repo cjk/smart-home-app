@@ -2,11 +2,11 @@ import * as uiActions from '../../common/ui/actions';
 import Component from 'react-pure-render/component';
 import Header from './Header.react';
 import Menu from './Menu.react';
-import React, {Navigator, PropTypes, StatusBarIOS, View} from 'react-native';
+import React, { Navigator, PropTypes, StatusBarIOS, View } from 'react-native';
 import SideMenu from 'react-native-side-menu';
 import routes from '../routes';
 import styles from './styles';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 class App extends Component {
 
@@ -39,22 +39,24 @@ class App extends Component {
   }
 
   onSideMenuChange(isOpen) {
-    const {device, onSideMenuChange} = this.props;
-    if (device.platform === 'ios')
+    const { device, onSideMenuChange } = this.props;
+    if (device.platform === 'ios') {
       StatusBarIOS.setHidden(isOpen, true);
+    }
     onSideMenuChange(isOpen);
   }
 
   getTitle(route) {
-    const {links} = this.props;
+    const { links } = this.props;
     switch (route) {
       case routes.home: return links.home;
       case routes.todos: return links.todos;
     }
+    throw new Error('Route not found.');
   }
 
   render() {
-    const {links, toggleSideMenu, ui} = this.props;
+    const { links, toggleSideMenu, ui } = this.props;
 
     const renderScene = route =>
       <View style={[styles.sceneView, route.style]}>

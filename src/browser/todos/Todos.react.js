@@ -1,8 +1,8 @@
 import * as todosActions from '../../common/todos/actions';
 import Component from 'react-pure-render/component';
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import Todo from './Todo.react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 // Container component.
 class Todos extends Component {
@@ -25,10 +25,11 @@ class Todos extends Component {
   // }
 
   render() {
-    const {deleteTodo, msg, todos, toggleTodoCompleted} = this.props;
+    const { deleteTodo, msg, todos, toggleTodoCompleted } = this.props;
 
-    if (!todos.size)
+    if (!todos.size) {
       return <p>{msg.empty}</p>;
+    }
 
     // Big lists should be sorted in reducer.
     const list = todos.toList().sortBy(item => item.createdAt);

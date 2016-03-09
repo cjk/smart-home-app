@@ -9,16 +9,15 @@ import React from 'react';
 import Settings from './me/Settings.react';
 import Events from './events/Page.react';
 import Fermenter from './fermenter/Page.react';
-import {IndexRoute, Route} from 'react-router';
+import { IndexRoute, Route } from 'react-router';
 
 export default function createRoutes(getState) {
-
   const requireAuth = (nextState, replace) => {
     const loggedInUser = getState().users.viewer;
     if (!loggedInUser) {
       replace({
         pathname: '/login',
-        state: {nextPathname: nextState.location.pathname}
+        state: { nextPathname: nextState.location.pathname }
       });
     }
   };
@@ -37,5 +36,4 @@ export default function createRoutes(getState) {
       <Route component={NotFound} path="*" />
     </Route>
   );
-
 }

@@ -4,8 +4,7 @@ const router = express.Router();
 
 router.route('/login')
   .post((req, res) => {
-
-    const {email, password} = req.body;
+    const { email, password } = req.body;
 
     // Simulate DB checks here.
     setTimeout(() => {
@@ -14,10 +13,9 @@ router.route('/login')
         res.status(401).end();
       } else {
         const id = Date.now();
-        res.status(200).send({email, id}).end();
+        res.status(200).send({ email, id }).end();
       }
     }, 1000);
-
   });
 
 export default router;

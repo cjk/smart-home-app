@@ -7,15 +7,21 @@ import recycle from 'redux-recycle';
 import shortid from 'shortid';
 import smartHomeConnect from './home/connector';
 import validate from './validate';
-import {LOGOUT} from './auth/actions';
-import {applyMiddleware, compose, createStore} from 'redux';
+import { LOGOUT } from './auth/actions';
+import { applyMiddleware, compose, createStore } from 'redux';
 
-export default function configureStore({deps, initialState}) {
+export default function configureStore(options) {
+  const {
+    initialState,
+    platformDeps = {},
+    platformMiddleware = []
+  } = options;
 
   /* MERGE-TODO */
   const homeConnect = smartHomeConnect();
 
-  const firebase = new Firebase('https://este.firebaseio.com');
+  const firebase = new Firebase(initialState.config.firebaseUrl);
+
   // // Check whether connection works.
   // firebase.child('hello-world').set({
   //   createdAt: Firebase.ServerValue.TIMESTAMP
@@ -23,21 +29,22 @@ export default function configureStore({deps, initialState}) {
 
   // Este dependency injection middleware. So simple that we don't need a lib.
   // It's like mixed redux-thunk and redux-inject.
-  const injectMiddleware = deps => ({dispatch, getState}) => next => action =>
+  const injectMiddleware = deps => ({ dispatch, getState }) => next => action =>
     next(typeof action === 'function'
-      ? action({...deps, dispatch, getState})
+      ? action({ ...deps, dispatch, getState })
       : action
     );
 
-  const {device: {host}} = initialState;
+  const { device: { host } } = initialState;
   // Remember to set SERVER_URL for deploy.
   const serverUrl = host || process.env.SERVER_URL ||
     // Browser is ok with relative url. Server and React Native need absolute.
     (process.env.IS_BROWSER ? '' : 'http://localhost:8000');
 
   const middleware = [
+    ...platformMiddleware,
     injectMiddleware({
-      ...deps,
+      ...platformDeps,
       ...homeConnect,
       fetch: createFetch(serverUrl),
       firebase,
@@ -51,8 +58,10 @@ export default function configureStore({deps, initialState}) {
   ];
 
   // Enable logger only for browser and React Native development.
+  const isReactNative = typeof navigator === 'object' &&
+    navigator.product === 'ReactNative';
   const enableLogger = process.env.NODE_ENV !== 'production' &&
-    (process.env.IS_BROWSER || process.env.IS_REACT_NATIVE);
+    (process.env.IS_BROWSER || isReactNative);
 
   if (enableLogger) {
     const logger = createLogger({

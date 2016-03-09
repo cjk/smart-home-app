@@ -25,7 +25,6 @@ const loaders = {
 const serverIp = ip.address();
 
 export default function makeConfig(isDevelopment) {
-
   function stylesLoaders() {
     return Object.keys(loaders).map(ext => {
       const prefix = 'css-loader!postcss-loader';
@@ -65,7 +64,7 @@ export default function makeConfig(isDevelopment) {
         test: /\.(ttf|eot|woff(2)?)(\?[a-z0-9]+)?$/
       }, {
         test: /\.js$/,
-        exclude: /node_modules/,
+        exclude: constants.NODE_MODULES_DIR,
         loader: 'babel',
         query: {
           cacheDirectory: true,
@@ -101,31 +100,34 @@ export default function makeConfig(isDevelopment) {
           }
         })
       ];
-      if (isDevelopment) plugins.push(
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoErrorsPlugin(),
-        webpackIsomorphicToolsPlugin.development()
-      );
-      else plugins.push(
-        // Render styles into separate cacheable file to prevent FOUC and
-        // optimize for critical rendering path.
-        new ExtractTextPlugin('app-[hash].css', {
-          allChunks: true
-        }),
-        new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurenceOrderPlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-          compress: {
-            screw_ie8: true, // eslint-disable-line camelcase
-            warnings: false // Because uglify reports irrelevant warnings.
-          }
-        }),
-        webpackIsomorphicToolsPlugin
-      );
+      if (isDevelopment) {
+        plugins.push(
+          new webpack.optimize.OccurenceOrderPlugin(),
+          new webpack.HotModuleReplacementPlugin(),
+          new webpack.NoErrorsPlugin(),
+          webpackIsomorphicToolsPlugin.development()
+        );
+      } else {
+        plugins.push(
+          // Render styles into separate cacheable file to prevent FOUC and
+          // optimize for critical rendering path.
+          new ExtractTextPlugin('app-[hash].css', {
+            allChunks: true
+          }),
+          new webpack.optimize.DedupePlugin(),
+          new webpack.optimize.OccurenceOrderPlugin(),
+          new webpack.optimize.UglifyJsPlugin({
+            compress: {
+              screw_ie8: true, // eslint-disable-line camelcase
+              warnings: false // Because uglify reports irrelevant warnings.
+            }
+          }),
+          webpackIsomorphicToolsPlugin
+        );
+      }
       return plugins;
     })(),
-    postcss: () => [autoprefixer({browsers: 'last 2 version'})],
+    postcss: () => [autoprefixer({ browsers: 'last 2 version' })],
     resolve: {
       extensions: ['', '.js'], // .json is ommited to ignore ./firebase.json
       modulesDirectories: ['src', 'node_modules'],
@@ -137,5 +139,4 @@ export default function makeConfig(isDevelopment) {
   };
 
   return config;
-
 }

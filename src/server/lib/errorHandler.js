@@ -1,4 +1,4 @@
-import config from '../config';
+import config from '../../common/config';
 
 export default function errorHandler(err, req, res, next) { // eslint-disable-line no-unused-vars
   const errorDetails = err.stack || err;
@@ -7,7 +7,7 @@ export default function errorHandler(err, req, res, next) { // eslint-disable-li
 
   res.status(500).format({
     json() {
-      const errorInfo = {error: err.toString()};
+      const errorInfo = { error: err.toString() };
       if (!config.isProduction) errorInfo.details = errorDetails;
 
       res.send(errorInfo);

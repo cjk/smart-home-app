@@ -4,7 +4,7 @@
 // Example:
 // Users = queryFirebase(Users, props => ({
 //   // Query path to listen. For one user we can use `users/${props.userId}`.
-//   child: 'users',
+//   path: 'users',
 //   // firebase.com/docs/web/api/query
 //   params: [
 //     ['orderByChild', 'authenticatedAt'],
@@ -14,22 +14,29 @@
 //     value: (snapshot) => props.setUsersList(snapshot.val())
 //   }
 // }));
+// Something doesn't work? Note how we can handle error:
+// on: {
+//   value: [(snapshot) => {
+//     console.log(snapshot.val())
+//   }, (error) => {
+//     console.log(error)
+//   }]
+// }
 
 import * as actions from './actions';
 import Component from 'react-pure-render/component';
 import Firebase from 'firebase';
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import invariant from 'invariant';
 
 const ensureArray = item => [].concat(item);
 // Use key whenever you want to force off / on event registration. It's useful
 // when queried component must be rerendered, for example when app state is
 // recycled on logout. Then we can just set the key to current viewer.
-const optionsToPayload = ({child, key, params}) => ({child, key, params});
+const optionsToPayload = ({ path, key, params }) => ({ path, key, params });
 const optionsToPayloadString = options => JSON.stringify(optionsToPayload(options));
 
 export default function queryFirebase(Wrapped, mapPropsToOptions) {
-
   return class FirebaseQuery extends Component {
 
     static contextTypes = {
@@ -53,22 +60,25 @@ export default function queryFirebase(Wrapped, mapPropsToOptions) {
         ]);
     }
 
-    dispatch(callback) {
-      this.context.store.dispatch(({firebase}) => {
+    dispatch(props, callback) {
+      const options = mapPropsToOptions(props);
+      // When any prop is not yet loaded, we can postpone loading easily.
+      // Example: { path: product && `products/${product.id}`, ... }
+      if (!options.path) return;
+      this.context.store.dispatch(({ firebase }) => {
         invariant(firebase instanceof Firebase,
           'Expected the firebase to be an instance of Firebase.');
-        const options = mapPropsToOptions(this.props);
-        invariant(typeof options.child === 'string',
-          'Expected the child to be a string.');
-        const ref = firebase.child(options.child);
+        invariant(typeof options.path === 'string',
+          'Expected the path to be a string.');
+        const ref = firebase.child(options.path);
         const type = callback(ref, options);
         const payload = optionsToPayload(options);
-        return {type, payload};
+        return { type, payload };
       });
     }
 
     on() {
-      this.dispatch((ref, {on, once, params = []}) => {
+      this.dispatch(this.props, (ref, { on, once, params = [] }) => {
         // Map declarative params to Firebase imperative API.
         params.forEach(([method, ...args]) => {
           ref = ref[method](...args);
@@ -81,8 +91,8 @@ export default function queryFirebase(Wrapped, mapPropsToOptions) {
       });
     }
 
-    off() {
-      this.dispatch(ref => {
+    off(props) {
+      this.dispatch(props, ref => {
         this.onArgs.forEach(arg => ref.off(...arg));
         this.onceArgs.forEach(arg => ref.off(...arg));
         return actions.REDUX_FIREBASE_OFF_QUERY;
@@ -98,12 +108,12 @@ export default function queryFirebase(Wrapped, mapPropsToOptions) {
       const options = optionsToPayloadString(mapPropsToOptions(this.props));
       // Detect only options change is must to avoid loops.
       if (prevOptions === options) return;
-      this.off();
+      this.off(prevProps);
       this.on();
     }
 
     componentWillUnmount() {
-      this.off();
+      this.off(this.props);
     }
 
     render() {

@@ -1,11 +1,11 @@
 import './Login.scss';
 import * as authActions from '../../common/auth/actions';
 import Component from 'react-pure-render/component';
-import Helmet from 'react-helmet';
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import focusInvalidField from '../lib/focusInvalidField';
-import {connect} from 'react-redux';
-import {fields} from '../../common/lib/redux-fields';
+import { connect } from 'react-redux';
+import { fields } from '../../common/lib/redux-fields';
+import { replace } from 'react-router-redux';
 
 class Login extends Component {
 
@@ -14,11 +14,8 @@ class Login extends Component {
     fields: PropTypes.object.isRequired,
     location: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
-    msg: PropTypes.object.isRequired
-  };
-
-  static contextTypes = {
-    router: PropTypes.object.isRequired
+    msg: PropTypes.object.isRequired,
+    replace: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -30,7 +27,7 @@ class Login extends Component {
 
   async onFormSubmit(e) {
     e.preventDefault();
-    const {login, fields} = this.props;
+    const { login, fields } = this.props;
     const result = await login(fields.$values()).payload.promise;
     if (result.error) {
       focusInvalidField(this, result.payload);
@@ -40,22 +37,20 @@ class Login extends Component {
   }
 
   redirectAfterLogin() {
-    const {location} = this.props;
+    const { location, replace } = this.props;
     const nextPathname = location.state && location.state.nextPathname || '/';
-    this.context.router.replace(nextPathname);
+    replace(nextPathname);
   }
 
   render() {
-    const {auth, fields, msg} = this.props;
+    const { auth, fields, msg } = this.props;
 
     return (
       <div className="login">
-        <Helmet title="Login" />
         <form onSubmit={this.onFormSubmit}>
           <fieldset disabled={auth.formDisabled}>
             <legend>{msg.legend}</legend>
             <input
-              autoFocus
               maxLength="100"
               placeholder={msg.placeholder.email}
               {...fields.email}
@@ -89,4 +84,4 @@ Login = fields(Login, {
 export default connect(state => ({
   auth: state.auth,
   msg: state.intl.msg.auth.form
-}), authActions)(Login);
+}), { ...authActions, replace })(Login);

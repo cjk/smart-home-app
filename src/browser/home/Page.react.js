@@ -2,10 +2,10 @@ import './Home.less';
 import AddressList from './AddressList.react';
 import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import fetch from '../../common/components/fetch';
-import {requestInitialState} from '../../common/home/actions';
-import {connect} from 'react-redux';
+import { requestInitialState } from '../../common/home/actions';
+import { connect } from 'react-redux';
 
 class Page extends Component {
 
@@ -16,13 +16,13 @@ class Page extends Component {
 
   render() {
     /*     console.log('Live-state: ', JSON.stringify(this.props.smartHome.livestate)); */
-    const {msg: {title}, smartHome: {livestate: addressMap}} = this.props,
-    addresses = addressMap.toList();
+    const { msg: { title }, smartHome: { livestate: addressMap } } = this.props;
+    const addresses = addressMap.toList();
 
     return (
       <div className="home-page" id="home">
         <Helmet title={title} />
-        <AddressList {...{addresses}} />
+        <AddressList {...{ addresses }} />
       </div>
     );
   }

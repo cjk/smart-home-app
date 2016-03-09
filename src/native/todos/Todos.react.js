@@ -3,7 +3,7 @@ import Buttons from './Buttons.react';
 import Component from 'react-pure-render/component';
 import React from 'react-native';
 import Todo from './Todo.react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 const {
   Image, PropTypes, ScrollView, StyleSheet, Text, View
@@ -41,9 +41,9 @@ class Todos extends Component {
   };
 
   render() {
-    const {msg, todos, toggleTodoCompleted} = this.props;
+    const { msg, todos, toggleTodoCompleted } = this.props;
 
-    if (todos.size === 0)
+    if (todos.size === 0) {
       return (
         <View style={styles.centeredView}>
           <Image
@@ -55,6 +55,7 @@ class Todos extends Component {
           </Text>
         </View>
       );
+    }
 
     const list = todos.toList().sortBy(item => item.createdAt);
 

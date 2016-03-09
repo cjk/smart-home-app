@@ -3,11 +3,9 @@ import Appbar from './Appbar.react';
 import Component from 'react-pure-render/component';
 import Footer from './Footer.react';
 import Helmet from 'react-helmet';
-import React, {PropTypes} from 'react';
-import {connect} from 'react-redux';
-
-/* MERGE-TODO: appActions should be refactored into ../../common/app/actions.js */
-import {onAppComponentDidMount} from '../../common/app/actions';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+import { onAppComponentDidMount } from '../../common/app/actions';
 
 /* Material-Design-Lite imports */
 import Layout from 'react-mdl/lib/Layout/Layout';
@@ -26,25 +24,24 @@ class App extends Component {
   // the right place to dispatch client only (e.g. Firebase) actions.
   // Firebase can be used on the server as well, but it's over of this example.
   componentDidMount() {
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
     dispatch(onAppComponentDidMount());
   }
 
   render() {
-    const {children, location} = this.props;
+    const { children, location } = this.props;
 
     return (
-      // Pass data-pathname to allow route specific styling.
-      <div className="page" data-pathname={location.pathname}>
+      <div className="page">
         <Helmet
-            link={[
-              {rel: 'shortcut icon', href: require('./favicon.ico')}
-            ]}
-            meta={[{
-                name: 'description',
-                content: 'smart home control app'
-              }]}
-            titleTemplate="%s - by CjK"
+          link={[
+            { rel: 'shortcut icon', href: require('./favicon.ico') }
+          ]}
+          meta={[{
+            name: 'description',
+            content: 'smart home control app'
+          }]}
+          titleTemplate="%s - by CjK"
         />
 
         <Layout fixedHeader>
@@ -73,5 +70,5 @@ class App extends Component {
   }
 }
 
-// Just inject dispatch and don't listen to store.
+// Just inject dispatch.
 export default connect()(App);

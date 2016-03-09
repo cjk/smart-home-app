@@ -3,17 +3,17 @@ import Helmet from 'react-helmet';
 import Html from './Html.react';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import config from '../config';
+import config from '../../common/config';
 import configureStore from '../../common/configureStore';
 import createRoutes from '../../browser/createRoutes';
 import serialize from 'serialize-javascript';
-import {IntlProvider} from 'react-intl';
-import {Provider} from 'react-redux';
-import {RouterContext, match} from 'react-router';
-import {createMemoryHistory} from 'react-router';
+import { IntlProvider } from 'react-intl';
+import { Provider } from 'react-redux';
+import { createMemoryHistory, match, RouterContext } from 'react-router';
+import { routerMiddleware, syncHistoryWithStore } from 'react-router-redux';
 
 const fetchComponentDataAsync = async (dispatch, renderProps) => {
-  const {components, location, params} = renderProps;
+  const { components, location, params } = renderProps;
   const promises = components
     .reduce((actions, component) => {
       if (typeof component === 'function') {
@@ -28,7 +28,7 @@ const fetchComponentDataAsync = async (dispatch, renderProps) => {
     .map(action =>
       // Server side fetching can use only router location and params props.
       // There is no easy way how to support custom component props.
-      dispatch(action({location, params})).payload.promise
+      dispatch(action({ location, params })).payload.promise
     );
   await Promise.all(promises);
 };
@@ -56,12 +56,12 @@ const getScriptHtml = (state, headers, hostname, appJsFilename) =>
 
 const renderPage = (store, renderProps, req) => {
   const state = store.getState();
-  const {headers, hostname} = req;
+  const { headers, hostname } = req;
   const appHtml = getAppHtml(store, renderProps);
   const helmet = Helmet.rewind();
   const {
-    styles: {app: appCssFilename},
-    javascript: {app: appJsFilename}
+    styles: { app: appCssFilename },
+    javascript: { app: appJsFilename }
   } = webpackIsomorphicTools.assets();
   const scriptHtml = getScriptHtml(state, headers, hostname, appJsFilename);
   if (!config.isProduction) {
@@ -83,21 +83,26 @@ export default function render(req, res, next) {
   // Detect Heroku protocol
   const protocol = req.headers['x-forwarded-proto'] || req.protocol;
   const initialState = {
+    config: {
+      // Never pass whole server config to the client.
+      firebaseUrl: config.firebaseUrl
+    },
     device: {
       isMobile: ['phone', 'tablet'].indexOf(req.device.type) > -1,
       host: `${protocol}://${req.headers.host}`
     }
   };
-  const store = configureStore({initialState});
-
-  // Fetch logged in user here because routes may need it. Remember we can use
-  // store.dispatch method.
-
+  const memoryHistory = createMemoryHistory(req.path);
+  const store = configureStore({
+    initialState,
+    platformMiddleware: [routerMiddleware(memoryHistory)]
+  });
+  const history = syncHistoryWithStore(memoryHistory, store);
+  // Fetch and dispatch current user here because routes may need it.
   const routes = createRoutes(() => store.getState());
-  const location = createMemoryHistory().createLocation(req.url);
+  const location = req.url;
 
-  match({routes, location}, async (error, redirectLocation, renderProps) => {
-
+  match({ history, routes, location }, async (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
       res.redirect(301, redirectLocation.pathname + redirectLocation.search);
       return;
