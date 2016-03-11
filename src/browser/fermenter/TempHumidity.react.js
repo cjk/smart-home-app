@@ -1,6 +1,6 @@
 import Component from 'react-pure-render/component';
 import React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 class TempHumidity extends Component {
 
@@ -10,11 +10,12 @@ class TempHumidity extends Component {
   };
 
   render() {
-    const {fermenterState: state} = this.props;
-    const {env, devices: {heater, humidifier}} = state;
+    const { fermenterState: state } = this.props;
+    const { env, devices: { heater, humidifier } } = state;
 
-    if (!env.createdAt)
+    if (!env.createdAt) {
       return (<div>No information yet...</div>);
+    }
 
     return (
       <div>
@@ -25,15 +26,15 @@ class TempHumidity extends Component {
         <hr/>
         <h4>Heater:</h4>
         {
-          Object.keys(heater).map((k, i) => {
-            return (<p key={k}>{k}: {heater[k] || heater[k] === 'on' ? 'yes' : 'nope'}</p>);
+          Object.keys(heater).map((k) => {
+            return (<p key={k}>{k}: {heater[k] && (heater[k] || heater[k] === 'on') ? 'yes' : 'nope'}</p>);
           })
         }
 
         <hr/>
         <h4>Humidifier:</h4>
         {
-          Object.keys(humidifier).map((k, i) => {
+          Object.keys(humidifier).map((k) => {
             return (<p key={k}>{k}: {humidifier[k] || humidifier[k] === 'on' ? 'yes' : 'nope'}</p>);
           })
         }
