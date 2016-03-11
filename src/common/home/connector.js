@@ -27,7 +27,7 @@ function fetchInitialState() {
     socket.on('initialstate', (state) => resolve(state));
   });
 
-  socket.emit('initialstate', {request: true});
+  socket.emit('initialstate', { request: true });
   return promise;
 }
 
@@ -43,7 +43,7 @@ function fetchFermenterState() {
     socket.on('fermenterstate', (state) => resolve(state));
   });
 
-  socket.emit('fermenterstate', {request: true});
+  socket.emit('fermenterstate', { request: true });
   return promise;
 }
 
@@ -52,16 +52,16 @@ function fetchFermenterHistory() {
     socket.on('fermenterhistory', (state) => resolve(state));
   });
 
-  socket.emit('fermenterhistory', {request: true});
+  socket.emit('fermenterhistory', { request: true });
   return promise;
 }
 
 export default function connector() {
   return {
-    setupEventlistener: setupEventlistener,
-    fetchInitialState: fetchInitialState,
-    writeGroupAddr: writeGroupAddr,
-    fetchFermenterState: fetchFermenterState,
-    fetchFermenterHistory: fetchFermenterHistory,
+    setupEventlistener,
+    fetchInitialState,
+    writeGroupAddr,
+    fetchFermenterState,
+    fetchFermenterHistory,
   };
 }
