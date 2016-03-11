@@ -16,9 +16,11 @@ class AddressList extends Component {
 
     return (
       <section className="device-switch-list">
-        {addresses.map(address =>
-          <AddrLine {...{ msg, address }} key={address.id} />
-         )
+        {addresses.sortBy(addr => addr.name)
+                  .sortBy(addr => !addr.value)
+                  .map(address =>
+                    <AddrLine {...{ msg, address }} key={address.id} />
+                  )
         }
       </section>
     );
