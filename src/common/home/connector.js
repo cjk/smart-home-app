@@ -4,7 +4,7 @@ import Event from '../events/event';
 import Promise from 'bluebird';
 
 const config = {
-  host: 'localhost',
+  host: 'zircon',
   port: 4001
 };
 
