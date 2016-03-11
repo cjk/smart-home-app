@@ -38,8 +38,8 @@ export default function configureStore(options) {
   const { device: { host } } = initialState;
   // Remember to set SERVER_URL for deploy.
   const serverUrl = host || process.env.SERVER_URL ||
-    // Browser is ok with relative url. Server and React Native need absolute.
-    (process.env.IS_BROWSER ? '' : 'http://localhost:8000');
+                    // Browser is ok with relative url. Server and React Native need absolute.
+                    (process.env.IS_BROWSER ? '' : 'http://localhost:8000');
 
   const middleware = [
     ...platformMiddleware,
@@ -59,9 +59,9 @@ export default function configureStore(options) {
 
   // Enable logger only for browser and React Native development.
   const isReactNative = typeof navigator === 'object' &&
-    navigator.product === 'ReactNative';
+                        navigator.product === 'ReactNative';
   const enableLogger = process.env.NODE_ENV !== 'production' &&
-    (process.env.IS_BROWSER || isReactNative);
+                       (process.env.IS_BROWSER || isReactNative);
 
   if (enableLogger) {
     const logger = createLogger({
@@ -74,12 +74,12 @@ export default function configureStore(options) {
   }
 
   const enableDevToolsExtension =
-    process.env.NODE_ENV !== 'production' &&
-    process.env.IS_BROWSER &&
-    window.devToolsExtension;
+  process.env.NODE_ENV !== 'production' &&
+  process.env.IS_BROWSER &&
+  window.devToolsExtension;
 
   const createReduxStore = enableDevToolsExtension
-    ? compose(applyMiddleware(...middleware), window.devToolsExtension())
+                         ? compose(applyMiddleware(...middleware), window.devToolsExtension())
     : applyMiddleware(...middleware);
 
   // Reset app store on logout to its initial state. Because app state can be
