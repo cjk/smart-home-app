@@ -1,9 +1,9 @@
 import R from 'ramda';
-import React, {PropTypes} from 'react';
-import {Switch} from 'react-mdl/lib';
+import React, { PropTypes } from 'react';
+import { Switch } from 'react-mdl/lib';
 import * as addrLineActions from '../../common/home/actions';
 import Component from 'react-pure-render/component';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 
 class AddrLine extends Component {
 
@@ -14,17 +14,16 @@ class AddrLine extends Component {
   };
 
   render() {
-
-    const {writeGroupAddr: updateAddr, address: addr} = this.props;
+    const { writeGroupAddr: updateAddr, address: addr } = this.props;
     const toggleAddrVal = (addr) => addr.set('value', !addr.value | 0);
     const switchable = (addr) => addr.func === 'light';
 
     return (
       <section className="row">
-        <div className="col-xs-2">
+        <div className="col-xs-offset-1 col-xs-2">
           <span className="box">{addr.id}</span>
         </div>
-        <div className="col-xs-6">
+        <div className="col-xs-5">
           <span className="box">{addr.name}</span>
         </div>
         <div className="col-xs-1">

@@ -1,10 +1,8 @@
 import './AddressList.less';
 import AddrLine from './AddrLine.react';
-import React, {PropTypes} from 'react';
+import React, { PropTypes } from 'react';
 import Component from 'react-pure-render/component';
-import {connect} from 'react-redux';
-import immutable from 'immutable';
-
+import { connect } from 'react-redux';
 
 class AddressList extends Component {
 
@@ -14,12 +12,12 @@ class AddressList extends Component {
   };
 
   render() {
-    const {addresses, msg} = this.props;
+    const { addresses, msg } = this.props;
 
     return (
       <section className="device-switch-list">
         {addresses.map(address =>
-          <AddrLine {...{msg, address}} key={address.id} />
+          <AddrLine {...{ msg, address }} key={address.id} />
          )
         }
       </section>

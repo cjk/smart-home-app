@@ -1,8 +1,8 @@
 import Component from 'react-pure-render/component';
 import Events from './Events.react';
 import Helmet from 'react-helmet';
-import React, {PropTypes} from 'react';
-import {connect} from 'react-redux';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 class Page extends Component {
 
@@ -12,12 +12,12 @@ class Page extends Component {
   };
 
   render() {
-    const {msg, smartHome: {eventHistory: list}} = this.props;
+    const { msg, smartHome: { eventHistory: list } } = this.props;
 
     return (
       <div className="events-page" id="events">
         <Helmet title={msg.title} />
-        <Events {...{list, msg}} />
+        <Events {...{ list, msg }} />
       </div>
     );
   }
