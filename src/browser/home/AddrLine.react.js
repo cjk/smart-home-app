@@ -1,5 +1,6 @@
 import R from 'ramda';
 import React, { PropTypes } from 'react';
+import { ListItem, ListItemContent, ListItemAction } from 'react-mdl/lib/List';
 import { Switch } from 'react-mdl/lib';
 import * as addrLineActions from '../../common/home/actions';
 import Component from 'react-pure-render/component';
@@ -19,22 +20,12 @@ class AddrLine extends Component {
     const switchable = (addr) => addr.func === 'light';
 
     return (
-      <section className="row">
-        <div className="col-xs-offset-1 col-xs-2">
-          <span className="box">{addr.id}</span>
-        </div>
-        <div className="col-xs-5">
-          <span className="box">{addr.name}</span>
-        </div>
-        <div className="col-xs-1">
-          <span className="box">{R.isNil(addr.value) ? '???' : addr.value}</span>
-        </div>
-        <div className="col-xs-2">
-          <span className="box">
-            <Switch checked={!!addr.value} disabled={!switchable(addr)} id={addr.id} onChange={() => updateAddr(toggleAddrVal(addr.set('type', 'DPT3')))} />
-          </span>
-        </div>
-      </section>
+      <ListItem className="addressRow">
+        <ListItemContent>{addr.name}</ListItemContent>
+        <ListItemAction info={R.isNil(addr.value) ? '???' : addr.value.toString()}>
+          <Switch ripple checked={!!addr.value} disabled={!switchable(addr)} id={addr.id} onChange={() => updateAddr(toggleAddrVal(addr.set('type', 'DPT3')))} />
+        </ListItemAction>
+      </ListItem>
     );
   }
 }

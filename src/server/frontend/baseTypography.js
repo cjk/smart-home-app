@@ -1,37 +1,37 @@
 import Typography from 'typography';
 
-const BaseTypography = Typography(
+const { GoogleFont, TypographyStyle } = Typography(
   {
-    'baseFontSize': '20px',
-    'baseLineHeight': '30px',
-    'modularScales': [
-      'perfect fifth'
+    "baseFontSize": "18px",
+    "baseLineHeight": "28.5px",
+    "modularScales": [
+      "diminished fourth",
+      [
+        "768px",
+        "minor third"
+      ]
     ],
-    'googleFonts': [
+    "googleFonts": [
       {
-        'name': 'Lato',
-        'styles': [
-          '100',
-          '400',
-          '700',
-          '900'
+        "name": "Lato",
+        "styles": [
+          "100",
+          "400",
+          "700",
+          "900"
         ]
       }
     ],
-    'headerFontFamily': 'Open Sans',
-    'bodyFontFamily': 'Lora',
-    'headerGray': '25',
-    'headerGrayHue': 0,
-    'bodyGray': '25',
-    'bodyGrayHue': 0,
-    'headerWeight': '900',
-    'bodyWeight': 400,
-    'boldWeight': 700,
-    'fontFaces': [],
-    'googleBodyFont': 'Lora',
-    'bodyFont': 'Lora',
-    'googleHeaderFont': 'Open Sans',
-    'headerFont': 'Open Sans'
+    "headerFontFamily": "Lato, sans-serif",
+    "bodyFontFamily": "Lato, sans-serif",
+    "headerGray": 20,
+    "headerGrayHue": 0,
+    "bodyGray": 20,
+    "bodyGrayHue": 0,
+    "headerWeight": 700,
+    "bodyWeight": 400,
+    "boldWeight": 700,
+    "fontFaces": []
   });
 
-export default BaseTypography;
+export default { GoogleFont, TypographyStyle };

@@ -6,6 +6,7 @@ import React, { PropTypes } from 'react';
 import fetch from '../../common/components/fetch';
 import { requestInitialState } from '../../common/home/actions';
 import { connect } from 'react-redux';
+import { Card } from 'react-mdl/lib';
 
 class Page extends Component {
 
@@ -20,10 +21,10 @@ class Page extends Component {
     const addresses = addressMap.toList();
 
     return (
-      <div className="home-page" id="home">
+      <Card className="home-page" id="home">
         <Helmet title={title} />
         <AddressList {...{ addresses }} />
-      </div>
+      </Card>
     );
   }
 }

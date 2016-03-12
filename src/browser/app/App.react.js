@@ -50,7 +50,7 @@ class App extends Component {
             <Appbar pathname={location.pathname} />
           </Header>
 
-          <Drawer title="Drawer-Title">
+          <Drawer title="Menu">
             <Navigation>
               <a href="">Link #1</a>
               <a href="">Link #2</a>
@@ -59,7 +59,7 @@ class App extends Component {
             </Navigation>
           </Drawer>
 
-          <Content id="page-content">
+          <Content className="page-content">
             {children}
           </Content>
 
