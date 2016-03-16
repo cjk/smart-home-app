@@ -1,17 +1,17 @@
 import * as actions from './actions';
 import Addr from './address';
-import {List, Record, Map} from 'immutable';
+import { List, Record, Map } from 'immutable';
 
 const InitialState = Record({
   livestate: new Map(),
   eventHistory: List([]),
 });
 
-const initialState = new InitialState,
-      buildLivestate = (livestate) => new Map(livestate).map(addr => new Addr(addr));
+const initialState = new InitialState;
+const buildLivestate = (livestate) => new Map(livestate).map(addr => new Addr(addr));
 
 // Note how JSON from server is revived to immutable record.
-const revive = ({livestate, eventHistory}) => initialState.merge({
+const revive = ({ livestate, eventHistory }) => initialState.merge({
   livestate: buildLivestate(livestate),
   eventHistory: eventHistory
 });
@@ -22,11 +22,10 @@ export default function connectHomeReducer(state = initialState, action) {
   switch (action.type) {
 
     case actions.PROCESS_EVENT: {
-      const {newEvent} = action.payload;
+      const { newEvent } = action.payload;
 
       /* Update event-history and/or livestate */
-      const newState = state
-                  .update('eventHistory', list => list.push(newEvent));
+      const newState = state.update('eventHistory', list => list.push(newEvent));
 
       if (newEvent.action.match(/^(write|response)$/)) {
         return newState.set('livestate',
@@ -59,7 +58,6 @@ export default function connectHomeReducer(state = initialState, action) {
 }
 
 function updateAddrValue(state, id, value) {
-
   if (!state.has(id))
     return state;
   return state.update(id, (addr) => addr.set('value', value));

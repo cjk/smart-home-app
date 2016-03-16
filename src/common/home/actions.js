@@ -9,7 +9,7 @@ export const WRITE_GROUP_ADDRESS_SUCCESS = 'WRITE_GROUP_ADDRESS_SUCCESS';
 export const WRITE_GROUP_ADDRESS_ERROR = 'WRITE_GROUP_ADDRESS_ERROR';
 
 export function writeGroupAddr(addr) {
-  return ({writeGroupAddr}) => ({
+  return ({ writeGroupAddr }) => ({
     type: 'WRITE_GROUP_ADDRESS',
     payload: {
       promise: writeGroupAddr(addr)
@@ -19,7 +19,7 @@ export function writeGroupAddr(addr) {
 
 export function requestInitialState(/* {location, params} */) {
   // We can use location and params to create custom endpoint.
-  return ({fetchInitialState}) => ({
+  return ({ fetchInitialState }) => ({
     type: 'REQUEST_INITIAL_STATE',
     payload: {
       // We could use location and params to create custom endpoint.
@@ -29,14 +29,14 @@ export function requestInitialState(/* {location, params} */) {
 }
 
 export function processEvent(event) {
-  return ({getUid}) => {
+  return ({ getUid }) => {
     const newEvent = event.merge({
       id: getUid()
     });
 
     return {
       type: PROCESS_EVENT,
-      payload: {newEvent}
+      payload: { newEvent }
     };
   };
 }
