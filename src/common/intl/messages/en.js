@@ -50,7 +50,7 @@ export default {
       Press CMD+R to reload
       Press CMD+D for debug menu
     `,
-    title: 'Este.js',
+    title: 'CjK\'s smart-home',
     toCheck: {
       andMuchMore: 'And much more :-)',
       h2: 'Things to Check',
