@@ -4,7 +4,7 @@ import Event from '../events/event';
 import Promise from 'bluebird';
 
 const config = {
-  host: '192.168.0.28', /* zircon.local not available on HOME-LAN! :( */
+  host: '192.168.0.28', /* NOTE: zircon.local is not available on HOME-LAN! :( */
   port: 4001
 };
 
