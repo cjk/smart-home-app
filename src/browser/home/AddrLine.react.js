@@ -28,8 +28,8 @@ class AddrLine extends Component {
     const switchable = (addr) => addr.func === 'light';
 
     return (
-      <ListItem className="addressRow">
-        <ListItemContent>{address.name}</ListItemContent>
+      <ListItem twoLine className="addressRow">
+        <ListItemContent avatar="wb_incandescent" subtitle={address.id}>{address.name}</ListItemContent>
         <ListItemAction info={R.isNil(address.value) ? '???' : address.value.toString()}>
           <Switch ripple checked={!!address.value} disabled={!switchable(address)} id={address.id} onChange={this.onSwitchToggle} />
         </ListItemAction>

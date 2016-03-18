@@ -1,4 +1,4 @@
-import {Record} from 'immutable';
+import { Record } from 'immutable';
 
 export default Record({
   id: null,
@@ -8,4 +8,5 @@ export default Record({
   room: null,
   type: null,
   func: null,
+  updatedAt: null
 });
