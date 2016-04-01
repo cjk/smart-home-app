@@ -15,7 +15,7 @@ socket
   .on('connect_error', () => console.log(`ERROR connecting to smart-home-backend on <${config.host}:${config.port}>`))
   .on('connect_timeout', () => console.log(`TIMEOUT connecting to smart-home-backend on <${config.host}:${config.port}>!`));
 
-function setupEventlistener(eventAction) {
+function subscribeToBusEvents(eventAction) {
   socket.on('knx-event', (event) => {
     const e = new Event(event);
     eventAction(e);
@@ -58,7 +58,7 @@ function fetchFermenterHistory() {
 
 export default function connector() {
   return {
-    setupEventlistener,
+    subscribeToBusEvents,
     fetchInitialState,
     writeGroupAddr,
     fetchFermenterState,
