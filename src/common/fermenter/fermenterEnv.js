@@ -6,4 +6,5 @@ export default Record({
   humidity: null,
   isValid: false,
   errors: 0,
+  iterations: 0
 });
