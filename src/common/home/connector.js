@@ -22,6 +22,17 @@ function subscribeToBusEvents(eventAction) {
   });
 }
 
+function subscribeToFermenterState(eventAction) {
+  socket.on('fermenterstate', (event) => {
+    eventAction(event);
+  });
+
+  /* No emit necessary, our backend is automatically sending us
+     fermeter-state-events on successful (socket-) connection */
+
+  // socket.emit('fermenterstate', { request: true });
+}
+
 function fetchInitialState() {
   const promise = new Promise((resolve) => {
     socket.on('initialstate', (state) => resolve(state));
@@ -38,15 +49,6 @@ function writeGroupAddr(addr) {
   return promise;
 }
 
-function fetchFermenterState() {
-  const promise = new Promise((resolve) => {
-    socket.on('fermenterstate', (state) => resolve(state));
-  });
-
-  socket.emit('fermenterstate', { request: true });
-  return promise;
-}
-
 function fetchFermenterHistory() {
   const promise = new Promise((resolve) => {
     socket.on('fermenterhistory', (state) => resolve(state));
@@ -59,9 +61,9 @@ function fetchFermenterHistory() {
 export default function connector() {
   return {
     subscribeToBusEvents,
+    subscribeToFermenterState,
     fetchInitialState,
     writeGroupAddr,
-    fetchFermenterState,
     fetchFermenterHistory,
   };
 }
