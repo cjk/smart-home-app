@@ -10,7 +10,7 @@ export function clearAll() {
 }
 
 export function fetchState(/* {location, params} */) {
-  return ({fetchFermenterState}) => ({
+  return ({ fetchFermenterState }) => ({
     type: 'FETCH_FERMENTER_STATE',
     payload: {
       promise: fetchFermenterState()
@@ -19,7 +19,7 @@ export function fetchState(/* {location, params} */) {
 }
 
 export function fetchHistory() {
-  return ({fetchFermenterHistory}) => ({
+  return ({ fetchFermenterHistory }) => ({
     type: 'FETCH_FERMENTER_STATE',
     payload: {
       promise: fetchFermenterHistory()

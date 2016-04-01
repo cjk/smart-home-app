@@ -19,24 +19,24 @@ class TempHumidity extends Component {
 
     return (
       <div>
-        <h4>Environment:</h4>
+        <h4>Environment (iteration #{state.env.iterations}):</h4>
         <p>Temperature: {state.env.temperature}</p>
         <p>Humidity: {state.env.humidity}</p>
 
-        <hr/>
+        <hr />
         <h4>Heater:</h4>
         {
-          Object.keys(heater).map((k) => {
-            return (<p key={k}>{k}: {heater[k] && (heater[k] || heater[k] === 'on') ? 'yes' : 'nope'}</p>);
-          })
+          Object.keys(heater).map((k) =>
+            (<p key={k}>{k}: {heater[k] && (heater[k] || heater[k] === 'on') ? 'yes' : 'nope'}</p>)
+          )
         }
 
-        <hr/>
+        <hr />
         <h4>Humidifier:</h4>
         {
-          Object.keys(humidifier).map((k) => {
-            return (<p key={k}>{k}: {humidifier[k] || humidifier[k] === 'on' ? 'yes' : 'nope'}</p>);
-          })
+          Object.keys(humidifier).map((k) =>
+            (<p key={k}>{k}: {humidifier[k] || humidifier[k] === 'on' ? 'yes' : 'nope'}</p>)
+          )
         }
       </div>
     );
