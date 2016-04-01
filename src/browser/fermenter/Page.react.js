@@ -1,17 +1,27 @@
 import Component from 'react-pure-render/component';
-import fetch from '../../common/components/fetch';
-import { fetchState } from '../../common/fermenter/actions';
 import Helmet from 'react-helmet';
 import React, { PropTypes } from 'react';
+import smartHomeConnect from '../../common/home/connector';
+import { processState } from '../../common/fermenter/actions';
 import TempHumidityInfo from './TempHumidity.react';
 import { connect } from 'react-redux';
 
 class Page extends Component {
 
   static propTypes = {
+    dispatch: PropTypes.func.isRequired,
     msg: PropTypes.object.isRequired,
     fermenter: PropTypes.object,
   };
+
+  /* TODO: Refactor out in HOC + action */
+  componentDidMount() {
+    const { dispatch } = this.props;
+    const { subscribeToFermenterState } = smartHomeConnect();
+
+    const boundProcessState = (state) => dispatch(processState(state));
+    subscribeToFermenterState(boundProcessState);
+  }
 
   render() {
     const { msg: { title }, fermenter: fermenterState } = this.props;
@@ -24,8 +34,6 @@ class Page extends Component {
     );
   }
 }
-
-Page = fetch(fetchState)(Page);
 
 export default connect(state => ({
   msg: state.intl.msg.fermenter,

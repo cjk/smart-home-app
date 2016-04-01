@@ -15,11 +15,22 @@ socket
   .on('connect_error', () => console.log(`ERROR connecting to smart-home-backend on <${config.host}:${config.port}>`))
   .on('connect_timeout', () => console.log(`TIMEOUT connecting to smart-home-backend on <${config.host}:${config.port}>!`));
 
-function setupEventlistener(eventAction) {
+function subscribeToBusEvents(eventAction) {
   socket.on('knx-event', (event) => {
     const e = new Event(event);
     eventAction(e);
   });
+}
+
+function subscribeToFermenterState(eventAction) {
+  socket.on('fermenterstate', (event) => {
+    eventAction(event);
+  });
+
+  /* No emit necessary, our backend is automatically sending us
+     fermeter-state-events on successful (socket-) connection */
+
+  // socket.emit('fermenterstate', { request: true });
 }
 
 function fetchInitialState() {
@@ -38,15 +49,6 @@ function writeGroupAddr(addr) {
   return promise;
 }
 
-function fetchFermenterState() {
-  const promise = new Promise((resolve) => {
-    socket.on('fermenterstate', (state) => resolve(state));
-  });
-
-  socket.emit('fermenterstate', { request: true });
-  return promise;
-}
-
 function fetchFermenterHistory() {
   const promise = new Promise((resolve) => {
     socket.on('fermenterhistory', (state) => resolve(state));
@@ -58,10 +60,10 @@ function fetchFermenterHistory() {
 
 export default function connector() {
   return {
-    setupEventlistener,
+    subscribeToBusEvents,
+    subscribeToFermenterState,
     fetchInitialState,
     writeGroupAddr,
-    fetchFermenterState,
     fetchFermenterHistory,
   };
 }

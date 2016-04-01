@@ -6,12 +6,12 @@ export const ON_APP_COMPONENT_DID_MOUNT = 'ON_APP_COMPONENT_DID_MOUNT';
 
 export function onAppComponentDidMount() {
   // Who injected dispatch? Check configureStore.js injectMiddleware.
-  return ({ dispatch, setupEventlistener }) => {
+  return ({ dispatch, subscribeToBusEvents }) => {
     /* Create a bound action creator (see
        http://redux.js.org/docs/basics/Actions.html) and send it to our
        smartHome-event handler */
     const boundProcessEvent = (event) => dispatch(processEvent(event));
-    setupEventlistener(boundProcessEvent);
+    subscribeToBusEvents(boundProcessEvent);
 
     /* for Firebase-related login (by Este) */
     dispatch(firebaseActions.watchAuth(authActions.logout));

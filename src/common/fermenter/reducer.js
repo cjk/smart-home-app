@@ -22,33 +22,22 @@ export default function fermenterReducer(state = initialState, action) {
 
   switch (action.type) {
 
-    case actions.FETCH_FERMENTER_STATE_START: {
-      /* Currently no state change on this event */
-      return state;
-    }
-
-    case actions.FETCH_FERMENTER_STATE_ERROR: {
-      console.log('ERROR fetching fermenter-state: ', action.payload);
-      return state;
-    }
-
-    case actions.FETCH_FERMENTER_STATE_SUCCESS: {
-      const s = action.payload.fermenterState;
+    case actions.PROCESS_STATE: {
+      const fs = action.payload.fermenterState;
 
       /* fermenter state is not available */
-      if (!s) {
+      if (!fs) {
         return state;
       }
 
-      const env = new FermenterEnv(s.env);
+      const env = new FermenterEnv(fs.env);
       /* TODO: Map into FermenterDev-struct */
-      const devices = s.devices;
+      const devices = fs.devices;
 
       return state
                .set('env', env)
                .set('devices', devices);
     }
-
   }
 
   return state;
