@@ -1,10 +1,28 @@
-import * as authActions from '../auth/actions';
-import { firebaseActions } from '../lib/redux-firebase';
+import { setCurrentLocale } from '../intl/actions';
 import { processEvent } from '../../common/home/actions';
 
-export const ON_APP_COMPONENT_DID_MOUNT = 'ON_APP_COMPONENT_DID_MOUNT';
+export const UPDATE_APP_STATE_FROM_STORAGE = 'UPDATE_APP_STATE_FROM_STORAGE';
 
-export function onAppComponentDidMount() {
+export function updateAppStateFromStorage() {
+  return ({ dispatch, engine }) => {
+    engine.load().then(state => {
+      if (state.intl && state.intl.currentLocale) {
+        dispatch(setCurrentLocale(state.intl.currentLocale));
+      } else if (process.env.IS_SERVERLESS) {
+        // TODO: Add a reliable client side only locale detection with failback
+        // to config defaultLocale.
+        dispatch(setCurrentLocale('en'));
+      }
+    });
+    return {
+      type: UPDATE_APP_STATE_FROM_STORAGE
+    };
+  };
+}
+
+export const SUBSCRIBE_TO_BUS_EVENTS = 'SUBSCRIBE_TO_BUS_EVENTS';
+
+export function subscribeToBusEvents() {
   // Who injected dispatch? Check configureStore.js injectMiddleware.
   return ({ dispatch, subscribeToBusEvents }) => {
     /* Create a bound action creator (see
@@ -12,12 +30,5 @@ export function onAppComponentDidMount() {
        smartHome-event handler */
     const boundProcessEvent = (event) => dispatch(processEvent(event));
     subscribeToBusEvents(boundProcessEvent);
-
-    /* for Firebase-related login (by Este) */
-    dispatch(firebaseActions.watchAuth(authActions.logout));
-
-    return {
-      type: ON_APP_COMPONENT_DID_MOUNT
-    };
   };
 }

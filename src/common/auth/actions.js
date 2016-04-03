@@ -1,3 +1,5 @@
+import { ValidationError } from '../lib/validation';
+
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGIN_START = 'LOGIN_START';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -5,13 +7,19 @@ export const LOGOUT = 'LOGOUT';
 
 export function login(fields) {
   return ({ fetch, validate }) => {
-    // Why function? https://phabricator.babeljs.io/T2765
-    async function getPromise() {
+    const getPromise = async () => {
       try {
         await validate(fields)
           .prop('email').required().email()
           .prop('password').required().simplePassword()
           .promise;
+        // Simulate response for server-less (Firebase hosting) example.
+        if (process.env.IS_SERVERLESS) {
+          return {
+            email: fields.email,
+            id: Date.now()
+          };
+        }
         // Sure we can use smarter api than raw fetch.
         const response = await fetch('/api/v1/auth/login', {
           method: 'POST',
@@ -22,13 +30,13 @@ export function login(fields) {
         // Return JSON response.
         return response.json();
       } catch (error) {
-        // Here we can transforn error statuses to custom errors.
+        // Transform error status to custom error.
         if (error.status === 401) {
-          throw validate.wrongPassword('password');
+          throw new ValidationError('wrongPassword', { prop: 'password' });
         }
         throw error;
       }
-    }
+    };
 
     return {
       type: 'LOGIN',
@@ -40,7 +48,8 @@ export function login(fields) {
 }
 
 export function logout() {
-  return ({ firebase }) => {
+  return ({ engine, firebase }) => {
+    engine.save({});
     firebase.unauth();
     return {
       type: LOGOUT

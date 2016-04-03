@@ -1,21 +1,21 @@
 import Component from 'react-pure-render/component';
-import React, {PropTypes} from 'react';
-import {Link} from 'react-router';
-import {connect} from 'react-redux';
+import React, { PropTypes } from 'react';
+import { Link } from 'react-router';
+import { connect } from 'react-redux';
 
-import {HeaderRow, Navigation} from 'react-mdl/lib/Layout';
+import { HeaderRow, Navigation } from 'react-mdl/lib/Layout';
 
 class Appbar extends Component {
 
   static propTypes = {
-    msg: PropTypes.object.isRequired,
     pathname: PropTypes.string.isRequired,
     viewer: PropTypes.object
   };
 
   render() {
-    const {msg, viewer} = this.props;
+    const { viewer } = this.props;
 
+    /* MERGE-TODO: Use link-messages from ./linksMessages */
     return (
       <HeaderRow>
         <Navigation>
@@ -29,5 +29,5 @@ class Appbar extends Component {
 }
 
 export default connect(state => ({
-  msg: state.intl.msg.home
+  viewer: state.users.viewer
 }))(Appbar);

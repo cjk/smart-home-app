@@ -16,10 +16,9 @@ const devtools = 'cheap-module-eval-source-map';
 
 const loaders = {
   css: '',
-  less: '!less-loader',
+  // Why not LESS or Stylus? The battle is over, let's focus on inline styles.
   scss: '!sass-loader',
-  sass: '!sass-loader?indentedSyntax',
-  styl: '!stylus-loader'
+  sass: '!sass-loader?indentedSyntax'
 };
 
 const serverIp = ip.address();
@@ -73,6 +72,12 @@ export default function makeConfig(isDevelopment) {
           env: {
             development: {
               presets: ['react-hmre']
+            },
+            production: {
+              plugins: [
+                'transform-react-constant-elements',
+                'transform-react-inline-elements'
+              ]
             }
           }
         }
@@ -95,6 +100,7 @@ export default function makeConfig(isDevelopment) {
           'process.env': {
             IS_BROWSER: true, // Because webpack is used only for browser code.
             IS_REACT_NATIVE: false, // To strip off React Native code.
+            IS_SERVERLESS: JSON.stringify(process.env.IS_SERVERLESS || false),
             NODE_ENV: JSON.stringify(isDevelopment ? 'development' : 'production'),
             SERVER_URL: JSON.stringify(process.env.SERVER_URL || '')
           }

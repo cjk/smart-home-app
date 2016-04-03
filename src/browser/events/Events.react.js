@@ -1,27 +1,34 @@
 import Component from 'react-pure-render/component';
-import {DataTable} from 'react-mdl/lib';
-import {List, Map} from 'immutable';
+import { DataTable } from 'react-mdl/lib';
+import { List, Map } from 'immutable';
 import moment from 'moment';
 import React from 'react';
-import {connect} from 'react-redux';
+import { FormattedMessage, defineMessages, injectIntl, intlShape } from 'react-intl';
+
+const messages = defineMessages({
+  emptyList: {
+    defaultMessage: 'no events yet',
+    id: 'event.emptyList'
+  }
+});
 
 class EventList extends Component {
 
   static propTypes = {
     list: React.PropTypes.object.isRequired,
-    msg: React.PropTypes.object.isRequired
+    intl: intlShape.isRequired,
   };
 
   render() {
-    const {list, msg} = this.props;
+    const { list } = this.props;
 
     const columns = List([
-      {name: 'created', label: 'Time'},
-      {name: 'action', label: 'Action'},
-      {name: 'dest', label: 'Address'},
-      {name: 'src', label: 'From'},
-      {name: 'type', label: 'Type'},
-      {name: 'value', label: 'Value'},
+      { name: 'created', label: 'Time' },
+      { name: 'action', label: 'Action' },
+      { name: 'dest', label: 'Address' },
+      { name: 'src', label: 'From' },
+      { name: 'type', label: 'Type' },
+      { name: 'value', label: 'Value' },
     ]);
 
     const rows = list.map(event => {
@@ -31,21 +38,18 @@ class EventList extends Component {
                          moment(event[colName]).format('MMMM Do YYYY, HH:mm:ss') :
                          event[colName]);
 
-        return row.merge({[colName]: content});
+        return row.merge({ [colName]: content });
       }, Map());
     });
 
     if (!list.size) return (
-      <p>{msg.emptyList}</p>
+      <p><FormattedMessage {...messages.emptyList} /></p>
     );
 
     return (
       <DataTable columns={columns.toJS()} rows={rows.toJS()} />
     );
   }
-
 }
 
-export default connect(state => ({
-  msg: state.intl.msg.home
-}))(EventList);
+export default injectIntl(EventList);

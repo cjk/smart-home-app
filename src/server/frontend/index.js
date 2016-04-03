@@ -1,5 +1,4 @@
 import compression from 'compression';
-import device from 'express-device';
 import esteMiddleware from '../lib/esteMiddleware';
 import express from 'express';
 import render from './render';
@@ -19,7 +18,6 @@ app.use('/assets', express.static('build', { maxAge: '200d' }));
 // CjK 22.01.2016: Is this still needed in addition to the above?
 app.use('/assets/js', express.static('assets/js', { maxAge: '200d' }));
 
-app.use(device.capture());
 app.get('*', render);
 
 app.on('mount', () => {

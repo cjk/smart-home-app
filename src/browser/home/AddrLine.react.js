@@ -3,7 +3,6 @@ import React, { PropTypes } from 'react';
 import { ListItem, ListItemContent, ListItemAction } from 'react-mdl/lib/List';
 import { Switch } from 'react-mdl/lib';
 import Component from 'react-pure-render/component';
-import { connect } from 'react-redux';
 
 /* Presentational component to render address-list lines */
 class AddrLine extends Component {
@@ -36,9 +35,6 @@ class AddrLine extends Component {
       </ListItem>
     );
   }
-
 }
 
-export default connect(state => ({
-  msg: state.intl.msg.home
-}))(AddrLine);
+export default AddrLine;

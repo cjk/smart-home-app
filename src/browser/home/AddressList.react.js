@@ -1,4 +1,4 @@
-import './AddressList.less';
+import './AddressList.scss';
 import AddrLine from './AddrLine.react';
 import FABButton from 'react-mdl/lib/FABButton';
 import { List } from 'react-mdl/lib/List';
@@ -14,8 +14,7 @@ class AddressList extends Component {
   static propTypes = {
     addresses: PropTypes.object.isRequired,
     requestInitialState: PropTypes.func.isRequired,
-    writeGroupAddr: PropTypes.func.isRequired,
-    msg: PropTypes.object
+    writeGroupAddr: PropTypes.func.isRequired
   }
 
   updateAddr = (addr) => {
@@ -30,7 +29,7 @@ class AddressList extends Component {
   }
 
   render() {
-    const { addresses, msg } = this.props;
+    const { addresses } = this.props;
     const updateAddr = this.updateAddr;
 
     return (
@@ -49,7 +48,7 @@ class AddressList extends Component {
           addresses.sortBy(addr => addr.name)
                    .sortBy(addr => !addr.value)
                    .map(address =>
-                     <AddrLine {...{ msg, address, updateAddr }} key={address.id} />
+                     <AddrLine {...{ address, updateAddr }} key={address.id} />
                    )
         }
       </List>
@@ -57,6 +56,4 @@ class AddressList extends Component {
   }
 }
 
-export default connect(state => ({
-  msg: state.intl.msg.home, /* PENDING: don't use this, create your own subtree in en.js */
-}), addressActions)(AddressList);
+export default connect(null, addressActions)(AddressList);
