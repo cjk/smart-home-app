@@ -2,11 +2,10 @@ import './Home.scss';
 import AddressList from './AddressList.react';
 import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
-/* MERGE-TODO */
+import React, { PropTypes } from 'react';
 import { requestInitialState } from '../../common/home/actions';
 import { connect } from 'react-redux';
 import { Card } from 'react-mdl/lib';
-import React, { PropTypes } from 'react';
 import { defineMessages, injectIntl, intlShape } from 'react-intl';
 
 const messages = defineMessages({
@@ -25,8 +24,9 @@ class Page extends Component {
   };
 
   componentDidMount() {
+    /* Request and wait for loading of smart-home-state from backend */
     const { dispatch } = this.props;
-    dispatch(requestInitialState);
+    dispatch(requestInitialState());
   }
 
   render() {
@@ -43,13 +43,7 @@ class Page extends Component {
   }
 }
 
-/* MERGE-TODO */
-// Truly universal (not only isomorphic) data fetching.
-// One higher order component for browser, server, and mobile.
-/* Page = fetch(requestInitialState)(Page); */
-
 Page = injectIntl(Page);
-
 
 export default connect(state => ({
   smartHome: state.smartHome

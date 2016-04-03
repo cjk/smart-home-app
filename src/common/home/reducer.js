@@ -16,6 +16,12 @@ const revive = ({ livestate, eventHistory }) => initialState.merge({
   eventHistory: eventHistory
 });
 
+function updateAddrValue(state, id, value) {
+  if (!state.has(id))
+    return state;
+  return state.update(id, (addr) => addr.set('value', value));
+}
+
 export default function connectHomeReducer(state = initialState, action) {
   if (!(state instanceof InitialState)) return revive(state);
 
@@ -55,10 +61,4 @@ export default function connectHomeReducer(state = initialState, action) {
   }
 
   return state;
-}
-
-function updateAddrValue(state, id, value) {
-  if (!state.has(id))
-    return state;
-  return state.update(id, (addr) => addr.set('value', value));
 }
