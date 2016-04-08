@@ -1,5 +1,4 @@
 import { setCurrentLocale } from '../intl/actions';
-import { processEvent } from '../../common/home/actions';
 
 export const UPDATE_APP_STATE_FROM_STORAGE = 'UPDATE_APP_STATE_FROM_STORAGE';
 
@@ -17,18 +16,5 @@ export function updateAppStateFromStorage() {
     return {
       type: UPDATE_APP_STATE_FROM_STORAGE
     };
-  };
-}
-
-export const SUBSCRIBE_TO_BUS_EVENTS = 'SUBSCRIBE_TO_BUS_EVENTS';
-
-export function subscribeToBusEvents() {
-  // Who injected dispatch? Check configureStore.js injectMiddleware.
-  return ({ dispatch, subscribeToBusEvents }) => {
-    /* Create a bound action creator (see
-       http://redux.js.org/docs/basics/Actions.html) and send it to our
-       smartHome-event handler */
-    const boundProcessEvent = (event) => dispatch(processEvent(event));
-    subscribeToBusEvents(boundProcessEvent);
   };
 }

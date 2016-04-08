@@ -13,7 +13,7 @@ const buildLivestate = (livestate) => new Map(livestate).map(addr => new Addr(ad
 // Note how JSON from server is revived to immutable record.
 const revive = ({ livestate, eventHistory }) => initialState.merge({
   livestate: buildLivestate(livestate),
-  eventHistory: eventHistory
+  eventHistory
 });
 
 function updateAddrValue(state, id, value) {

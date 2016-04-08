@@ -7,6 +7,8 @@ import { requestInitialState } from '../../common/home/actions';
 import { connect } from 'react-redux';
 import { Card } from 'react-mdl/lib';
 import { defineMessages, injectIntl, intlShape } from 'react-intl';
+import smartHomeConnect from '../../common/home/connector';
+import { processEvent } from '../../common/home/actions';
 
 const messages = defineMessages({
   title: {
@@ -27,6 +29,10 @@ class Page extends Component {
     /* Request and wait for loading of smart-home-state from backend */
     const { dispatch } = this.props;
     dispatch(requestInitialState());
+
+    const { subscribeToBusEvents } = smartHomeConnect();
+    const boundProcessEvent = (state) => dispatch(processEvent(state));
+    subscribeToBusEvents(boundProcessEvent);
   }
 
   render() {
