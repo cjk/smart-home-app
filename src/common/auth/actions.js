@@ -1,4 +1,5 @@
 import { ValidationError } from '../lib/validation';
+import { browserHistory } from 'react-router';
 
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const LOGIN_START = 'LOGIN_START';
@@ -9,6 +10,7 @@ export function login(fields) {
   return ({ fetch, validate }) => {
     const getPromise = async () => {
       try {
+        // Validate fields async.
         await validate(fields)
           .prop('email').required().email()
           .prop('password').required().simplePassword()
@@ -20,17 +22,16 @@ export function login(fields) {
             id: Date.now()
           };
         }
-        // Sure we can use smarter api than raw fetch.
+        // Naive API fetch example.
         const response = await fetch('/api/v1/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(fields)
         });
         if (response.status !== 200) throw response;
-        // Return JSON response.
         return response.json();
       } catch (error) {
-        // Transform error status to custom error.
+        // HTTP status to ValidationError.
         if (error.status === 401) {
           throw new ValidationError('wrongPassword', { prop: 'password' });
         }
@@ -40,16 +41,18 @@ export function login(fields) {
 
     return {
       type: 'LOGIN',
-      payload: {
-        promise: getPromise()
-      }
+      payload: getPromise()
     };
   };
 }
 
 export function logout() {
   return ({ engine, firebase }) => {
-    engine.save({});
+    // Always redirect to home first to ensure valid view state after logout.
+    if (process.env.IS_BROWSER) {
+      browserHistory.replace('/');
+    }
+    engine.save({}); // Always reset client storage.
     firebase.unauth();
     return {
       type: LOGOUT
