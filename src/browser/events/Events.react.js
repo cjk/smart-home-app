@@ -12,6 +12,9 @@ const messages = defineMessages({
   }
 });
 
+/* How many events to show in events-history table */
+const maxListEntries = 50;
+
 class EventList extends Component {
 
   static propTypes = {
@@ -22,16 +25,18 @@ class EventList extends Component {
   render() {
     const { list } = this.props;
 
+    const sortedList = list.sortBy(e => e.created, (a, b) => a < b);
+
     const columns = List([
       { name: 'created', label: 'Time' },
       { name: 'action', label: 'Action' },
       { name: 'dest', label: 'Address' },
-      //{ name: 'src', label: 'From' },
+      // { name: 'src', label: 'From' },
       { name: 'type', label: 'Type' },
       { name: 'value', label: 'Value' },
     ]);
 
-    const rows = list.map(event => (
+    const rows = sortedList.take(maxListEntries).map(event => (
       columns.reduce((row, col) => {
         const colName = col.name;
         const content = (colName === 'created' ?
