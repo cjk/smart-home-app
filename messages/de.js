@@ -6,338 +6,146 @@ export default [
   },
   {
     "id": "app.links.home",
-    "defaultMessage": "Home"
+    "defaultMessage": "Homepage"
   },
   {
     "id": "app.links.intl",
-    "defaultMessage": "Intl"
+    "defaultMessage": "Übersetzung"
   },
   {
     "id": "app.links.login",
-    "defaultMessage": "Login"
+    "defaultMessage": "Anmelden"
   },
   {
     "id": "app.links.me",
-    "defaultMessage": "Me"
+    "defaultMessage": "Ich"
   },
   {
     "id": "app.links.events",
-    "defaultMessage": "Events"
+    "defaultMessage": "Ereignisse"
   },
   {
     "id": "app.links.fermenter",
-    "defaultMessage": "Fermenter"
-  },
-  {
-    "id": "fermenter.title",
-    "defaultMessage": "Fermenter-closet"
+    "defaultMessage": "Fermentierschrank"
   },
   {
     "id": "auth.login.emailPlaceholder",
-    "defaultMessage": "your@email.com"
+    "defaultMessage": "ihre@email.com"
   },
   {
     "id": "auth.login.error.email",
-    "defaultMessage": "Email address is not valid."
+    "defaultMessage": "Diese E-Mail Adresse ist nicht gültig."
   },
   {
     "id": "auth.login.error.required",
-    "defaultMessage": "Please fill out {prop, select, email {email} password {password}}."
+    "defaultMessage": "Bitte füllen Sie das Feld {prop, select, email {Email} password {Passwort}} aus."
   },
   {
     "id": "auth.login.error.simplePassword",
-    "defaultMessage": "Password must contain at least {minLength} characters."
+    "defaultMessage": "Das Passwort muss mindestens {minLength} Zeichen lang sein."
   },
   {
     "id": "auth.login.error.wrongPassword",
-    "defaultMessage": "Wrong password."
+    "defaultMessage": "Falsches Passwort"
   },
   {
     "id": "auth.login.formLegend",
-    "defaultMessage": "Classic XMLHttpRequest Login"
+    "defaultMessage": "Klassische Anmeldung via XMLHttpRequest"
   },
   {
     "id": "auth.login.hint",
-    "defaultMessage": "Hint: pass1"
+    "defaultMessage": "Tipp: pass1"
   },
   {
     "id": "auth.login.loginButton",
-    "defaultMessage": "Login"
+    "defaultMessage": "Anmelden"
   },
   {
     "id": "auth.login.passwordPlaceholder",
-    "defaultMessage": "password"
+    "defaultMessage": "Passwort"
   },
   {
     "id": "auth.logout",
-    "defaultMessage": "Logout"
+    "defaultMessage": "Abmelden"
   },
   {
-    "id": "auth.page.title",
-    "defaultMessage": "Login"
-  },
-  {
-    "id": "firebase.error.authenticationProviderDisabled",
-    "defaultMessage": "The requested authentication provider is disabled for this Firebase."
-  },
-  {
-    "id": "firebase.error.dataStale",
-    "defaultMessage": "Internal use."
-  },
-  {
-    "id": "firebase.error.deniedByUser",
-    "defaultMessage": "The user did not authorize the application."
-  },
-  {
-    "id": "firebase.error.disconnected",
-    "defaultMessage": "The operation had to be aborted due to a network disconnect."
-  },
-  {
-    "id": "firebase.error.emailTaken",
-    "defaultMessage": "The new user account cannot be created because the specified email address is already in use."
-  },
-  {
-    "id": "firebase.error.expiredToken",
-    "defaultMessage": "The supplied auth token has expired."
-  },
-  {
-    "id": "firebase.error.invalidAuthArguments",
-    "defaultMessage": "The specified credentials are malformed or incomplete."
-  },
-  {
-    "id": "firebase.error.invalidConfiguration",
-    "defaultMessage": "The requested authentication provider is misconfigured, and the request cannot complete."
-  },
-  {
-    "id": "firebase.error.invalidCredentials",
-    "defaultMessage": "The specified authentication credentials are invalid."
-  },
-  {
-    "id": "firebase.error.invalidEmail",
-    "defaultMessage": "The specified email is not a valid email."
-  },
-  {
-    "id": "firebase.error.invalidPassword",
-    "defaultMessage": "The specified user account password is incorrect."
-  },
-  {
-    "id": "firebase.error.invalidProvider",
-    "defaultMessage": "The requested authentication provider does not exist."
-  },
-  {
-    "id": "firebase.error.invalidToken",
-    "defaultMessage": "The specified authentication token is invalid."
-  },
-  {
-    "id": "firebase.error.limitsExceeded",
-    "defaultMessage": "Limits exceeded."
-  },
-  {
-    "id": "firebase.error.maxRetries",
-    "defaultMessage": "The transaction had too many retries."
-  },
-  {
-    "id": "firebase.error.networkError",
-    "defaultMessage": "The operation could not be performed due to a network error."
-  },
-  {
-    "id": "firebase.error.operationFailed",
-    "defaultMessage": "The server indicated that this operation failed."
-  },
-  {
-    "id": "firebase.error.overriddenBySet",
-    "defaultMessage": "The transaction was overridden by a subsequent set."
-  },
-  {
-    "id": "firebase.error.permissionDenied",
-    "defaultMessage": "This client does not have permission to perform this operation."
-  },
-  {
-    "id": "firebase.error.preempted",
-    "defaultMessage": "The active or pending auth credentials were superseded by another call to auth."
-  },
-  {
-    "id": "firebase.error.providerError",
-    "defaultMessage": "A third-party provider error occurred."
-  },
-  {
-    "id": "firebase.error.unavailable",
-    "defaultMessage": "The service is unavailable."
-  },
-  {
-    "id": "firebase.error.unknownError",
-    "defaultMessage": "An unknown error occurred."
-  },
-  {
-    "id": "firebase.error.userCancelled",
-    "defaultMessage": "The user cancelled authentication."
-  },
-  {
-    "id": "firebase.error.userCodeException",
-    "defaultMessage": "An exception occurred in user code."
-  },
-  {
-    "id": "firebase.error.userDoesNotExist",
-    "defaultMessage": "The specified user account does not exist."
-  },
-  {
-    "id": "firebase.error.writeCanceled",
-    "defaultMessage": "The write was canceled locally."
-  },
-  {
-    "id": "firebase.login.dismiss",
-    "defaultMessage": "Dismiss"
-  },
-  {
-    "id": "firebase.login.emailLoginOrSignUp",
-    "defaultMessage": "Email Login / Sign Up"
-  },
-  {
-    "id": "firebase.login.emailPasswordRecovery",
-    "defaultMessage": "Email Password Recovery"
-  },
-  {
-    "id": "firebase.login.emailPlaceholder",
-    "defaultMessage": "your@email.com"
-  },
-  {
-    "id": "firebase.login.facebookLogin",
-    "defaultMessage": "Facebook Login"
-  },
-  {
-    "id": "firebase.login.loginButton",
-    "defaultMessage": "Login"
-  },
-  {
-    "id": "firebase.login.passwordForgotten",
-    "defaultMessage": "Forgot your password?"
-  },
-  {
-    "id": "firebase.login.passwordPlaceholder",
-    "defaultMessage": "password"
-  },
-  {
-    "id": "firebase.login.recoveryEmailSent",
-    "defaultMessage": "Recovery email has been sent."
-  },
-  {
-    "id": "firebase.login.resetPassword",
-    "defaultMessage": "Reset Password"
-  },
-  {
-    "id": "firebase.login.signUp",
-    "defaultMessage": "Sign Up"
-  },
-  {
-    "id": "firebase.page.loadMore",
-    "defaultMessage": "Load more"
-  },
-  {
-    "id": "firebase.profile.greeting",
-    "defaultMessage": "Hi"
-  },
-  {
-    "id": "firebase.profile.logout",
-    "defaultMessage": "Logout"
-  },
-  {
-    "id": "firebase.users.lastLoggedInUsers",
-    "defaultMessage": "Last {limitToLast} Logged In Users"
-  },
-  {
-    "id": "footer.madeBy",
+    "id": "footer.madeByHtml",
     "defaultMessage": "written by <a href=\"https://twitter.com/cjk\">CjK</a>, based on steida's Este.js"
   },
   {
     "id": "home.intro",
-    "defaultMessage": "<p>\n        Ahoy, this is\n        <a target=\"_blank\" href=\"https://github.com/este/este\">Este</a> dev stack.\n      </p>"
+    "defaultMessage": "<p>\n        Hey ho, hier\n        <a target=\"_blank\" href=\"https://github.com/este/este\">Este</a> dev stack.\n      </p>"
   },
   {
     "id": "home.native.intro",
-    "defaultMessage": "Este App\n      Press CMD+R to reload\n      Press CMD+D for debug menu"
-  },
-  {
-    "id": "home.title",
-    "defaultMessage": "CjK's smart-home"
+    "defaultMessage": "Este App\n      CMD+R drücken um zu Aktualisieren\n      CMD+D drücken um das Debugging-Menu zu öffnen"
   },
   {
     "id": "intl.page.h2",
-    "defaultMessage": "react-intl demonstration"
-  },
-  {
-    "id": "intl.page.title",
-    "defaultMessage": "Intl"
+    "defaultMessage": "Demo von react-intl"
   },
   {
     "id": "intl.page.unreadCount",
-    "defaultMessage": "{unreadCount, plural, one {message} other {messages}}"
+    "defaultMessage": "{unreadCount, plural, one {Meldung} other {Meldungen}}"
   },
   {
     "id": "me.page.linkToProfile",
-    "defaultMessage": "Profile"
+    "defaultMessage": "Profil"
   },
   {
     "id": "me.page.linkToSettings",
-    "defaultMessage": "Settings"
-  },
-  {
-    "id": "me.page.title",
-    "defaultMessage": "Me"
+    "defaultMessage": "Einstellungen"
   },
   {
     "id": "me.page.welcome",
-    "defaultMessage": "Hi {email}. This is your secret page."
+    "defaultMessage": "Guten Tag {email}. Das ist Ihre geheime Seite."
   },
   {
     "id": "me.profilePage.title",
-    "defaultMessage": "Profile"
+    "defaultMessage": "Profil"
   },
   {
     "id": "me.settingsPage.title",
-    "defaultMessage": "Settings"
+    "defaultMessage": "Einstellungen"
   },
   {
     "id": "notFound.continue",
-    "defaultMessage": "Continue here please."
+    "defaultMessage": "Hier weiter bitte"
   },
   {
     "id": "notFound.h1",
-    "defaultMessage": "This page isn't available"
+    "defaultMessage": "Diese Seite existiert nicht."
   },
   {
     "id": "notFound.p",
-    "defaultMessage": "The link may be broken, or the page may have been removed."
+    "defaultMessage": "Der Link ist möglicherweise veraltet oder die Seite wurde gelöscht."
   },
   {
     "id": "notFound.title",
-    "defaultMessage": "Page Not Found"
+    "defaultMessage": "Seite nicht gefunden"
   },
   {
     "id": "todos.buttons.add100",
-    "defaultMessage": "Add 100 Todos"
+    "defaultMessage": "100 Aufgaben hinzufügen"
   },
   {
     "id": "todos.buttons.clearAll",
-    "defaultMessage": "Clear All"
+    "defaultMessage": "Alles löschen"
   },
   {
     "id": "todos.buttons.clearCompleted",
-    "defaultMessage": "Clear Completed"
+    "defaultMessage": "Löschen abgeschlossen"
   },
   {
     "id": "todos.leftTodos",
-    "defaultMessage": "{leftTodos, plural, =0 {Nothing, enjoy :-)} one {You have {leftTodos} task} other {You have {leftTodos} tasks}}"
+    "defaultMessage": "{leftTodos, plural, =0 {Es gibt nichts mehr zu tun, viel Spass! :-)} one {Sie haben {leftTodos} Aufgabe} other {Sie haben {leftTodos} Aufgaben}}"
   },
   {
     "id": "todos.newTodo.placeholder",
-    "defaultMessage": "What needs to be done?"
-  },
-  {
-    "id": "todos.page.title",
-    "defaultMessage": "Todos"
+    "defaultMessage": "Was müssen Sie tun?"
   },
   {
     "id": "todos.todos.empty",
-    "defaultMessage": "It's rather empty here..."
+    "defaultMessage": "Es ist eher ruhig hier..."
   }
 ];

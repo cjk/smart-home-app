@@ -5,14 +5,8 @@ import smartHomeConnect from '../../common/home/connector';
 import { processState } from '../../common/fermenter/actions';
 import TempHumidityInfo from './TempHumidity.react';
 import { connect } from 'react-redux';
+import linksMessages from '../../common/app/linksMessages';
 import { defineMessages, injectIntl, intlShape } from 'react-intl';
-
-const messages = defineMessages({
-  title: {
-    defaultMessage: 'Fermenter-closet',
-    id: 'fermenter.title'
-  }
-});
 
 class Page extends Component {
 
@@ -33,7 +27,7 @@ class Page extends Component {
 
   render() {
     const { intl, fermenter: fermenterState } = this.props;
-    const title = intl.formatMessage(messages.title);
+    const title = intl.formatMessage(linksMessages.fermenter);
 
     return (
       <div className="events-page" id="events">
