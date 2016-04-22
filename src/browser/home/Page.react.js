@@ -3,17 +3,22 @@ import AddressList from './AddressList.react';
 import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
 import React, { PropTypes } from 'react';
-import { requestInitialState } from '../../common/home/actions';
+import { requestInitialState, processEvent } from '../../common/home/actions';
 import { connect } from 'react-redux';
 import { Card } from 'react-mdl/lib';
-import { defineMessages, injectIntl, intlShape } from 'react-intl';
+import linksMessages from '../../common/app/linksMessages';
+import { FormattedHTMLMessage, defineMessages, injectIntl, intlShape } from 'react-intl';
 import smartHomeConnect from '../../common/home/connector';
-import { processEvent } from '../../common/home/actions';
 
 const messages = defineMessages({
-  title: {
-    defaultMessage: 'Home',
-    id: 'home.title'
+  intro: {
+    defaultMessage: `
+      <p>
+        Welcome, this is CjK's
+        <a target="_blank" href="https://github.com/cjk/smart-home-app">smart-home</a> app.
+      </p>
+    `,
+    id: 'home.intro'
   }
 });
 
@@ -37,12 +42,13 @@ class Page extends Component {
 
   render() {
     const { intl, smartHome: { livestate: addressMap } } = this.props;
-    const title = intl.formatMessage(messages.title);
+    const title = intl.formatMessage(linksMessages.home);
     const addresses = addressMap.toList();
 
     return (
       <Card className="home-page" id="home">
         <Helmet title={ title } />
+        <FormattedHTMLMessage {...messages.intro} />
         <AddressList {...{ addresses }} />
       </Card>
     );

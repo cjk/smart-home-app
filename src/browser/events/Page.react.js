@@ -3,14 +3,8 @@ import Events from './Events.react';
 import Helmet from 'react-helmet';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import linksMessages from '../../common/app/linksMessages';
 import { defineMessages, injectIntl, intlShape } from 'react-intl';
-
-const messages = defineMessages({
-  title: {
-    defaultMessage: 'Event-History',
-    id: 'events.title'
-  }
-});
 
 class Page extends Component {
 
@@ -21,7 +15,7 @@ class Page extends Component {
 
   render() {
     const { intl, smartHome: { eventHistory: list } } = this.props;
-    const title = intl.formatMessage(messages.title);
+    const title = intl.formatMessage(linksMessages.events);
 
     return (
       <div className="events-page" id="events">

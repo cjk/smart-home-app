@@ -35,10 +35,10 @@ class App extends Component {
     const { children, currentLocale, location } = this.props;
 
     return (
-      <div className="page">
+      <div className="container">
         <Helmet
           htmlAttributes={{ lang: currentLocale }}
-          titleTemplate="%s - Este.js"
+          titleTemplate="%s - smartHome.js"
           meta={[
             ...bootstrap4Metas,
             {
@@ -57,7 +57,7 @@ class App extends Component {
             <Appbar pathname={location.pathname} />
           </Header>
 
-          {/* MERGE-TODO: Move to own component and use ./linksMessages for link-texts */}
+          {/* TODO: Move to own component and use ./linksMessages for link-texts */}
           <Drawer title="Menu">
             <Navigation>
               <a href="">Link #1</a>

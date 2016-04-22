@@ -29,10 +29,6 @@ export default [
     "defaultMessage": "Fermenter"
   },
   {
-    "id": "fermenter.title",
-    "defaultMessage": "Fermenter-closet"
-  },
-  {
     "id": "fermenter.environment",
     "defaultMessage": "Environment"
   },
@@ -83,10 +79,6 @@ export default [
   {
     "id": "auth.logout",
     "defaultMessage": "Logout"
-  },
-  {
-    "id": "auth.page.title",
-    "defaultMessage": "Login"
   },
   {
     "id": "firebase.error.authenticationProviderDisabled",
@@ -285,10 +277,6 @@ export default [
     "defaultMessage": "react-intl demonstration"
   },
   {
-    "id": "intl.page.title",
-    "defaultMessage": "Intl"
-  },
-  {
     "id": "intl.page.unreadCount",
     "defaultMessage": "{unreadCount, plural, one {message} other {messages}}"
   },
@@ -299,10 +287,6 @@ export default [
   {
     "id": "me.page.linkToSettings",
     "defaultMessage": "Settings"
-  },
-  {
-    "id": "me.page.title",
-    "defaultMessage": "Me"
   },
   {
     "id": "me.page.welcome",
@@ -351,10 +335,6 @@ export default [
   {
     "id": "todos.newTodo.placeholder",
     "defaultMessage": "What needs to be done?"
-  },
-  {
-    "id": "todos.page.title",
-    "defaultMessage": "Todos"
   },
   {
     "id": "todos.todos.empty",
