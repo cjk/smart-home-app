@@ -27,7 +27,7 @@ class EventList extends Component {
       { name: 'action', label: 'Action' },
       { name: 'dest', label: 'Address' },
       //{ name: 'src', label: 'From' },
-      //{ name: 'type', label: 'Type' },
+      { name: 'type', label: 'Type' },
       { name: 'value', label: 'Value' },
     ]);
 
@@ -35,7 +35,7 @@ class EventList extends Component {
       columns.reduce((row, col) => {
         const colName = col.name;
         const content = (colName === 'created' ?
-                         moment(event[colName]).fromNow() :
+                         moment(event[colName]).fromNow(true) :
                          event[colName]);
 
         return row.merge({ [colName]: content });

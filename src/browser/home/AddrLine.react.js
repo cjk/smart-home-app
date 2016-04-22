@@ -24,11 +24,20 @@ class AddrLine extends Component {
 
   render() {
     const { address } = this.props;
-    const switchable = (addr) => addr.func === 'light';
+    const switchable = (addr) => addr.type === 'switch';
+
+    /* Decides which action-item to display */
+    const chooseIcon = (addFunc) => {
+      switch (addFunc) {
+        case 'light': return 'wb_incandescent';
+        case 'shut': return 'web_asset';
+        default: return 'all_inclusive';
+      }
+    };
 
     return (
       <ListItem twoLine className="addressRow">
-        <ListItemContent avatar="wb_incandescent" subtitle={address.id}>{address.name}</ListItemContent>
+        <ListItemContent avatar={chooseIcon(address.func)} subtitle={address.id}>{address.name}</ListItemContent>
         <ListItemAction info={R.isNil(address.value) ? '???' : address.value.toString()}>
           <Switch ripple checked={!!address.value} disabled={!switchable(address)} id={address.id} onChange={this.onSwitchToggle} />
         </ListItemAction>
