@@ -1,13 +1,20 @@
 # Este
+#
 *.sublime-workspace
 src/common/secrets.json
 src/native/config.js
 src/native/messages.js
+webpack-assets.json
+firebase/rules.json
+*.jsbundle
 
+# React Native
 # OSX
+#
 .DS_Store
 
 # Xcode
+#
 build/
 *.pbxuser
 !default.pbxuser
@@ -27,20 +34,19 @@ DerivedData
 project.xcworkspace
 
 # Android/IJ
+#
 .idea
 .gradle
 local.properties
 
 # node.js
+#
 node_modules/
 npm-debug.log
-webpack-assets.json
 
 # misc
 .tern-port
 /.sass-cache
-npm-debug.log
-*.log
 GPATH
 GRTAGS
 GTAGS
@@ -49,6 +55,3 @@ TAGS
 
 # Credentials
 # src/server/paypal-credentials.js
-
-# firebase
-firebase/rules.json
