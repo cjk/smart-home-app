@@ -20,13 +20,16 @@ const messages = defineMessages({
 class TempHumidity extends Component {
 
   static propTypes = {
-    fermenterState: React.PropTypes.object.isRequired,
+    state: React.PropTypes.object.isRequired,
     intl: intlShape.isRequired,
   };
 
   render() {
-    const { fermenterState: state } = this.props;
-    const { env, devices: { heater, humidifier } } = state;
+    const { state } = this.props;
+
+    const env = state.get('env');
+    const devices = state.get('devices');
+    const { heater, humidifier } = devices;
 
     if (!env.createdAt) {
       return (<div>No information yet...</div>);
@@ -34,9 +37,9 @@ class TempHumidity extends Component {
 
     return (
       <div>
-        <h4>Environment (iteration #{state.env.iterations}):</h4>
-        <p><FormattedMessage {...messages.temperature} />: {state.env.temperature}</p>
-        <p><FormattedMessage {...messages.humidity} />: {state.env.humidity}</p>
+        <h4>Environment (iteration #{env.iterations}):</h4>
+        <p><FormattedMessage {...messages.temperature} />: {env.temperature}</p>
+        <p><FormattedMessage {...messages.humidity} />: {env.humidity}</p>
         <hr />
         <h4>Heater:</h4>
         {
