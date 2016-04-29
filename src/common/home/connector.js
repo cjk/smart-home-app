@@ -1,3 +1,5 @@
+/* eslint no-console: "off" */
+
 /* TODO: Move to components- or lib-directory */
 import io from 'socket.io-client';
 import Event from '../events/event';
@@ -11,9 +13,12 @@ const config = {
 const socket = io.connect(`http://${config.host}:${config.port}`);
 
 socket
-  .on('connect', () => console.log(`Connected to smart-home-backend on <${config.host}:${config.port}>`))
-  .on('connect_error', () => console.log(`ERROR connecting to smart-home-backend on <${config.host}:${config.port}>`))
-  .on('connect_timeout', () => console.log(`TIMEOUT connecting to smart-home-backend on <${config.host}:${config.port}>!`));
+  .on('connect', () =>
+    console.log(`Connected to smart-home-backend on <${config.host}:${config.port}>`))
+  .on('connect_error', () =>
+    console.log(`ERROR connecting to smart-home-backend on <${config.host}:${config.port}>`))
+  .on('connect_timeout', () =>
+    console.log(`TIMEOUT connecting to smart-home-backend on <${config.host}:${config.port}>!`));
 
 function subscribeToBusEvents(eventAction) {
   socket.on('knx-event', (event) => {
