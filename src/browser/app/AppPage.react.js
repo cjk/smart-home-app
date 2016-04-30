@@ -1,4 +1,4 @@
-import './App.scss';
+import './AppPage.scss';
 import Appbar from './Appbar.react';
 import Component from 'react-pure-render/component';
 import Footer from './Footer.react';
@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 /* Material-Design-Lite imports */
 import Layout from 'react-mdl/lib/Layout/Layout';
 import { Content, Header, Drawer, Navigation } from 'react-mdl/lib/Layout';
+
+import { locationShape } from 'react-router';
 
 // v4-alpha.getbootstrap.com/getting-started/introduction/#starter-template
 const bootstrap4Metas = [
@@ -23,12 +25,12 @@ const bootstrap4Metas = [
   }
 ];
 
-class App extends Component {
+class AppPage extends Component {
 
   static propTypes = {
     children: PropTypes.object.isRequired,
     currentLocale: PropTypes.string.isRequired,
-    location: PropTypes.object.isRequired
+    location: locationShape
   };
 
   render() {
@@ -78,8 +80,8 @@ class App extends Component {
   }
 }
 
-App = start(App);
+AppPage = start(AppPage);
 
 export default connect(state => ({
   currentLocale: state.intl.currentLocale
-}))(App);
+}))(AppPage);

@@ -20,5 +20,18 @@ export default defineMessages({
   fermenter: {
     defaultMessage: 'Fermenter',
     id: 'app.links.fermenter'
+  },
+  /* Este.js remains */
+  intl: {
+    defaultMessage: 'Intl',
+    id: 'app.links.intl'
+  },
+  fields: {
+    defaultMessage: 'Fields',
+    id: 'app.links.fields'
+  },
+  firebase: {
+    defaultMessage: 'Firebase',
+    id: 'app.links.firebase'
   }
 });

@@ -1,4 +1,4 @@
-import './Home.scss';
+import './HomePage.scss';
 import AddressList from './AddressList.react';
 import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
@@ -22,7 +22,7 @@ const messages = defineMessages({
   }
 });
 
-class Page extends Component {
+class HomePage extends Component {
 
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -55,8 +55,8 @@ class Page extends Component {
   }
 }
 
-Page = injectIntl(Page);
+HomePage = injectIntl(HomePage);
 
 export default connect(state => ({
   smartHome: state.smartHome
-}))(Page);
+}))(HomePage);

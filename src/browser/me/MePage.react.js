@@ -1,4 +1,4 @@
-import './Page.scss';
+import './MePage.scss';
 import AuthLogout from '../auth/Logout.react';
 import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
@@ -23,7 +23,7 @@ const messages = defineMessages({
   },
 });
 
-class Page extends Component {
+class MePage extends Component {
 
   static propTypes = {
     children: PropTypes.object,
@@ -58,8 +58,8 @@ class Page extends Component {
 
 }
 
-Page = injectIntl(Page);
+MePage = injectIntl(MePage);
 
 export default connect(state => ({
   viewer: state.users.viewer
-}))(Page);
+}))(MePage);
