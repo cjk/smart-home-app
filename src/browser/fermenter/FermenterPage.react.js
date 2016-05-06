@@ -2,7 +2,7 @@ import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
 import React, { PropTypes } from 'react';
 import smartHomeConnect from '../../common/home/connector';
-import { processState } from '../../common/fermenter/actions';
+import * as fermenterActions from '../../common/fermenter/actions';
 import TempHumidityInfo from './TempHumidity.react';
 import Commander from './Commander.react';
 import { connect } from 'react-redux';
@@ -12,22 +12,23 @@ import { defineMessages, injectIntl, intlShape } from 'react-intl';
 class Page extends Component {
 
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
     intl: intlShape.isRequired,
     fermenter: PropTypes.object,
+    processState: PropTypes.func.isRequired,
+    fermenterStart: PropTypes.func.isRequired,
+    fermenterStop: PropTypes.func.isRequired,
   };
 
   /* TODO: Refactor out in HOC + action */
   componentDidMount() {
-    const { dispatch } = this.props;
+    const { processState } = this.props;
     const { subscribeToFermenterState } = smartHomeConnect();
 
-    const boundProcessState = (state) => dispatch(processState(state));
-    subscribeToFermenterState(boundProcessState);
+    subscribeToFermenterState(processState);
   }
 
   render() {
-    const { intl, fermenter: state } = this.props;
+    const { intl, fermenter: state, fermenterStart, fermenterStop } = this.props;
     const status = state.get('status');
 
     const title = intl.formatMessage(linksMessages.fermenter);
@@ -35,7 +36,7 @@ class Page extends Component {
     return (
       <div className="events-page" id="events">
         <Helmet title={title} />
-        <Commander fermenterStatus={status} />
+        <Commander fermenterStatus={status} fermenterStart={fermenterStart} fermenterStop={fermenterStop} />
         <TempHumidityInfo state={state} />
       </div>
     );
@@ -46,4 +47,4 @@ Page = injectIntl(Page);
 
 export default connect(state => ({
   fermenter: state.fermenter
-}))(Page);
+}), fermenterActions)(Page);

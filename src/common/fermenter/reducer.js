@@ -15,20 +15,13 @@ export default function fermenterReducer(state = initialState, action) {
   switch (action.type) {
 
     case actions.PROCESS_STATE: {
-      const fs = action.payload.fermenterState;
+      const newState = action.payload.fermenterState;
 
       /* fermenter state is not available */
-      if (!fs) {
-        return state;
+      if (!newState) {
+        return newState;
       }
-
-      const env = Env(fs.env);
-      /* TODO: Map into FermenterDev-struct */
-      const devices = fs.devices;
-
-      return state
-               .set('env', env)
-               .set('devices', devices);
+      return revive(newState);
     }
   }
 

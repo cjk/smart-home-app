@@ -1,42 +1,34 @@
 import Component from 'react-pure-render/component';
 import R from 'ramda';
-import React from 'react';
-import { FormattedMessage, defineMessages, injectIntl, intlShape } from 'react-intl';
-
-const messages = defineMessages({
-  environment: {
-    defaultMessage: 'Environment',
-    id: 'fermenter.environment'
-  },
-  temperature: {
-    defaultMessage: 'Temperature',
-    id: 'fermenter.temperature'
-  },
-  humidity: {
-    defaultMessage: 'Humidity',
-    id: 'fermenter.Humidity'
-  },
-});
+import React, { PropTypes } from 'react';
+import { defineMessages, injectIntl, intlShape } from 'react-intl';
+import { IconButton, Menu } from 'react-mdl/lib';
+import { MenuItem } from 'react-mdl/lib/Menu';
 
 class FermenterCommander extends Component {
 
   static propTypes = {
-    fermenterStatus: React.PropTypes.string.isRequired,
+    fermenterStatus: PropTypes.string.isRequired,
+    fermenterStart: PropTypes.func.isRequired,
+    fermenterStop: PropTypes.func.isRequired,
     intl: intlShape.isRequired,
   };
 
   render() {
-    const { fermenterStatus: status } = this.props;
-    console.log(`~~~ Fermenter-Status is ${status}`);
+    const { fermenterStatus: status, fermenterStart, fermenterStop } = this.props;
 
     if (R.empty(status)) {
       return (<div>No status yet...</div>);
     }
 
     return (
-      <div>
-        <h4>Status:</h4>
-        <p>{status}</p>
+      <div style={{ position: 'relative' }}>
+        <IconButton name="more_vert" id="fermenter_menu_upper_left" />
+        <Menu target="fermenter_menu_upper_left" >
+          <MenuItem onClick={fermenterStart}>Switch fermenter on</MenuItem>
+          <MenuItem onClick={fermenterStop}>Switch fermenter off</MenuItem>
+          <MenuItem disabled>Emergency off</MenuItem>
+        </Menu>
       </div>
     );
   }

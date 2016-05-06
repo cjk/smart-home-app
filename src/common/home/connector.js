@@ -52,6 +52,13 @@ function writeGroupAddr(addr) {
   return promise;
 }
 
+function sendFermenterCommand(cmd) {
+  const promise = new Promise((resolve) => {
+    socket.emit('fermenterCommand', cmd, resolve(cmd));
+  });
+  return promise;
+}
+
 function fetchFermenterHistory() {
   const promise = new Promise((resolve) => {
     socket.on('fermenterhistory', (state) => resolve(state));
@@ -67,6 +74,7 @@ export default function connector() {
     subscribeToFermenterState,
     fetchInitialState,
     writeGroupAddr,
+    sendFermenterCommand,
     fetchFermenterHistory,
   };
 }

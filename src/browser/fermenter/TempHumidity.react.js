@@ -1,5 +1,6 @@
 import Component from 'react-pure-render/component';
 import React from 'react';
+import immutable, { Record } from 'immutable';
 import { FormattedMessage, defineMessages, injectIntl, intlShape } from 'react-intl';
 
 const messages = defineMessages({
@@ -29,7 +30,8 @@ class TempHumidity extends Component {
 
     const env = state.get('env');
     const devices = state.get('devices');
-    const { heater, humidifier } = devices;
+    /* TODO: Remove this temp. hack when switching to Ramda */
+    const { heater, humidifier } = devices.toObject();
 
     if (!env.createdAt) {
       return (<div>No information yet...</div>);

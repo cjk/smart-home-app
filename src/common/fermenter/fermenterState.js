@@ -36,9 +36,9 @@ const History = new Record({
 });
 
 const InitialState = new Map({
-  status: 'starting',
+  status: 'unknown',
   env: new Env,
-  devices: Record({
+  devices: new Map({
     heater: new Device(),
     humidifier: new Device()
   }),
