@@ -28,14 +28,12 @@ function subscribeToBusEvents(eventAction) {
 }
 
 function subscribeToFermenterState(eventAction) {
-  socket.on('fermenterstate', (event) => {
+  socket.on('fermenter-state', (event) => {
     eventAction(event);
   });
 
   /* No emit necessary, our backend is automatically sending us
      fermeter-state-events on successful (socket-) connection */
-
-  // socket.emit('fermenterstate', { request: true });
 }
 
 function fetchInitialState() {
