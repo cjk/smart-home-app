@@ -29,14 +29,14 @@ class Page extends Component {
 
   render() {
     const { intl, fermenter: state, fermenterStart, fermenterStop } = this.props;
-    const status = state.get('status');
+    const rts = state.get('rts');
 
     const title = intl.formatMessage(linksMessages.fermenter);
 
     return (
       <div className="events-page" id="events">
         <Helmet title={title} />
-        <Commander fermenterStatus={status} fermenterStart={fermenterStart} fermenterStop={fermenterStop} />
+        <Commander fermenterRts={rts} fermenterStart={fermenterStart} fermenterStop={fermenterStop} />
         <TempHumidityInfo state={state} />
       </div>
     );

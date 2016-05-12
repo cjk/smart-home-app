@@ -8,14 +8,14 @@ import { MenuItem } from 'react-mdl/lib/Menu';
 class FermenterCommander extends Component {
 
   static propTypes = {
-    fermenterStatus: PropTypes.string.isRequired,
+    fermenterRts: PropTypes.object.isRequired,
     fermenterStart: PropTypes.func.isRequired,
     fermenterStop: PropTypes.func.isRequired,
     intl: intlShape.isRequired,
   };
 
   render() {
-    const { fermenterStatus: status, fermenterStart, fermenterStop } = this.props;
+    const { fermenterRts: rts, fermenterStart, fermenterStop } = this.props;
 
     if (R.empty(status)) {
       return (<div>No status yet...</div>);
@@ -29,6 +29,7 @@ class FermenterCommander extends Component {
           <MenuItem onClick={fermenterStop}>Switch fermenter off</MenuItem>
           <MenuItem disabled>Emergency off</MenuItem>
         </Menu>
+        <p style={{ display: 'inline' }}>Current status: [{rts.status}]</p>
       </div>
     );
   }
