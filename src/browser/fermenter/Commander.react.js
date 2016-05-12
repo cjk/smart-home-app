@@ -16,8 +16,9 @@ class FermenterCommander extends Component {
 
   render() {
     const { fermenterRts: rts, fermenterStart, fermenterStop } = this.props;
+    const maybeShowCurrentCmd = R.defaultTo(' -- ');
 
-    if (R.empty(status)) {
+    if (R.isEmpty(rts.status)) {
       return (<div>No status yet...</div>);
     }
 
@@ -30,6 +31,7 @@ class FermenterCommander extends Component {
           <MenuItem disabled>Emergency off</MenuItem>
         </Menu>
         <p style={{ display: 'inline' }}>Current status: [{rts.status}]</p>
+        <p style={{ display: 'inline' }}>| Last command: [{maybeShowCurrentCmd(rts.currentCmd)}]</p>
       </div>
     );
   }
