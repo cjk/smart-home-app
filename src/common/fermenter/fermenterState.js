@@ -1,7 +1,7 @@
 /* NOTE / IMPORTANT: This is *almost* a 1:1 verbatim copy of the file
    'initialState.js' from our fermenter-project. Both files should be kept in
    sync most of the time. */
-import { Record, Map, Seq } from 'immutable';
+import { Record, Map, Seq, List } from 'immutable';
 
 const Env = new Record({
   createdAt: null,
@@ -36,10 +36,12 @@ const History = new Record({
 });
 
 const RunTimeState = new Record({
-  status: 'initializing',
+  active: false,
+  status: 'dead',
   hasEnvEmergency: false,
   hasDeviceMalfunction: false,
-  currentCmd: null
+  currentCmd: null,
+  notifications: new List()
 });
 
 const InitialState = new Map({
