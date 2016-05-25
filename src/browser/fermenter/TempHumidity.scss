@@ -1,0 +1,15 @@
+#fermenterEnv {
+  .fermDevStatusLine {
+
+  }
+  .fermDevHeader {
+    font-variant: small-caps;
+  }
+  .fermDevStatus {
+    color: orange;
+    font-style: italic;
+  }
+  .fermDevStatusOn {
+    color: green;
+  }
+}

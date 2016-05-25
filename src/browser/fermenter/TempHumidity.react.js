@@ -1,3 +1,6 @@
+import './TempHumidity.scss';
+
+import cx from 'classnames';
 import Component from 'react-pure-render/component';
 import React from 'react';
 import immutable, { Record } from 'immutable';
@@ -30,31 +33,26 @@ class TempHumidity extends Component {
 
     const env = state.get('env');
     const devices = state.get('devices');
-    /* TODO: Remove this temp. hack when switching to Ramda */
-    const { heater, humidifier } = devices.toObject();
 
     if (!env.createdAt) {
       return (<div>No information yet...</div>);
     }
 
     return (
-      <div>
+      <div id="fermenterEnv">
         <h4>Environment (iteration #{env.iterations}):</h4>
         <p><FormattedMessage {...messages.temperature} />: {env.temperature}</p>
         <p><FormattedMessage {...messages.humidity} />: {env.humidity}</p>
         <hr />
-        <h4>Heater:</h4>
         {
-          Object.keys(heater).map((k) =>
-            (<p key={k}>{k}: {heater[k] && (heater[k] || heater[k] === 'on') ? 'yes' : 'nope'}</p>))
+          devices.entrySeq().map(([key, dev]) => (
+            <section className="fermDevice" key={key}>
+              <h4 className="fermDevHeader">{key}:</h4>
+              <p className="fermDevStatusLine">{key} is currently [<span className={cx('fermDevStatus', { fermDevStatusOn: dev.isOn })}>{dev.isOn ? 'running' : 'off'}</span>]</p>
+            </section>
+          ))
         }
-
         <hr />
-        <h4>Humidifier:</h4>
-        {
-          Object.keys(humidifier).map((k) =>
-            (<p key={k}>{k}: {humidifier[k] || humidifier[k] === 'on' ? 'yes' : 'nope'}</p>))
-        }
       </div>
     );
   }
