@@ -3,7 +3,6 @@ import './TempHumidity.scss';
 import cx from 'classnames';
 import Component from 'react-pure-render/component';
 import React from 'react';
-import immutable, { Record } from 'immutable';
 import { FormattedMessage, defineMessages, injectIntl, intlShape } from 'react-intl';
 
 const messages = defineMessages({
