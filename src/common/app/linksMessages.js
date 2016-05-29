@@ -1,6 +1,18 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
+  intl: {
+    defaultMessage: 'Intl',
+    id: 'app.links.intl'
+  },
+  fields: {
+    defaultMessage: 'redux-fields',
+    id: 'app.links.fields'
+  },
+  firebase: {
+    defaultMessage: 'Firebase',
+    id: 'app.links.firebase'
+  },
   home: {
     defaultMessage: 'Home',
     id: 'app.links.home'
@@ -21,17 +33,4 @@ export default defineMessages({
     defaultMessage: 'Fermenter',
     id: 'app.links.fermenter'
   },
-  /* Este.js remains */
-  intl: {
-    defaultMessage: 'Intl',
-    id: 'app.links.intl'
-  },
-  fields: {
-    defaultMessage: 'Fields',
-    id: 'app.links.fields'
-  },
-  firebase: {
-    defaultMessage: 'Firebase',
-    id: 'app.links.firebase'
-  }
 });

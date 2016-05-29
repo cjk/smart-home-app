@@ -133,7 +133,7 @@ export default function queryFirebase(Wrapped, mapPropsToOptions) {
             ref.once(...arg);
           }
         });
-        return actions.REDUX_FIREBASE_ON_QUERY;
+        return actions.ESTE_REDUX_FIREBASE_ON_QUERY;
       });
     }
 
@@ -142,7 +142,7 @@ export default function queryFirebase(Wrapped, mapPropsToOptions) {
         // For deregistration, we have to use only eventType and callback.
         this.onArgs.forEach(arg => ref.off(arg[0], arg[1]));
         this.onceArgs.forEach(arg => ref.off(arg[0], arg[1]));
-        return actions.REDUX_FIREBASE_OFF_QUERY;
+        return actions.ESTE_REDUX_FIREBASE_OFF_QUERY;
       });
     }
 
@@ -196,6 +196,6 @@ export const queryFirebaseServer = renderAppCallback => {
     // http://bluebirdjs.com/docs/api/reflect.html
     const promises = serverFetchingPromises.map(promise => promise.reflect());
     serverFetchingPromises = null;
-    return Promise.all(promises);
+    return Promise.all(promises); // eslint-disable-line no-unsafe-finally
   }
 };

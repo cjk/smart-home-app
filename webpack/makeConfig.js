@@ -1,18 +1,21 @@
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
 import autoprefixer from 'autoprefixer';
 import constants from './constants';
+import ip from 'ip';
 import path from 'path';
 import webpack from 'webpack';
 import webpackIsomorphicAssets from './assets';
-import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
-import ip from 'ip';
 
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(webpackIsomorphicAssets);
 
 // cheap-module-eval-source-map, because we want original source, but we don't
 // care about columns, which makes this devtool faster than eval-source-map.
 // http://webpack.github.io/docs/configuration.html#devtool
-const devtools = 'cheap-module-eval-source-map';
+// const devtools = 'cheap-module-eval-source-map';
+// TODO: https://github.com/webpack/webpack/issues/2145
+const devtools = 'eval-source-map';
 
 const loaders = {
   css: '',
@@ -46,9 +49,9 @@ export default function makeConfig(isDevelopment) {
     entry: {
       app: isDevelopment ? [
         `webpack-hot-middleware/client?path=http://${serverIp}:${constants.HOT_RELOAD_PORT}/__webpack_hmr`,
-        path.join(constants.SRC_DIR, 'browser/main.js')
+        path.join(constants.SRC_DIR, 'browser/index.js')
       ] : [
-        path.join(constants.SRC_DIR, 'browser/main.js')
+        path.join(constants.SRC_DIR, 'browser/index.js')
       ]
     },
     module: {
@@ -67,7 +70,12 @@ export default function makeConfig(isDevelopment) {
         loader: 'babel',
         query: {
           cacheDirectory: true,
-          plugins: ['transform-runtime', 'add-module-exports'],
+          plugins: [
+            // 'transform-runtime' should do as little as possible.
+            // https://github.com/este/este/issues/862
+            ['transform-runtime', { polyfill: false, regenerator: false }],
+            'add-module-exports',
+          ],
           presets: ['es2015', 'react', 'stage-1'],
           env: {
             development: {
@@ -107,7 +115,7 @@ export default function makeConfig(isDevelopment) {
       ];
       if (isDevelopment) {
         plugins.push(
-          new webpack.optimize.OccurenceOrderPlugin(),
+          new webpack.optimize.OccurrenceOrderPlugin(),
           new webpack.HotModuleReplacementPlugin(),
           new webpack.NoErrorsPlugin(),
           webpackIsomorphicToolsPlugin.development()
@@ -120,14 +128,23 @@ export default function makeConfig(isDevelopment) {
             allChunks: true
           }),
           new webpack.optimize.DedupePlugin(),
-          new webpack.optimize.OccurenceOrderPlugin(),
+          new webpack.optimize.OccurrenceOrderPlugin(),
           new webpack.optimize.UglifyJsPlugin({
             compress: {
               screw_ie8: true, // eslint-disable-line camelcase
               warnings: false // Because uglify reports irrelevant warnings.
             }
           }),
-          webpackIsomorphicToolsPlugin
+          new webpack.SourceMapDevToolPlugin({
+            filename: '[file].map'
+          }),
+          webpackIsomorphicToolsPlugin,
+          new CopyWebpackPlugin([{
+            from: './src/browser/app/favicons/',
+            to: 'favicons'
+          }], {
+            ignore: ['original/**']
+          })
         );
       }
       return plugins;

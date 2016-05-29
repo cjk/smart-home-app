@@ -1,4 +1,4 @@
-import App from './app/AppPage.react';
+import App from './app/App.react';
 import Auth from './auth/AuthPage.react';
 import Fields from './fields/FieldsPage.react';
 import Firebase from './firebase/FirebasePage.react';
@@ -15,6 +15,8 @@ import { IndexRoute, Route } from 'react-router';
 
 export default function createRoutes(getState) {
   const requireAuth = (nextState, replace) => {
+    // Note how we can read anything from the global app state safely, because
+    // the app state is an immutable value.
     const loggedInUser = getState().users.viewer;
     if (!loggedInUser) {
       replace({

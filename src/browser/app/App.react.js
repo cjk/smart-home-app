@@ -1,9 +1,10 @@
-import './AppPage.scss';
+import './App.scss';
 import Appbar from './Appbar.react';
 import Component from 'react-pure-render/component';
 import Footer from './Footer.react';
 import Helmet from 'react-helmet';
 import React, { PropTypes } from 'react';
+import favicon from './favicon';
 import start from '../../common/app/start';
 import { connect } from 'react-redux';
 /* Material-Design-Lite imports */
@@ -25,7 +26,7 @@ const bootstrap4Metas = [
   }
 ];
 
-class AppPage extends Component {
+class App extends Component {
 
   static propTypes = {
     children: PropTypes.object.isRequired,
@@ -46,10 +47,11 @@ class AppPage extends Component {
             {
               name: 'description',
               content: 'smart home control app'
-            }
+            },
+            ...favicon.meta
           ]}
           link={[
-            { rel: 'shortcut icon', href: require('./favicon.ico') }
+            ...favicon.link
           ]}
         />
 
@@ -79,8 +81,8 @@ class AppPage extends Component {
   }
 }
 
-AppPage = start(AppPage);
+App = start(App);
 
 export default connect(state => ({
   currentLocale: state.intl.currentLocale
-}))(AppPage);
+}))(App);

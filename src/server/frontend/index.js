@@ -20,8 +20,4 @@ app.use('/assets/js', express.static('assets/js', { maxAge: '200d' }));
 
 app.get('*', render);
 
-app.on('mount', () => {
-  console.log('App is available at %s', app.mountpath);
-});
-
 export default app;

@@ -1,6 +1,50 @@
 /* eslint-disable max-len, quote-props, quotes */
 export default [
   {
+    "id": "app.buttons.add",
+    "defaultMessage": "Add"
+  },
+  {
+    "id": "app.buttons.cancel",
+    "defaultMessage": "Cancel"
+  },
+  {
+    "id": "app.buttons.delete",
+    "defaultMessage": "Delete"
+  },
+  {
+    "id": "app.buttons.edit",
+    "defaultMessage": "Edit"
+  },
+  {
+    "id": "app.buttons.login",
+    "defaultMessage": "Login"
+  },
+  {
+    "id": "app.buttons.logout",
+    "defaultMessage": "Logout"
+  },
+  {
+    "id": "app.buttons.save",
+    "defaultMessage": "Save"
+  },
+  {
+    "id": "app.buttons.submit",
+    "defaultMessage": "Submit"
+  },
+  {
+    "id": "app.confirm.areYouSure",
+    "defaultMessage": "Are you sure?"
+  },
+  {
+    "id": "app.confirm.unsavedChanges",
+    "defaultMessage": "You have unsaved changes. Are you sure?"
+  },
+  {
+    "id": "app.links.fields",
+    "defaultMessage": "redux-fields"
+  },
+  {
     "id": "app.links.firebase",
     "defaultMessage": "Firebase"
   },
@@ -69,44 +113,12 @@ export default [
     "defaultMessage": "Hint: pass1"
   },
   {
-    "id": "auth.login.loginButton",
-    "defaultMessage": "Login"
-  },
-  {
     "id": "auth.login.passwordPlaceholder",
     "defaultMessage": "password"
   },
   {
-    "id": "auth.logout",
-    "defaultMessage": "Logout"
-  },
-  {
-    "id": "firebase.error.authenticationProviderDisabled",
-    "defaultMessage": "The requested authentication provider is disabled for this Firebase."
-  },
-  {
-    "id": "firebase.error.dataStale",
-    "defaultMessage": "Internal use."
-  },
-  {
-    "id": "firebase.error.deniedByUser",
-    "defaultMessage": "The user did not authorize the application."
-  },
-  {
-    "id": "firebase.error.disconnected",
-    "defaultMessage": "The operation had to be aborted due to a network disconnect."
-  },
-  {
-    "id": "firebase.error.emailTaken",
-    "defaultMessage": "The new user account cannot be created because the specified email address is already in use."
-  },
-  {
-    "id": "firebase.error.expiredToken",
-    "defaultMessage": "The supplied auth token has expired."
-  },
-  {
-    "id": "firebase.error.invalidAuthArguments",
-    "defaultMessage": "The specified credentials are malformed or incomplete."
+    "id": "fields.page.h2",
+    "defaultMessage": "redux-fields demonstration"
   },
   {
     "id": "firebase.error.invalidConfiguration",
@@ -209,10 +221,6 @@ export default [
     "defaultMessage": "Facebook Login"
   },
   {
-    "id": "firebase.login.loginButton",
-    "defaultMessage": "Login"
-  },
-  {
     "id": "firebase.login.passwordForgotten",
     "defaultMessage": "Forgot your password?"
   },
@@ -239,10 +247,6 @@ export default [
   {
     "id": "firebase.profile.greeting",
     "defaultMessage": "Hi"
-  },
-  {
-    "id": "firebase.profile.logout",
-    "defaultMessage": "Logout"
   },
   {
     "id": "firebase.users.lastLoggedInUsers",

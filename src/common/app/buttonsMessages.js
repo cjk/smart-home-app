@@ -1,6 +1,10 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
+  add: {
+    defaultMessage: 'Add',
+    id: 'app.buttons.add'
+  },
   cancel: {
     defaultMessage: 'Cancel',
     id: 'app.buttons.cancel'
@@ -24,5 +28,9 @@ export default defineMessages({
   save: {
     defaultMessage: 'Save',
     id: 'app.buttons.save'
+  },
+  submit: {
+    defaultMessage: 'Submit',
+    id: 'app.buttons.submit'
   }
 });

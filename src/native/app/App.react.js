@@ -2,16 +2,17 @@ import * as uiActions from '../../common/ui/actions';
 import Component from 'react-pure-render/component';
 import Header from './Header.react';
 import Menu from './Menu.react';
-import React, { Navigator, PropTypes, StatusBar, View } from 'react-native';
+import React, { PropTypes } from 'react';
 import SideMenu from 'react-native-side-menu';
 import linksMessages from '../../common/app/linksMessages';
 import routes from '../routes';
-import styles from './styles';
 import start from '../../common/app/start';
+import styles from './styles';
+import { Navigator, StatusBar, View } from 'react-native';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 
-class AppPage extends Component {
+class App extends Component {
 
   static propTypes = {
     device: PropTypes.object.isRequired,
@@ -79,7 +80,7 @@ class AppPage extends Component {
         style={styles.container}
       >
         <Navigator
-          configureScene={AppPage.configureScene}
+          configureScene={App.configureScene}
           initialRoute={routes.home}
           ref={this.onNavigatorRef}
           renderScene={this.renderScene}
@@ -91,11 +92,11 @@ class AppPage extends Component {
 
 }
 
-AppPage = injectIntl(AppPage);
+App = injectIntl(App);
 
-AppPage = connect(state => ({
+App = connect(state => ({
   device: state.device,
   ui: state.ui
-}), uiActions)(AppPage);
+}), uiActions)(App);
 
-export default start(AppPage);
+export default start(App);

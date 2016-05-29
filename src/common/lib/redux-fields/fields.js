@@ -16,11 +16,11 @@ export default function fields(Wrapped, options) {
   } = options;
 
   invariant(Array.isArray(fields), 'Fields must be an array.');
-  invariant((
+  invariant(
     (typeof path === 'string') ||
     (typeof path === 'function') ||
     Array.isArray(path)
-  ), 'Path must be a string, function, or an array.');
+  , 'Path must be a string, function, or an array.');
 
   return class Fields extends Component {
 
@@ -36,11 +36,10 @@ export default function fields(Wrapped, options) {
       }
     }
 
-    static getFieldValue(field, model, props) {
+    static getFieldValue(field, model, initialState) {
       if (model && model.has(field)) {
         return model.get(field);
       }
-      const initialState = getInitialState && getInitialState(props);
       if (initialState && initialState.hasOwnProperty(field)) {
         return initialState[field];
       }
@@ -48,10 +47,11 @@ export default function fields(Wrapped, options) {
     }
 
     static lazyJsonValuesOf(model, props) {
+      const initialState = getInitialState && getInitialState(props);
       // http://www.devthought.com/2012/01/18/an-object-is-not-a-hash
       return options.fields.reduce((fields, field) => ({
         ...fields,
-        [field]: Fields.getFieldValue(field, model, props)
+        [field]: Fields.getFieldValue(field, model, initialState)
       }), Object.create(null));
     }
 
@@ -62,7 +62,10 @@ export default function fields(Wrapped, options) {
         }
       } : {
         name: field,
-        onChange: ({ target: { type, checked, value } }) => {
+        onChange: (event) => {
+          // React-select is not passing an event but the target directly
+          const target = event.target || event;
+          const { type, checked, value } = target;
           const isCheckbox = type && type.toLowerCase() === 'checkbox';
           onChange(field, isCheckbox ? checked : value);
         }
