@@ -1,6 +1,6 @@
 import Component from 'react-pure-render/component';
 import { DataTable, TableHeader } from 'react-mdl/lib';
-import { List, Map } from 'immutable';
+import { List, OrderedMap } from 'immutable';
 import moment from 'moment';
 import React from 'react';
 import { FormattedMessage, defineMessages, injectIntl, intlShape } from 'react-intl';
@@ -44,11 +44,11 @@ class EventList extends Component {
                          event[colName]);
 
         return row.merge({ [colName]: content });
-      }, Map())
+      }, OrderedMap())
     ));
 
     if (!list.size) return (
-      <p><FormattedMessage {...messages.emptyList} /></p>
+      <h4><FormattedMessage {...messages.emptyList} /></h4>
     );
 
     return (

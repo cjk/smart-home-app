@@ -19,7 +19,7 @@ class Page extends Component {
 
     return (
       <div className="events-page" id="events">
-        <Helmet title={ title } />
+        <Helmet title={title} />
         <Events {...{ list }} />
       </div>
     );
