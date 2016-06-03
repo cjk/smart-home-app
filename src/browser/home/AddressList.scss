@@ -1,11 +1,25 @@
 .addressList {
+
+  .addrLstContainer {
+    width: max-content;         // Override mdl-card max-width setting to make
+                                // full use of available horizontal space
+  }
+
   .header {
+    margin-bottom: 20px;
     h5 {
       display: inline;
-      vertical-align: bottom;
     }
     .listRefresher {
-      float: right;
+      display: flex;
     }
+  }
+
+  .addrLstActions {
+    top: 10px;                  // aligns button horizontally to title-text
+  }
+
+  .addrLstBody {
+    padding: 0px;
   }
 }

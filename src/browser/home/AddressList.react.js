@@ -1,8 +1,8 @@
 import './AddressList.scss';
 import AddrLine from './AddrLine.react';
-import FABButton from 'react-mdl/lib/FABButton';
+import Button from 'react-mdl/lib/Button';
 import { List } from 'react-mdl/lib/List';
-import Grid, { Cell } from 'react-mdl/lib/Grid';
+import { Card, CardTitle, CardText, CardMenu } from 'react-mdl/lib/Card';
 
 import * as addressActions from '../../common/home/actions';
 import React, { PropTypes } from 'react';
@@ -33,25 +33,27 @@ class AddressList extends Component {
     const updateAddr = this.updateAddr;
 
     return (
-      <List className="addressList">
-        <Grid shadow={4} className="header">
-          <Cell col={10}>
-            <h5>Device-list</h5>
-          </Cell>
-          <Cell col={2}>
-            <FABButton mini>
-              <i className="material-icons listRefresher" onClick={this.updateList}>update</i>
-            </FABButton>
-          </Cell>
-        </Grid>
-        {
-          addresses.sortBy(addr => addr.name)
-                   .sortBy(addr => !addr.value)
-                   .map(address =>
-                     <AddrLine {...{ address, updateAddr }} key={address.id} />
-                   )
-        }
-      </List>
+      <section className="addressList">
+        <Card className="addrLstContainer" shadow={1}>
+          <CardTitle expand>Device list</CardTitle>
+          <CardMenu className="addrLstActions">
+            <Button colored className="listRefresher">
+              <i className="material-icons" onClick={this.updateList}>update</i>
+            </Button>
+          </CardMenu>
+          <CardText className="addrLstBody">
+            <List>
+              {
+                addresses.sortBy(addr => addr.name)
+                         .sortBy(addr => !addr.value)
+                         .map(address =>
+                           <AddrLine {...{ address, updateAddr }} key={address.id} />
+                         )
+              }
+            </List>
+          </CardText>
+        </Card>
+      </section>
     );
   }
 }
