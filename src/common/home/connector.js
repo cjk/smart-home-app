@@ -20,11 +20,12 @@ socket
   .on('connect_timeout', () =>
     console.log(`TIMEOUT connecting to smart-home-backend on <${config.host}:${config.port}>!`))
   .on('close', () =>
-    console.log(`#### CLOSE`))
+    console.log('#### CLOSE'))
   .on('disconnect', () =>
-    console.log(`#### DISCONNECT`))
+    /* Could cleanup resources here, once needed  */
+    console.log('#### DISCONNECT'))
   .on('error', () =>
-    console.log(`#### ERROR`));
+    console.log('#### ERROR'));
 
 function subscribeToBusEvents(eventAction) {
   socket.on('knx-event', (event) => {
