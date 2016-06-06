@@ -1,5 +1,6 @@
 import './App.scss';
 import Appbar from './Appbar.react';
+import AppMenu from './Menu.react';
 import Component from 'react-pure-render/component';
 import Footer from './Footer.react';
 import Helmet from 'react-helmet';
@@ -9,7 +10,7 @@ import start from '../../common/app/start';
 import { connect } from 'react-redux';
 /* Material-Design-Lite imports */
 import Layout from 'react-mdl/lib/Layout/Layout';
-import { Content, Header, Drawer, Navigation } from 'react-mdl/lib/Layout';
+import { Content, Header } from 'react-mdl/lib/Layout';
 
 import { locationShape } from 'react-router';
 
@@ -61,14 +62,7 @@ class App extends Component {
             <Appbar pathname={location.pathname} />
           </Header>
 
-          {/* TODO: Move to own component and use ./linksMessages for link-texts */}
-          <Drawer title="Menu">
-            <Navigation>
-              <a href="">Link #1</a>
-              <a href="">Link #2</a>
-              <a href="">Link #3</a>
-            </Navigation>
-          </Drawer>
+          <AppMenu />
 
           <Content className="page-content">
             {children}

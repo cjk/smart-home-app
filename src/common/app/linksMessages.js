@@ -33,4 +33,8 @@ export default defineMessages({
     defaultMessage: 'Fermenter',
     id: 'app.links.fermenter'
   },
+  rooms: {
+    defaultMessage: 'Rooms',
+    id: 'app.links.rooms'
+  },
 });
