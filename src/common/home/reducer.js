@@ -31,7 +31,7 @@ export default function connectHomeReducer(state = initialState, action) {
       const { newEvent } = action.payload;
 
       /* Update event-history and/or livestate */
-      const newState = state.update('eventHistory', list => list.push(newEvent));
+      const newState = state.update('eventHistory', list => list.unshift(newEvent));
 
       if (newEvent.action.match(/^(write|response)$/)) {
         return newState.set('livestate',
