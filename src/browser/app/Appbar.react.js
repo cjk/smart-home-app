@@ -21,9 +21,6 @@ class Appbar extends Component {
       <HeaderRow>
         <Navigation>
           <Link to="/"><FormattedMessage {...linksMessages.home} /></Link>
-          <Link activeClassName="active" to="/rooms">
-            <FormattedMessage {...linksMessages.rooms} />
-          </Link>
           <Link activeClassName="active" to="/events">
             <FormattedMessage {...linksMessages.events} />
           </Link>

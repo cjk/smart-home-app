@@ -8,6 +8,8 @@ export const WRITE_GROUP_ADDRESS_START = 'WRITE_GROUP_ADDRESS_START';
 export const WRITE_GROUP_ADDRESS_SUCCESS = 'WRITE_GROUP_ADDRESS_SUCCESS';
 export const WRITE_GROUP_ADDRESS_ERROR = 'WRITE_GROUP_ADDRESS_ERROR';
 
+export const SWITCH_TO_TAB = 'SWITCH_TO_TAB';
+
 export function writeGroupAddr(addr) {
   return ({ writeGroupAddr }) => ({
     type: 'WRITE_GROUP_ADDRESS',
@@ -38,5 +40,12 @@ export function processEvent(event) {
       type: PROCESS_EVENT,
       payload: { newEvent }
     };
+  };
+}
+
+export function switchToTab(tabId) {
+  return {
+    type: SWITCH_TO_TAB,
+    payload: { tabId }
   };
 }

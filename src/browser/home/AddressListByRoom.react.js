@@ -1,5 +1,5 @@
 import './AddressList.scss';
-import AddrLine from './AddrLine.react';
+// import AddrLine from './AddrLine.react';
 import Button from 'react-mdl/lib/Button';
 import { List } from 'react-mdl/lib/List';
 import { Card, CardTitle, CardText, CardMenu } from 'react-mdl/lib/Card';
@@ -33,9 +33,9 @@ class AddressList extends Component {
     const updateAddr = this.updateAddr;
 
     return (
-      <section className="addressList">
-        <Card className="addrLstContainer">
-          <CardTitle expand>Device list</CardTitle>
+      <section className="addressListByRoom">
+        <Card className="addrLstByRoomContainer">
+          <CardTitle expand>Rooms</CardTitle>
           <CardMenu className="addrLstActions">
             <Button colored className="listRefresher">
               <i className="material-icons" onClick={this.updateList}>update</i>
@@ -43,13 +43,7 @@ class AddressList extends Component {
           </CardMenu>
           <CardText className="addrLstBody">
             <List>
-              {
-                addresses.sortBy(addr => addr.name)
-                         .sortBy(addr => !addr.value)
-                         .map(address =>
-                           <AddrLine {...{ address, updateAddr }} key={address.id} />
-                         )
-              }
+              <h5>Nothing to see here yet!</h5>
             </List>
           </CardText>
         </Card>

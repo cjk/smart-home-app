@@ -5,6 +5,7 @@ import { List, Record, Map } from 'immutable';
 const InitialState = Record({
   livestate: new Map(),
   eventHistory: List([]),
+  activeTab: 0,
 });
 
 const initialState = new InitialState;
@@ -57,6 +58,11 @@ export default function connectHomeReducer(state = initialState, action) {
     case actions.WRITE_GROUP_ADDRESS_SUCCESS: {
       /* Currently no state change on this event */
       return state;
+    }
+
+    case actions.SWITCH_TO_TAB: {
+      const { tabId } = action.payload;
+      return state.set('activeTab', tabId);
     }
   }
 
