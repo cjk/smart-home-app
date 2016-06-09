@@ -1,31 +1,37 @@
 import App from './app/App.react';
 import Component from 'react-pure-render/component';
+import Locale from 'react-native-locale'; // eslint-disable-line import/no-unresolved
 import React from 'react';
-import config from './config';
 import configureStore from '../common/configureStore';
 import createEngine from 'redux-storage-engine-reactnativeasyncstorage';
-import messages from './messages';
+import initialState from './initialState';
 import { AppRegistry, Platform } from 'react-native';
 import { Provider } from 'react-redux';
 
-// TODO: Reuse server/frontend/render getInitialState.
-const initialState = {
-  config: {
-    appName: config.appName,
-    firebaseUrl: config.firebaseUrl
-  },
+const getCurrentLocale = () => {
+  const currentLocale = Locale.constants().localeIdentifier.split('_')[0];
+  const { intl: { defaultLocale, locales } } = initialState;
+  return locales.indexOf(currentLocale) !== -1
+    ? currentLocale
+    : defaultLocale;
+};
+
+const createNativeInitialState = () => ({
+  ...initialState,
   intl: {
-    currentLocale: config.defaultLocale, // TODO: Detect native locale.
-    defaultLocale: config.defaultLocale,
+    ...initialState.intl,
+    currentLocale: getCurrentLocale(),
     initialNow: Date.now(),
-    locales: config.locales,
-    messages
   },
   device: {
-    platform: Platform.OS
-  }
-};
-const store = configureStore({ createEngine, initialState });
+    platform: Platform.OS,
+  },
+});
+
+const store = configureStore({
+  initialState: createNativeInitialState(),
+  platformDeps: { createEngine },
+});
 
 class Root extends Component {
   render() {
