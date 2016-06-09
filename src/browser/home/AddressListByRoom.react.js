@@ -1,10 +1,8 @@
-import './AddressList.scss';
+// import './AddressRoomList.scss';
 // import AddrLine from './AddrLine.react';
 import Button from 'react-mdl/lib/Button';
 import { List } from 'react-mdl/lib/List';
 import { Card, CardTitle, CardText, CardMenu } from 'react-mdl/lib/Card';
-
-import * as addressActions from '../../common/home/actions';
 import React, { PropTypes } from 'react';
 import Component from 'react-pure-render/component';
 import { connect } from 'react-redux';
@@ -12,25 +10,13 @@ import { connect } from 'react-redux';
 class AddressList extends Component {
 
   static propTypes = {
-    addresses: PropTypes.object.isRequired,
-    requestInitialState: PropTypes.func.isRequired,
-    writeGroupAddr: PropTypes.func.isRequired
-  }
-
-  updateAddr = (addr) => {
-    const toggleAddrVal = (addr) => addr.set('value', !addr.value | 0);
-    const { writeGroupAddr } = this.props;
-    return writeGroupAddr(toggleAddrVal(addr.set('type', 'DPT3')));
-  }
-
-  updateList = () => {
-    const { requestInitialState } = this.props;
-    return requestInitialState();
+    actions: PropTypes.object.isRequired,
+    addresses: PropTypes.object.isRequired
   }
 
   render() {
     const { addresses } = this.props;
-    const updateAddr = this.updateAddr;
+    const { updateAddr, updateList } = this.props.actions;
 
     return (
       <section className="addressListByRoom">
@@ -38,12 +24,17 @@ class AddressList extends Component {
           <CardTitle expand>Rooms</CardTitle>
           <CardMenu className="addrLstActions">
             <Button colored className="listRefresher">
-              <i className="material-icons" onClick={this.updateList}>update</i>
+              <i className="material-icons" onClick={updateList}>update</i>
             </Button>
           </CardMenu>
           <CardText className="addrLstBody">
             <List>
-              <h5>Nothing to see here yet!</h5>
+              {
+                addresses.filter(addr => !!addr.room)
+                         .map(address =>
+                           <p key={address.id}>Room: {address.room}, Name: {address.name}</p>
+                         )
+              }
             </List>
           </CardText>
         </Card>
@@ -52,4 +43,4 @@ class AddressList extends Component {
   }
 }
 
-export default connect(null, addressActions)(AddressList);
+export default connect()(AddressList);

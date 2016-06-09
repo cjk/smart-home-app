@@ -23,6 +23,12 @@ class HomePage extends Component {
     intl: intlShape.isRequired
   };
 
+  constructor(props) {
+    super(props);
+    this.updateAddr = this.updateAddr.bind(this);
+    this.updateList = this.updateList.bind(this);
+  }
+
   componentDidMount() {
     /* Request and wait for loading of smart-home-state from backend */
     const { actions: { requestInitialState, processEvent } } = this.props;
@@ -32,20 +38,33 @@ class HomePage extends Component {
     subscribeToBusEvents(processEvent);
   }
 
+  /* Define actions for current and sub-components */
   tabChange(tabId) {
     const { switchToTab } = this.props.actions;
     switchToTab(tabId);
   }
 
+  updateAddr = (addr) => {
+    const toggleAddrVal = (addr) => addr.set('value', !addr.value | 0);
+    const { writeGroupAddr } = this.props.actions;
+    return writeGroupAddr(toggleAddrVal(addr.set('type', 'DPT3')));
+  }
+
+  updateList = () => {
+    const { requestInitialState } = this.props.actions;
+    return requestInitialState();
+  }
+
   render() {
     const { intl, smartHome: { livestate: addressMap, activeTab } } = this.props;
+    const actions = { updateAddr: this.updateAddr, updateList: this.updateList };
     const title = intl.formatMessage(linksMessages.home);
     const addresses = addressMap.toList();
     const onTabChange = this.tabChange.bind(this);
 
     const addrList = activeTab === 0
-                   ? <AddressListByState {...{ addresses }} />
-                   : <AddressListByRoom {...{ addresses }} />;
+                   ? <AddressListByState {...{ addresses, actions }} />
+                   : <AddressListByRoom {...{ addresses, actions }} />;
 
     return (
       <div className="home-page" id="home">
