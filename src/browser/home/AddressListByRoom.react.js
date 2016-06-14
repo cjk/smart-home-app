@@ -28,12 +28,14 @@ class AddressList extends Component {
       {
         addresses.filter(
           addr => prefs.rooms.some(
-            /* Only addresses with a valid room + in our rooms-preferences list */
+            /* Only addresses with a valid room + presence in our
+               rooms-preferences list */
             roomName => addr.room && addr.room.startsWith(roomName)))
                  /* Sort in reverse-alphabetical order */
                  .sort((a, b) => a.room < b.room)
                  .groupBy(a => a.room)
-                 /* Convert from map to keyed-sequence, since React currently doesn't support iterating Maps */
+                 /* Convert from map to keyed-sequence, since React currently
+                    doesn't support iterating Maps */
                  .entrySeq()
                   /* Create a card for each room... */
                  .map(([room, addrLst]) =>
