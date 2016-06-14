@@ -19,7 +19,7 @@ nconf.defaults({
   isProduction: process.env.NODE_ENV === 'production',
   locales: ['de', 'en'],
   port: process.env.PORT || 8000,
-  sentryUrl: 'https://f297cec9c9654088b8ccf1ea9136c458@app.getsentry.com/77415',
+  sentryUrl: 'https://4cc8a3d9b7524380a73f0b68efa268b5@app.getsentry.com/82537',
 });
 
 export default nconf.get();
