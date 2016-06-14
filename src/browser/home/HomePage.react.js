@@ -56,7 +56,7 @@ class HomePage extends Component {
   }
 
   render() {
-    const { intl, smartHome: { livestate: addressMap, activeTab } } = this.props;
+    const { intl, smartHome: { livestate: addressMap, activeTab, prefs } } = this.props;
     const actions = { updateAddr: this.updateAddr, updateList: this.updateList };
     const title = intl.formatMessage(linksMessages.home);
     const addresses = addressMap.toList();
@@ -64,7 +64,7 @@ class HomePage extends Component {
 
     const addrList = activeTab === 0
                    ? <AddressListByState {...{ addresses, actions }} />
-                   : <AddressListByRoom {...{ addresses, actions }} />;
+                   : <AddressListByRoom {...{ addresses, actions, prefs }} />;
 
     return (
       <div className="home-page" id="home">

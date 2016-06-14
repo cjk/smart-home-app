@@ -1,10 +1,14 @@
 import * as actions from './actions';
 import Addr from './address';
+import Prefs from './preferences';
 import { List, Record, Map } from 'immutable';
 
 const InitialState = Record({
   livestate: new Map(),
   eventHistory: List([]),
+  prefs: new Prefs({
+    rooms: List.of('HALL', 'WZ', 'EZ', 'KIT', 'KND-1', 'KND-2', 'KND-3', 'CEL', 'OFFICE')
+  }),
   activeTab: 0,
 });
 
@@ -14,7 +18,7 @@ const buildLivestate = (livestate) => new Map(livestate).map(addr => new Addr(ad
 // Note how JSON from server is revived to immutable record.
 const revive = ({ livestate, eventHistory }) => initialState.merge({
   livestate: buildLivestate(livestate),
-  eventHistory
+  eventHistory,
 });
 
 function updateAddrValue(state, id, value) {

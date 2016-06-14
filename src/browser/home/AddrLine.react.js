@@ -26,18 +26,24 @@ class AddrLine extends Component {
     const { address } = this.props;
     const switchable = (addr) => addr.type === 'switch';
 
+    /* Tweak MDL styles so address-name + id fit into main-content area */
+    const addressLineText = {
+      lineHeight: '1.2em'
+    };
+
     /* Decides which action-item to display */
     const chooseIcon = (addr) => {
       switch (addr.func) {
         case 'light': return 'wb_incandescent';
         case 'shut': return 'web_asset';
+        case 'outlet': return 'power';
         default: return 'all_inclusive';
       }
     };
 
     return (
       <ListItem twoLine className="addressRow">
-        <ListItemContent avatar={chooseIcon(address)} subtitle={address.id}>{address.name}</ListItemContent>
+        <ListItemContent avatar={chooseIcon(address)} subtitle={address.id} style={addressLineText}>{address.name}</ListItemContent>
         <ListItemAction info={R.isNil(address.value) ? '???' : address.value.toString()}>
           <Switch ripple checked={!!address.value} disabled={!switchable(address)} id={address.id} onChange={this.onSwitchToggle} />
         </ListItemAction>
