@@ -7,7 +7,7 @@ const InitialState = Record({
   livestate: new Map(),
   eventHistory: List([]),
   prefs: new Prefs({
-    rooms: List.of('HALL', 'WZ', 'EZ', 'KIT', 'KND-1', 'KND-2', 'KND-3', 'CEL', 'OFFICE')
+    rooms: List.of('HALL', 'HBY', 'WZ', 'EZ', 'KIT', 'KND-1', 'KND-2', 'KND-3', 'CEL', 'OFFICE')
   }),
   activeTab: 0,
 });
