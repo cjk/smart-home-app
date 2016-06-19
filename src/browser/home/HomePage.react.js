@@ -47,7 +47,8 @@ class HomePage extends Component {
   updateAddr = (addr) => {
     const toggleAddrVal = (addr) => addr.set('value', !addr.value | 0);
     const { writeGroupAddr } = this.props.actions;
-    return writeGroupAddr(toggleAddrVal(addr.set('type', 'DPT3')));
+
+    return writeGroupAddr(toggleAddrVal(addr));
   }
 
   updateList = () => {
