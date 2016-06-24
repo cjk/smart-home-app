@@ -1,15 +1,14 @@
 import * as actions from './actions';
-import FermenterState, { Env } from './fermenterState';
+import FermenterState from './fermenterState';
 import { Map } from 'immutable';
 
-const initialState = FermenterState;
+const InitialState = FermenterState;
 
-// Note how JSON from server is revived to immutable record.
-const revive = (state) => initialState.mergeDeep(state);
+// TODO: Probably better to not merge here - see
+// https://github.com/este/este/commit/03cebd9ad7152d5f4147bcb6e8bc023671409bac
+const revive = (state) => InitialState.mergeDeep(state);
 
-export default function fermenterReducer(state = initialState, action) {
-  //console.log(`~~~ InitialState RAW: ${state}`);
-  //console.log(`~~~ InitialState: ${JSON.stringify(state)}`);
+export default function fermenterReducer(state = InitialState, action) {
   if (!(Map.isMap(state))) return revive(state);
 
   switch (action.type) {
