@@ -5,7 +5,7 @@ import Component from 'react-pure-render/component';
 import Footer from './Footer.react';
 import Helmet from 'react-helmet';
 import React, { PropTypes } from 'react';
-import favicon from './favicon';
+import favicon from '../../common/app/favicon';
 import start from '../../common/app/start';
 import { connect } from 'react-redux';
 /* Material-Design-Lite imports */

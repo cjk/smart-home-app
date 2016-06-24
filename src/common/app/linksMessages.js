@@ -6,7 +6,7 @@ export default defineMessages({
     id: 'app.links.intl'
   },
   fields: {
-    defaultMessage: 'redux-fields',
+    defaultMessage: 'Fields',
     id: 'app.links.fields'
   },
   firebase: {
@@ -24,6 +24,14 @@ export default defineMessages({
   me: {
     defaultMessage: 'Me',
     id: 'app.links.me'
+  },
+  todos: {
+    defaultMessage: 'Todos',
+    id: 'app.links.todos'
+  },
+  offline: {
+    defaultMessage: 'Offline',
+    id: 'app.links.offline'
   },
   events: {
     defaultMessage: 'Events',

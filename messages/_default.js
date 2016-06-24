@@ -157,48 +157,8 @@ export default [
     "defaultMessage": "The operation could not be performed due to a network error."
   },
   {
-    "id": "firebase.error.operationFailed",
-    "defaultMessage": "The server indicated that this operation failed."
-  },
-  {
-    "id": "firebase.error.overriddenBySet",
-    "defaultMessage": "The transaction was overridden by a subsequent set."
-  },
-  {
-    "id": "firebase.error.permissionDenied",
-    "defaultMessage": "This client does not have permission to perform this operation."
-  },
-  {
-    "id": "firebase.error.preempted",
-    "defaultMessage": "The active or pending auth credentials were superseded by another call to auth."
-  },
-  {
-    "id": "firebase.error.providerError",
-    "defaultMessage": "A third-party provider error occurred."
-  },
-  {
-    "id": "firebase.error.unavailable",
-    "defaultMessage": "The service is unavailable."
-  },
-  {
-    "id": "firebase.error.unknownError",
-    "defaultMessage": "An unknown error occurred."
-  },
-  {
-    "id": "firebase.error.userCancelled",
-    "defaultMessage": "The user cancelled authentication."
-  },
-  {
-    "id": "firebase.error.userCodeException",
-    "defaultMessage": "An exception occurred in user code."
-  },
-  {
-    "id": "firebase.error.userDoesNotExist",
-    "defaultMessage": "The specified user account does not exist."
-  },
-  {
-    "id": "firebase.error.writeCanceled",
-    "defaultMessage": "The write was canceled locally."
+    "id": "firebase.error.USER_CANCELLED",
+    "defaultMessage": "Login cancelled."
   },
   {
     "id": "firebase.login.dismiss",

@@ -9,8 +9,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Tabs, Tab } from 'react-mdl/lib';
 import Grid, { Cell } from 'react-mdl/lib/Grid';
+import { FormattedMessage } from 'react-intl';
 import linksMessages from '../../common/app/linksMessages';
-import { injectIntl, intlShape } from 'react-intl';
 import smartHomeConnect from '../../common/home/connector';
 
 const homeActions = (dispatch) => ({ actions: bindActionCreators(actions, dispatch) });
@@ -20,7 +20,6 @@ class HomePage extends Component {
   static propTypes = {
     actions: PropTypes.object.isRequired,
     smartHome: PropTypes.object.isRequired,
-    intl: intlShape.isRequired
   };
 
   constructor(props) {
@@ -57,9 +56,8 @@ class HomePage extends Component {
   }
 
   render() {
-    const { intl, smartHome: { livestate: addressMap, activeTab, prefs } } = this.props;
+    const { smartHome: { livestate: addressMap, activeTab, prefs } } = this.props;
     const actions = { updateAddr: this.updateAddr, updateList: this.updateList };
-    const title = intl.formatMessage(linksMessages.home);
     const addresses = addressMap.toList();
     const onTabChange = this.tabChange.bind(this);
 
@@ -69,7 +67,12 @@ class HomePage extends Component {
 
     return (
       <div className="home-page" id="home">
-        <Helmet title={title} />
+
+        {/* Note child is a function, so we can localize anything. */}
+        <FormattedMessage {...linksMessages.home}>
+          {message => <Helmet title={message} />}
+        </FormattedMessage>
+
         <Grid>
           <Cell col={1} /> {/* left border column */}
           <Cell col={10}>  {/* main (center column) */}
@@ -91,8 +94,6 @@ class HomePage extends Component {
     );
   }
 }
-
-HomePage = injectIntl(HomePage);
 
 export default connect(state => ({
   smartHome: state.smartHome

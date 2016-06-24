@@ -11,8 +11,8 @@
 //     ['limitToFirst', props.limitToFirst]
 //   ],
 //   on: {
-//     value: (snapshot) => props.onUsersList(snapshot.val())
-//     // To handle custom error: value: [callback, onCustomError]
+//     value: (snap) => props.onUsersList(snap.val())
+//     // To handle cancelCallback: value: [callback, cancelCallback]
 //     // To handle all events, check github.com/steida/vetoapp VetoedBy.
 //   }
 // }));
@@ -23,12 +23,6 @@ import Firebase from 'firebase';
 import React, { PropTypes } from 'react';
 import invariant from 'invariant';
 
-const onError = error => console.log(error); // eslint-disable-line no-console
-const ensureArrayWithDefaultOnError = item => {
-  const array = [].concat(item);
-  if (array.length === 1) array.push(onError);
-  return array;
-};
 // Use key whenever you want to force off / on event registration. It's useful
 // when queried component must be rerendered, for example when app state is
 // recycled on logout. Then we can just set the key to the current viewer.
@@ -45,6 +39,16 @@ export default function queryFirebase(Wrapped, mapPropsToOptions) {
       store: PropTypes.object // Redux store.
     };
 
+    ensureCancelCallback(callbackOrCallbackWithCancelCallback) {
+      const callbacks = [].concat(callbackOrCallbackWithCancelCallback);
+      const cancelCallback = callbacks[1];
+      callbacks[1] = error => {
+        this.context.store.dispatch(actions.onPermissionDenied(error.message));
+        if (cancelCallback) cancelCallback();
+      };
+      return callbacks;
+    }
+
     // {eventType: fn} -> [['eventType', fn, onDefaultError]]
     // {eventType: [fn1, fn2]} -> [['eventType', fn1, fn2]]
     createArgs(eventTypes = {}) {
@@ -55,26 +59,26 @@ export default function queryFirebase(Wrapped, mapPropsToOptions) {
         const action = eventTypes.all;
         delete eventTypes.all;
         // Use value to get current state once.
-        eventTypes.value = snapshot => {
+        eventTypes.value = snap => {
           this._onAllValueCalled = true;
           const val = [];
-          snapshot.forEach(childSnapshot => {
-            val.push(childSnapshot.val());
+          snap.forEach(childSnap => {
+            val.push(childSnap.val());
           });
           action({ eventType: 'value', val });
         };
         if (!serverFetching) {
           ['child_added', 'child_changed', 'child_moved', 'child_removed']
             .forEach(eventType => {
-              eventTypes[eventType] = (snapshot, prevChildKey) => {
+              eventTypes[eventType] = (snap, prevChildKey) => {
                 if (eventType === 'child_added' && !this._onAllValueCalled) {
                   return;
                 }
                 action({
                   eventType,
-                  key: snapshot.key(),
+                  key: snap.key(),
                   prevChildKey,
-                  val: snapshot.val()
+                  val: snap.val()
                 });
               };
             });
@@ -82,7 +86,7 @@ export default function queryFirebase(Wrapped, mapPropsToOptions) {
       }
       return Object.keys(eventTypes).map(eventType => [
         eventType,
-        ...ensureArrayWithDefaultOnError(eventTypes[eventType])
+        ...this.ensureCancelCallback(eventTypes[eventType])
       ]);
     }
 
@@ -133,7 +137,7 @@ export default function queryFirebase(Wrapped, mapPropsToOptions) {
             ref.once(...arg);
           }
         });
-        return actions.ESTE_REDUX_FIREBASE_ON_QUERY;
+        return actions.FIREBASE_ON_QUERY;
       });
     }
 
@@ -142,7 +146,7 @@ export default function queryFirebase(Wrapped, mapPropsToOptions) {
         // For deregistration, we have to use only eventType and callback.
         this.onArgs.forEach(arg => ref.off(arg[0], arg[1]));
         this.onceArgs.forEach(arg => ref.off(arg[0], arg[1]));
-        return actions.ESTE_REDUX_FIREBASE_OFF_QUERY;
+        return actions.FIREBASE_OFF_QUERY;
       });
     }
 

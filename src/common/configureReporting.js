@@ -3,6 +3,8 @@ import { ValidationError } from './lib/validation';
 import { firebaseActions, firebaseMessages } from './lib/redux-firebase';
 
 // Some errors can be ignored, for example ValidationError is pretty innocent.
+// Such errors should be handled locally without re-throw.
+// This check is here because legacy code.
 const isNegligibleError = error =>
   error.reason instanceof ValidationError ||
   firebaseMessages[error.reason && error.reason.code];
@@ -31,13 +33,13 @@ const setRavenUserContext = authData => {
     return;
   }
   Raven.setUserContext({
-    email: authData[authData.provider].email,
+    email: authData.token.email,
     id: authData.uid
   });
 };
 
 const reportingMiddleware = () => next => action => {
-  if (action.type === firebaseActions.ESTE_REDUX_FIREBASE_ON_AUTH) {
+  if (action.type === firebaseActions.FIREBASE_ON_AUTH) {
     setRavenUserContext(action.payload.authData);
   }
   // TODO: Use Raven.setExtraContext for last 10 actions and limited app state.

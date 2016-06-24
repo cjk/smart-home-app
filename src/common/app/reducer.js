@@ -1,25 +1,26 @@
-import { combineReducers } from 'redux';
-import { reduxFields } from '../lib/redux-fields';
-import { routerReducer as routing } from 'react-router-redux';
+import * as actions from './actions';
+import { Record } from 'immutable';
 
-import auth from '../auth/reducer';
-import config from '../config/reducer';
-import device from '../device/reducer';
-import intl from '../intl/reducer';
-import smartHome from '../home/reducer';
-import fermenter from '../fermenter/reducer';
-import ui from '../ui/reducer';
-import users from '../users/reducer';
-
-export default combineReducers({
-  auth,
-  config,
-  device,
-  intl,
-  smartHome,
-  fermenter,
-  reduxFields,
-  routing,
-  ui,
-  users
+const InitialState = Record({
+  online: false,
+  storageLoaded: false
 });
+
+export default function appReducer(state = new InitialState, action) {
+  if (!(state instanceof InitialState)) return new InitialState;
+
+  switch (action.type) {
+
+    case actions.APP_OFFLINE:
+      return state.set('online', false);
+
+    case actions.APP_ONLINE:
+      return state.set('online', true);
+
+    case actions.APP_STORAGE_LOAD:
+      return state.set('storageLoaded', true);
+
+  }
+
+  return state;
+}
