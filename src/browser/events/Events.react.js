@@ -3,7 +3,7 @@ import { DataTable, TableHeader } from 'react-mdl/lib';
 import { List, OrderedMap } from 'immutable';
 import moment from 'moment';
 import React from 'react';
-import { FormattedMessage, defineMessages, injectIntl, intlShape } from 'react-intl';
+import { FormattedMessage, defineMessages } from 'react-intl';
 
 const messages = defineMessages({
   emptyList: {
@@ -19,7 +19,6 @@ class EventList extends Component {
 
   static propTypes = {
     list: React.PropTypes.object.isRequired,
-    intl: intlShape.isRequired,
   };
 
   render() {
@@ -63,4 +62,4 @@ class EventList extends Component {
   }
 }
 
-export default injectIntl(EventList);
+export default EventList;
