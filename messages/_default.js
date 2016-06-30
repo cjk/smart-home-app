@@ -13,6 +13,10 @@ export default [
     "defaultMessage": "Delete"
   },
   {
+    "id": "app.buttons.dismiss",
+    "defaultMessage": "Dismiss"
+  },
+  {
     "id": "app.buttons.edit",
     "defaultMessage": "Edit"
   },
@@ -29,6 +33,10 @@ export default [
     "defaultMessage": "Save"
   },
   {
+    "id": "app.buttons.signUp",
+    "defaultMessage": "Sign Up"
+  },
+  {
     "id": "app.buttons.submit",
     "defaultMessage": "Submit"
   },
@@ -41,8 +49,12 @@ export default [
     "defaultMessage": "You have unsaved changes. Are you sure?"
   },
   {
+    "id": "app.FieldError.required",
+    "defaultMessage": "{prop, select, description {Please enter a description.} email {Please enter an email address.} name {Please enter a name.} password {Please enter a password.} other {You can't leave this empty.}}"
+  },
+  {
     "id": "app.links.fields",
-    "defaultMessage": "redux-fields"
+    "defaultMessage": "Fields"
   },
   {
     "id": "app.links.firebase",
@@ -69,6 +81,14 @@ export default [
     "defaultMessage": "Events"
   },
   {
+    "id": "app.links.offline",
+    "defaultMessage": "Offline"
+  },
+  {
+    "id": "app.links.todos",
+    "defaultMessage": "Todos"
+  },
+  {
     "id": "app.links.fermenter",
     "defaultMessage": "Fermenter"
   },
@@ -85,10 +105,6 @@ export default [
     "defaultMessage": "Humidity"
   },
   {
-    "id": "auth.login.emailPlaceholder",
-    "defaultMessage": "your@email.com"
-  },
-  {
     "id": "auth.login.error.email",
     "defaultMessage": "Email address is not valid."
   },
@@ -101,28 +117,12 @@ export default [
     "defaultMessage": "Password must contain at least {minLength} characters."
   },
   {
-    "id": "auth.login.error.wrongPassword",
-    "defaultMessage": "Wrong password."
-  },
-  {
-    "id": "auth.login.formLegend",
-    "defaultMessage": "Classic XMLHttpRequest Login"
-  },
-  {
-    "id": "auth.login.hint",
-    "defaultMessage": "Hint: pass1"
-  },
-  {
-    "id": "auth.login.passwordPlaceholder",
-    "defaultMessage": "password"
-  },
-  {
     "id": "fields.page.h2",
-    "defaultMessage": "redux-fields demonstration"
+    "defaultMessage": "Fields"
   },
   {
-    "id": "firebase.error.invalidConfiguration",
-    "defaultMessage": "The requested authentication provider is misconfigured, and the request cannot complete."
+    "id": "fields.page.p",
+    "defaultMessage": "Something like redux-form but simplified and universal."
   },
   {
     "id": "firebase.error.invalidCredentials",
@@ -157,14 +157,6 @@ export default [
     "defaultMessage": "The operation could not be performed due to a network error."
   },
   {
-    "id": "firebase.error.USER_CANCELLED",
-    "defaultMessage": "Login cancelled."
-  },
-  {
-    "id": "firebase.login.dismiss",
-    "defaultMessage": "Dismiss"
-  },
-  {
     "id": "firebase.login.emailLoginOrSignUp",
     "defaultMessage": "Email Login / Sign Up"
   },
@@ -195,18 +187,6 @@ export default [
   {
     "id": "firebase.login.resetPassword",
     "defaultMessage": "Reset Password"
-  },
-  {
-    "id": "firebase.login.signUp",
-    "defaultMessage": "Sign Up"
-  },
-  {
-    "id": "firebase.page.loadMore",
-    "defaultMessage": "Load more"
-  },
-  {
-    "id": "firebase.profile.greeting",
-    "defaultMessage": "Hi"
   },
   {
     "id": "firebase.users.lastLoggedInUsers",
@@ -254,7 +234,7 @@ export default [
   },
   {
     "id": "me.page.welcome",
-    "defaultMessage": "Hi {email}. This is your secret page."
+    "defaultMessage": "Hi {displayName}. This is your secret page."
   },
   {
     "id": "me.profilePage.title",

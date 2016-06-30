@@ -1,14 +1,15 @@
 import './FieldsPage.scss';
 import Component from 'react-pure-render/component';
 import DynamicField from './DynamicField.react.js';
+import FieldError from '../lib/FieldError.react';
 import Helmet from 'react-helmet';
 import React, { PropTypes } from 'react';
 import buttonsMessages from '../../common/app/buttonsMessages';
 import linksMessages from '../../common/app/linksMessages';
 import { FormattedMessage, defineMessages } from 'react-intl';
-import { focusInvalidField, ValidationError } from '../../common/lib/validation';
 import { connect } from 'react-redux';
 import { fields } from '../../common/lib/redux-fields';
+import { focusInvalidField, ValidationError } from '../../common/lib/validation';
 
 const messages = defineMessages({
   h2: {
@@ -19,6 +20,36 @@ const messages = defineMessages({
     defaultMessage: 'Something like redux-form but simplified and universal.',
     id: 'fields.page.p'
   }
+});
+
+// Just an example of some dynamically loaded data.
+// cato.org/publications/commentary/key-concepts-libertarianism
+const keyConceptsOfLibertarianism = [
+  'Individualism',
+  'Individual Rights',
+  'Spontaneous Order',
+  'The Rule of Law',
+  'Limited Government',
+  'Free Markets',
+  'The Virtue of Production',
+  'Natural Harmony of Interests',
+  'Peace',
+].map((concept, index) => ({
+  id: index,
+  name: concept,
+}));
+
+// Use Redux action for real usage.
+const exampleAction = async (values) => new Promise((resolve, reject) => {
+  if (values.someField.trim()) {
+    setTimeout(resolve, 1000);
+    return;
+  }
+  setTimeout(() => {
+    reject({
+      reason: new ValidationError('required', { prop: 'someField' })
+    });
+  }, 1000);
 });
 
 class FieldsPage extends Component {
@@ -33,41 +64,39 @@ class FieldsPage extends Component {
   constructor(props) {
     super(props);
     this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.state = {
+      disabled: false,
+      error: null,
+    };
   }
 
   async onFormSubmit(e) {
     e.preventDefault();
     const { fields } = this.props;
 
-    // Disable form.
-    fields.$disabled.setValue(true);
-
-    // Use Redux action for real usage.
-    const exampleAction = async (values) => new Promise((resolve, reject) => {
-      if (values.someField.trim()) {
-        setTimeout(resolve, 1000);
-        return;
-      }
-      setTimeout(() => {
-        reject({
-          reason: new ValidationError('required', { prop: 'someField' })
-        });
-      }, 1000);
-    });
+    this.setState({ disabled: true });
+    // For simple flat forms we can use handy fields.$values() helper.
+    const values = fields.$values();
+    // console.log(values); // eslint-disable-line no-console
+    // For complex nested forms we can get whole model via Redux connect.
+    // const allValues = this.propsfieldsPageModel && this.propsfieldsPageModel.toJS();
+    // console.log(allValues); // eslint-disable-line no-console
 
     try {
-      // For simple flat forms we can use handy fields.$values() helper.
-      const values = fields.$values();
-      console.log(values); // eslint-disable-line no-console
-      // For complex nested forms we can get whole model via redux connect.
-      // const allValues = this.propsfieldsPageModel && this.propsfieldsPageModel.toJS();
-      // console.log(allValues); // eslint-disable-line no-console
       await exampleAction(values);
     } catch (error) {
-      fields.$disabled.setValue(false);
-      fields.$error.setValue(error.reason);
-      focusInvalidField(this, error.reason);
+      const { reason } = error;
+      if (reason instanceof ValidationError) {
+        this.setState({ error: reason }, () => {
+          setTimeout(() => {
+            focusInvalidField(this, reason);
+          }, 0);
+        });
+        return;
+      }
       throw error;
+    } finally {
+      this.setState({ disabled: false });
     }
 
     // Reset all (even nested) fieldsPage fields.
@@ -76,23 +105,7 @@ class FieldsPage extends Component {
 
   render() {
     const { fields, fieldsPageModel } = this.props;
-
-    // Just an example of some dynamically loaded data.
-    // cato.org/publications/commentary/key-concepts-libertarianism
-    const keyConceptsOfLibertarianism = [
-      'Individualism',
-      'Individual Rights',
-      'Spontaneous Order',
-      'The Rule of Law',
-      'Limited Government',
-      'Free Markets',
-      'The Virtue of Production',
-      'Natural Harmony of Interests',
-      'Peace',
-    ].map((concept, index) => ({
-      id: index,
-      name: concept,
-    }));
+    const { disabled, error } = this.state;
 
     return (
       <div className="fields-page">
@@ -106,13 +119,14 @@ class FieldsPage extends Component {
           <FormattedMessage {...messages.p} />
         </p>
         <form onSubmit={this.onFormSubmit}>
-          <fieldset disabled={fields.$disabled.value}>
+          <fieldset disabled={disabled}>
             <h3>Some Field</h3>
             <input
               {...fields.someField}
               maxLength={100}
               type="text"
             />
+            <FieldError error={error} prop="someField" />
             <h3>Dynamic Fields</h3>
             <div>
               {keyConceptsOfLibertarianism.map(concept =>
@@ -173,13 +187,9 @@ class FieldsPage extends Component {
               <button type="submit">
                 <FormattedMessage {...buttonsMessages.submit} />
               </button>
-              {fields.$error.value &&
-                <b className="error-message">{fields.$error.value.message}</b>
-              }
             </div>
             <pre>
-              {
-                fieldsPageModel &&
+              {fieldsPageModel &&
                 JSON.stringify(fieldsPageModel.toJS(), null, 2)
               }
             </pre>
@@ -194,8 +204,6 @@ class FieldsPage extends Component {
 FieldsPage = fields(FieldsPage, {
   path: 'fieldsPage',
   fields: [
-    '$disabled', // We can use fields even for meta values. Use $ prefix.
-    '$error',
     'someField',
     'hasCar',
     'hasBike',

@@ -4,7 +4,6 @@ import promiseMiddleware from 'redux-promise-middleware';
 
 // Deps.
 import Firebase from 'firebase';
-import fetch from 'isomorphic-fetch';
 import shortid from 'shortid';
 import smartHomeConnect from './home/connector';
 import validate from './validate';
@@ -36,10 +35,9 @@ export default function configureMiddleware(initialState, platformDeps, platform
     injectMiddleware({
       ...platformDeps,
       ...homeConnect,
-      fetch,
       firebase,
       getUid: () => shortid.generate(),
-      now: () => Date.now(),
+      now: () => Date.now(), // Consider Firebase.ServerValue.TIMESTAMP
       storageEngine,
       validate,
     }),
