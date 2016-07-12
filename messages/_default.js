@@ -21,16 +21,16 @@ export default [
     "defaultMessage": "Edit"
   },
   {
-    "id": "app.buttons.login",
-    "defaultMessage": "Login"
-  },
-  {
-    "id": "app.buttons.logout",
-    "defaultMessage": "Logout"
-  },
-  {
     "id": "app.buttons.save",
     "defaultMessage": "Save"
+  },
+  {
+    "id": "app.buttons.signIn",
+    "defaultMessage": "Sign In"
+  },
+  {
+    "id": "app.buttons.signOut",
+    "defaultMessage": "Sign Out"
   },
   {
     "id": "app.buttons.signUp",
@@ -69,10 +69,6 @@ export default [
     "defaultMessage": "Intl"
   },
   {
-    "id": "app.links.login",
-    "defaultMessage": "Login"
-  },
-  {
     "id": "app.links.me",
     "defaultMessage": "Me"
   },
@@ -85,8 +81,8 @@ export default [
     "defaultMessage": "Offline"
   },
   {
-    "id": "app.links.todos",
-    "defaultMessage": "Todos"
+    "id": "app.links.signIn",
+    "defaultMessage": "Sign in"
   },
   {
     "id": "app.links.fermenter",
@@ -113,8 +109,48 @@ export default [
     "defaultMessage": "Please fill out {prop, select, email {email} password {password}}."
   },
   {
-    "id": "auth.login.error.simplePassword",
+    "id": "auth.email.emailLegend",
+    "defaultMessage": "Email"
+  },
+  {
+    "id": "auth.email.emailPlaceholder",
+    "defaultMessage": "your@email.com"
+  },
+  {
+    "id": "auth.email.passwordForgotten",
+    "defaultMessage": "Forgot Your Password?"
+  },
+  {
+    "id": "auth.email.passwordPlaceholder",
+    "defaultMessage": "password"
+  },
+  {
+    "id": "auth.email.passwordRecoveryLegend",
+    "defaultMessage": "Email Password Recovery"
+  },
+  {
+    "id": "auth.email.recoveryEmailSent",
+    "defaultMessage": "Recovery email has been sent."
+  },
+  {
+    "id": "auth.email.resetPassword",
+    "defaultMessage": "Reset Password"
+  },
+  {
+    "id": "auth.signInError.email",
+    "defaultMessage": "Email address is not valid."
+  },
+  {
+    "id": "auth.signInError.required",
+    "defaultMessage": "Please fill out {prop, select, email {email} password {password}}."
+  },
+  {
+    "id": "auth.signInError.simplePassword",
     "defaultMessage": "Password must contain at least {minLength} characters."
+  },
+  {
+    "id": "auth.social.facebookSignIn",
+    "defaultMessage": "Facebook Login"
   },
   {
     "id": "fields.page.h2",
@@ -125,72 +161,20 @@ export default [
     "defaultMessage": "Something like redux-form but simplified and universal."
   },
   {
-    "id": "firebase.error.invalidCredentials",
-    "defaultMessage": "The specified authentication credentials are invalid."
+    "id": "firebase.error.EMAIL_TAKEN",
+    "defaultMessage": "The new user account cannot be created because the\n      specified email address is already in use."
   },
   {
-    "id": "firebase.error.invalidEmail",
+    "id": "firebase.error.INVALID_EMAIL",
     "defaultMessage": "The specified email is not a valid email."
   },
   {
-    "id": "firebase.error.invalidPassword",
+    "id": "firebase.error.INVALID_PASSWORD",
     "defaultMessage": "The specified user account password is incorrect."
   },
   {
-    "id": "firebase.error.invalidProvider",
-    "defaultMessage": "The requested authentication provider does not exist."
-  },
-  {
-    "id": "firebase.error.invalidToken",
-    "defaultMessage": "The specified authentication token is invalid."
-  },
-  {
-    "id": "firebase.error.limitsExceeded",
-    "defaultMessage": "Limits exceeded."
-  },
-  {
-    "id": "firebase.error.maxRetries",
-    "defaultMessage": "The transaction had too many retries."
-  },
-  {
-    "id": "firebase.error.networkError",
-    "defaultMessage": "The operation could not be performed due to a network error."
-  },
-  {
-    "id": "firebase.login.emailLoginOrSignUp",
-    "defaultMessage": "Email Login / Sign Up"
-  },
-  {
-    "id": "firebase.login.emailPasswordRecovery",
-    "defaultMessage": "Email Password Recovery"
-  },
-  {
-    "id": "firebase.login.emailPlaceholder",
-    "defaultMessage": "your@email.com"
-  },
-  {
-    "id": "firebase.login.facebookLogin",
-    "defaultMessage": "Facebook Login"
-  },
-  {
-    "id": "firebase.login.passwordForgotten",
-    "defaultMessage": "Forgot your password?"
-  },
-  {
-    "id": "firebase.login.passwordPlaceholder",
-    "defaultMessage": "password"
-  },
-  {
-    "id": "firebase.login.recoveryEmailSent",
-    "defaultMessage": "Recovery email has been sent."
-  },
-  {
-    "id": "firebase.login.resetPassword",
-    "defaultMessage": "Reset Password"
-  },
-  {
-    "id": "firebase.users.lastLoggedInUsers",
-    "defaultMessage": "Last {limitToLast} Logged In Users"
+    "id": "firebase.error.INVALID_USER",
+    "defaultMessage": "The specified user account does not exist."
   },
   {
     "id": "footer.madeBy",
@@ -223,6 +207,14 @@ export default [
   {
     "id": "intl.page.unreadCount",
     "defaultMessage": "{unreadCount, plural, one {message} other {messages}}"
+  },
+  {
+    "id": "loading.loadingText",
+    "defaultMessage": "Loading"
+  },
+  {
+    "id": "loading.longLoadingText",
+    "defaultMessage": "Still loading, please check your connection"
   },
   {
     "id": "me.page.linkToProfile",

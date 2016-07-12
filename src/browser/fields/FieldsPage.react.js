@@ -46,9 +46,7 @@ const exampleAction = async (values) => new Promise((resolve, reject) => {
     return;
   }
   setTimeout(() => {
-    reject({
-      reason: new ValidationError('required', { prop: 'someField' })
-    });
+    reject(new ValidationError('required', { prop: 'someField' }));
   }, 1000);
 });
 
@@ -64,8 +62,11 @@ class FieldsPage extends Component {
   constructor(props) {
     super(props);
     this.onFormSubmit = this.onFormSubmit.bind(this);
+    this.onToggleClick = this.onToggleClick.bind(this);
     this.state = {
+      // For a demo, we can store disabled state here, but favor app state ofc.
       disabled: false,
+      // Error state is ephemeral, so it belongs to the component state.
       error: null,
     };
   }
@@ -73,23 +74,19 @@ class FieldsPage extends Component {
   async onFormSubmit(e) {
     e.preventDefault();
     const { fields } = this.props;
-
     this.setState({ disabled: true });
     // For simple flat forms we can use handy fields.$values() helper.
     const values = fields.$values();
-    // console.log(values); // eslint-disable-line no-console
-    // For complex nested forms we can get whole model via Redux connect.
-    // const allValues = this.propsfieldsPageModel && this.propsfieldsPageModel.toJS();
-    // console.log(allValues); // eslint-disable-line no-console
-
+    // console.log(values);
+    // For complex nested forms we can read from fields app state directly.
+    // console.log(this.props.fieldsPageModel);
     try {
       await exampleAction(values);
     } catch (error) {
-      const { reason } = error;
-      if (reason instanceof ValidationError) {
-        this.setState({ error: reason }, () => {
+      if (error instanceof ValidationError) {
+        this.setState({ error }, () => {
           setTimeout(() => {
-            focusInvalidField(this, reason);
+            focusInvalidField(this, error);
           }, 0);
         });
         return;
@@ -98,9 +95,13 @@ class FieldsPage extends Component {
     } finally {
       this.setState({ disabled: false });
     }
-
     // Reset all (even nested) fieldsPage fields.
     fields.$reset();
+  }
+
+  onToggleClick() {
+    const { fields } = this.props;
+    fields.$setValue('toggled', !fields.toggled.value);
   }
 
   render() {
@@ -183,6 +184,12 @@ class FieldsPage extends Component {
               Why no multiple select? Because users are not familiar with that.
               Use checkboxes or custom checkable dynamic fields instead.
             */}
+            <h3>Custom</h3>
+            <div
+              className="custom-toggle"
+              onClick={this.onToggleClick}
+              style={{ fontWeight: fields.toggled.value ? 'bold' : 'normal' }}
+            >Toggle me!</div>
             <div>
               <button type="submit">
                 <FormattedMessage {...buttonsMessages.submit} />
@@ -208,13 +215,15 @@ FieldsPage = fields(FieldsPage, {
     'hasCar',
     'hasBike',
     'gender',
-    'selectedNumber'
+    'selectedNumber',
+    'toggled'
   ],
   getInitialState: () => ({
     // someField: '123',
     // hasCar: true,
     gender: 'male',
-    selectedNumber: '2'
+    selectedNumber: '2',
+    toggled: false
   })
 });
 

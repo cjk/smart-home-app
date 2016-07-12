@@ -1,45 +1,36 @@
-// Text loading component with two important limits.
-// https://www.nngroup.com/articles/response-times-3-important-limits
-// Example:
-// {!users ?
-//   <Loading />
-// :
-//   <div>
-//     users here
-//   </div>
-// }
-// TODO: Make it universal.
-
 import './Loading.scss';
 import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
+import Helmet from 'react-helmet';
+import React from 'react';
+import { FormattedMessage, defineMessages } from 'react-intl';
+
+const messages = defineMessages({
+  loadingText: {
+    defaultMessage: 'Loading',
+    id: 'loading.loadingText'
+  },
+  longLoadingText: {
+    defaultMessage: 'Still loading, please check your connection',
+    id: 'loading.longLoadingText'
+  }
+});
 
 export default class Loading extends Component {
-
-  static propTypes = {
-    loadingText: PropTypes.string.isRequired,
-    longLoadingText: PropTypes.string.isRequired
-  };
-
-  static defaultProps = {
-    loadingText: 'Loading',
-    longLoadingText: 'Still loading, please check your connection'
-  };
 
   constructor(props) {
     super(props);
     this.state = {
-      // Render no-break space for the first second of loading.
-      currentText: String.fromCharCode(160)
+      currentText: null
     };
   }
 
   componentDidMount() {
+    // www.nngroup.com/articles/response-times-3-important-limits
     this.timer = setTimeout(() => {
-      this.setState({ currentText: this.props.loadingText });
+      this.setState({ currentText: messages.loadingText });
     }, 1000);
     this.longTimer = setTimeout(() => {
-      this.setState({ currentText: this.props.longLoadingText });
+      this.setState({ currentText: messages.longLoadingText });
     }, 10000);
   }
 
@@ -49,9 +40,16 @@ export default class Loading extends Component {
   }
 
   render() {
+    const { currentText } = this.state;
+    if (!currentText) {
+      return <div className="este-loading">{String.fromCharCode(160)}</div>;
+    }
     return (
       <div className="este-loading">
-        {this.state.currentText}
+        <FormattedMessage {...currentText}>
+          {title => <Helmet title={title} />}
+        </FormattedMessage>
+        <FormattedMessage {...currentText} />
       </div>
     );
   }

@@ -3,6 +3,7 @@
 !default.pbxuser
 !default.perspectivev3
 *.hmap
+*.iml
 *.ipa
 *.jsbundle
 *.mode1v3
@@ -23,6 +24,7 @@ android/app/libs
 android/keystores/debug.keystore
 buck-out/
 build/
+bundle-stats.json
 firebase-debug.log
 firebase/rules.json
 local.properties
