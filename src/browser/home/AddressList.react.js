@@ -33,7 +33,7 @@ class AddressList extends Component {
                 addresses.sortBy(addr => addr.name)
                          .sortBy(addr => !addr.value)
                          .map(address =>
-                           <AddrLine {...{ address, updateAddr }} key={address.id} />
+                           <AddrLine {...{ address, updateAddr }} key={address.get('id')} />
                          )
               }
             </List>

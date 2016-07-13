@@ -7,7 +7,7 @@ import { fromJSON, toJSON } from './transit';
 
 const stateToSave = [
   ['fields'],
-  ['todos'],
+  ['smartHome'],
   ['intl', 'currentLocale'],
   ['users', 'viewer'],
 ];

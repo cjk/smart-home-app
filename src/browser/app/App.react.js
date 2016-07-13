@@ -58,8 +58,8 @@ class App extends Component {
 
         <Layout fixedHeader>
           {/* Pathname enforces rerender so activeClassName is updated. */}
-          <Header pathname={location.pathname}>
-            <Appbar pathname={location.pathname} />
+          <Header>
+            <Appbar location={location} />
           </Header>
 
           <AppMenu />

@@ -10,7 +10,6 @@ import { HeaderRow, Navigation } from 'react-mdl/lib/Layout';
 class Appbar extends Component {
 
   static propTypes = {
-    pathname: PropTypes.string.isRequired,
     viewer: PropTypes.object
   };
 

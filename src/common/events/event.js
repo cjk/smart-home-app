@@ -1,4 +1,4 @@
-import { Record } from 'immutable';
+import { Record } from '../transit';
 
 export default Record({
   id: null,
@@ -8,4 +8,4 @@ export default Record({
   src: null,
   dest: null,
   value: null
-});
+}, 'event');

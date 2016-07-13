@@ -1,7 +1,8 @@
 import * as actions from './actions';
 import Addr from './address';
 import Prefs from './preferences';
-import { List, Record, Map } from 'immutable';
+import { List, Map } from 'immutable';
+import { Record } from '../transit';
 
 const InitialState = Record({
   livestate: new Map(),
@@ -12,15 +13,11 @@ const InitialState = Record({
     )
   }),
   activeTab: 0,
-});
+}, 'smartHome');
 
+/* PENDING: This should no longer be needed once we use transit-js to serialize
+ * backend-communication */
 const buildLivestate = (livestate) => new Map(livestate).map(addr => new Addr(addr));
-
-// Note how JSON from server is revived to immutable record.
-const revive = ({ livestate, eventHistory }) => new InitialState({
-  livestate: buildLivestate(livestate),
-  eventHistory: new List(eventHistory),
-});
 
 function updateAddrValue(state, id, value) {
   if (!state.has(id)) {
@@ -29,9 +26,7 @@ function updateAddrValue(state, id, value) {
   return state.update(id, (addr) => addr.set('value', value));
 }
 
-export default function connectHomeReducer(state = new InitialState, action) {
-  if (!(state instanceof InitialState)) return revive(state);
-
+export default function smartHomeReducer(state = new InitialState, action) {
   switch (action.type) {
 
     case actions.PROCESS_EVENT: {

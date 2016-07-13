@@ -96,7 +96,7 @@ class AddressList extends Component {
       <section className="addressListByRoom">
       {
         addresses.filter(
-          addr => prefs.rooms.some(
+          addr => prefs.get('rooms').some(
             /* Only addresses with a valid room + presence in our
                rooms-preferences list */
             roomName => addr.room && addr.room.startsWith(roomName)))

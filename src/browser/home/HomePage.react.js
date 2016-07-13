@@ -78,7 +78,7 @@ class HomePage extends Component {
           <Cell col={10}>  {/* main (center column) */}
             <section className="page-content">
               <div className="homeTabs">
-                <Tabs activeTab={activeTab} onChange={onTabChange} ripple>
+                <Tabs activeTab={activeTab} onChange={onTabChange} >
                   <Tab>Devices</Tab>
                   <Tab>Rooms</Tab>
                 </Tabs>

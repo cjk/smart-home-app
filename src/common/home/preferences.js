@@ -1,5 +1,6 @@
-import { List, Record } from 'immutable';
+import { List } from 'immutable';
+import { Record } from '../transit';
 
 export default Record({
-  rooms: List(),
-});
+  rooms: new List(),
+}, 'prefs');
