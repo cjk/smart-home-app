@@ -1,5 +1,6 @@
 import configureStorage from './configureStorage';
 import createLoggerMiddleware from 'redux-logger';
+import promiseMiddleware from 'redux-promise-middleware';
 
 // Deps.
 import firebase from 'firebase';
@@ -15,26 +16,6 @@ const injectMiddleware = deps => ({ dispatch, getState }) => next => action =>
     ? action({ ...deps, dispatch, getState })
     : action
   );
-
-// Like redux-promise-middleware but without the noise.
-const promiseMiddleware = ({ dispatch }) => next => action => {
-  const { type, payload: promise } = action;
-  const isPromise = promise && typeof promise.then === 'function';
-  if (!isPromise) return next(action);
-  const createAction = (suffix, payload) => ({
-    type: `${type}_${suffix}`, meta: { action }, payload
-  });
-  next(createAction('START'));
-  const onFulfilled = value => {
-    dispatch(createAction('SUCCESS', value));
-    return value;
-  };
-  const onRejected = error => {
-    dispatch(createAction('ERROR', error));
-    throw error;
-  };
-  return promise.then(onFulfilled, onRejected);
-};
 
 export default function configureMiddleware(initialState, platformDeps, platformMiddleware) {
   if (!firebaseDeps) {
@@ -71,7 +52,9 @@ export default function configureMiddleware(initialState, platformDeps, platform
       storageEngine,
       validate,
     }),
-    promiseMiddleware,
+    promiseMiddleware({
+      promiseTypeSuffixes: ['START', 'SUCCESS', 'ERROR']
+    }),
     ...platformMiddleware,
   ];
 
