@@ -1,9 +1,9 @@
 import './NewTodo.scss';
-import * as todosActions from '../../common/todos/actions';
 import Component from 'react-pure-render/component';
 import React, { PropTypes } from 'react';
 import newTodoMessages from '../../common/todos/newTodoMessages';
 import { FormattedMessage } from 'react-intl';
+import { addTodo } from '../../common/todos/actions';
 import { connect } from 'react-redux';
 import { fields } from '../../common/lib/redux-fields';
 
@@ -11,11 +11,11 @@ class NewTodo extends Component {
 
   static propTypes = {
     addTodo: PropTypes.func.isRequired,
-    fields: PropTypes.object.isRequired
+    fields: PropTypes.object.isRequired,
   };
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.onInputKeyDown = this.onInputKeyDown.bind(this);
   }
 
@@ -48,7 +48,7 @@ class NewTodo extends Component {
 
 NewTodo = fields(NewTodo, {
   path: 'newTodo',
-  fields: ['title']
+  fields: ['title'],
 });
 
-export default connect(null, todosActions)(NewTodo);
+export default connect(null, { addTodo })(NewTodo);

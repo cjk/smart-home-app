@@ -5,10 +5,10 @@ import { FormattedHTMLMessage, defineMessages } from 'react-intl';
 // Messages collocation ftw.
 // https://github.com/yahoo/react-intl/wiki/API#definemessages
 const messages = defineMessages({
-  madeBy: {
-    defaultMessage: 'Made with love by <a href=\"https://twitter.com/cjk\">CjK</a>, based on steida\'s Este.js',
-    id: 'footer.madeBy'
-  }
+  madeByHtml: {
+    defaultMessage: 'Made with love by <a href="https://twitter.com/cjk">CjK</a>, based on steida\'s Este.js',
+    id: 'footer.madeByHtml',
+  },
 });
 
 export default class Footer extends Component {
@@ -17,7 +17,7 @@ export default class Footer extends Component {
     return (
       <footer>
         <p>
-          <FormattedHTMLMessage {...messages.madeBy} />
+          <FormattedHTMLMessage {...messages.madeByHtml} />
         </p>
       </footer>
     );

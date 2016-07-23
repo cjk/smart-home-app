@@ -1,10 +1,10 @@
-import * as todosActions from '../../common/todos/actions';
 import Component from 'react-pure-render/component';
 import React, { PropTypes } from 'react';
 import Todo from './Todo.react';
 import todosMessages from '../../common/todos/todosMessages';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
+import { deleteTodo, toggleTodoCompleted } from '../../common/todos/actions';
 
 // Container component.
 export class Todos extends Component {
@@ -12,7 +12,7 @@ export class Todos extends Component {
   static propTypes = {
     deleteTodo: PropTypes.func.isRequired,
     todos: PropTypes.object.isRequired,
-    toggleTodoCompleted: PropTypes.func.isRequired
+    toggleTodoCompleted: PropTypes.func.isRequired,
   };
 
   // // Check render performance.
@@ -49,5 +49,5 @@ export class Todos extends Component {
 }
 
 export default connect(state => ({
-  todos: state.todos.map
-}), todosActions)(Todos);
+  todos: state.todos.map,
+}), { deleteTodo, toggleTodoCompleted })(Todos);

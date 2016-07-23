@@ -9,11 +9,11 @@ class Social extends Component {
 
   static propTypes = {
     disabled: PropTypes.bool.isRequired,
-    signIn: PropTypes.func.isRequired
+    signIn: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.onButtonClick = this.onButtonClick.bind(this);
   }
 
@@ -50,5 +50,5 @@ class Social extends Component {
 }
 
 export default connect(state => ({
-  disabled: state.auth.formDisabled
+  disabled: state.auth.formDisabled,
 }), { signIn })(Social);

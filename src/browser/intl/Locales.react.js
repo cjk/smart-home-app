@@ -1,14 +1,14 @@
-import * as intlActions from '../../common/intl/actions';
 import Component from 'react-pure-render/component';
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { setCurrentLocale } from '../../common/intl/actions';
 
 class Locales extends Component {
 
   static propTypes = {
     currentLocale: PropTypes.string.isRequired,
     locales: PropTypes.arrayOf(React.PropTypes.string),
-    setCurrentLocale: PropTypes.func.isRequired
+    setCurrentLocale: PropTypes.func.isRequired,
   };
 
   render() {
@@ -31,5 +31,5 @@ class Locales extends Component {
 
 export default connect(state => ({
   currentLocale: state.intl.currentLocale,
-  locales: state.intl.locales
-}), intlActions)(Locales);
+  locales: state.intl.locales,
+}), { setCurrentLocale })(Locales);

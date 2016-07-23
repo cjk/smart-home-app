@@ -1,5 +1,7 @@
 import configureStorage from './configureStorage';
 import createLoggerMiddleware from 'redux-logger';
+/* TODO: Check if it's feasable to also migrate to Este simpler promise-middleware implementation instead of
+   redux-promise-middleware */
 import promiseMiddleware from 'redux-promise-middleware';
 
 // Deps.
@@ -73,7 +75,7 @@ export default function configureMiddleware(initialState, platformDeps, platform
       collapsed: true,
       predicate: (getState, action) => ignoredActions.indexOf(action.type) === -1,
       // Convert immutable to JSON.
-      stateTransformer: state => JSON.parse(JSON.stringify(state))
+      stateTransformer: state => JSON.parse(JSON.stringify(state)),
     });
     middleware.push(logger);
   }

@@ -19,12 +19,12 @@ const bootstrap4Metas = [
   { charset: 'utf-8' },
   {
     name: 'viewport',
-    content: 'width=device-width, initial-scale=1, shrink-to-fit=no'
+    content: 'width=device-width, initial-scale=1, shrink-to-fit=no',
   },
   {
     'http-equiv': 'x-ua-compatible',
-    content: 'ie=edge'
-  }
+    content: 'ie=edge',
+  },
 ];
 
 class App extends Component {
@@ -32,7 +32,7 @@ class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     currentLocale: PropTypes.string.isRequired,
-    location: locationShape
+    location: locationShape,
   };
 
   render() {
@@ -47,12 +47,12 @@ class App extends Component {
             ...bootstrap4Metas,
             {
               name: 'description',
-              content: 'smart home control app'
+              content: 'smart home control app',
             },
-            ...favicon.meta
+            ...favicon.meta,
           ]}
           link={[
-            ...favicon.link
+            ...favicon.link,
           ]}
         />
 
@@ -78,5 +78,5 @@ class App extends Component {
 App = start(App);
 
 export default connect(state => ({
-  currentLocale: state.intl.currentLocale
+  currentLocale: state.intl.currentLocale,
 }))(App);

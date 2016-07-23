@@ -1,46 +1,51 @@
 import Component from 'react-pure-render/component';
 import React, { PropTypes } from 'react';
 import linksMessages from '../../common/app/linksMessages';
-import { Dimensions, ScrollView, StyleSheet, Text, View } from 'react-native';
+import theme from '../app/theme';
+import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+import { Text } from './components';
+import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
 
-const window = Dimensions.get('window');
+// TODO: Fix the orientation change.
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#2C2C2C',
-    flex: 1,
-    height: window.height,
-    width: window.width * .7
-  },
   menu: {
+    backgroundColor: theme.inverseBackgroundColor,
+    flex: 1,
+    height,
+    width: width * .7,
+  },
+  content: {
     flex: 1,
     justifyContent: 'space-between',
-    paddingVertical: 20,
-    paddingHorizontal: 30
+    paddingVertical: theme.fontSizeH5,
+    paddingHorizontal: theme.fontSizeH5,
   },
   item: {
-    fontSize: 16,
-    padding: 10,
-    color: '#fff'
-  }
+    fontSize: theme.fontSizeBase,
+    padding: theme.fontSizeBase * .625,
+    color: '#fff',
+  },
 });
 
 class Menu extends Component {
 
   static propTypes = {
     intl: intlShape.isRequired,
-    onRouteChange: PropTypes.func.isRequired
+    onRouteChange: PropTypes.func.isRequired,
+    viewer: PropTypes.object,
   };
 
   render() {
-    const { intl, onRouteChange } = this.props;
+    const { intl, onRouteChange, viewer } = this.props;
 
     return (
       <ScrollView
         automaticallyAdjustContentInsets={false}
-        contentContainerStyle={styles.menu}
-        style={styles.container}
+        contentContainerStyle={styles.content}
+        style={styles.menu}
       >
         <View>
           {/* TODO: Refactor */}
@@ -60,10 +65,17 @@ class Menu extends Component {
             onPress={() => onRouteChange('offline')} // eslint-disable-line react/jsx-no-bind
             style={styles.item}
           >{intl.formatMessage(linksMessages.offline)}</Text>
-          <Text
-            onPress={() => onRouteChange('signIn')} // eslint-disable-line react/jsx-no-bind
-            style={styles.item}
-          >{intl.formatMessage(linksMessages.signIn)}</Text>
+          {viewer ?
+            <Text
+              onPress={() => onRouteChange('me')} // eslint-disable-line react/jsx-no-bind
+              style={styles.item}
+            >{intl.formatMessage(linksMessages.me)}</Text>
+          :
+            <Text
+              onPress={() => onRouteChange('signIn')} // eslint-disable-line react/jsx-no-bind
+              style={styles.item}
+            >{intl.formatMessage(linksMessages.signIn)}</Text>
+          }
         </View>
       </ScrollView>
     );
@@ -71,4 +83,8 @@ class Menu extends Component {
 
 }
 
-export default injectIntl(Menu);
+Menu = injectIntl(Menu);
+
+export default connect(state => ({
+  viewer: state.users.viewer,
+}))(Menu);

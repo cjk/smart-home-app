@@ -1,9 +1,9 @@
 import './Buttons.scss';
-import * as todosActions from '../../common/todos/actions';
 import Component from 'react-pure-render/component';
 import React, { PropTypes } from 'react';
 import buttonsMessages from '../../common/todos/buttonsMessages';
 import { FormattedMessage } from 'react-intl';
+import { addHundredTodos, clearAllTodos } from '../../common/todos/actions';
 import { connect } from 'react-redux';
 
 class Buttons extends Component {
@@ -11,7 +11,7 @@ class Buttons extends Component {
   static propTypes = {
     addHundredTodos: PropTypes.func.isRequired,
     clearAllTodos: PropTypes.func.isRequired,
-    todos: PropTypes.object.isRequired
+    todos: PropTypes.object.isRequired,
   };
 
   render() {
@@ -33,5 +33,5 @@ class Buttons extends Component {
 }
 
 export default connect(state => ({
-  todos: state.todos.map
-}), todosActions)(Buttons);
+  todos: state.todos.map,
+}), { addHundredTodos, clearAllTodos })(Buttons);

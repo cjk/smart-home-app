@@ -8,27 +8,27 @@ import {
   FormattedMessage,
   FormattedNumber,
   FormattedRelative,
-  defineMessages
+  defineMessages,
 } from 'react-intl';
 
 const messages = defineMessages({
   h2: {
     defaultMessage: 'react-intl demonstration',
-    id: 'intl.page.h2'
+    id: 'intl.page.h2',
   },
   unreadCount: {
     defaultMessage: `{unreadCount, plural,
       one {message}
       other {messages}
     }`,
-    id: 'intl.page.unreadCount'
-  }
+    id: 'intl.page.unreadCount',
+  },
 });
 
 export default class IntlPage extends Component {
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.componentRenderedAt = Date.now();
   }
 

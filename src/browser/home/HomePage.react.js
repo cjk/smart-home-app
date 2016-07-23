@@ -96,5 +96,5 @@ class HomePage extends Component {
 }
 
 export default connect(state => ({
-  smartHome: state.smartHome
+  smartHome: state.smartHome,
 }), homeActions)(HomePage);

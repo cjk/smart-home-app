@@ -6,7 +6,6 @@ import smartHome from './home/reducer';
 import fermenter from './fermenter/reducer';
 import intl from './intl/reducer';
 import todos from './todos/reducer';
-import ui from './ui/reducer';
 import users from './users/reducer';
 import { SIGN_OUT } from './auth/actions';
 import { combineReducers } from 'redux';
@@ -24,7 +23,7 @@ const resetStateOnSignOut = (reducer, initialState) => (state, action) => {
       config: initialState.config,
       device: initialState.device,
       intl: initialState.intl,
-      routing: state.routing // Routing state has to be reused.
+      routing: state.routing, // Routing state has to be reused.
     };
   }
   return reducer(state, action);
@@ -44,7 +43,6 @@ export default function configureReducer(initialState, platformReducers) {
     smartHome,
     fermenter,
     todos,
-    ui,
     users,
   });
 

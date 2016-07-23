@@ -1,63 +1,56 @@
 import Component from 'react-pure-render/component';
+import Icon from 'react-native-vector-icons/Ionicons';
 import React, { PropTypes } from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import theme from './theme';
+import { Button, Text } from './components';
+import { StyleSheet, View } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: '#31AACC',
-    borderBottomColor: '#73CEE7',
-    borderBottomWidth: 2,
-    height: 70,
-    justifyContent: 'center',
-    paddingBottom: 10,
-    paddingTop: 30,
-    position: 'relative'
-  },
   header: {
-    color: '#fff',
-    fontSize: 20
+    backgroundColor: theme.brandPrimary,
+    flexDirection: 'row',
+    justifyContent: 'space-between', // align items in the flexDirection
+    alignItems: 'center', // align items in the cross-axis flexDirection
+    paddingTop: theme.fontSizeBase * 1.875, // pxtoem.com
+    paddingBottom: theme.fontSizeBase * .625,
+    borderBottomColor: theme.lighten(theme.brandPrimary),
+    borderBottomWidth: 2,
   },
-  menuIcon: {
-    backgroundColor: 'transparent',
-    height: 24,
-    width: 24
+  title: {
+    color: theme.inverseTextColor,
+    fontSize: theme.fontSizeH5,
   },
-  menuLink: {
-    backgroundColor: 'transparent',
-    height: 44,
-    left: 8,
-    opacity: 0.9,
-    padding: 10,
-    position: 'absolute',
-    top: 25,
-    width: 44
-  }
+  button: {
+    alignItems: 'center',
+    top: 1,
+    width: theme.fontSizeBase * 3,
+  },
+  icon: {
+    color: theme.inverseTextColor,
+    fontSize: theme.fontSizeH4,
+  },
 });
 
 export default class Header extends Component {
 
   static propTypes = {
     title: PropTypes.string.isRequired,
-    toggleSideMenu: PropTypes.func.isRequired
+    toggleSideMenu: PropTypes.func.isRequired,
   };
 
   render() {
     const { title, toggleSideMenu } = this.props;
 
     return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          activeOpacity={.8}
-          onPress={toggleSideMenu}
-          style={styles.menuLink}
-        >
-          <Image
-            source={require('./img/MenuIcon.png')}
-            style={styles.menuIcon}
-          />
-        </TouchableOpacity>
-        <Text style={styles.header}>{title}</Text>
+      <View style={styles.header}>
+        <Button onPress={toggleSideMenu} style={styles.button}>
+          <Icon name="ios-menu" style={styles.icon} />
+        </Button>
+        <Text style={styles.title}>{title}</Text>
+        <Button style={styles.button}>
+          {/* This is a placeholder for the right side button. */}
+          {/* <Icon name="ios-menu" style={styles.icon} /> */}
+        </Button>
       </View>
     );
   }

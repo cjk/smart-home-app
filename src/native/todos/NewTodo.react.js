@@ -1,38 +1,39 @@
-import * as todosActions from '../../common/todos/actions';
 import Component from 'react-pure-render/component';
 import React, { PropTypes } from 'react';
 import newTodoMessages from '../../common/todos/newTodoMessages';
+import theme from '../app/theme';
 import { FormattedMessage } from 'react-intl';
 import { StyleSheet, TextInput, View } from 'react-native';
+import { addTodo } from '../../common/todos/actions';
 import { connect } from 'react-redux';
 import { fields } from '../../common/lib/redux-fields';
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#31AACC',
-    borderTopColor: '#73CEE7',
+  newTodo: {
+    backgroundColor: theme.brandPrimary,
+    borderTopColor: theme.lighten(theme.brandPrimary),
     borderTopWidth: 1,
-    height: 62
+    height: theme.fontSizeBase * 4,
   },
   input: {
-    color: '#fff',
+    color: theme.inverseTextColor,
     flex: 1,
     fontFamily: 'Helvetica Neue',
-    fontSize: 16,
-    paddingLeft: 10,
-    paddingRight: 10
-  }
+    fontSize: theme.fontSizeH5,
+    marginLeft: theme.fontSizeBase,
+    marginRight: theme.fontSizeBase,
+  },
 });
 
 class NewTodo extends Component {
 
   static propTypes = {
     addTodo: PropTypes.func.isRequired,
-    fields: PropTypes.object.isRequired
+    fields: PropTypes.object.isRequired,
   };
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.onTextInputEndEditing = this.onTextInputEndEditing.bind(this);
     this.onSubmitEditing = this.onSubmitEditing.bind(this);
   }
@@ -52,10 +53,11 @@ class NewTodo extends Component {
     const { fields } = this.props;
 
     return (
-      <View style={styles.container}>
+      <View style={styles.newTodo}>
         <FormattedMessage {...newTodoMessages.placeholder}>
           {message => <TextInput
             {...fields.title}
+            autoCorrect={false}
             maxLength={100} // React Native needs explicit maxLength.
             onEndEditing={this.onTextInputEndEditing}
             onSubmitEditing={this.onSubmitEditing}
@@ -72,7 +74,7 @@ class NewTodo extends Component {
 
 NewTodo = fields(NewTodo, {
   path: 'newTodo',
-  fields: ['title']
+  fields: ['title'],
 });
 
-export default connect(null, todosActions)(NewTodo);
+export default connect(null, { addTodo })(NewTodo);

@@ -1,11 +1,11 @@
 import './FieldsPage.scss';
 import Component from 'react-pure-render/component';
 import DynamicField from './DynamicField.react.js';
-import FieldError from '../lib/FieldError.react';
 import Helmet from 'react-helmet';
 import React, { PropTypes } from 'react';
 import buttonsMessages from '../../common/app/buttonsMessages';
 import linksMessages from '../../common/app/linksMessages';
+import { FieldError } from '../app/components';
 import { FormattedMessage, defineMessages } from 'react-intl';
 import { connect } from 'react-redux';
 import { fields } from '../../common/lib/redux-fields';
@@ -14,12 +14,12 @@ import { focusInvalidField, ValidationError } from '../../common/lib/validation'
 const messages = defineMessages({
   h2: {
     defaultMessage: 'Fields',
-    id: 'fields.page.h2'
+    id: 'fields.page.h2',
   },
   p: {
     defaultMessage: 'Something like redux-form but simplified and universal.',
-    id: 'fields.page.p'
-  }
+    id: 'fields.page.p',
+  },
 });
 
 // Just an example of some dynamically loaded data.
@@ -56,11 +56,11 @@ class FieldsPage extends Component {
     // Generated fields by fields higher order component.
     fields: PropTypes.object.isRequired,
     // We can read anything from fields model directly.
-    fieldsPageModel: PropTypes.object
+    fieldsPageModel: PropTypes.object,
   };
 
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onToggleClick = this.onToggleClick.bind(this);
     this.state = {
@@ -216,18 +216,18 @@ FieldsPage = fields(FieldsPage, {
     'hasBike',
     'gender',
     'selectedNumber',
-    'toggled'
+    'toggled',
   ],
   getInitialState: () => ({
     // someField: '123',
     // hasCar: true,
     gender: 'male',
     selectedNumber: '2',
-    toggled: false
-  })
+    toggled: false,
+  }),
 });
 
 // Connect is not required. It's just a demonstration of fields state.
 export default connect(state => ({
-  fieldsPageModel: state.fields.get('fieldsPage')
+  fieldsPageModel: state.fields.get('fieldsPage'),
 }))(FieldsPage);

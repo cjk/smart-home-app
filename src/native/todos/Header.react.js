@@ -1,7 +1,9 @@
 import Component from 'react-pure-render/component';
 import React, { PropTypes } from 'react';
+import theme from '../app/theme';
 import { FormattedMessage, defineMessages } from 'react-intl';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { Text } from '../app/components';
 import { connect } from 'react-redux';
 
 const messages = defineMessages({
@@ -11,29 +13,29 @@ const messages = defineMessages({
       one {You have {leftTodos} task}
       other {You have {leftTodos} tasks}
     }`,
-    id: 'todos.leftTodos'
-  }
+    id: 'todos.leftTodos',
+  },
 });
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-    backgroundColor: '#31AACC',
-    justifyContent: 'center',
-    marginTop: -5,
-    paddingBottom: 20,
-    paddingTop: 10
-  },
   header: {
-    color: '#fff',
-    fontSize: 20,
-  }
+    alignItems: 'center',
+    backgroundColor: theme.brandPrimary,
+    justifyContent: 'center',
+    marginTop: -2, // To override app header borderBottom.
+    paddingBottom: theme.fontSizeH5,
+    paddingTop: theme.fontSizeBase * .625,
+  },
+  text: {
+    color: theme.inverseTextColor,
+    fontSize: theme.fontSizeH5,
+  },
 });
 
 class Header extends Component {
 
   static propTypes = {
-    todos: PropTypes.object.isRequired
+    todos: PropTypes.object.isRequired,
   };
 
   render() {
@@ -41,9 +43,9 @@ class Header extends Component {
     const leftTodos = todos.filter(todo => !todo.completed).size;
 
     return (
-      <View style={styles.container}>
+      <View style={styles.header}>
         <FormattedMessage {...messages.leftTodos} values={{ leftTodos }}>
-          {message => <Text style={styles.header}>{message}</Text>}
+          {message => <Text style={styles.text}>{message}</Text>}
         </FormattedMessage>
       </View>
     );
@@ -52,5 +54,5 @@ class Header extends Component {
 }
 
 export default connect(state => ({
-  todos: state.todos.map
+  todos: state.todos.map,
 }))(Header);

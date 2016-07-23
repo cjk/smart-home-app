@@ -1,61 +1,58 @@
 import Component from 'react-pure-render/component';
 import React, { PropTypes } from 'react';
-import { Image, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
+import theme from '../app/theme';
+import { Checkbox } from '../app/components';
+import { StyleSheet, TextInput, View } from 'react-native';
 
 const styles = StyleSheet.create({
-  container: {
+  todo: {
     alignItems: 'center',
     flex: 1,
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   input: {
-    color: '#7C7C7C',
+    color: theme.textColor,
     flex: 1,
-    fontSize: 16,
-    paddingRight: 20
+    fontSize: theme.fontSizeBase,
+    paddingRight: theme.fontSizeH5,
   },
   checkbox: {
-    height: 30,
-    marginLeft: 20,
-    marginRight: 20,
-    width: 30
-  }
+    height: theme.fontSizeH5,
+    marginLeft: theme.fontSizeH5,
+    marginRight: theme.fontSizeH5,
+    width: theme.fontSizeH5,
+  },
 });
 
 export default class Todo extends Component {
 
   static propTypes = {
     todo: PropTypes.object.isRequired,
-    toggleTodoCompleted: PropTypes.func.isRequired
+    toggleTodoCompleted: PropTypes.func.isRequired,
   };
 
-  constructor(props) {
-    super(props);
-    this.onTouchableOpacityPress = this.onTouchableOpacityPress.bind(this);
+  constructor() {
+    super();
+    this.onCheckboxPress = this.onCheckboxPress.bind(this);
   }
 
-  onTouchableOpacityPress() {
+  onCheckboxPress() {
     const { todo, toggleTodoCompleted } = this.props;
     toggleTodoCompleted(todo);
   }
 
   render() {
     const { todo } = this.props;
-    const image = todo.completed
-      ? require('./img/SelectedCheckbox.png')
-      : require('./img/EmptyCheckbox.png');
-
     return (
-      <View style={styles.container}>
-        <TouchableOpacity
-          activeOpacity={.8}
-          onPress={this.onTouchableOpacityPress}
-        >
-          <Image source={image} style={styles.checkbox} />
-        </TouchableOpacity>
+      <View style={styles.todo}>
+        <Checkbox
+          checked={todo.completed}
+          onPress={this.onCheckboxPress}
+          style={styles.checkbox}
+        />
         <TextInput
           editable={false}
-          style={[styles.input]}
+          style={styles.input}
           value={todo.title}
         />
       </View>
