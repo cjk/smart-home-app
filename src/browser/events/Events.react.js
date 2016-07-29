@@ -31,7 +31,7 @@ class EventList extends Component {
       { name: 'action', label: 'Action' },
       { name: 'dest', label: 'Address' },
       // { name: 'src', label: 'From' },
-      { name: 'type', label: 'Type' },
+      // { name: 'type', label: 'Type' },
       { name: 'value', label: 'Value' },
     ]);
 
