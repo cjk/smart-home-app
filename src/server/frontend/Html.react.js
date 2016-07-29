@@ -1,4 +1,6 @@
-import { GoogleFont, TypographyStyle } from './baseTypography';
+/* PENDING: CjK 29.07.2016 - this overlaps with Este's themeing in ../../common/app/theme.js
+ * Check current development this is taking and switch over if matured */
+import typography from './baseTypography';
 import React, { Component, PropTypes } from 'react';
 
 export default class Html extends Component {
@@ -41,8 +43,7 @@ ga('create', '${googleAnalyticsId}', 'auto'); ga('send', 'pageview');` }}
           <script src="/assets/js/material.js"></script>
           <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
           {/* Insert Typography.js styles */}
-          <GoogleFont/>
-          <TypographyStyle />
+          {typography.injectStyles()}
           {/* Default Styles and GoogleFont-Analytics */}
           {linkStyles}
           {analytics}
