@@ -1,10 +1,10 @@
 import Component from 'react-pure-render/component';
 import React, { PropTypes } from 'react';
-import theme from '../app/theme';
-import { FormattedMessage, defineMessages } from 'react-intl';
+import theme from '../../common/app/theme';
+import { FormattedMessage } from '../app/components';
 import { StyleSheet, View } from 'react-native';
-import { Text } from '../app/components';
 import { connect } from 'react-redux';
+import { defineMessages } from 'react-intl';
 
 const messages = defineMessages({
   leftTodos: {
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: -2, // To override app header borderBottom.
     paddingBottom: theme.fontSizeH5,
-    paddingTop: theme.fontSizeBase * .625,
+    paddingTop: theme.fontSize * .625,
   },
   text: {
     color: theme.inverseTextColor,
@@ -44,9 +44,11 @@ class Header extends Component {
 
     return (
       <View style={styles.header}>
-        <FormattedMessage {...messages.leftTodos} values={{ leftTodos }}>
-          {message => <Text style={styles.text}>{message}</Text>}
-        </FormattedMessage>
+        <FormattedMessage
+          {...messages.leftTodos}
+          style={styles.text}
+          values={{ leftTodos }}
+        />
       </View>
     );
   }

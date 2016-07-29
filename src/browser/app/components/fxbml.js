@@ -7,7 +7,7 @@ import Component from 'react-pure-render/component';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-export default function xfbml(Wrapped) {
+export default function xfbml(WrappedComponent) {
   return class Wrapper extends Component {
 
     parseXfbmlAsap(el) {
@@ -35,7 +35,9 @@ export default function xfbml(Wrapped) {
     }
 
     render() {
-      return <Wrapped {...this.props} />;
+      return (
+        <WrappedComponent {...this.props} />
+      );
     }
 
   };

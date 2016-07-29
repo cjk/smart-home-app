@@ -1,8 +1,8 @@
 import Component from 'react-pure-render/component';
 import React, { PropTypes } from 'react';
-import theme from '../app/theme';
-import { Checkbox } from '../app/components';
-import { StyleSheet, TextInput, View } from 'react-native';
+import theme from '../../common/app/theme';
+import { Checkbox, TextInput } from '../app/components';
+import { StyleSheet, View } from 'react-native';
 
 const styles = StyleSheet.create({
   todo: {
@@ -10,17 +10,17 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
-  input: {
-    color: theme.textColor,
-    flex: 1,
-    fontSize: theme.fontSizeBase,
-    paddingRight: theme.fontSizeH5,
-  },
   checkbox: {
     height: theme.fontSizeH5,
     marginLeft: theme.fontSizeH5,
     marginRight: theme.fontSizeH5,
     width: theme.fontSizeH5,
+  },
+  textInputView: {
+    alignSelf: 'center',
+    borderBottomWidth: 0,
+    flex: 1,
+    marginBottom: 0,
   },
 });
 
@@ -52,7 +52,7 @@ export default class Todo extends Component {
         />
         <TextInput
           editable={false}
-          style={styles.input}
+          viewStyle={styles.textInputView}
           value={todo.title}
         />
       </View>

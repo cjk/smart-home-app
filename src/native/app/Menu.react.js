@@ -1,21 +1,16 @@
 import Component from 'react-pure-render/component';
 import React, { PropTypes } from 'react';
 import linksMessages from '../../common/app/linksMessages';
-import theme from '../app/theme';
-import { Dimensions, ScrollView, StyleSheet, View } from 'react-native';
+import theme from '../../common/app/theme';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { Text } from './components';
 import { connect } from 'react-redux';
 import { injectIntl, intlShape } from 'react-intl';
-
-// TODO: Fix the orientation change.
-const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   menu: {
     backgroundColor: theme.inverseBackgroundColor,
     flex: 1,
-    height,
-    width: width * .7,
   },
   content: {
     flex: 1,
@@ -24,9 +19,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: theme.fontSizeH5,
   },
   item: {
-    fontSize: theme.fontSizeBase,
-    padding: theme.fontSizeBase * .625,
-    color: '#fff',
+    fontSize: theme.fontSize,
+    padding: theme.fontSize * .625,
+    color: theme.inverseTextColor,
   },
 });
 

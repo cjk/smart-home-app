@@ -68,12 +68,13 @@ class App extends Component {
     const { sideMenuOpen } = this.state;
     return (
       <Container>
+        {/* TODO: App is offline <Alert /> */}
         <StatusBar hidden={sideMenuOpen} />
         <Header
           title={this.getTitle(route)}
           toggleSideMenu={this.toggleSideMenu}
         />
-        <route.Page />
+        <route.Page navigator={this.navigator} />
       </Container>
     );
   }
@@ -85,7 +86,6 @@ class App extends Component {
 
     return (
       <SideMenu
-        disableGestures
         isOpen={sideMenuOpen}
         menu={<Menu onRouteChange={this.onRouteChange} />}
         onChange={this.onSideMenuChange}

@@ -70,7 +70,9 @@ class HomePage extends Component {
 
         {/* Note child is a function, so we can localize anything. */}
         <FormattedMessage {...linksMessages.home}>
-          {message => <Helmet title={message} />}
+          {message =>
+            <Helmet title={message} />
+          }
         </FormattedMessage>
 
         <Grid>
