@@ -10,7 +10,7 @@ class AddrLine extends Component {
   static propTypes = {
     address: PropTypes.object.isRequired,
     msg: PropTypes.object,
-    updateAddr: PropTypes.func.isRequired
+    updateAddr: PropTypes.func.isRequired,
   }
 
   /* Note how we make use of autobinding here
@@ -28,7 +28,7 @@ class AddrLine extends Component {
 
     /* Tweak MDL styles so address-name + id fit into main-content area */
     const addressLineText = {
-      lineHeight: '1.2em'
+      lineHeight: '1.2em',
     };
 
     /* Decides which action-item to display */

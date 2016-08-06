@@ -11,7 +11,7 @@ class AddressList extends Component {
 
   static propTypes = {
     actions: PropTypes.object.isRequired,
-    addresses: PropTypes.object.isRequired
+    addresses: PropTypes.object.isRequired,
   }
 
   render() {
