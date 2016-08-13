@@ -1,5 +1,5 @@
 import * as actions from './actions';
-import Addr from './address';
+import { AddrRecord } from './address';
 import Prefs from './preferences';
 import { List, Map } from 'immutable';
 import { Record } from '../transit';
@@ -17,14 +17,12 @@ const InitialState = Record({
 
 /* PENDING: This should no longer be needed once we use transit-js to serialize
  * backend-communication */
-const buildLivestate = (livestate) => new Map(livestate).map(addr => new Addr(addr));
+const buildLivestate = (livestate) => new Map(livestate).map(addr => new AddrRecord(addr));
 
-function updateAddrValue(state, id, value) {
-  if (!state.has(id)) {
-    return state;
-  }
-  return state.update(id, (addr) => addr.set('value', value));
-}
+/* Updates address-objects in a Map (key == address-id) with a new address-object. 'addrLstToUpdate' must be an array
+   including another array with address-id/addr-object pairs. */
+const updateLivestateAddr = (state, addrLstToUpdate) =>
+  addrLstToUpdate.reduce((newState, [id, addr]) => newState.set(id, addr), state);
 
 export default function smartHomeReducer(state = new InitialState, action) {
   switch (action.type) {
@@ -34,12 +32,33 @@ export default function smartHomeReducer(state = new InitialState, action) {
 
       /* Update event-history and/or livestate */
       const newState = state.update('eventHistory', list => list.unshift(newEvent));
+      const liveState = newState.livestate;
+      const newValue = newEvent.value;
+      const addrId = newEvent.dest;
+      // console.log(JSON.stringify(newState.livestate));
 
-      if (newEvent.action.match(/^(write|response)$/)) {
-        return newState.set('livestate',
-                            updateAddrValue(state.livestate, newEvent.dest, newEvent.value));
+      /* We're done if it's not a write-request or no address matches */
+      if (!liveState.has(addrId) || !newEvent.action.match(/^(write|response)$/))
+        return newState;
+
+      const addr = liveState
+        .find((v, k) => k === addrId)
+        .set('value', newValue)
+      ;
+
+      /* List of addrId/addr pairs of addresses to update in livestate */
+      const addrLstToUpdate = [[addrId, addr]];
+
+      /* If it's a feedback-address event, update address that references this event-id as it's feedback-addr. instead.
+      */
+      if (addr.type === 'fb') {
+        const fbFor = liveState.find((v, _) => v.fbAddr === addrId);
+        if (fbFor) {
+          addrLstToUpdate.push([fbFor.id, fbFor.set('value', newValue)]);
+        }
       }
-      return newState;
+
+      return newState.set('livestate', updateLivestateAddr(liveState, addrLstToUpdate));
     }
 
     case actions.REQUEST_INITIAL_STATE_START: {

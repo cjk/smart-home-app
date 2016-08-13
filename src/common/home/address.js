@@ -1,6 +1,6 @@
 import { Record } from 'immutable';
 
-export default Record({
+export const AddrRecord = Record({
   id: null,
   name: 'unknown',
   value: undefined,
@@ -8,5 +8,7 @@ export default Record({
   room: null,
   type: null,
   func: null,
-  updatedAt: null
+  fbAddr: null,
+  fbValue: null,
+  updatedAt: null,
 });

@@ -33,10 +33,6 @@ class AddrLine extends Component {
 
     /* Decides which action-item to display */
     const chooseIcon = (addr) => {
-      if (addr.type === 'fb') {
-        return 'rss_feed';
-      }
-
       switch (addr.func) {
         case 'light': return 'wb_incandescent';
         case 'shut': return 'web_asset';

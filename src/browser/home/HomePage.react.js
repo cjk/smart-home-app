@@ -58,7 +58,8 @@ class HomePage extends Component {
   render() {
     const { smartHome: { livestate: addressMap, activeTab, prefs } } = this.props;
     const actions = { updateAddr: this.updateAddr, updateList: this.updateList };
-    const addresses = addressMap.toList();
+    /* Built address-list, remove some address-types which should not be displayed */
+    const addresses = addressMap.toList().filter(a => a.type !== 'fb');
     const onTabChange = this.tabChange.bind(this);
 
     const addrList = activeTab === 0
