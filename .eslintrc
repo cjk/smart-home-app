@@ -29,5 +29,6 @@
     "react-native/split-platform-components": 2,
     // Override external defaults
     "comma-dangle": ["error", "always-multiline"],
+    "max-len": ["error", 120],
   }
 }
