@@ -1,7 +1,6 @@
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
-import ValidationError from '../../../common/lib/validation/ValidationError';
+import React, { Component, PropTypes } from 'react';
 import { FormattedMessage, defineMessages } from 'react-intl';
+import { ValidationError } from '../../../common/lib/validation';
 
 const messages = defineMessages({
   required: {

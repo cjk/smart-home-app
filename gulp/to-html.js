@@ -2,8 +2,10 @@
 import args from './support/args';
 import fs from 'fs';
 import gulp from 'gulp';
+import http from 'http';
 import path from 'path';
 import runSequence from 'run-sequence';
+import { spawn } from 'child_process';
 
 const urls = {
   '/': 'index.html',
@@ -15,7 +17,7 @@ gulp.task('to-html', done => {
   process.env.IS_SERVERLESS = true;
 
   const fetch = url => new Promise((resolve, reject) => {
-    require('http').get({ host: 'localhost', path: url, port: 8000 }, res => {
+    http.get({ host: 'localhost', path: url, port: 3000 }, res => {
       // Explicitly treat incoming data as utf8 (avoids issues with multi-byte).
       res.setEncoding('utf8');
       let body = '';
@@ -45,7 +47,7 @@ gulp.task('to-html', done => {
   };
 
   runSequence('eslint-ci', 'ava', 'clean', 'build', () => {
-    const proc = require('child_process').spawn('node', ['./src/server']);
+    const proc = spawn('node', ['./src/server']);
     proc.stderr.on('data', data => console.log(data.toString()));
     proc.stdout.on('data', async data => {
       data = data.toString();
@@ -59,7 +61,7 @@ gulp.task('to-html', done => {
         proc.kill();
         done();
         console.log('App has been rendered to /build directory.');
-        console.log('OSX tip: cd build && python -m SimpleHTTPServer 8000');
+        console.log('OSX tip: cd build && python -m SimpleHTTPServer 3000');
       }
     });
   });

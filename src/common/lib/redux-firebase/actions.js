@@ -1,8 +1,10 @@
-import ValidationError from '../validation/ValidationError';
 import invariant from 'invariant';
 import mapFirebaseUserToAppUser from './mapFirebaseUserToAppUser';
 import messages from './messages';
 import { APP_OFFLINE, APP_ONLINE } from '../../app/actions';
+import { ValidationError } from '../validation';
+import { replace } from 'react-router-redux';
+import { selectTab } from '../../../native/routing/actions';
 
 export const FIREBASE_OFF_QUERY = 'FIREBASE_OFF_QUERY';
 export const FIREBASE_ON_AUTH = 'FIREBASE_ON_AUTH';
@@ -61,7 +63,7 @@ const emailSignIn = async (firebaseAuth, validate, { email, password }) => {
 
 // stackoverflow.com/a/33997042/233902
 const isFacebookApp = () => {
-  const ua = navigator.userAgent || navigator.vendor || window.opera;
+  const ua = navigator.userAgent || navigator.vendor; // eslint-disable-line no-undef
   return ua.indexOf('FBAN') > -1 || ua.indexOf('FBAV') > -1;
 };
 
@@ -101,10 +103,16 @@ const saveUser = user => ({ firebase }) => {
   };
 };
 
-const onAuth = user => ({ dispatch }) => {
+const onAuth = user => ({ dispatch, getState }) => {
   if (user) {
-    // TODO: Save user only after sign in, once Firebase team tell me how.
+    // Save user after successful auth to possible update its profile data.
     dispatch(saveUser(user));
+  } else if (getState().users.viewer) {
+    // Redirect to home page before sign out to ensure a valid view state.
+    const action = getState().device.isReactNative
+      ? selectTab('home')
+      : replace('/');
+    dispatch(action);
   }
   return {
     type: FIREBASE_ON_AUTH,
@@ -114,24 +122,29 @@ const onAuth = user => ({ dispatch }) => {
 
 // firebase.google.com/docs/database/web/offline-capabilities#section-sample
 const createPresenceMonitor = () => {
+  let connections = [];
   let off = null;
 
   return (firebase, firebaseDatabase, user) => {
-    if (!user) return;
+    if (!user) {
+      connections.forEach(connection => connection.remove());
+      connections = [];
+      return;
+    }
     const connectedRef = firebase.child('.info/connected');
-    const presenceRef = firebase.child(`users-presence/${user.id}`);
-    if (off) off();
     const handler = snap => {
       if (!snap.val()) return;
       const userWithoutEmail = user.toJS();
       delete userWithoutEmail.email;
-      presenceRef
+      const connectionRef = firebase.child(`users-presence/${user.id}`)
         .push({
           authenticatedAt: firebaseDatabase.ServerValue.TIMESTAMP,
           user: userWithoutEmail,
-        })
-        .onDisconnect().remove();
+        });
+      connections.push(connectionRef);
+      connectionRef.onDisconnect().remove();
     };
+    if (off) off();
     off = () => connectedRef.off('value', handler);
     connectedRef.on('value', handler);
   };
@@ -204,7 +217,7 @@ export function onPermissionDenied(message) {
   };
 }
 
-export function resetPassword(email) {
+export function resetPassword(email, onSuccess) {
   return ({ firebaseAuth, validate }) => {
     const getPromise = async () => {
       await validate({ email })
@@ -220,6 +233,7 @@ export function resetPassword(email) {
         }
         throw error;
       }
+      if (onSuccess) onSuccess();
     };
     return {
       type: 'FIREBASE_RESET_PASSWORD',
@@ -236,18 +250,24 @@ export function firebaseStart() {
       if (!result.credential) return;
       dispatch({ type: FIREBASE_SIGN_IN_SUCCESS, payload: result });
     }, error => {
+      if (error.code === 'auth/operation-not-supported-in-this-environment') {
+        return;
+      }
       dispatch({ type: FIREBASE_SIGN_IN_ERROR, payload: error });
     });
+
     firebaseAuth().onAuthStateChanged(firebaseUser => {
       const user = mapFirebaseUserToAppUser(firebaseUser);
       monitorPresence(firebase, firebaseDatabase, user);
       dispatch(onAuth(user));
     });
+
     firebase.child('.info/connected').on('value', snap => {
       const online = snap.val();
       if (getState().app.online === online) return;
       dispatch({ type: online ? APP_ONLINE : APP_OFFLINE });
     });
+
     return {
       type: FIREBASE_START,
     };

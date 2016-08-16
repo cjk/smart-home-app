@@ -1,7 +1,6 @@
 import './Todo.scss';
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
-import cx from 'classnames';
+import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
 
 // Presentational component.
 export default class Todo extends Component {
@@ -34,7 +33,7 @@ export default class Todo extends Component {
     return (
       <li className="todo">
         <span
-          className={cx('view', { completed: todo.completed })}
+          className={classnames('view', { completed: todo.completed })}
           onClick={this.onTitleClick}
         >{todo.title}</span>
         <span

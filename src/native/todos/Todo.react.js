@@ -1,6 +1,5 @@
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
-import theme from '../../common/app/theme';
+import React, { Component, PropTypes } from 'react';
+import theme from '../app/theme';
 import { Checkbox, TextInput } from '../app/components';
 import { StyleSheet, View } from 'react-native';
 

@@ -18,8 +18,7 @@
 // }));
 
 import * as actions from './actions';
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 
 // Use key whenever you want to force off / on event registration. It's useful
 // when queried component must be rerendered, for example when app state is

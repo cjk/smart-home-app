@@ -1,6 +1,5 @@
-import Component from 'react-pure-render/component';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import buttonsMessages from '../../common/app/buttonsMessages';
 import { FormattedMessage } from '../app/components';
 import { View } from 'react-native';
@@ -38,18 +37,10 @@ class Social extends Component {
     this.onFacebookLoginPress = this.onFacebookLoginPress.bind(this);
   }
 
-  async onFacebookLoginPress() {
+  onFacebookLoginPress() {
     const { disabled, nativeSignIn } = this.props;
     if (disabled) return;
-    try {
-      await nativeSignIn('facebook');
-    } catch (error) {
-      // Swallow innocuous error here, so it will not be reported.
-      if (error.code === 'auth/popup-closed-by-user') {
-        return;
-      }
-      throw error;
-    }
+    nativeSignIn('facebook');
   }
 
   render() {

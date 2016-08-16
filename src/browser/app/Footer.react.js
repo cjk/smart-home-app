@@ -1,12 +1,9 @@
-import Component from 'react-pure-render/component';
-import React from 'react';
-import { FormattedHTMLMessage, defineMessages } from 'react-intl';
+import React, { Component } from 'react';
+import { FormattedMessage, defineMessages } from 'react-intl';
 
-// Messages collocation ftw.
-// https://github.com/yahoo/react-intl/wiki/API#definemessages
 const messages = defineMessages({
   madeByHtml: {
-    defaultMessage: 'Made with love by <a href="https://twitter.com/cjk">CjK</a>, based on steida\'s Este.js',
+    defaultMessage: 'Based on Daniel Steigerwald's lovely Este-Stack, written by',
     id: 'footer.madeByHtml',
   },
 });
@@ -17,7 +14,9 @@ export default class Footer extends Component {
     return (
       <footer>
         <p>
-          <FormattedHTMLMessage {...messages.madeByHtml} />
+          <FormattedMessage {...messages.madeByHtml} />
+          {' '}
+          <a href="https://twitter.com/cjk">CjK</a>
         </p>
       </footer>
     );

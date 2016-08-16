@@ -1,6 +1,5 @@
 import './NewTodo.scss';
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import newTodoMessages from '../../common/todos/newTodoMessages';
 import { FormattedMessage } from 'react-intl';
 import { addTodo } from '../../common/todos/actions';

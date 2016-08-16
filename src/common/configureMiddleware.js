@@ -1,13 +1,16 @@
 import configureStorage from './configureStorage';
 import createLoggerMiddleware from 'redux-logger';
+import errorToMessage from '../common/app/errorToMessage';
 /* TODO: Check if it's feasable to also migrate to Este simpler promise-middleware implementation instead of
    redux-promise-middleware */
 import promiseMiddleware from 'redux-promise-middleware';
 
 // Deps.
 import firebase from 'firebase';
-import shortid from 'shortid';
 import smartHomeConnect from './home/connector';
+
+// Deps.
+import firebase from 'firebase';
 import validate from './validate';
 
 let firebaseDeps = null;
@@ -20,8 +23,8 @@ const injectMiddleware = deps => ({ dispatch, getState }) => next => action =>
   );
 
 export default function configureMiddleware(initialState, platformDeps, platformMiddleware) {
+  // Lazy init.
   if (!firebaseDeps) {
-    // Lazy init.
     firebase.initializeApp(initialState.config.firebase);
     firebaseDeps = {
       firebase: firebase.database().ref(),
@@ -49,13 +52,13 @@ export default function configureMiddleware(initialState, platformDeps, platform
       ...platformDeps,
       ...homeConnect,
       ...firebaseDeps,
-      getUid: () => shortid.generate(),
+      getUid: () => platformDeps.uuid.v4(),
       now: () => Date.now(),
       storageEngine,
       validate,
     }),
     promiseMiddleware({
-      promiseTypeSuffixes: ['START', 'SUCCESS', 'ERROR']
+      promiseTypeSuffixes: ['START', 'SUCCESS', 'ERROR'],
     }),
     ...platformMiddleware,
   ];
@@ -64,9 +67,9 @@ export default function configureMiddleware(initialState, platformDeps, platform
     middleware.push(storageMiddleware);
   }
 
-  const enableLogger =
-    process.env.NODE_ENV !== 'production' &&
-    process.env.IS_BROWSER || initialState.device.isReactNative;
+  const enableLogger = process.env.NODE_ENV !== 'production' && (
+    process.env.IS_BROWSER || initialState.device.isReactNative
+  );
 
   // Logger must be the last middleware in chain.
   if (enableLogger) {

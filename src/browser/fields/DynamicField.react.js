@@ -1,5 +1,4 @@
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
 import { fields } from '../../common/lib/redux-fields';
 

@@ -1,6 +1,5 @@
-import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import linksMessages from '../../common/app/linksMessages';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';

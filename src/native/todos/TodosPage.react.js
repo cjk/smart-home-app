@@ -1,7 +1,6 @@
-import Component from 'react-pure-render/component';
 import Header from './Header.react';
 import NewTodo from './NewTodo.react';
-import React from 'react';
+import React, { Component } from 'react';
 import Todos from './Todos.react';
 import { Container } from '../app/components';
 

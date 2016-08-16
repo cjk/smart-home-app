@@ -1,5 +1,4 @@
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Todo from './Todo.react';
 import todosMessages from '../../common/todos/todosMessages';
 import { FormattedMessage } from 'react-intl';
@@ -7,21 +6,13 @@ import { connect } from 'react-redux';
 import { deleteTodo, toggleTodoCompleted } from '../../common/todos/actions';
 
 // Container component.
-export class Todos extends Component {
+class Todos extends Component {
 
   static propTypes = {
     deleteTodo: PropTypes.func.isRequired,
     todos: PropTypes.object.isRequired,
     toggleTodoCompleted: PropTypes.func.isRequired,
   };
-
-  // // Check render performance.
-  // componentWillUpdate() {
-  //   this.start = Date.now();
-  // }
-  // componentDidUpdate() {
-  //   console.log(`[ESTE] Todos updated in ${Date.now() - this.start}ms`);
-  // }
 
   render() {
     const { deleteTodo, todos, toggleTodoCompleted } = this.props;

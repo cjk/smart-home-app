@@ -1,14 +1,23 @@
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import SignOut from '../auth/SignOut.react';
-import routes from '../routes';
+import gravatar from 'gravatar-api';
 import { CenteredContainer, Text } from '../app/components';
-import { Image, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
+import { selectTab } from '../routing/actions';
+
+const styles = StyleSheet.create({
+  image: {
+    height: 100,
+    margin: 20,
+    width: 100,
+  },
+});
 
 class MePage extends Component {
 
   static propTypes = {
+    selectTab: PropTypes.func.isRequired,
     viewer: PropTypes.object,
   };
 
@@ -17,32 +26,36 @@ class MePage extends Component {
     this.wasRedirected = false;
   }
 
-  componentWillReceiveProps({ navigator, viewer }) {
+  componentWillReceiveProps({ selectTab, viewer }) {
     if (viewer) return;
     if (this.wasRedirected) return;
     this.wasRedirected = true;
-    navigator.replace(routes.home);
+    selectTab('home');
   }
 
   render() {
     const { viewer } = this.props;
     if (!viewer) return null;
     const { displayName, photoURL } = viewer;
+    const uri = photoURL || gravatar.imageUrl({
+      email: displayName,
+      parameters: {
+        default: 'retro',
+        rating: 'x',
+        size: 100,
+      },
+      secure: true,
+    });
 
     return (
       <CenteredContainer>
         <View>
           <Text>{displayName}</Text>
         </View>
-        {photoURL ?
-          <Image
-            source={{ uri: photoURL }}
-            style={{ height: 100, margin: 20, width: 100 }}
-          />
-        :
-          // TODO: Add gravatar, remember the displayName is the email.
-          <View style={{ margin: 20 }} />
-        }
+        <Image
+          source={{ uri }}
+          style={styles.image}
+        />
         <SignOut />
       </CenteredContainer>
     );
@@ -50,6 +63,8 @@ class MePage extends Component {
 
 }
 
-export default connect(state => ({
+MePage = connect(state => ({
   viewer: state.users.viewer,
-}))(MePage);
+}), { selectTab })(MePage);
+
+export default MePage;

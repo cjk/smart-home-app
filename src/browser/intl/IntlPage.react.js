@@ -1,7 +1,6 @@
-import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
 import Locales from './Locales.react';
-import React from 'react';
+import React, { Component } from 'react';
 import linksMessages from '../../common/app/linksMessages';
 import {
   FormattedDate,

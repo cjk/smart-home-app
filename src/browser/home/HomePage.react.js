@@ -1,9 +1,8 @@
 import './HomePage.scss';
 import AddressListByState from './AddressList.react';
 import AddressListByRoom from './AddressListByRoom.react';
-import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import * as actions from '../../common/home/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

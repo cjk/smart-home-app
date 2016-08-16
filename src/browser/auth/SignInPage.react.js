@@ -1,6 +1,5 @@
-import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
-import React from 'react';
+import React, { Component } from 'react';
 import SignIn from './SignIn.react';
 import linksMessages from '../../common/app/linksMessages';
 import { FormattedMessage } from 'react-intl';
@@ -22,18 +21,12 @@ export default class SignInPage extends Component {
             <Helmet title={message} />
           }
         </FormattedMessage>
-        <h2>
-          <a href="https://www.firebase.com/" target="_blank">
-            <img
-              role="presentation"
-              src={require('../firebase/logo.png')}
-              style={{ height: 27, width: 140 }}
-            />
-          </a>
-        </h2>
         <p>
-          Este uses <a href="https://firebase.google.com/docs/auth/">
-          Firebase Authentication</a> because it saves a lot of time.
+          Este uses <a
+            href="https://firebase.google.com/docs/auth/"
+            rel="noopener noreferrer"
+            target="_blank"
+          >Firebase Authentication</a> because it saves a lot of time.
         </p>
         <SignIn location={location} />
       </div>

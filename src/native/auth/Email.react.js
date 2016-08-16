@@ -1,11 +1,10 @@
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
-import ValidationError from '../../common/lib/validation/ValidationError';
+import React, { Component, PropTypes } from 'react';
 import buttonsMessages from '../../common/app/buttonsMessages';
 import emailMessages from '../../common/auth/emailMessages';
-import theme from '../../common/app/theme';
+import theme from '../app/theme';
 import { FormattedMessage, Button, TextInput } from '../app/components';
 import { StyleSheet, View } from 'react-native';
+import { ValidationError } from '../../common/lib/validation';
 import { connect } from 'react-redux';
 import { fields } from '../../common/lib/redux-fields';
 import { injectIntl, intlShape } from 'react-intl';
@@ -55,24 +54,14 @@ class Email extends Component {
     };
   }
 
-  async onSignInViaPasswordPress() {
+  onSignInViaPasswordPress() {
     const { fields, signIn } = this.props;
-    try {
-      await signIn('password', fields.$values());
-    } catch (error) {
-      if (error instanceof ValidationError) return;
-      throw error;
-    }
+    signIn('password', fields.$values());
   }
 
-  async onSignUpPress() {
+  onSignUpPress() {
     const { fields, signUp } = this.props;
-    try {
-      await signUp('password', fields.$values());
-    } catch (error) {
-      if (error instanceof ValidationError) return;
-      throw error;
-    }
+    signUp('password', fields.$values());
   }
 
   onForgetPasswordPress() {
@@ -80,18 +69,14 @@ class Email extends Component {
     this.setState({ forgetPasswordIsShown: !forgetPasswordIsShown });
   }
 
-  async onResetPasswordPress() {
+  onResetPasswordPress() {
     const { fields, resetPassword } = this.props;
     const { email } = fields.$values();
-    try {
-      await resetPassword(email);
-    } catch (error) {
-      if (error instanceof ValidationError) return;
-      throw error;
-    }
-    this.setState({
-      forgetPasswordIsShown: false,
-      recoveryEmailSent: true,
+    resetPassword(email, () => {
+      this.setState({
+        forgetPasswordIsShown: false,
+        recoveryEmailSent: true,
+      });
     });
   }
 
@@ -111,8 +96,10 @@ class Email extends Component {
           autoCorrect={false}
           editable={!disabled}
           invalid={ValidationError.isInvalid(error, 'email')}
+          keyboardType="email-address"
           maxLength={100}
           placeholder={intl.formatMessage(emailMessages.emailPlaceholder)}
+          returnKeyType="next"
         />
         {!forgetPasswordIsShown &&
           <TextInput
@@ -121,6 +108,7 @@ class Email extends Component {
             invalid={ValidationError.isInvalid(error, 'password')}
             maxLength={1000}
             placeholder={intl.formatMessage(emailMessages.passwordPlaceholder)}
+            returnKeyType="next"
             secureTextEntry
           />
         }

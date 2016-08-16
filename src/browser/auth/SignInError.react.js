@@ -1,5 +1,4 @@
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import errorMessages from '../../common/auth/errorMessages';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';

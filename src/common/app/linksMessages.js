@@ -17,17 +17,9 @@ export default defineMessages({
     defaultMessage: 'Home',
     id: 'app.links.home',
   },
-  signIn: {
-    defaultMessage: 'Sign in',
-    id: 'app.links.signIn',
-  },
   me: {
     defaultMessage: 'Me',
     id: 'app.links.me',
-  },
-  todos: {
-    defaultMessage: 'Todos',
-    id: 'app.links.todos',
   },
   offline: {
     defaultMessage: 'Offline',
@@ -35,14 +27,26 @@ export default defineMessages({
   },
   events: {
     defaultMessage: 'Events',
-    id: 'app.links.events'
+    id: 'app.links.events',
   },
   fermenter: {
     defaultMessage: 'Fermenter',
-    id: 'app.links.fermenter'
+    id: 'app.links.fermenter',
   },
   rooms: {
     defaultMessage: 'Rooms',
-    id: 'app.links.rooms'
+    id: 'app.links.rooms',
+  },
+  profile: {
+    defaultMessage: 'Profile',
+    id: 'app.links.profile',
+  },
+  settings: {
+    defaultMessage: 'Settings',
+    id: 'app.links.settings',
+  },
+  signIn: {
+    defaultMessage: 'Sign in',
+    id: 'app.links.signIn',
   },
 });

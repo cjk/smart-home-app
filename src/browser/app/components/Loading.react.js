@@ -1,7 +1,6 @@
 import './Loading.scss';
-import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
-import React from 'react';
+import React, { Component } from 'react';
 import { FormattedMessage, defineMessages } from 'react-intl';
 
 const messages = defineMessages({

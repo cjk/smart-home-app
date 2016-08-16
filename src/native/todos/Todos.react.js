@@ -1,8 +1,7 @@
 import Buttons from './Buttons.react';
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Todo from './Todo.react';
-import theme from '../../common/app/theme';
+import theme from '../app/theme';
 import todosMessages from '../../common/todos/todosMessages';
 import { CenteredContainer, FormattedMessage } from '../app/components';
 import { Image, ScrollView, StyleSheet, View } from 'react-native';
@@ -20,7 +19,7 @@ const styles = StyleSheet.create({
     width: 60,
   },
   row: {
-    borderBottomColor: '#f1f1f1',
+    borderBottomColor: theme.separator,
     borderBottomWidth: 1,
     height: 53,
   },

@@ -1,12 +1,12 @@
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
-import theme from '../../../common/app/theme';
-import { FormattedMessage, Text } from './';
+import React, { Component, PropTypes } from 'react';
+import errorToMessage from '../../../common/app/errorToMessage';
+import theme from '../theme';
 import { Animated, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { FormattedMessage } from './';
+import { connect } from 'react-redux';
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'blue',
     height: 0,
     left: 0,
     overflow: 'hidden',
@@ -22,29 +22,20 @@ const styles = StyleSheet.create({
     right: 0,
   },
   message: {
-    color: '#fff',
+    color: theme.light(theme.inverseTextColor),
     fontWeight: 'bold',
     margin: theme.fontSize * .75,
     textAlign: 'center',
   },
 });
 
-export default class Alert extends Component {
+class Alert extends Component {
 
   static propTypes = {
     brand: PropTypes.string,
     duration: PropTypes.number.isRequired,
+    error: PropTypes.instanceOf(Error),
     hideTimeout: PropTypes.number.isRequired,
-    message: PropTypes.oneOfType([
-      // github.com/yahoo/react-intl/issues/549
-      PropTypes.shape({
-        defaultMessage: PropTypes.string.isRequired,
-        description: PropTypes.string,
-        id: PropTypes.string.isRequired,
-      }),
-      PropTypes.string,
-    ]),
-    values: PropTypes.object,
   };
 
   static defaultProps = {
@@ -63,14 +54,9 @@ export default class Alert extends Component {
     };
   }
 
-  componentWillReceiveProps({ message }) {
-    if (!message) return;
-    const { hideTimeout } = this.props;
-    this.animateTo(1, 0);
-    clearTimeout(this.hideTimer);
-    this.hideTimer = setTimeout(() => {
-      this.animateTo(0);
-    }, hideTimeout);
+  componentWillReceiveProps({ error }) {
+    if (!error) return;
+    this.show();
   }
 
   onAlertLayout({ nativeEvent: { layout } }) {
@@ -80,6 +66,25 @@ export default class Alert extends Component {
 
   onPress() {
     this.animateTo(0);
+  }
+
+  getAlertStyle() {
+    const { brand } = this.props;
+    return {
+      backgroundColor: brand,
+      borderBottomColor: theme.light(brand),
+    };
+  }
+
+  getContainerStyle() {
+    const { alertHeight, animation } = this.state;
+    return {
+      height: animation.interpolate({
+        inputRange: [0, 1],
+        outputRange: [0, alertHeight],
+      }),
+      opacity: animation,
+    };
   }
 
   animateTo(toValue, fromValue) {
@@ -93,36 +98,34 @@ export default class Alert extends Component {
       .start();
   }
 
-  render() {
-    const { brand, message, values } = this.props;
-    const { alertHeight, animation } = this.state;
-    const containerStyle = {
-      height: animation.interpolate({
-        inputRange: [0, 1],
-        outputRange: [0, alertHeight],
-      }),
-      opacity: animation,
-    };
-    const alertStyle = {
-      backgroundColor: brand,
-      borderBottomColor: theme.lighten(brand),
-    };
+  show() {
+    const { hideTimeout } = this.props;
+    this.animateTo(1, 0);
+    clearTimeout(this.hideTimer);
+    this.hideTimer = setTimeout(() => {
+      this.animateTo(0);
+    }, hideTimeout);
+  }
 
-    if (!message) return null;
+  render() {
+    const { error } = this.props;
+    if (!error) return null;
+
+    const errorMessage = errorToMessage(error);
+    if (!errorMessage || !errorMessage.message) return null;
+
+    const alertStyle = this.getAlertStyle();
+    const containerStyle = this.getContainerStyle();
 
     return (
       <TouchableWithoutFeedback onPress={this.onPress}>
         <Animated.View style={[styles.container, containerStyle]}>
           <View style={[styles.alert, alertStyle]} onLayout={this.onAlertLayout}>
-            {typeof message === 'object' ?
-              <FormattedMessage
-                {...message}
-                values={values}
-                style={styles.message}
-              />
-            :
-              <Text style={styles.message}>{message}</Text>
-            }
+            <FormattedMessage
+              {...errorMessage.message}
+              values={errorMessage.values}
+              style={styles.message}
+            />
           </View>
         </Animated.View>
       </TouchableWithoutFeedback>
@@ -130,3 +133,7 @@ export default class Alert extends Component {
   }
 
 }
+
+export default connect(state => ({
+  error: state.app.error,
+}))(Alert);

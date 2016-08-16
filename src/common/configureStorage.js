@@ -5,12 +5,20 @@ import { APP_STORAGE_LOAD } from './app/actions';
 import { Iterable } from 'immutable';
 import { fromJSON, toJSON } from './transit';
 
+const isReactNative =
+  typeof navigator === 'object' &&
+  navigator.product === 'ReactNative'; // eslint-disable-line no-undef
+
 const stateToSave = [
   ['fields'],
   ['smartHome'],
   ['intl', 'currentLocale'],
   ['users', 'viewer'],
 ];
+
+if (isReactNative) {
+  stateToSave.push(['routing', 'currentTab']);
+}
 
 const invariantFeatureState = (state, feature) => invariant(
   Iterable.isIterable(state[feature]),
@@ -20,11 +28,13 @@ const invariantFeatureState = (state, feature) => invariant(
 const updateState = (state, storageStateJson) => {
   try {
     fromJSON(storageStateJson).forEach(({ feature, featurePath, value }) => {
-      invariantFeatureState(state, feature);
-      // As we can see, updateState always overrides the current app state.
+      const canSet = state[feature] && state[feature].hasIn(featurePath);
+      if (!canSet) return;
+      // As we can see, setIn always overrides the current value.
       // That's perfect for fields, currentLocale, or viewer.
-      // But what if todos are prefetched on the server? Then we would like to
-      // merge locally cached with fresh from the server. TODO: Add customUpdate.
+      // But what if something is prefetched on the server? Then we would like
+      // to merge locally cached data with fresh data from the server.
+      // TODO: Add customUpdate.
       state[feature] = state[feature].setIn(featurePath, value);
     });
   } catch (error) {
@@ -36,6 +46,11 @@ const updateState = (state, storageStateJson) => {
 const storageFilter = engine => ({
   ...engine,
   save(state) {
+    // github.com/este/este/issues/1071
+    if (!state) return null;
+
+    // We don't filter by actions but by the app state structure.
+    // That's fine because saving is debounced.
     const saveState = stateToSave.map(([feature, ...featurePath]) => {
       invariantFeatureState(state, feature);
       return {

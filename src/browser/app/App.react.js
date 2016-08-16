@@ -1,18 +1,16 @@
 import './App.scss';
 import Appbar from './Appbar.react';
 import AppMenu from './Menu.react';
-import Component from 'react-pure-render/component';
 import Footer from './Footer.react';
 import Helmet from 'react-helmet';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import favicon from '../../common/app/favicon';
 import start from '../../common/app/start';
 import { connect } from 'react-redux';
+import { locationShape } from 'react-router';
 /* Material-Design-Lite imports */
 import Layout from 'react-mdl/lib/Layout/Layout';
 import { Content, Header } from 'react-mdl/lib/Layout';
-
-import { locationShape } from 'react-router';
 
 // v4-alpha.getbootstrap.com/getting-started/introduction/#starter-template
 const bootstrap4Metas = [

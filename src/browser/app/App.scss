@@ -1,17 +1,38 @@
-// =============================================================================
-// App-CSS: Custom styles and overrides
-// =============================================================================
+// Get Google' Roboto-Font made especially for Material-Design
+@import url(http://fonts.googleapis.com/css?family=Roboto:300,400,500,700);
 
-// Remember to use rems and ems. http://css-tricks.com/rems-ems.
+// Makes browsers render all elements more consistently.
+@import '~normalize.css/normalize.css';
 
 // Include material-ui lite L&F as a base:
 @import "~react-mdl/extra/material.css";
 
-// Get Google' Roboto-Font made especially for Material-Design
-@import url(http://fonts.googleapis.com/css?family=Roboto:300,400,500,700);
+// Useful stuff from github.com/twbs/bootstrap/blob/v4-dev/scss/_reboot.scss
+html {
+  // Note React Native uses border-box by default.
+  box-sizing: border-box;
+}
 
-html, body {
-  -webkit-tap-highlight-color: transparent;
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  // Changes the default tap highlight to be completely transparent in iOS.
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+[tabindex="-1"]:focus {
+  outline: none !important;
+}
+
+// Este styles. Note Este is going to leverage inline styles soon.
+// TODO: Rewrite to inline styles.
+body {
+  color: #333;
+
   // Use modern, beautiful fonts with zero latency.
   // medium.com/design/system-shock-6b1dc6d6596f
   // font-family taken from medium.com

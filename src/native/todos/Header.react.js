@@ -1,6 +1,5 @@
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
-import theme from '../../common/app/theme';
+import React, { Component, PropTypes } from 'react';
+import theme from '../app/theme';
 import { FormattedMessage } from '../app/components';
 import { StyleSheet, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -22,9 +21,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: theme.brandPrimary,
     justifyContent: 'center',
-    marginTop: -2, // To override app header borderBottom.
-    paddingBottom: theme.fontSizeH5,
-    paddingTop: theme.fontSize * .625,
+    paddingTop: theme.fontSize,
+    paddingBottom: theme.fontSize * .5,
   },
   text: {
     color: theme.inverseTextColor,

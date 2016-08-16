@@ -1,10 +1,11 @@
 import App from './app/App.react';
-import Component from 'react-pure-render/component';
 import FBSDK from 'react-native-fbsdk';
 import Locale from 'react-native-locale'; // eslint-disable-line import/no-unresolved
-import React from 'react';
+import React, { Component } from 'react';
 import configureStore from '../common/configureStore';
+import createRoutes from './createRoutes';
 import createStorageEngine from 'redux-storage-engine-reactnativeasyncstorage';
+import uuid from 'react-native-uuid';
 import { AppRegistry, Platform } from 'react-native';
 import { Provider } from 'react-redux';
 import { fromJSON } from '../common/transit';
@@ -25,21 +26,20 @@ const createNativeInitialState = () => ({
     .set('isReactNative', true)
     .set('platform', Platform.OS),
   intl: initialState.intl
-    .set('currentLocale', getDefaultDeviceLocale())
-    .set('defaultLocale', getDefaultDeviceLocale())
-    .set('initialNow', Date.now()),
+    .set('currentLocale', getDefaultDeviceLocale()),
 });
 
 const store = configureStore({
   initialState: createNativeInitialState(),
-  platformDeps: { FBSDK, createStorageEngine },
+  platformDeps: { FBSDK, createStorageEngine, uuid },
 });
+const routes = createRoutes();
 
 class Root extends Component {
   render() {
     return (
       <Provider store={store}>
-        <App />
+        <App routes={routes} />
       </Provider>
     );
   }

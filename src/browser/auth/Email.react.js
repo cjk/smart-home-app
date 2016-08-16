@@ -1,11 +1,10 @@
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import buttonsMessages from '../../common/app/buttonsMessages';
 import emailMessages from '../../common/auth/emailMessages';
-import { FormattedMessage } from 'react-intl';
-import { ValidationError, focusInvalidField } from '../../common/lib/validation';
+import { FormattedMessage, injectIntl, intlShape } from 'react-intl';
 import { connect } from 'react-redux';
 import { fields } from '../../common/lib/redux-fields';
+import { focus } from '../app/components';
 import { resetPassword, signIn, signUp } from '../../common/lib/redux-firebase/actions';
 
 class Email extends Component {
@@ -13,6 +12,7 @@ class Email extends Component {
   static propTypes = {
     disabled: PropTypes.bool.isRequired,
     fields: PropTypes.object.isRequired,
+    intl: intlShape.isRequired,
     resetPassword: PropTypes.func.isRequired,
     signIn: PropTypes.func.isRequired,
     signUp: PropTypes.func.isRequired,
@@ -40,17 +40,9 @@ class Email extends Component {
     }
   }
 
-  async onSignUpClick() {
+  onSignUpClick() {
     const { fields, signUp } = this.props;
-    try {
-      await signUp('password', fields.$values());
-    } catch (error) {
-      if (error instanceof ValidationError) {
-        focusInvalidField(this, error);
-        return;
-      }
-      throw error;
-    }
+    signUp('password', fields.$values());
   }
 
   onForgetPasswordClick() {
@@ -58,39 +50,24 @@ class Email extends Component {
     this.setState({ forgetPasswordIsShown: !forgetPasswordIsShown });
   }
 
-  async resetPassword() {
+  resetPassword() {
     const { fields, resetPassword } = this.props;
     const { email } = fields.$values();
-    try {
-      await resetPassword(email);
-    } catch (error) {
-      if (error instanceof ValidationError) {
-        focusInvalidField(this, error);
-        return;
-      }
-      throw error;
-    }
-    this.setState({
-      forgetPasswordIsShown: false,
-      recoveryEmailSent: true,
+    resetPassword(email, () => {
+      this.setState({
+        forgetPasswordIsShown: false,
+        recoveryEmailSent: true,
+      });
     });
   }
 
-  async signInViaPassword() {
+  signInViaPassword() {
     const { fields, signIn } = this.props;
-    try {
-      await signIn('password', fields.$values());
-    } catch (error) {
-      if (error instanceof ValidationError) {
-        focusInvalidField(this, error);
-        return;
-      }
-      throw error;
-    }
+    signIn('password', fields.$values());
   }
 
   render() {
-    const { disabled, fields } = this.props;
+    const { disabled, fields, intl } = this.props;
     const { forgetPasswordIsShown, recoveryEmailSent } = this.state;
     const legendMessage = forgetPasswordIsShown
       ? emailMessages.passwordRecoveryLegend
@@ -102,26 +79,18 @@ class Email extends Component {
           <legend>
             <FormattedMessage {...legendMessage} />
           </legend>
-          <FormattedMessage {...emailMessages.emailPlaceholder}>
-            {message =>
-              <input
-                {...fields.email}
-                maxLength={100}
-                placeholder={message}
-              />
-            }
-          </FormattedMessage>
+          <input
+            {...fields.email}
+            maxLength={100}
+            placeholder={intl.formatMessage(emailMessages.emailPlaceholder)}
+          />
           {!forgetPasswordIsShown &&
-            <FormattedMessage {...emailMessages.passwordPlaceholder}>
-              {message =>
-                <input
-                  {...fields.password}
-                  maxLength={1000}
-                  placeholder={message}
-                  type="password"
-                />
-              }
-            </FormattedMessage>
+            <input
+              {...fields.password}
+              maxLength={1000}
+              placeholder={intl.formatMessage(emailMessages.passwordPlaceholder)}
+              type="password"
+            />
           }
           {!forgetPasswordIsShown ?
             <div className="buttons">
@@ -161,6 +130,10 @@ class Email extends Component {
 
 }
 
+Email = focus(Email, 'error');
+
+Email = injectIntl(Email);
+
 Email = fields(Email, {
   path: ['auth', 'email'],
   fields: ['email', 'password'],
@@ -168,4 +141,5 @@ Email = fields(Email, {
 
 export default connect(state => ({
   disabled: state.auth.formDisabled,
+  error: state.auth.error,
 }), { resetPassword, signIn, signUp })(Email);

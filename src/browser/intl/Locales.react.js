@@ -1,5 +1,4 @@
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { setCurrentLocale } from '../../common/intl/actions';
 
@@ -20,7 +19,7 @@ class Locales extends Component {
           <button
             disabled={locale === currentLocale}
             key={locale}
-            onClick={() => setCurrentLocale(locale)} // eslint-disable-line react/jsx-no-bind
+            onClick={() => setCurrentLocale(locale)}
           >{locale}</button>
         )}
       </div>

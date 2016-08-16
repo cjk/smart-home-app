@@ -1,14 +1,29 @@
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
-import theme from '../../common/app/theme';
-import {
+import * as components from '../app/components';
+import React, { Component, PropTypes } from 'react';
+import theme from '../app/theme';
+import { ScrollView, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import { setCurrentLocale } from '../../common/intl/actions';
+
+const {
   CenteredContainer,
   FormattedDate,
   FormattedRelative,
   Text,
-} from '../app/components';
-import { connect } from 'react-redux';
-import { setCurrentLocale } from '../../common/intl/actions';
+} = components;
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: theme.fontSizeH5,
+  },
+  text: {
+    fontSize: theme.fontSizeH5,
+    marginBottom: theme.fontSize * .5,
+  },
+  selected: {
+    fontWeight: 'bold',
+  },
+});
 
 class IntlPage extends Component {
 
@@ -27,31 +42,29 @@ class IntlPage extends Component {
     const { currentLocale, locales, setCurrentLocale } = this.props;
 
     return (
-      <CenteredContainer>
-        {locales.map(locale =>
-          <Text
-            style={{
-              fontSize: theme.fontSizeH5,
-              fontWeight: locale === currentLocale ? 'bold' : 'normal',
-              marginBottom: theme.fontSize * .5,
-            }}
-            key={locale}
-            onPress={() => setCurrentLocale(locale)} // eslint-disable-line react/jsx-no-bind
-          >{locale}</Text>
-        )}
-        <FormattedDate
-          day="numeric"
-          month="short"
-          style={{ margin: theme.fontSize }}
-          value={Date.now()}
-          year="numeric"
-        />
-        <FormattedRelative
-          initialNow={this.componentRenderedAt}
-          updateInterval={1000 * 1}
-          value={this.componentRenderedAt}
-        />
-      </CenteredContainer>
+      <ScrollView>
+        <CenteredContainer style={styles.container}>
+          {locales.map(locale =>
+            <Text
+              style={[styles.text, locale === currentLocale && styles.selected]}
+              key={locale}
+              onPress={() => setCurrentLocale(locale)}
+            >{locale}</Text>
+          )}
+          <FormattedDate
+            day="numeric"
+            month="short"
+            style={{ margin: theme.fontSize }}
+            value={Date.now()}
+            year="numeric"
+          />
+          <FormattedRelative
+            initialNow={this.componentRenderedAt}
+            updateInterval={1000 * 1}
+            value={this.componentRenderedAt}
+          />
+        </CenteredContainer>
+      </ScrollView>
     );
   }
 

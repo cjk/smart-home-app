@@ -1,5 +1,4 @@
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Container } from './';
 import { StyleSheet, View } from 'react-native';
 
@@ -10,7 +9,6 @@ const styles = StyleSheet.create({
   },
 });
 
-// TODO: Use golden ratio for vertical alignment.
 export default class CenteredContainer extends Component {
 
   static propTypes = {

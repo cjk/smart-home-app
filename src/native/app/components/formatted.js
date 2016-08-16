@@ -1,6 +1,5 @@
 import * as reactIntl from 'react-intl';
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
+import React, { Component } from 'react';
 import Text from './Text.react';
 
 // Create react-intl component which work in the React Native.
@@ -10,9 +9,23 @@ const native = WrappedComponent =>
   class Native extends Component {
 
     static propTypes = {
-      children: PropTypes.oneOfType([PropTypes.node, PropTypes.func]),
+      children: WrappedComponent.propTypes.children,
       style: Text.propTypes.style,
     };
+
+    constructor() {
+      super();
+      this.onTextRef = this.onTextRef.bind(this);
+    }
+
+    onTextRef(text) {
+      this.text = text;
+    }
+
+    setNativeProps(nativeProps) {
+      if (typeof this.props.children === 'function') return;
+      this.text.setNativeProps(nativeProps);
+    }
 
     render() {
       const { children, style, ...wrappedComponentProps } = this.props;
@@ -22,7 +35,7 @@ const native = WrappedComponent =>
         <WrappedComponent {...wrappedComponentProps}>
           {message => childrenAsFunction
             ? children(message)
-            : <Text style={style}>{message}</Text>
+            : <Text ref={this.onTextRef} style={style}>{message}</Text>
           }
         </WrappedComponent>
       );

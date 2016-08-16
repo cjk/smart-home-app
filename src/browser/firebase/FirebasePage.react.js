@@ -1,9 +1,15 @@
-import Component from 'react-pure-render/component';
 import Helmet from 'react-helmet';
 import OnlineUsers from '../users/OnlineUsers.react';
-import React from 'react';
+import React, { Component } from 'react';
 import linksMessages from '../../common/app/linksMessages';
 import { FormattedMessage } from 'react-intl';
+
+const styles = {
+  image: {
+    height: 27,
+    width: 140,
+  },
+};
 
 export default class FirebasePage extends Component {
 
@@ -16,11 +22,11 @@ export default class FirebasePage extends Component {
           }
         </FormattedMessage>
         <h2>
-          <a href="https://firebase.google.com/" target="_blank">
+          <a href="https://firebase.google.com/">
             <img
               role="presentation"
               src={require('./logo.png')}
-              style={{ height: 27, width: 140 }}
+              style={styles.image}
             />
           </a>
         </h2>

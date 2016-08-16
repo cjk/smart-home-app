@@ -1,15 +1,16 @@
+/* eslint-disable jsx-a11y/label-has-for */
 import './FieldsPage.scss';
-import Component from 'react-pure-render/component';
 import DynamicField from './DynamicField.react.js';
 import Helmet from 'react-helmet';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import buttonsMessages from '../../common/app/buttonsMessages';
+import classnames from 'classnames';
 import linksMessages from '../../common/app/linksMessages';
 import { FieldError } from '../app/components';
 import { FormattedMessage, defineMessages } from 'react-intl';
+import { ValidationError } from '../../common/lib/validation';
 import { connect } from 'react-redux';
 import { fields } from '../../common/lib/redux-fields';
-import { focusInvalidField, ValidationError } from '../../common/lib/validation';
 
 const messages = defineMessages({
   h2: {
@@ -39,17 +40,6 @@ const keyConceptsOfLibertarianism = [
   name: concept,
 }));
 
-// Use Redux action for real usage.
-const exampleAction = async (values) => new Promise((resolve, reject) => {
-  if (values.someField.trim()) {
-    setTimeout(resolve, 1000);
-    return;
-  }
-  setTimeout(() => {
-    reject(new ValidationError('required', { prop: 'someField' }));
-  }, 1000);
-});
-
 class FieldsPage extends Component {
 
   static propTypes = {
@@ -63,40 +53,35 @@ class FieldsPage extends Component {
     super();
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onToggleClick = this.onToggleClick.bind(this);
+    // For a demo, we can store the state in the component.
     this.state = {
-      // For a demo, we can store disabled state here, but favor app state ofc.
       disabled: false,
-      // Error state is ephemeral, so it belongs to the component state.
       error: null,
     };
   }
 
-  async onFormSubmit(e) {
+  onFormSubmit(e) {
     e.preventDefault();
     const { fields } = this.props;
-    this.setState({ disabled: true });
-    // For simple flat forms we can use handy fields.$values() helper.
     const values = fields.$values();
-    // console.log(values);
-    // For complex nested forms we can read from fields app state directly.
-    // console.log(this.props.fieldsPageModel);
-    try {
-      await exampleAction(values);
-    } catch (error) {
-      if (error instanceof ValidationError) {
-        this.setState({ error }, () => {
-          setTimeout(() => {
-            focusInvalidField(this, error);
-          }, 0);
-        });
+
+    // This is just a demo. Check src/common/auth flow for the real usage.
+
+    // Disable form now.
+    this.setState({ disabled: true });
+
+    // Simulate async action.
+    setTimeout(() => {
+      this.setState({ disabled: false });
+      const isValid = values.someField.trim();
+      if (!isValid) {
+        const error = new ValidationError('required', { prop: 'someField' });
+        this.setState({ error });
         return;
       }
-      throw error;
-    } finally {
-      this.setState({ disabled: false });
-    }
-    // Reset all (even nested) fieldsPage fields.
-    fields.$reset();
+      this.setState({ error: null });
+      fields.$reset();
+    }, 1000);
   }
 
   onToggleClick() {
@@ -188,9 +173,10 @@ class FieldsPage extends Component {
             */}
             <h3>Custom</h3>
             <div
-              className="custom-toggle"
+              className={classnames('custom-toggle', {
+                toggled: fields.toggled.value,
+              })}
               onClick={this.onToggleClick}
-              style={{ fontWeight: fields.toggled.value ? 'bold' : 'normal' }}
             >Toggle me!</div>
             <div>
               <button type="submit">
@@ -229,7 +215,7 @@ FieldsPage = fields(FieldsPage, {
   }),
 });
 
-// Connect is not required. It's just a demonstration of fields state.
+// Connect is not required. It's just a demonstration of nested fields state.
 export default connect(state => ({
   fieldsPageModel: state.fields.get('fieldsPage'),
 }))(FieldsPage);

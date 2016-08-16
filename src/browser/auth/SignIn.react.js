@@ -1,7 +1,6 @@
 import './SignIn.scss';
-import Component from 'react-pure-render/component';
 import Email from './Email.react';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import SignInError from './SignInError.react';
 import Social from './Social.react';
 import { connect } from 'react-redux';
@@ -34,7 +33,7 @@ class SignIn extends Component {
 
   redirect() {
     const { location, redirectTo, router } = this.props;
-    const url = location.state && location.state.nextPathname || redirectTo;
+    const url = (location.state && location.state.nextPathname) || redirectTo;
     router.replace(url);
   }
 

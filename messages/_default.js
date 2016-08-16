@@ -81,6 +81,14 @@ export default [
     "defaultMessage": "Offline",
   },
   {
+    "id": "app.links.profile",
+    "defaultMessage": "Profile",
+  },
+  {
+    "id": "app.links.settings",
+    "defaultMessage": "Settings",
+  },
+  {
     "id": "app.links.signIn",
     "defaultMessage": "Sign in",
   },
@@ -161,6 +169,18 @@ export default [
     "defaultMessage": "Something like redux-form but simplified and universal.",
   },
   {
+    "id": "firebase.error.auth/network-request-failed",
+    "defaultMessage": "No internet connection.",
+  },
+  {
+    "id": "firebase.error.auth/too-many-requests",
+    "defaultMessage": "Too many requests. Try it later, please.",
+  },
+  {
+    "id": "firebase.error.auth/user-token-expired",
+    "defaultMessage": "Your credential has expired. Please sign in.",
+  },
+  {
     "id": "firebase.error.EMAIL_TAKEN",
     "defaultMessage": "The new user account cannot be created because the\n      specified email address is already in use.",
   },
@@ -178,11 +198,7 @@ export default [
   },
   {
     "id": "footer.madeByHtml",
-    "defaultMessage": "written by <a href=\"https://twitter.com/cjk\">CjK</a>, based on steida's Este.js",
-  },
-  {
-    "id": "home.native.intro",
-    "defaultMessage": "Este App\n      Press CMD+R to reload\n      Press CMD+D for debug menu",
+    "defaultMessage": "Based on Daniel Steigerwalds lovely Este-Stack, written by",
   },
   {
     "id": "home.title",
@@ -211,18 +227,6 @@ export default [
   {
     "id": "loading.longLoadingText",
     "defaultMessage": "Still loading, please check your connection",
-  },
-  {
-    "id": "me.page.linkToProfile",
-    "defaultMessage": "Profile",
-  },
-  {
-    "id": "me.page.linkToSettings",
-    "defaultMessage": "Settings",
-  },
-  {
-    "id": "me.page.welcome",
-    "defaultMessage": "Hi {displayName}. This is your secret page.",
   },
   {
     "id": "me.profilePage.title",

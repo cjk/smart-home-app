@@ -1,14 +1,13 @@
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
-import theme from '../../../common/app/theme';
+import React, { Component, PropTypes } from 'react';
+import theme from '../theme';
 import { StyleSheet, Text } from 'react-native';
 
 const styles = StyleSheet.create({
-  text: {
+  text: { // eslint-disable-line react-native/no-unused-styles
     color: theme.textColor,
     fontFamily: theme.fontFamily,
     fontSize: theme.fontSize,
-    lineHeight: theme.lineHeight,
+    lineHeight: theme.fontSize * theme.lineHeight,
   },
 });
 
@@ -22,10 +21,38 @@ export default class AppText extends Component {
     style: Text.propTypes.style,
   };
 
+  constructor() {
+    super();
+    this.onTextRef = this.onTextRef.bind(this);
+  }
+
+  onTextRef(text) {
+    this.text = text;
+  }
+
+  setNativeProps(nativeProps) {
+    this.text.setNativeProps(nativeProps);
+  }
+
+  getTextStyleWithMaybeComputedLineHeight() {
+    const { style } = this.props;
+    if (!style) {
+      return styles.text;
+    }
+    const customFontSize = StyleSheet.flatten(style).fontSize;
+    if (!Number.isInteger(customFontSize)) {
+      return [styles.text, style];
+    }
+    const lineHeight = customFontSize * theme.lineHeight;
+    return [styles.text, style, { lineHeight }];
+  }
+
   render() {
-    const { children, style } = this.props;
+    const { children } = this.props;
+    const textStyle = this.getTextStyleWithMaybeComputedLineHeight();
+
     return (
-      <Text {...this.props} style={[styles.text, style]}>
+      <Text {...this.props} ref={this.onTextRef} style={textStyle}>
         {typeof children === 'string'
           ? normalizeMultilineString(children)
           : children

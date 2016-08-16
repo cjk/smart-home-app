@@ -1,17 +1,16 @@
-import Component from 'react-pure-render/component';
 import Email from './Email.react';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import Social from './Social.react';
-import ValidationError from '../../common/lib/validation/ValidationError';
-import authErrorMessages from '../../common/auth/errorMessages';
-import routes from '../routes';
-import theme from '../../common/app/theme';
-import { Alert, Container } from '../app/components';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import theme from '../app/theme';
+import { Container } from '../app/components';
+import { ScrollView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
-import { firebaseMessages } from '../../common/lib/redux-firebase';
+import { selectTab } from '../routing/actions';
 
 const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+  },
   email: {
     marginBottom: theme.fontSize * 2,
     width: theme.fontSize * 16,
@@ -24,8 +23,7 @@ const styles = StyleSheet.create({
 class SignInPage extends Component {
 
   static propTypes = {
-    error: PropTypes.instanceOf(Error),
-    navigator: PropTypes.object,
+    selectTab: PropTypes.func.isRequired,
     viewer: PropTypes.object,
   };
 
@@ -34,43 +32,26 @@ class SignInPage extends Component {
     this.wasRedirected = false;
   }
 
-  componentWillReceiveProps({ navigator, viewer }) {
+  componentWillReceiveProps({ viewer, selectTab }) {
     if (!viewer) return;
     if (this.wasRedirected) return;
     this.wasRedirected = true;
-    navigator.replace(routes.home);
-  }
-
-  getMessageAndValuesFromError(error) {
-    if (!(error instanceof ValidationError)) return [];
-    const message =
-      authErrorMessages[error.name] ||
-      firebaseMessages[error.name] ||
-      error.toString();
-    const values = error.params;
-    return { message, values };
+    selectTab('home');
   }
 
   render() {
-    const { error } = this.props;
-    const { message, values } = this.getMessageAndValuesFromError(error);
-
     return (
-      <View>
-        <Alert message={message} values={values} />
-        <ScrollView>
-          <Container style={{ alignItems: 'center' }}>
-            <Email style={styles.email} />
-            <Social style={styles.social} />
-          </Container>
-        </ScrollView>
-      </View>
+      <ScrollView>
+        <Container style={styles.container}>
+          <Email style={styles.email} />
+          <Social style={styles.social} />
+        </Container>
+      </ScrollView>
     );
   }
 
 }
 
 export default connect(state => ({
-  error: state.auth.error,
   viewer: state.users.viewer,
-}))(SignInPage);
+}), { selectTab })(SignInPage);

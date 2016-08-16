@@ -5,18 +5,22 @@ import device from './device/reducer';
 import smartHome from './home/reducer';
 import fermenter from './fermenter/reducer';
 import intl from './intl/reducer';
+import nativeRouting from '../native/routing/reducer';
 import todos from './todos/reducer';
 import users from './users/reducer';
-import { SIGN_OUT } from './auth/actions';
+import { FIREBASE_ON_AUTH } from '../common/lib/redux-firebase/actions';
 import { combineReducers } from 'redux';
 import { fieldsReducer as fields } from './lib/redux-fields';
 import { firebaseReducer as firebase } from './lib/redux-firebase';
-import { routerReducer as routing } from 'react-router-redux';
+import { routerReducer as browserRouting } from 'react-router-redux';
 import { updateStateOnStorageLoad } from './configureStorage';
 
 const resetStateOnSignOut = (reducer, initialState) => (state, action) => {
   // Reset app state on sign out, stackoverflow.com/q/35622588/233902.
-  if (action.type === SIGN_OUT) {
+  const userWasSignedOut =
+    action.type === FIREBASE_ON_AUTH &&
+    state.users.viewer && !action.payload.user;
+  if (userWasSignedOut) {
     // Preserve state without sensitive data.
     state = {
       app: state.app,
@@ -29,9 +33,13 @@ const resetStateOnSignOut = (reducer, initialState) => (state, action) => {
   return reducer(state, action);
 };
 
-export default function configureReducer(initialState, platformReducers) {
+export default function configureReducer(initialState) {
+  // One day we will have universal routing, but we are not there yet.
+  // jmurzy/react-router-native
+  const routing = initialState.device.isReactNative
+    ? nativeRouting
+    : browserRouting;
   let reducer = combineReducers({
-    ...platformReducers,
     app,
     auth,
     config,

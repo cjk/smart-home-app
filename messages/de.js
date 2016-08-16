@@ -5,10 +5,6 @@ export default [
     "defaultMessage": "Hinzufügen",
   },
   {
-    "id": "app.links.signIn",
-    "defaultMessage": "Anmelden",
-  },
-  {
     "id": "app.buttons.cancel",
     "defaultMessage": "Abbrechen",
   },
@@ -17,8 +13,20 @@ export default [
     "defaultMessage": "Löschen",
   },
   {
+    "id": "app.buttons.dismiss",
+    "defaultMessage": "Entlassen",
+  },
+  {
     "id": "app.buttons.edit",
     "defaultMessage": "Bearbeiten",
+  },
+  {
+    "id": "app.buttons.save",
+    "defaultMessage": "Speichern",
+  },
+  {
+    "id": "app.buttons.signIn",
+    "defaultMessage": "Anmelden",
   },
   {
     "id": "app.buttons.signIn",
@@ -29,8 +37,8 @@ export default [
     "defaultMessage": "Abmelden",
   },
   {
-    "id": "app.buttons.save",
-    "defaultMessage": "Speichern",
+    "id": "app.buttons.signUp",
+    "defaultMessage": "Anmelden",
   },
   {
     "id": "app.buttons.submit",
@@ -43,6 +51,10 @@ export default [
   {
     "id": "app.confirm.unsavedChanges",
     "defaultMessage": "Sie haben Änderungen gemacht. Sind Sie sicher?",
+  },
+  {
+    "id": "app.FieldError.required",
+    "defaultMessage": "Erforderlich",
   },
   {
     "id": "app.links.fields",
@@ -61,10 +73,6 @@ export default [
     "defaultMessage": "Übersetzung",
   },
   {
-    "id": "app.buttons.signIn",
-    "defaultMessage": "Anmelden",
-  },
-  {
     "id": "app.links.me",
     "defaultMessage": "Ich",
   },
@@ -73,8 +81,52 @@ export default [
     "defaultMessage": "Ereignisse"
   },
   {
+    "id": "app.links.offline",
+    "defaultMessage": "Offline",
+  },
+  {
+    "id": "app.links.profile",
+    "defaultMessage": "Profil",
+  },
+  {
+    "id": "app.links.settings",
+    "defaultMessage": "Einstellungen",
+  },
+  {
+    "id": "app.links.signIn",
+    "defaultMessage": "Anmelden",
+  },
+  {
+    "id": "app.links.todos",
+    "defaultMessage": "Aufgaben",
+  },
+  {
     "id": "app.links.fermenter",
     "defaultMessage": "Fermentierschrank"
+  },
+  {
+    "id": "auth.email.emailPlaceholder",
+    "defaultMessage": "ihre@email.com",
+  },
+  {
+    "id": "auth.email.passwordForgotten",
+    "defaultMessage": "Passwort vergessen?",
+  },
+  {
+    "id": "auth.email.passwordPlaceholder",
+    "defaultMessage": "Passwort",
+  },
+  {
+    "id": "auth.email.passwordRecoveryLegend",
+    "defaultMessage": "Passwort zurücksetzen",
+  },
+  {
+    "id": "auth.email.recoveryEmailSent",
+    "defaultMessage": "Die E-Mail zum Zurücksetzen Ihres Passwortes wurde gesendet.",
+  },
+  {
+    "id": "auth.email.resetPassword",
+    "defaultMessage": "Passwort zurücksetzen",
   },
   {
     "id": "auth.signInError.email",
@@ -87,6 +139,10 @@ export default [
   {
     "id": "auth.signInError.simplePassword",
     "defaultMessage": "Das Passwort muss mindestens {minLength} Zeichen lang sein.",
+  },
+  {
+    "id": "auth.social.facebookSignIn",
+    "defaultMessage": "Anmeldung via Facebook",
   },
   {
     "id": "fields.page.h2",
@@ -113,44 +169,8 @@ export default [
     "defaultMessage": "Das eigegebene Konto existiert nicht.",
   },
   {
-    "id": "auth.email.passwordRecoveryLegend",
-    "defaultMessage": "Passwort zurücksetzen",
-  },
-  {
-    "id": "auth.email.emailPlaceholder",
-    "defaultMessage": "ihre@email.com",
-  },
-  {
-    "id": "auth.social.facebookSignIn",
-    "defaultMessage": "Anmeldung via Facebook",
-  },
-  {
-    "id": "auth.email.passwordForgotten",
-    "defaultMessage": "Passwort vergessen?",
-  },
-  {
-    "id": "auth.email.passwordPlaceholder",
-    "defaultMessage": "Passwort",
-  },
-  {
-    "id": "auth.email.recoveryEmailSent",
-    "defaultMessage": "Die E-Mail zum Zurücksetzen Ihres Passwortes wurde gesendet.",
-  },
-  {
-    "id": "auth.email.resetPassword",
-    "defaultMessage": "Passwort zurücksetzen",
-  },
-  {
     "id": "footer.madeByHtml",
-    "defaultMessage": "Umgesetzt von <a href=\"https://twitter.com/cjk\">CjK</a>, based on steida's Este.js",
-  },
-  {
-    "id": "home.intro",
-    "defaultMessage": "<p>\n        Hey ho, hier\n        <a target=\"_blank\" href=\"https://github.com/este/este\">Este</a> dev stack.\n      </p>",
-  },
-  {
-    "id": "home.native.intro",
-    "defaultMessage": "Este App\n      CMD+R drücken um zu Aktualisieren\n      CMD+D drücken um das Debugging-Menu zu öffnen",
+    "defaultMessage": "Based on Daniel Steigerwalds lovely Este-Stack, written by",
   },
   {
     "id": "intl.page.h2",
@@ -159,18 +179,6 @@ export default [
   {
     "id": "intl.page.unreadCount",
     "defaultMessage": "{unreadCount, plural, one {Meldung} other {Meldungen}}",
-  },
-  {
-    "id": "me.page.linkToProfile",
-    "defaultMessage": "Profil",
-  },
-  {
-    "id": "me.page.linkToSettings",
-    "defaultMessage": "Einstellungen",
-  },
-  {
-    "id": "me.page.welcome",
-    "defaultMessage": "Hallo {displayName}. Das ist Ihre geheime Seite.",
   },
   {
     "id": "me.profilePage.title",
@@ -221,19 +229,11 @@ export default [
     "defaultMessage": "Es ist eher ruhig hier...",
   },
   {
-    "id": "app.buttons.dismiss",
-    "defaultMessage": "Entlassen",
+    "id": "loading.loadingText",
+    "defaultMessage": "Laden",
   },
   {
-    "id": "app.buttons.signUp",
-    "defaultMessage": "Anmelden",
-  },
-  {
-    "id": "app.FieldError.required",
-    "defaultMessage": "Erforderlich",
-  },
-  {
-    "id": "app.links.offline",
-    "defaultMessage": "Offline",
+    "id": "loading.longLoadingText",
+    "defaultMessage": "Noch Laden, überprüfen Sie bitte Ihre Verbindung",
   },
 ];

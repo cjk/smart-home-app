@@ -1,11 +1,10 @@
-import Component from 'react-pure-render/component';
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import invariant from 'invariant';
 import { resetFields, setField } from './actions';
 
 const isReactNative =
   typeof navigator === 'object' &&
-  navigator.product === 'ReactNative';
+  navigator.product === 'ReactNative'; // eslint-disable-line no-undef
 
 // Higher order component for huge fast dynamic deeply nested universal forms.
 export default function fields(WrappedComponent, options) {
@@ -40,7 +39,7 @@ export default function fields(WrappedComponent, options) {
       if (model && model.has(field)) {
         return model.get(field);
       }
-      if (initialState && initialState.hasOwnProperty(field)) {
+      if (initialState && {}.hasOwnProperty.call(initialState, field)) {
         return initialState[field];
       }
       return '';
