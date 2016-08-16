@@ -2,13 +2,13 @@ import * as actions from './actions';
 import FermenterState from './fermenterState';
 import { Map } from 'immutable';
 
-const InitialState = FermenterState;
+const State = FermenterState;
 
 // TODO: Probably better to not merge here - see
 // https://github.com/este/este/commit/03cebd9ad7152d5f4147bcb6e8bc023671409bac
-const revive = (state) => InitialState.mergeDeep(state);
+const revive = (state) => State.mergeDeep(state);
 
-export default function fermenterReducer(state = InitialState, action) {
+export default function fermenterReducer(state = State, action) {
   if (!(Map.isMap(state))) return revive(state);
 
   switch (action.type) {

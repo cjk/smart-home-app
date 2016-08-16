@@ -4,7 +4,7 @@ import Prefs from './preferences';
 import { List, Map } from 'immutable';
 import { Record } from '../transit';
 
-const InitialState = Record({
+const State = Record({
   livestate: new Map(),
   eventHistory: new List(),
   prefs: new Prefs({
@@ -24,7 +24,7 @@ const buildLivestate = (livestate) => new Map(livestate).map(addr => new AddrRec
 const updateLivestateAddr = (state, addrLstToUpdate) =>
   addrLstToUpdate.reduce((newState, [id, addr]) => newState.set(id, addr), state);
 
-export default function smartHomeReducer(state = new InitialState, action) {
+export default function smartHomeReducer(state = new State, action) {
   switch (action.type) {
 
     case actions.PROCESS_EVENT: {
