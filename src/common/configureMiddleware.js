@@ -1,17 +1,16 @@
 import configureStorage from './configureStorage';
 import createLoggerMiddleware from 'redux-logger';
-import errorToMessage from '../common/app/errorToMessage';
+/* Below import is only used by Este's custom middleware */
+// import errorToMessage from '../common/app/errorToMessage';
+
 /* TODO: Check if it's feasable to also migrate to Este simpler promise-middleware implementation instead of
    redux-promise-middleware */
 import promiseMiddleware from 'redux-promise-middleware';
 
 // Deps.
 import firebase from 'firebase';
-import smartHomeConnect from './home/connector';
-
-// Deps.
-import firebase from 'firebase';
 import validate from './validate';
+import smartHomeConnect from './home/connector';
 
 let firebaseDeps = null;
 
@@ -59,6 +58,8 @@ export default function configureMiddleware(initialState, platformDeps, platform
     }),
     promiseMiddleware({
       promiseTypeSuffixes: ['START', 'SUCCESS', 'ERROR'],
+      /* Use parameter below once you switched to Este's custom middleware */
+      // shouldThrow: error => !errorToMessage(error),
     }),
     ...platformMiddleware,
   ];

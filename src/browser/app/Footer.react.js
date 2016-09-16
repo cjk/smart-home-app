@@ -3,7 +3,7 @@ import { FormattedMessage, defineMessages } from 'react-intl';
 
 const messages = defineMessages({
   madeByHtml: {
-    defaultMessage: 'Based on Daniel Steigerwald's lovely Este-Stack, written by',
+    defaultMessage: 'Based on Daniel Steigerwald\'s lovely Este-Stack, written by',
     id: 'footer.madeByHtml',
   },
 });
