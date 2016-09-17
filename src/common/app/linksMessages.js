@@ -1,6 +1,7 @@
+/* @flow */
 import { defineMessages } from 'react-intl';
 
-export default defineMessages({
+const LinkMessages = defineMessages({
   intl: {
     defaultMessage: 'Intl',
     id: 'app.links.intl',
@@ -20,6 +21,10 @@ export default defineMessages({
   me: {
     defaultMessage: 'Me',
     id: 'app.links.me',
+  },
+  notFound: {
+    defaultMessage: 'Page Not Found',
+    id: 'app.links.notFound',
   },
   offline: {
     defaultMessage: 'Offline',
@@ -50,3 +55,5 @@ export default defineMessages({
     id: 'app.links.signIn',
   },
 });
+
+export default LinkMessages;

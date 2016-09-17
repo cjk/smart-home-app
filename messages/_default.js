@@ -53,6 +53,14 @@ export default [
     "defaultMessage": "{prop, select, description {Please enter a description.} email {Please enter an email address.} name {Please enter a name.} password {Please enter a password.} other {You can't leave this empty.}}",
   },
   {
+    "id": "app.links.events",
+    "defaultMessage": "Events",
+  },
+  {
+    "id": "app.links.fermenter",
+    "defaultMessage": "Fermenter",
+  },
+  {
     "id": "app.links.fields",
     "defaultMessage": "Fields",
   },
@@ -73,8 +81,8 @@ export default [
     "defaultMessage": "Me",
   },
   {
-    "id": "app.links.events",
-    "defaultMessage": "Events"
+    "id": "app.links.notFound",
+    "defaultMessage": "Page Not Found",
   },
   {
     "id": "app.links.offline",
@@ -93,28 +101,8 @@ export default [
     "defaultMessage": "Sign in",
   },
   {
-    "id": "app.links.fermenter",
-    "defaultMessage": "Fermenter"
-  },
-  {
-    "id": "fermenter.environment",
-    "defaultMessage": "Environment"
-  },
-  {
-    "id": "fermenter.temperature",
-    "defaultMessage": "Temperature"
-  },
-  {
-    "id": "fermenter.humidity",
-    "defaultMessage": "Humidity"
-  },
-  {
-    "id": "auth.login.error.email",
-    "defaultMessage": "Email address is not valid."
-  },
-  {
-    "id": "auth.login.error.required",
-    "defaultMessage": "Please fill out {prop, select, email {email} password {password}}."
+    "id": "app.links.todos",
+    "defaultMessage": "Todos",
   },
   {
     "id": "auth.email.emailLegend",
@@ -161,12 +149,24 @@ export default [
     "defaultMessage": "Login with Facebook",
   },
   {
-    "id": "fields.page.h2",
-    "defaultMessage": "Fields",
+    "id": "events.title",
+    "defaultMessage": "Event-History",
   },
   {
-    "id": "fields.page.p",
-    "defaultMessage": "Something like redux-form but simplified and universal.",
+    "id": "events.emptyList",
+    "defaultMessage": "no events yet",
+  },
+  {
+    "id": "fermenter.environment",
+    "defaultMessage": "Environment",
+  },
+  {
+    "id": "fermenter.temperature",
+    "defaultMessage": "Temperature",
+  },
+  {
+    "id": "fermenter.humidity",
+    "defaultMessage": "Humidity",
   },
   {
     "id": "firebase.error.auth/network-request-failed",
@@ -205,18 +205,6 @@ export default [
     "defaultMessage": "CjK's smart-home",
   },
   {
-    "id": "events.title",
-    "defaultMessage": "Event-History",
-  },
-  {
-    "id": "events.emptyList",
-    "defaultMessage": "no events yet",
-  },
-  {
-    "id": "intl.page.h2",
-    "defaultMessage": "react-intl demonstration",
-  },
-  {
     "id": "intl.page.unreadCount",
     "defaultMessage": "{unreadCount, plural, one {message} other {messages}}",
   },
@@ -229,14 +217,6 @@ export default [
     "defaultMessage": "Still loading, please check your connection",
   },
   {
-    "id": "me.profilePage.title",
-    "defaultMessage": "Profile",
-  },
-  {
-    "id": "me.settingsPage.title",
-    "defaultMessage": "Settings",
-  },
-  {
     "id": "notFound.continue",
     "defaultMessage": "Continue here please.",
   },
@@ -247,10 +227,6 @@ export default [
   {
     "id": "notFound.p",
     "defaultMessage": "The link may be broken, or the page may have been removed.",
-  },
-  {
-    "id": "notFound.title",
-    "defaultMessage": "Page Not Found",
   },
   {
     "id": "todos.buttons.add100",

@@ -1,8 +1,15 @@
+/* @flow */
 import configureReducer from './configureReducer';
 import configureMiddleware from './configureMiddleware';
 import { applyMiddleware, createStore } from 'redux';
 
-export default function configureStore(options) {
+type Options = {
+  initialState: Object,
+  platformDeps?: Object,
+  platformMiddleware?: Array<Function>,
+};
+
+const configureStore = (options: Options) => {
   const {
     initialState,
     platformDeps = {},
@@ -23,21 +30,27 @@ export default function configureStore(options) {
     applyMiddleware(...middleware)
   );
 
-  // Enable hot reload where available.
+  // Enable hot reloading for reducers.
   if (module.hot) {
-    const replaceReducer = configureReducer =>
-      store.replaceReducer(configureReducer(initialState));
-
     if (initialState.device.isReactNative) {
+      // React Native for some reason needs accept without the explicit path.
+      // facebook.github.io/react-native/blog/2016/03/24/introducing-hot-reloading.html
       module.hot.accept(() => {
-        replaceReducer(require('./configureReducer').default);
+        const configureReducer = require('./configureReducer').default;
+
+        store.replaceReducer(configureReducer(initialState));
       });
     } else {
+      // Webpack for some reason needs accept with the explicit path.
       module.hot.accept('./configureReducer', () => {
-        replaceReducer(require('./configureReducer'));
+        const configureReducer = require('./configureReducer').default;
+
+        store.replaceReducer(configureReducer(initialState));
       });
     }
   }
 
   return store;
-}
+};
+
+export default configureStore;

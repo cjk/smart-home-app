@@ -3,33 +3,33 @@ import ValidationError from './ValidationError';
 import validator from 'validator';
 
 // Subclass to add custom validations.
-export default class Validation {
+class Validation {
 
   // JSON to be validated.
   constructor(object) {
-    this._object = object;
-    this._prop = null;
-    this._validator = validator;
+    this.object = object;
+    this.currentProp = null;
+    this.validator = validator;
     this.promise = Promise.resolve();
   }
 
   validate(callback, { required } = {}) {
-    const prop = this._prop;
-    const value = this._object[prop];
-    const object = this._object;
+    const prop = this.currentProp;
+    const value = this.object[prop];
+    const object = this.object;
     this.promise = this.promise.then(() => {
-      if (required && !this._isEmptyString(value)) return;
+      if (required && !this.isEmptyString(value)) return;
       callback(value, prop, object);
     });
     return this;
   }
 
-  _isEmptyString(value) {
-    return !this._validator.toString(value).trim();
+  isEmptyString(value) {
+    return !this.validator.toString(value).trim();
   }
 
   prop(prop) {
-    this._prop = prop;
+    this.currentProp = prop;
     return this;
   }
 
@@ -41,7 +41,7 @@ export default class Validation {
 
   email() {
     return this.validate((value, prop) => {
-      if (this._validator.isEmail(value)) return;
+      if (this.validator.isEmail(value)) return;
       throw new ValidationError('email', { prop });
     });
   }
@@ -56,3 +56,5 @@ export default class Validation {
   }
 
 }
+
+export default Validation;

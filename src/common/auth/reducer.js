@@ -1,3 +1,4 @@
+/* @flow weak */
 import { Record } from '../transit';
 import { firebaseActions } from '../lib/redux-firebase';
 
@@ -7,7 +8,7 @@ const State = Record({
   success: null, // To get accessToken, refreshToken, whatever.
 }, 'auth');
 
-export default function authReducer(state = new State, action) {
+const authReducer = (state = new State(), action) => {
   switch (action.type) {
 
     case firebaseActions.FIREBASE_RESET_PASSWORD_START:
@@ -34,7 +35,10 @@ export default function authReducer(state = new State, action) {
         .set('success', action.payload);
     }
 
-  }
+    default:
+      return state;
 
-  return state;
-}
+  }
+};
+
+export default authReducer;

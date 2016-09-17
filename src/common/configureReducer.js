@@ -1,3 +1,4 @@
+/* @flow weak */
 import app from './app/reducer';
 import auth from './auth/reducer';
 import config from './config/reducer';
@@ -6,6 +7,7 @@ import smartHome from './home/reducer';
 import fermenter from './fermenter/reducer';
 import intl from './intl/reducer';
 import nativeRouting from '../native/routing/reducer';
+import themes from './themes/reducer';
 import todos from './todos/reducer';
 import users from './users/reducer';
 import { FIREBASE_ON_AUTH } from '../common/lib/redux-firebase/actions';
@@ -33,9 +35,9 @@ const resetStateOnSignOut = (reducer, initialState) => (state, action) => {
   return reducer(state, action);
 };
 
-export default function configureReducer(initialState) {
+const configureReducer = (initialState: Object) => {
   // One day we will have universal routing, but we are not there yet.
-  // jmurzy/react-router-native
+  // jmurzy/react-router-native or React Router 4
   const routing = initialState.device.isReactNative
     ? nativeRouting
     : browserRouting;
@@ -48,9 +50,9 @@ export default function configureReducer(initialState) {
     firebase,
     intl,
     routing,
+    themes,
     smartHome,
     fermenter,
-    todos,
     users,
   });
 
@@ -59,4 +61,6 @@ export default function configureReducer(initialState) {
   reducer = updateStateOnStorageLoad(reducer);
 
   return reducer;
-}
+};
+
+export default configureReducer;

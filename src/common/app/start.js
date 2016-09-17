@@ -1,22 +1,27 @@
-import * as actions from './actions';
-import React, { Component, PropTypes } from 'react';
+/* @flow */
+import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { connect } from 'react-redux';
+import { start as appStart } from './actions';
 
-export default function start(WrappedComponent) {
-  class Start extends Component {
+const start = (WrappedComponent: Function) => {
+  let appStarted = false;
+
+  class Start extends React.Component {
 
     static propTypes = {
-      intl: PropTypes.object.isRequired,
-      start: PropTypes.func.isRequired,
+      intl: React.PropTypes.object.isRequired,
+      appStart: React.PropTypes.func.isRequired,
     };
 
     componentDidMount() {
-      const { start } = this.props;
-      // Client side changes must be dispatched on componentDidMount, aka
-      // after the first app render, to match client and server HTML. Otherwise,
-      // React attempt to reuse markup will fail.
-      start();
+      const { appStart } = this.props;
+      // The appStart must be called after the initial render, because
+      // componentDidMount is not called on the server. Because hot reloading,
+      // we have to call appStart only once.
+      if (appStarted) return;
+      appStarted = true;
+      appStart();
     }
 
     render() {
@@ -40,7 +45,10 @@ export default function start(WrappedComponent) {
 
   Start = connect(state => ({
     intl: state.intl,
-  }), actions)(Start);
+  }), { appStart })(Start);
 
   return Start;
-}
+};
+
+
+export default start;

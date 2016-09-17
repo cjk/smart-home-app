@@ -1,3 +1,4 @@
+/* @flow weak */
 import invariant from 'invariant';
 import storage from 'redux-storage';
 import storageDebounce from 'redux-storage-decorator-debounce';
@@ -13,6 +14,7 @@ const stateToSave = [
   ['fields'],
   ['smartHome'],
   ['intl', 'currentLocale'],
+  ['themes', 'currentTheme'],
   ['users', 'viewer'],
 ];
 
@@ -26,6 +28,8 @@ const invariantFeatureState = (state, feature) => invariant(
 );
 
 const updateState = (state, storageStateJson) => {
+  const empty = !storageStateJson || !Object.keys(storageStateJson).length;
+  if (empty) return state;
   try {
     fromJSON(storageStateJson).forEach(({ feature, featurePath, value }) => {
       const canSet = state[feature] && state[feature].hasIn(featurePath);
@@ -39,6 +43,7 @@ const updateState = (state, storageStateJson) => {
     });
   } catch (error) {
     // Shouldn't happen, but if the data's invalid, there's not much we can do.
+    console.log(error); // eslint-disable-line no-console
   }
   return state;
 };
@@ -46,8 +51,7 @@ const updateState = (state, storageStateJson) => {
 const storageFilter = engine => ({
   ...engine,
   save(state) {
-    // github.com/este/este/issues/1071
-    if (!state) return null;
+    if (!state) return Promise.resolve();
 
     // We don't filter by actions but by the app state structure.
     // That's fine because saving is debounced.
@@ -74,7 +78,7 @@ export const updateStateOnStorageLoad = reducer => (state, action) => {
   return reducer(state, action);
 };
 
-export default function configureStorage(initialState, createStorageEngine) {
+const configureStorage = (initialState, createStorageEngine) => {
   const storageEngine =
     createStorageEngine &&
     createStorageEngine(`redux-storage:${initialState.config.appName}`);
@@ -87,4 +91,6 @@ export default function configureStorage(initialState, createStorageEngine) {
     storageEngine,
     storageMiddleware,
   };
-}
+};
+
+export default configureStorage;

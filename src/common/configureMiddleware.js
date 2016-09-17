@@ -1,3 +1,4 @@
+/* @flow weak */
 import configureStorage from './configureStorage';
 import createLoggerMiddleware from 'redux-logger';
 /* Below import is only used by Este's custom middleware */
@@ -21,7 +22,7 @@ const injectMiddleware = deps => ({ dispatch, getState }) => next => action =>
     : action
   );
 
-export default function configureMiddleware(initialState, platformDeps, platformMiddleware) {
+const configureMiddleware = (initialState, platformDeps, platformMiddleware) => {
   // Lazy init.
   if (!firebaseDeps) {
     firebase.initializeApp(initialState.config.firebase);
@@ -85,4 +86,6 @@ export default function configureMiddleware(initialState, platformDeps, platform
   }
 
   return middleware;
-}
+};
+
+export default configureMiddleware;

@@ -57,6 +57,14 @@ export default [
     "defaultMessage": "Erforderlich",
   },
   {
+    "id": "app.links.events",
+    "defaultMessage": "Ereignisse",
+  },
+  {
+    "id": "app.links.fermenter",
+    "defaultMessage": "Fermentierschrank",
+  },
+  {
     "id": "app.links.fields",
     "defaultMessage": "Fields",
   },
@@ -77,8 +85,8 @@ export default [
     "defaultMessage": "Ich",
   },
   {
-    "id": "app.links.events",
-    "defaultMessage": "Ereignisse"
+    "id": "app.links.notFound",
+    "defaultMessage": "Seite nicht gefunden",
   },
   {
     "id": "app.links.offline",
@@ -101,8 +109,8 @@ export default [
     "defaultMessage": "Aufgaben",
   },
   {
-    "id": "app.links.fermenter",
-    "defaultMessage": "Fermentierschrank"
+    "id": "auth.email.emailLegend",
+    "defaultMessage": "E-Mail",
   },
   {
     "id": "auth.email.emailPlaceholder",
@@ -145,14 +153,6 @@ export default [
     "defaultMessage": "Anmeldung via Facebook",
   },
   {
-    "id": "fields.page.h2",
-    "defaultMessage": "Fields",
-  },
-  {
-    "id": "fields.page.p",
-    "defaultMessage": "Wie redux-form aber vereinfacht",
-  },
-  {
     "id": "firebase.error.EMAIL_TAKEN",
     "defaultMessage": "Das Konto konnte nicht erstellt werden, weil die E-Mail bereits benutzt wurde.",
   },
@@ -173,20 +173,16 @@ export default [
     "defaultMessage": "Based on Daniel Steigerwalds lovely Este-Stack, written by",
   },
   {
-    "id": "intl.page.h2",
-    "defaultMessage": "Demo von react-intl",
-  },
-  {
     "id": "intl.page.unreadCount",
     "defaultMessage": "{unreadCount, plural, one {Meldung} other {Meldungen}}",
   },
   {
-    "id": "me.profilePage.title",
-    "defaultMessage": "Profil",
+    "id": "loading.loadingText",
+    "defaultMessage": "Laden",
   },
   {
-    "id": "me.settingsPage.title",
-    "defaultMessage": "Einstellungen",
+    "id": "loading.longLoadingText",
+    "defaultMessage": "Noch Laden, überprüfen Sie bitte Ihre Verbindung",
   },
   {
     "id": "notFound.continue",
@@ -199,10 +195,6 @@ export default [
   {
     "id": "notFound.p",
     "defaultMessage": "Der Link ist möglicherweise veraltet oder die Seite wurde gelöscht.",
-  },
-  {
-    "id": "notFound.title",
-    "defaultMessage": "Seite nicht gefunden",
   },
   {
     "id": "todos.buttons.add100",
@@ -227,13 +219,5 @@ export default [
   {
     "id": "todos.todos.empty",
     "defaultMessage": "Es ist eher ruhig hier...",
-  },
-  {
-    "id": "loading.loadingText",
-    "defaultMessage": "Laden",
-  },
-  {
-    "id": "loading.longLoadingText",
-    "defaultMessage": "Noch Laden, überprüfen Sie bitte Ihre Verbindung",
   },
 ];

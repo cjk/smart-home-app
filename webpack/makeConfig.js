@@ -1,3 +1,4 @@
+/* @flow weak */
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import WebpackIsomorphicToolsPlugin from 'webpack-isomorphic-tools/plugin';
@@ -11,9 +12,9 @@ import webpackIsomorphicAssets from './assets';
 
 const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(webpackIsomorphicAssets);
 
-// cheap-module-eval-source-map, because we want the fastest original source.
-// http://webpack.github.io/docs/configuration.html#devtool
-const devtools = 'cheap-module-eval-source-map';
+// github.com/facebookincubator/create-react-app/issues/343#issuecomment-237241875
+// You may want 'cheap-module-source-map' instead if you prefer source maps.
+const devtools = 'eval';
 
 const loaders = {
   css: '',
@@ -26,7 +27,7 @@ const serverIp = config.remoteHotReload
   ? ip.address() // Dynamic IP address enables hot reload on remote devices.
   : 'localhost';
 
-export default function makeConfig(options) {
+const makeConfig = options => {
   const {
     isDevelopment,
   } = options;
@@ -80,12 +81,8 @@ export default function makeConfig(options) {
                 polyfill: false,
                 regenerator: false,
               }],
-              'add-module-exports',
             ],
             env: {
-              development: {
-                presets: ['react-hmre'],
-              },
               production: {
                 plugins: [
                   'transform-react-constant-elements',
@@ -167,4 +164,6 @@ export default function makeConfig(options) {
   };
 
   return config;
-}
+};
+
+export default makeConfig;

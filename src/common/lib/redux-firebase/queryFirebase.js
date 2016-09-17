@@ -1,3 +1,4 @@
+/* @flow weak */
 // A higher order component for Firebase queries without on / off madness.
 
 // Example:
@@ -18,7 +19,7 @@
 // }));
 
 import * as actions from './actions';
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 
 // Use key whenever you want to force off / on event registration. It's useful
 // when queried component must be rerendered, for example when app state is
@@ -29,12 +30,17 @@ const optionsToPayloadString = options => JSON.stringify(optionsToPayload(option
 let serverFetching = false;
 let serverFetchingPromises = null;
 
-export default function queryFirebase(WrappedComponent, mapPropsToOptions) {
-  return class FirebaseQuery extends Component {
+const queryFirebase = (WrappedComponent, mapPropsToOptions) =>
+  class FirebaseQuery extends React.Component {
 
     static contextTypes = {
-      store: PropTypes.object, // Redux store.
+      store: React.PropTypes.object, // Redux store.
     };
+
+    onAllValueCalled: boolean;
+    onArgs: any;
+    onceArgs: any;
+
 
     ensureCancelCallback(callbackOrCallbackWithCancelCallback) {
       const callbacks = [].concat(callbackOrCallbackWithCancelCallback);
@@ -57,7 +63,7 @@ export default function queryFirebase(WrappedComponent, mapPropsToOptions) {
         delete eventTypes.all;
         // Use value to get current state once.
         eventTypes.value = snap => {
-          this._onAllValueCalled = true;
+          this.onAllValueCalled = true;
           const val = [];
           snap.forEach(childSnap => {
             val.push(childSnap.val());
@@ -68,7 +74,7 @@ export default function queryFirebase(WrappedComponent, mapPropsToOptions) {
           ['child_added', 'child_changed', 'child_moved', 'child_removed']
             .forEach(eventType => {
               eventTypes[eventType] = (snap, prevChildKey) => {
-                if (eventType === 'child_added' && !this._onAllValueCalled) {
+                if (eventType === 'child_added' && !this.onAllValueCalled) {
                   return;
                 }
                 action({
@@ -103,7 +109,7 @@ export default function queryFirebase(WrappedComponent, mapPropsToOptions) {
 
     on() {
       // This flag is for ignoring all child_added events before once value.
-      this._onAllValueCalled = false;
+      this.onAllValueCalled = false;
       this.dispatch(this.props, (ref, { on, once, params = [] }) => {
         // Map declarative params to Firebase imperative API.
         params.forEach(([method, ...args]) => {
@@ -172,7 +178,8 @@ export default function queryFirebase(WrappedComponent, mapPropsToOptions) {
     }
 
   };
-}
+
+export default queryFirebase;
 
 // queryFirebaseServer is for server side data fetching. Example:
 // await queryFirebaseServer(() => {

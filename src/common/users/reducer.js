@@ -1,3 +1,4 @@
+/* @flow weak */
 import * as actions from './actions';
 import User from './user';
 import { Record } from '../transit';
@@ -10,7 +11,7 @@ const State = Record({
   viewer: null,
 }, 'users');
 
-export default function usersReducer(state = new State, action) {
+const usersReducer = (state = new State(), action) => {
   switch (action.type) {
 
     case firebaseActions.FIREBASE_ON_AUTH: {
@@ -34,7 +35,10 @@ export default function usersReducer(state = new State, action) {
         .set('onlineLoaded', true);
     }
 
-  }
+    default:
+      return state;
 
-  return state;
-}
+  }
+};
+
+export default usersReducer;

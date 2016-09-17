@@ -1,16 +1,15 @@
+/* @flow */
 // Higher order component for Facebook XFBML.
 // Examples
 //  https://gist.github.com/steida/04a39dfa1043e1451044ba8370743b0c
 //  https://gist.github.com/steida/b19a1858e38007651a616ae44244ca52
-import React, { Component } from 'react';
+import React from 'react';
 
-export default function xfbml(WrappedComponent) {
-  return class Wrapper extends Component {
+const xfbml = (WrappedComponent: any) =>
+  class Wrapper extends React.Component {
 
-    constructor() {
-      super();
-      this.onWrappedComponentRef = this.onWrappedComponentRef.bind(this);
-    }
+    el: Element;
+    isMounted: boolean;
 
     parseXfbmlAsap() {
       if (window.FB) {
@@ -21,29 +20,33 @@ export default function xfbml(WrappedComponent) {
       // Aspect Oriented Programming ftw.
       window.fbAsyncInit = () => {
         fbAsyncInit();
-        if (!this._isMounted) return;
+        if (!this.isMounted) return;
         window.FB.XFBML.parse(this.el);
       };
     }
 
     componentDidMount() {
-      this._isMounted = true;
+      this.isMounted = true;
       this.parseXfbmlAsap();
     }
 
     componentWillUnmount() {
-      this._isMounted = false;
+      this.isMounted = false;
     }
 
-    onWrappedComponentRef(el) {
+    onWrappedComponentRef(el: Element) {
       this.el = el;
     }
 
     render() {
       return (
-        <WrappedComponent {...this.props} ref={this.onWrappedComponentRef} />
+        <WrappedComponent
+          {...this.props}
+          ref={el => this.onWrappedComponentRef(el)}
+        />
       );
     }
 
   };
-}
+
+export default xfbml;
