@@ -4,11 +4,9 @@ import Button from 'react-mdl/lib/Button';
 import { List } from 'react-mdl/lib/List';
 import { Card, CardTitle, CardText, CardMenu } from 'react-mdl/lib/Card';
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
 
-const AddressList = () => {
-  const { addresses } = this.props;
-  const { updateAddr, updateList } = this.props.actions;
+const AddressList = ({ addresses, actions }) => {
+  const { updateAddr, updateList } = actions;
 
   return (
     <section className="addressList">
@@ -40,4 +38,4 @@ AddressList.propTypes = {
   addresses: PropTypes.object.isRequired,
 };
 
-export default connect()(AddressList);
+export default AddressList;

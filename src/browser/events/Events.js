@@ -14,10 +14,8 @@ const messages = defineMessages({
 /* How many events to show in events-history table */
 const maxListEntries = 50;
 
-const EventList = () => {
-  const { list } = this.props;
-
-  const sortedList = list.sortBy(e => e.created, (a, b) => a < b);
+const EventList = ({ eventlist }) => {
+  const sortedEventlist = eventlist.sortBy(e => e.created, (a, b) => a < b);
 
   const columns = List([
     { name: 'created', label: 'Time' },
@@ -28,7 +26,7 @@ const EventList = () => {
     { name: 'value', label: 'Value' },
   ]);
 
-  const rows = sortedList.take(maxListEntries).map(event => (
+  const rows = sortedEventlist.take(maxListEntries).map(event => (
     columns.reduce((row, col) => {
       const colName = col.name;
       const content = (colName === 'created' ?
@@ -39,7 +37,7 @@ const EventList = () => {
     }, OrderedMap())
   ));
 
-  if (!list.size) return (
+  if (!eventlist.size) return (
     <h4><FormattedMessage {...messages.emptyList} /></h4>
   );
 
@@ -55,7 +53,7 @@ const EventList = () => {
 };
 
 EventList.propTypes = {
-  list: React.PropTypes.object.isRequired,
+  eventlist: React.PropTypes.object.isRequired,
 };
 
 export default EventList;

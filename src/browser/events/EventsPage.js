@@ -1,28 +1,26 @@
 import Events from './Events';
 import Helmet from 'react-helmet';
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import linksMessages from '../../common/app/linksMessages';
 import { FormattedMessage } from 'react-intl';
 
-const EventsPage = () => {
-  const { smartHome: { eventHistory: list } } = this.props;
-
+const EventsPage = ({ eventlist }) => {
   return (
     <div className="events-page" id="events">
       <FormattedMessage {...linksMessages.events}>
         {message => <Helmet title={message} />}
       </FormattedMessage>
-      <Events {...{ list }} />
+      <Events {...{ eventlist }} />
     </div>
   );
 };
 
 
 EventsPage.propTypes = {
-  smartHome: PropTypes.object,
+  eventlist: React.PropTypes.object,
 };
 
 export default connect(state => ({
-  smartHome: state.smartHome,
+  eventlist: state.smartHome.eventHistory,
 }))(EventsPage);

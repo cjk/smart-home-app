@@ -3,7 +3,6 @@ import AddrLine from './AddrLine';
 import { List } from 'react-mdl/lib/List';
 import { Card, CardTitle, CardText } from 'react-mdl/lib/Card';
 import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
 import { FormattedMessage, defineMessages } from 'react-intl';
 
 /* TODO: These are not available as i18n-messages under ./src/common/intl/messages */
@@ -74,9 +73,8 @@ const messages = defineMessages({
   },
 });
 
-const AddressList = () => {
-  const { addresses, prefs } = this.props;
-  const { updateAddr, updateList } = this.props.actions;
+const AddressList = ({ addresses, actions, prefs }) => {
+  const { updateAddr, updateList } = actions;
 
   /* Tweak MDL styles to allow for more room inside address-text-box */
   const listStyle = {
@@ -128,4 +126,4 @@ AddressList.propTypes = {
   prefs: PropTypes.object.isRequired,
 };
 
-export default connect()(AddressList);
+export default AddressList;

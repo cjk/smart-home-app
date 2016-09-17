@@ -4,14 +4,7 @@ import { ListItem, ListItemContent, ListItemAction } from 'react-mdl/lib/List';
 import { Switch } from 'react-mdl/lib';
 
 /* Presentational component to render address-list lines */
-const AddrLine = () => {
-  const onSwitchToggle = () => {
-    const { updateAddr, address } = this.props;
-
-    updateAddr(address);
-  };
-
-  const { address } = this.props;
+const AddrLine = ({ address, updateAddr }) => {
   const switchable = (addr) => addr.type === 'switch';
 
   /* Tweak MDL styles so address-name + id fit into main-content area */
@@ -34,7 +27,7 @@ const AddrLine = () => {
     <ListItem twoLine className="addressRow">
       <ListItemContent avatar={chooseIcon(address)} subtitle={address.id} style={addressLineText}>{address.name}</ListItemContent>
       <ListItemAction info={R.isNil(address.value) ? '???' : address.value.toString()}>
-        <Switch ripple checked={!!address.value} disabled={!switchable(address)} id={address.id} onChange={onSwitchToggle} />
+        <Switch ripple checked={!!address.value} disabled={!switchable(address)} id={address.id} onChange={() => updateAddr(address)} />
       </ListItemAction>
     </ListItem>
   );
@@ -45,6 +38,5 @@ AddrLine.propTypes = {
   msg: PropTypes.object,
   updateAddr: PropTypes.func.isRequired,
 };
-
 
 export default AddrLine;
