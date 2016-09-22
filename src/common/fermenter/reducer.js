@@ -22,7 +22,8 @@ export default function fermenterReducer(state = State, action) {
       }
       return revive(newState);
     }
-  }
 
-  return state;
+    default:
+      return state;
+  }
 }

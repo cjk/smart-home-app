@@ -19,11 +19,9 @@ const messages = defineMessages({
   },
 });
 
-const TempHumidity = () => {
-  const { state } = this.props;
-
-  const env = state.get('env');
-  const devices = state.get('devices');
+const TempHumidity = ({ fermenterState }) => {
+  const env = fermenterState.get('env');
+  const devices = fermenterState.get('devices');
 
   if (!env.createdAt) {
     return (<div>No information yet...</div>);
@@ -49,7 +47,7 @@ const TempHumidity = () => {
 };
 
 TempHumidity.propTypes = {
-  state: React.PropTypes.object.isRequired,
+  fermenterState: React.PropTypes.object.isRequired,
   intl: intlShape.isRequired,
 };
 

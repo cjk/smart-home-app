@@ -17,7 +17,7 @@ export function fermenterStart() {
     type: 'FERMENTER_START',
     payload: {
       promise: sendFermenterCommand('fermenterStart')
-    }
+    },
   });
 }
 
@@ -28,14 +28,14 @@ export function fermenterStop() {
     type: 'FERMENTER_STOP',
     payload: {
       promise: sendFermenterCommand('fermenterStop')
-    }
+    },
   });
 }
 
 export function processState(newState) {
   return {
     type: PROCESS_STATE,
-    payload: newState
+    payload: newState,
   };
 }
 

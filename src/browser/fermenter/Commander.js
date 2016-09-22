@@ -4,11 +4,10 @@ import { injectIntl, intlShape } from 'react-intl';
 import { IconButton, Menu } from 'react-mdl/lib';
 import { MenuItem } from 'react-mdl/lib/Menu';
 
-const FermenterCommander = () => {
-  const { fermenterRts: rts, fermenterStart, fermenterStop } = this.props;
+const FermenterCommander = ({ runtimeState, fermenterStart, fermenterStop }) => {
   const maybeShowCurrentCmd = R.defaultTo(' -- ');
 
-  if (R.isEmpty(rts.status)) {
+  if (R.isEmpty(runtimeState.status)) {
     return (<div>No status yet...</div>);
   }
 
@@ -20,14 +19,14 @@ const FermenterCommander = () => {
         <MenuItem onClick={fermenterStop}>Switch fermenter off</MenuItem>
         <MenuItem disabled>Emergency off</MenuItem>
       </Menu>
-      <p style={{ display: 'inline' }}>Current status: [{rts.status}]</p>
-      <p style={{ display: 'inline' }}>| Last command: [{maybeShowCurrentCmd(rts.currentCmd)}]</p>
+      <p style={{ display: 'inline' }}>Current status: [{runtimeState.status}]</p>
+      <p style={{ display: 'inline' }}>| Last command: [{maybeShowCurrentCmd(runtimeState.currentCmd)}]</p>
     </div>
   );
 };
 
 FermenterCommander.propTypes = {
-  fermenterRts: PropTypes.object.isRequired,
+  runtimeState: PropTypes.object.isRequired,
   fermenterStart: PropTypes.func.isRequired,
   fermenterStop: PropTypes.func.isRequired,
   intl: intlShape.isRequired,

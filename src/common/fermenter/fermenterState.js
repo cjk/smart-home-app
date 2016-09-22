@@ -15,19 +15,19 @@ const Env = new Record({
 const Device = new Record({
   isOn: false,
   shouldSwitchTo: null,
-  willSwitch: false
+  willSwitch: false,
 });
 
 const SwitchOp = new Record({
   device: '',
   to: null,
-  at: undefined
+  at: undefined,
 });
 
 const Emergency = new Record({
   device: null,
   sensor: null,
-  at: undefined
+  at: undefined,
 });
 
 const History = new Record({
