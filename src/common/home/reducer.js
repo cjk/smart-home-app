@@ -84,7 +84,8 @@ export default function smartHomeReducer(state = new State, action) {
       const { tabId } = action.payload;
       return state.set('activeTab', tabId);
     }
-  }
 
-  return state;
+    default:
+      return state;
+  }
 }

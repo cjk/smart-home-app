@@ -16,11 +16,6 @@ const homeActions = (dispatch) => ({ actions: bindActionCreators(actions, dispat
 
 class HomePage extends Component {
 
-  static propTypes = {
-    actions: PropTypes.object.isRequired,
-    smartHome: PropTypes.object.isRequired,
-  };
-
   constructor(props) {
     super(props);
     this.updateAddr = this.updateAddr.bind(this);
@@ -96,6 +91,12 @@ class HomePage extends Component {
     );
   }
 }
+
+HomePage.propTypes = {
+  actions: PropTypes.object.isRequired,
+  smartHome: PropTypes.object.isRequired,
+};
+
 
 export default connect(state => ({
   smartHome: state.smartHome,
