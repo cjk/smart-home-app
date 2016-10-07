@@ -1,46 +1,71 @@
+/* @flow */
+import App from '../../browser/app/App';
 import Helmet from 'react-helmet';
 import Html from './Html';
+import Promise from 'bluebird';
 import React from 'react';
-import ReactDOMServer from 'react-dom/server';
+import ServerFetchProvider from './ServerFetchProvider';
 import config from '../config';
 import configureStore from '../../common/configureStore';
 import createInitialState from './createInitialState';
-import createRoutes from '../../browser/createRoutes';
 import serialize from 'serialize-javascript';
-import { Provider } from 'react-redux';
-import { createMemoryHistory, match, RouterContext } from 'react-router';
-import { queryFirebaseServer } from '../../common/lib/redux-firebase/queryFirebase';
-import { routerMiddleware, syncHistoryWithStore } from 'react-router-redux';
+import { Provider as Redux } from 'react-redux';
+import { createServerRenderContext, ServerRouter } from 'react-router';
+import { renderToStaticMarkup, renderToString } from 'react-dom/server';
 import { toJSON } from '../../common/transit';
+
+const settleAllWithTimeout = promises => Promise
+  .all(promises.map(p => p.reflect()))
+  .each(inspection => {
+    if (inspection.isFulfilled()) return;
+    console.log('Server fetch failed:', inspection.reason());
+  })
+  .timeout(5000) // Do not block rendering if any fetch is still pending.
+  .catch(error => {
+    if (error instanceof Promise.TimeoutError) {
+      console.log('Server fetch timeouted:', error);
+      return;
+    }
+    throw error;
+  });
 
 const initialState = createInitialState();
 
-const createRequestInitialState = req => {
-  const currentLocale = process.env.IS_SERVERLESS
-    ? config.defaultLocale
-    : req.acceptsLanguages(config.locales) || config.defaultLocale;
-  const host =
-    `${req.headers['x-forwarded-proto'] || req.protocol}://${req.headers.host}`;
-  return {
+const getHost = req =>
+  `${req.headers['x-forwarded-proto'] || req.protocol}://${req.headers.host}`;
+
+const getLocale = req => process.env.IS_SERVERLESS
+  ? config.defaultLocale
+  : req.acceptsLanguages(config.locales) || config.defaultLocale;
+
+const createStore = (req) => configureStore({
+  initialState: {
     ...initialState,
-    intl: initialState.intl
-      .set('currentLocale', currentLocale)
-      .set('initialNow', Date.now()),
     device: initialState.device
-      .set('host', host),
-  };
-};
+      .set('host', getHost(req)),
+    intl: initialState.intl
+      .set('currentLocale', getLocale(req))
+      .set('initialNow', Date.now()),
+  },
+});
 
-const renderApp = (store, renderProps) => {
-  const appHtml = ReactDOMServer.renderToString(
-    <Provider store={store}>
-      <RouterContext {...renderProps} />
-    </Provider>
+const renderBody = (store, context, location, fetchPromises) => {
+  const markup = renderToString(
+    <Redux store={store}>
+      <ServerFetchProvider promises={fetchPromises}>
+        <ServerRouter
+          context={context}
+          location={location}
+        >
+          <App />
+        </ServerRouter>
+      </ServerFetchProvider>
+    </Redux>
   );
-  return { appHtml, helmet: Helmet.rewind() };
+  return { markup, helmet: Helmet.rewind() };
 };
 
-const renderScripts = (state, headers, hostname, appJsFilename) =>
+const renderScripts = (state, appJsFilename) =>
   // https://github.com/yahoo/serialize-javascript#user-content-automatic-escaping-of-html-characters
   // TODO: Switch to CSP, https://github.com/este/este/pull/731
   `
@@ -50,65 +75,61 @@ const renderScripts = (state, headers, hostname, appJsFilename) =>
     <script src="${appJsFilename}"></script>
   `;
 
-const renderPage = (store, renderProps, req) => {
-  const state = store.getState();
-  // No server routing for server-less apps.
-  if (process.env.IS_SERVERLESS) {
-    delete state.routing;
-  }
-  const { headers, hostname } = req;
-  const { appHtml, helmet } = renderApp(store, renderProps);
+const renderHtml = (state, bodyMarkupWithHelmet) => {
   const {
     styles: { app: appCssFilename },
     javascript: { app: appJsFilename },
-  } = webpackIsomorphicTools.assets();
-  const scriptsHtml = renderScripts(state, headers, hostname, appJsFilename);
+  } = global.webpackIsomorphicTools.assets();
   if (!config.isProduction) {
-    webpackIsomorphicTools.refresh();
+    global.webpackIsomorphicTools.refresh();
   }
-  const docHtml = ReactDOMServer.renderToStaticMarkup(
+  const { markup: bodyMarkup, helmet } = bodyMarkupWithHelmet;
+  const scriptsMarkup = renderScripts(state, appJsFilename);
+  const markup = renderToStaticMarkup(
     <Html
       appCssFilename={appCssFilename}
-      bodyHtml={`<div id="app">${appHtml}</div>${scriptsHtml}`}
+      bodyHtml={`<div id="app">${bodyMarkup}</div>${scriptsMarkup}`}
       googleAnalyticsId={config.googleAnalyticsId}
       helmet={helmet}
       isProduction={config.isProduction}
     />
   );
-  return `<!DOCTYPE html>${docHtml}`;
+  return `<!DOCTYPE html>${markup}`;
 };
 
-const render = (req, res, next) => {
-  const memoryHistory = createMemoryHistory(req.originalUrl);
-  const store = configureStore({
-    initialState: createRequestInitialState(req),
-    platformMiddleware: [routerMiddleware(memoryHistory)],
-  });
-  const history = syncHistoryWithStore(memoryHistory, store);
-  const routes = createRoutes(store.getState);
-  const location = req.url;
+// react-router.now.sh/ServerRouter
+const render = async (req: Object, res: Object, next: Function) => {
+  try {
+    const context = createServerRenderContext();
+    const store = createStore(req);
+    const fetchPromises = [];
 
-  match({ history, routes, location }, async (error, redirectLocation, renderProps) => {
-    if (redirectLocation) {
-      res.redirect(301, redirectLocation.pathname + redirectLocation.search);
+    let bodyMarkupWithHelmet = renderBody(store, context, req.url, fetchPromises);
+    const result = context.getResult();
+
+    if (result.redirect) {
+      res.redirect(301, result.redirect.pathname + result.redirect.search);
       return;
     }
-    if (error) {
-      next(error);
+
+    if (result.missed) {
+      bodyMarkupWithHelmet = renderBody(store, context, req.url);
+      const htmlMarkup = renderHtml(store.getState(), bodyMarkupWithHelmet);
+      res.status(404).send(htmlMarkup);
       return;
     }
-    try {
-      if (!process.env.IS_SERVERLESS) {
-        await queryFirebaseServer(() => renderApp(store, renderProps));
-      }
-      const html = renderPage(store, renderProps, req);
-      const status = renderProps.routes
-        .some(route => route.path === '*') ? 404 : 200;
-      res.status(status).send(html);
-    } catch (error) {
-      next(error);
+
+    if (!process.env.IS_SERVERLESS && fetchPromises.length > 0) {
+      await settleAllWithTimeout(fetchPromises);
+      bodyMarkupWithHelmet = renderBody(store, context, req.url);
     }
-  });
+
+    const htmlMarkup = renderHtml(store.getState(), bodyMarkupWithHelmet);
+    res.status(200).send(htmlMarkup);
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 };
 
 export default render;

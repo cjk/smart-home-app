@@ -14,17 +14,14 @@ const messages = defineMessages({
   },
 });
 
+type State = {
+  currentText: ?Object,
+};
+
 class Loading extends React.Component {
 
-  constructor() {
-    super();
-    this.state = {
-      currentText: null,
-    };
-  }
-
-  state: {
-    currentText: ?Object,
+  state: State = {
+    currentText: null,
   };
 
   componentDidMount() {
@@ -53,7 +50,9 @@ class Loading extends React.Component {
     return (
       <View>
         <Title message={currentText} />
-        <FormattedMessage {...currentText} children={children} />
+        <FormattedMessage {...currentText}>
+          {children}
+        </FormattedMessage>
       </View>
     );
   }
