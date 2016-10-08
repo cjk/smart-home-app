@@ -21,6 +21,12 @@ const Header = ({ viewer }) => (
     <Link bold inverted to="/events">
       <FormattedMessage {...linksMessages.events} />
     </Link>
+    <Space x={2} />
+
+    <Link bold inverted to="/fermenter">
+      <FormattedMessage {...linksMessages.fermenter} />
+    </Link>
+
   </Toolbar>
 );
 
