@@ -31,12 +31,6 @@ class HomePage extends Component {
     subscribeToBusEvents(processEvent);
   }
 
-  /* Define actions for current and sub-components */
-  tabChange(tabId) {
-    const { switchToTab } = this.props.actions;
-    switchToTab(tabId);
-  }
-
   updateAddr = (addr) => {
     const toggleAddrVal = (addr) => addr.set('value', !addr.value | 0);
     const { writeGroupAddr } = this.props.actions;
@@ -54,7 +48,7 @@ class HomePage extends Component {
     const actions = { updateAddr: this.updateAddr, updateList: this.updateList };
     /* Built address-list, remove some address-types which should not be displayed */
     const addresses = addressMap.toList().filter(a => a.type !== 'fb');
-    const onTabChange = this.tabChange.bind(this);
+    const { switchToTab } = this.props.actions;
 
     const addrList = activeTab === 0
                    ? <AddressListByState {...{ addresses, actions }} />
@@ -75,7 +69,7 @@ class HomePage extends Component {
           <Cell col={10}>  {/* main (center column) */}
             <section className="page-content">
               <div className="homeTabs">
-                <Tabs activeTab={activeTab} onChange={onTabChange} >
+                <Tabs activeTab={activeTab} onChange={switchToTab} >
                   <Tab>Devices</Tab>
                   <Tab>Rooms</Tab>
                 </Tabs>
