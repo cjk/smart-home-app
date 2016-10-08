@@ -1,3 +1,4 @@
+/* @flow */
 import R from 'ramda';
 import React, { PropTypes } from 'react';
 import { injectIntl, intlShape } from 'react-intl';

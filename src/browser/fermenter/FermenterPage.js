@@ -1,3 +1,4 @@
+/* @flow */
 import Helmet from 'react-helmet';
 import React, { Component, PropTypes } from 'react';
 import smartHomeConnect from '../../common/home/connector';

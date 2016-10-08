@@ -1,3 +1,4 @@
+/* @flow */
 import './AddressList.scss';
 import AddrLine from './AddrLine';
 import Button from 'react-mdl/lib/Button';

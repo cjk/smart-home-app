@@ -1,3 +1,4 @@
+/* @flow */
 import { DataTable, TableHeader } from 'react-mdl/lib';
 import { List, OrderedMap } from 'immutable';
 import moment from 'moment';
@@ -43,11 +44,11 @@ const EventList = ({ eventlist }) => {
 
   return (
     <DataTable rows={rows.toJS()}>
-    {
-      columns.map((col) => (
-        <TableHeader key={col.name} name={col.name}>{col.label}</TableHeader>
-      ))
-    }
+      {
+        columns.map((col) => (
+          <TableHeader key={col.name} name={col.name}>{col.label}</TableHeader>
+        ))
+      }
     </DataTable>
   );
 };

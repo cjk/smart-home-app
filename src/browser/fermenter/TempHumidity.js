@@ -1,3 +1,4 @@
+/* @flow */
 import './TempHumidity.scss';
 
 import cx from 'classnames';
