@@ -1,7 +1,6 @@
 /* @flow */
 import './App.scss';
 import * as themes from './themes';
-import AppMenu from './Menu';
 import Header from './Header';
 import Footer from './Footer';
 import Helmet from 'react-helmet';
@@ -68,7 +67,6 @@ let App = ({ currentLocale, currentTheme }) => (
         {/* Pathname enforces rerender so activeClassName is updated. */}
 
         <Header />
-        <AppMenu />
 
         <Content className="page-content">
           <Match exactly pattern="/" component={Home} />
