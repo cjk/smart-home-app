@@ -1,50 +1,46 @@
 /* @flow */
+import type { State } from '../../common/types';
 import Menu from './Menu';
 import Page from './Page';
+import R from 'ramda';
 import React from 'react';
 import SideMenu from 'react-native-side-menu';
 import start from '../../common/app/start';
 import { Container } from './components';
 import { Match, Redirect } from 'react-router';
 import { Platform, StatusBar } from 'react-native';
+import { appShowMenu } from '../../common/app/actions';
 import { connect } from 'react-redux';
-import { showMenu } from '../../common/app/actions';
 
 // Pages
-import Home from '../home/HomePage';
-import Intl from '../intl/IntlPage';
-import Me from '../me/MePage';
-import Offline from '../offline/OfflinePage';
-import SignIn from '../auth/SignInPage';
-import Todos from '../todos/TodosPage';
+import HomePage from '../home/HomePage';
+import IntlPage from '../intl/IntlPage';
+import MePage from '../me/MePage';
+import OfflinePage from '../offline/OfflinePage';
+import SignInPage from '../auth/SignInPage';
+import TodosPage from '../todos/TodosPage';
 
-let App = ({
-  menuShown,
-  showMenu,
-  storageLoaded,
-}) => {
+const App = ({ appMenuShown, appShowMenu, appStarted }) => {
   // TODO: Add splash screen.
-  if (!storageLoaded) return null;
+  if (!appStarted) return null;
   return (
     <Container inverse>
       {Platform.OS === 'ios' && // Because iOS StatusBar is an overlay.
-        <StatusBar hidden={menuShown} />
+        <StatusBar hidden={appMenuShown} />
       }
       <SideMenu
-        isOpen={menuShown}
+        isOpen={appMenuShown}
         menu={<Menu />}
-        onChange={showMenu}
+        onChange={appShowMenu}
       >
-        <Page exactly pattern="/" component={Home} />
-        <Page pattern="/intl" component={Intl} />
-        <Page pattern="/offline" component={Offline} />
-        <Page pattern="/signin" component={SignIn} />
-        <Page pattern="/todos" component={Todos} />
-        <Page authorized pattern="/me" component={Me} />
-        {/* Miss does't work yet. */}
-        {/* github.com/ReactTraining/react-router/issues/3905 */}
+        <Page exactly pattern="/" component={HomePage} />
+        <Page pattern="/intl" component={IntlPage} />
+        <Page pattern="/offline" component={OfflinePage} />
+        <Page pattern="/signin" component={SignInPage} />
+        <Page pattern="/todos" component={TodosPage} />
+        <Page authorized pattern="/me" component={MePage} />
+        {/* Miss does't work in React Native for some reason. */}
         {/* <Miss render={() => <Redirect to="/" />} /> */}
-        {/* This is silly workaround. */}
         <Match
           pattern="/"
           render={({ location: { pathname } }) => {
@@ -61,14 +57,18 @@ let App = ({
 };
 
 App.propTypes = {
-  menuShown: React.PropTypes.bool.isRequired,
-  showMenu: React.PropTypes.func.isRequired,
-  storageLoaded: React.PropTypes.bool.isRequired,
+  appMenuShown: React.PropTypes.bool.isRequired,
+  appShowMenu: React.PropTypes.func.isRequired,
+  appStarted: React.PropTypes.bool.isRequired,
 };
 
-App = connect(state => ({
-  menuShown: state.app.menuShown,
-  storageLoaded: state.app.storageLoaded,
-}), { showMenu })(App);
-
-export default start(App);
+export default R.compose(
+  start,
+  connect(
+    (state: State) => ({
+      appMenuShown: state.app.menuShown,
+      appStarted: state.app.started,
+    }),
+    { appShowMenu },
+  ),
+)(App);

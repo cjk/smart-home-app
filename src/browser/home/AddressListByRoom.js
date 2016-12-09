@@ -1,4 +1,3 @@
-import './AddressListByRoom.scss';
 import AddrLine from './AddrLine';
 import { List } from 'react-mdl/lib/List';
 import { Card, CardTitle, CardText } from 'react-mdl/lib/Card';

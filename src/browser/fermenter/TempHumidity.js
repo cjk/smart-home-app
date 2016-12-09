@@ -1,6 +1,4 @@
 /* @flow */
-import './TempHumidity.scss';
-
 import cx from 'classnames';
 import React from 'react';
 import { FormattedMessage, defineMessages, injectIntl, intlShape } from 'react-intl';

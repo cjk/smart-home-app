@@ -1,11 +1,12 @@
 /* @flow */
+import type { State } from '../../common/types';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import React from 'react';
 import buttonsMessages from '../../common/app/buttonsMessages';
 import { FormattedMessage } from '../app/components';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
-import { nativeSignIn } from '../../common/lib/redux-firebase/actions';
+import { signIn } from '../../common/auth/actions';
 
 const SocialLoginButton = ({ backgroundColor, message, name, onPress }) =>
   <FormattedMessage {...message}>
@@ -25,10 +26,10 @@ SocialLoginButton.propTypes = {
   onPress: React.PropTypes.func.isRequired,
 };
 
-const Social = ({ disabled, nativeSignIn, style }) => {
+const Social = ({ disabled, signIn, style }) => {
   const onFacebookLoginPress = () => {
     if (disabled) return;
-    nativeSignIn('facebook');
+    signIn('facebook', { isNative: true });
   };
   return (
     <View style={style}>
@@ -45,10 +46,13 @@ const Social = ({ disabled, nativeSignIn, style }) => {
 
 Social.propTypes = {
   disabled: React.PropTypes.bool.isRequired,
-  nativeSignIn: React.PropTypes.func.isRequired,
+  signIn: React.PropTypes.func.isRequired,
   style: View.propTypes.style,
 };
 
-export default connect(state => ({
-  disabled: state.auth.formDisabled,
-}), { nativeSignIn })(Social);
+export default connect(
+  (state: State) => ({
+    disabled: state.auth.formDisabled,
+  }),
+  { signIn },
+)(Social);

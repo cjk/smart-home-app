@@ -1,42 +1,64 @@
 /* @flow weak */
+import type { Action } from './types';
 import Raven from 'raven-js';
-import { firebaseActions } from './lib/redux-firebase';
 
-// bluebirdjs.com/docs/api/error-management-configuration.html#global-rejection-events
-const register = unhandledRejection => unhandledRejection(event => {
-  event.preventDefault();
-  // http://bluebirdjs.com/docs/api/error-management-configuration.html
-  const { reason: error } = event.detail;
+const captureException = (error) => {
   if (process.env.NODE_ENV === 'production') {
     Raven.captureException(error);
     // We can use also Raven.lastEventId() and Raven.showReportDialog().
     // Check docs.getsentry.com/hosted/clients/javascript/usage
   } else {
     /* eslint-disable no-console */
-    console.warn('Unhandled promise rejection. Fix it or it will be reported.');
-    console.warn(error);
+    console.warn('Uncaught error. Fix it, or it will be reported on production.');
+    // github.com/redux-observable/redux-observable/issues/10#issuecomment-235431202
+    console.error(error.stack);
     /* eslint-enable no-console */
   }
-});
+};
 
-const setRavenUserContext = user => {
+const setRavenUserContext = (user) => {
   if (!user) {
     Raven.setUserContext();
     return;
   }
   Raven.setUserContext({
     email: user.email,
-    id: user.id,
+    id: user.uid,
   });
 };
 
-const reportingMiddleware = () => next => action => {
-  if (action.type === firebaseActions.FIREBASE_ON_AUTH) {
-    setRavenUserContext(action.payload.user);
-  }
-  // TODO: Use Raven.setExtraContext for last 10 actions and limited app state.
-  return next(action);
+// TODO: Add www.youtube.com/watch?v=5yHFTN-_mOo for total imperative reporting.
+const contextWithoutPrivateData = (state, actions) => ({
+  actions: actions.map(action => action.type),
+  device: state.device,
+});
+
+const createReportingMiddleware = () => {
+  let actions = [];
+
+  const setExtraContext = (state, action) => {
+    actions = [action, ...actions].slice(0, 100); // last 100 actions
+    const context = contextWithoutPrivateData(state, actions);
+    Raven.setExtraContext(context);
+  };
+
+  return store => next => (action: Action) => {
+    if (action.type === 'APP_ERROR') {
+      captureException(action.payload.error);
+    } else if (action.type === 'ON_AUTH') {
+      setRavenUserContext(action.payload.firebaseUser);
+    }
+    setExtraContext(store.getState(), action);
+    return next(action);
+  };
 };
+
+// bluebirdjs.com/docs/api/error-management-configuration.html#global-rejection-events
+const register = unhandledRejection => unhandledRejection((event) => {
+  event.preventDefault();
+  // http://bluebirdjs.com/docs/api/error-management-configuration.html
+  captureException(event.detail.reason);
+});
 
 const configureReporting = (options) => {
   const { appVersion, sentryUrl, unhandledRejection } = options;
@@ -85,7 +107,7 @@ const configureReporting = (options) => {
     // docs.getsentry.com/hosted/clients/javascript/tips/#decluttering-sentry
   }).install();
   register(unhandledRejection);
-  return reportingMiddleware;
+  return createReportingMiddleware();
 };
 
 export default configureReporting;

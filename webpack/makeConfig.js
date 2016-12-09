@@ -18,21 +18,18 @@ const devtools = 'eval';
 
 const loaders = {
   css: '',
-  // Why not LESS or Stylus? The battle is over, let's focus on inline styles.
-  scss: '!sass-loader',
-  sass: '!sass-loader?indentedSyntax',
 };
 
 const serverIp = config.remoteHotReload
   ? ip.address() // Dynamic IP address enables hot reload on remote devices.
   : 'localhost';
 
-const makeConfig = options => {
+const makeConfig = (options) => {
   const {
     isDevelopment,
   } = options;
 
-  const stylesLoaders = Object.keys(loaders).map(ext => {
+  const stylesLoaders = Object.keys(loaders).map((ext) => {
     const prefix = 'css-loader!postcss-loader';
     const extLoaders = prefix + loaders[ext];
     const loader = isDevelopment
@@ -58,16 +55,20 @@ const makeConfig = options => {
       ],
     },
     module: {
+      noParse: [
+        // https://github.com/localForage/localForage/issues/617
+        new RegExp('localforage.js'),
+      ],
       loaders: [
         {
           loader: 'url-loader?limit=10000',
-          test: /\.(gif|jpg|png|svg)$/,
+          test: /\.(gif|jpg|png|svg)(\?.*)?$/,
         }, {
           loader: 'url-loader?limit=1',
           test: /favicon\.ico$/,
         }, {
           loader: 'url-loader?limit=100000',
-          test: /\.(ttf|eot|woff(2)?)(\?[a-z0-9]+)?$/,
+          test: /\.(ttf|eot|woff|woff2)(\?.*)?$/,
         }, {
           test: /\.js$/,
           exclude: constants.NODE_MODULES_DIR,
@@ -112,7 +113,6 @@ const makeConfig = options => {
             IS_BROWSER: true, // Because webpack is used only for browser code.
             IS_SERVERLESS: JSON.stringify(process.env.IS_SERVERLESS || false),
             NODE_ENV: JSON.stringify(isDevelopment ? 'development' : 'production'),
-            SERVER_URL: JSON.stringify(process.env.SERVER_URL || ''),
           },
         }),
       ];
@@ -121,7 +121,7 @@ const makeConfig = options => {
           new webpack.optimize.OccurrenceOrderPlugin(),
           new webpack.HotModuleReplacementPlugin(),
           new webpack.NoErrorsPlugin(),
-          webpackIsomorphicToolsPlugin.development()
+          webpackIsomorphicToolsPlugin.development(),
         );
       } else {
         plugins.push(
@@ -147,7 +147,7 @@ const makeConfig = options => {
             to: 'favicons',
           }], {
             ignore: ['original/**'],
-          })
+          }),
         );
       }
       return plugins;

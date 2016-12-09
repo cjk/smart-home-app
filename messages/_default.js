@@ -65,10 +65,6 @@ export default [
     "defaultMessage": "Fields",
   },
   {
-    "id": "app.links.users",
-    "defaultMessage": "Users",
-  },
-  {
     "id": "app.links.home",
     "defaultMessage": "Home",
   },
@@ -103,6 +99,10 @@ export default [
   {
     "id": "app.links.todos",
     "defaultMessage": "Todos",
+  },
+  {
+    "id": "app.links.users",
+    "defaultMessage": "Users",
   },
   {
     "id": "auth.email.emailLegend",

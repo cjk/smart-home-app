@@ -1,4 +1,5 @@
 /* @flow */
+import type { State } from '../../common/types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
@@ -8,6 +9,9 @@ import { Link, Space, Toolbar } from '../app/components';
 const styles = {
   toolbar: {
     flexWrap: 'wrap',
+  },
+  prefetch: {
+    display: 'none',
   },
 };
 
@@ -34,6 +38,8 @@ Header.propTypes = {
   viewer: React.PropTypes.object,
 };
 
-export default connect(state => ({
-  viewer: state.users.viewer,
-}))(Header);
+export default connect(
+  (state: State) => ({
+    viewer: state.users.viewer,
+  }),
+)(Header);
