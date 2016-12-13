@@ -3,7 +3,6 @@ import configureDeps from './configureDeps';
 import configureEpics from './configureEpics';
 import createLoggerMiddleware from 'redux-logger';
 import { createEpicMiddleware } from 'redux-observable';
-import smartHomeConnect from './home/connector';
 
 // Like redux-thunk, but with just one argument.
 const injectMiddleware = deps => ({ dispatch, getState }) => next => action =>
@@ -14,8 +13,6 @@ const injectMiddleware = deps => ({ dispatch, getState }) => next => action =>
 
 const configureMiddleware = (initialState, platformDeps, platformMiddleware) => {
 
-  /* Enable smart-home backend communication */
-  const homeConnect = smartHomeConnect();
   const deps = configureDeps(initialState, platformDeps);
   const rootEpic = configureEpics(deps);
   const epicMiddleware = createEpicMiddleware(rootEpic);
@@ -24,7 +21,6 @@ const configureMiddleware = (initialState, platformDeps, platformMiddleware) => 
     injectMiddleware(deps),
     epicMiddleware,
     ...platformMiddleware,
-    ...homeConnect,
   ];
 
   const enableLogger = process.env.NODE_ENV !== 'production' && (

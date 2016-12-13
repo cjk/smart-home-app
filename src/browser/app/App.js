@@ -14,23 +14,11 @@ import { Match, ThemeProvider } from '../../common/app/components';
 import { Miss } from 'react-router';
 import { connect } from 'react-redux';
 
-/* Material-Design-Lite imports */
-import { Content } from 'react-mdl/lib/Layout';
-import Layout from 'react-mdl/lib/Layout/Layout';
-
 // Pages
 import HomePage from '../home/HomePage';
 import EventsPage from '../events/EventsPage';
 import FermenterPage from '../fermenter/FermenterPage';
 import NotFoundPage from '../notfound/NotFoundPage';
-// import FieldsPage from '../fields/FieldsPage';
-// import UsersPage from '../users/UsersPage';
-// import HomePage from '../home/HomePage';
-// import IntlPage from '../intl/IntlPage';
-// import MePage from '../me/MePage';
-// import OfflinePage from '../offline/OfflinePage';
-// import SignInPage from '../auth/SignInPage';
-// import TodosPage from '../todos/TodosPage';
 
 const styles = {
   container: {
@@ -77,7 +65,6 @@ const App = ({ currentLocale, currentTheme }) => (
       <Flex flexColumn style={styles.container}>
         <Header />
         <Box style={styles.page}>
-          <Match exactly pattern="/" component={HomePage} />
           <Match exactly pattern="/" component={HomePage} />
           <Match pattern="/events" component={EventsPage} />
           <Match pattern="/fermenter" component={FermenterPage} />

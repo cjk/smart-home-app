@@ -62,6 +62,7 @@ const reducer = (
     }
 
     case 'REQUEST_INITIAL_STATE_SUCCESS': {
+      console.log(`[home-Reducer] REQUEST_INITIAL_STATE_SUCCESS: ${action.payload}`);
       return R.assoc('livestate', action.payload, state);
     }
 

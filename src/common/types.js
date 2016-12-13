@@ -14,6 +14,9 @@ export type Deps = {
   getUid: () => string,
   now: () => number,
   validate: (json: Object) => any,
+  /* SmartHome-methods */
+  fetchInitialState: Function,
+  writeGroupAddr: Function,
 };
 
 // Models
@@ -132,6 +135,7 @@ export type Action =
   | { type: 'PROCESS_EVENT', payload: { newEvent: BusEvent } }
   | { type: 'WRITE_GROUP_ADDRESS', payload: { addr: KnxAddress } }
   | { type: 'REQUEST_INITIAL_STATE' }
+  | { type: 'REQUEST_INITIAL_STATE_SUCCESS', payload: SmartHomeState }
   | { type: 'SWITCH_TO_TAB', payload: { tabId: number } }
   | { type: 'APP_ONLINE', payload: { online: boolean } }
   | { type: 'APP_SHOW_MENU', payload: { menuShown: boolean } }

@@ -3,6 +3,7 @@ import type { State } from '../../common/types';
 /* MERGE-TODO: */
 // import AddressListByState from './AddressList';
 // import AddressListByRoom from './AddressListByRoom';
+import R from 'ramda';
 import React from 'react';
 import * as actions from '../../common/home/actions';
 import { bindActionCreators } from 'redux';
@@ -11,6 +12,7 @@ import linksMessages from '../../common/app/linksMessages';
 import smartHomeConnect from '../../common/home/connector';
 
 import {
+  Block,
   PageHeader,
   Title,
   View,
@@ -54,7 +56,6 @@ class HomePage extends React.Component {
 
   render() {
     console.log(`[HomePage] Props: ${JSON.stringify(this.props)}`);
-    console.log(`[HomePage] Actions: ${this.props.actions}`);
     const { smartHome: { livestate, activeTab, prefs } } = this.props;
     const actions = { updateAddr: this.updateAddr, updateList: this.updateList };
     /* Built address-list, remove some address-types which should not be displayed */
@@ -66,13 +67,21 @@ class HomePage extends React.Component {
     //                ? <AddressListByState {...{ addresses, actions }} />
     //                : <AddressListByRoom {...{ addresses, actions, prefs }} />;
 
+    if (R.isEmpty(livestate)) {
+      return (
+        <Block>
+          <p>Waiting for SmartHome-State...</p>
+        </Block>
+      );
+    }
+
     return (
       <View>
-      <Title message={linksMessages.home} />
-      <PageHeader
-        description="A smart remote control for your smart home."
-        heading="SmartHome-App"
-      />
+        <Title message={linksMessages.home} />
+        <PageHeader
+          description="A smart remote control for your smart home."
+          heading="SmartHome-App"
+        />
       </View>
     );
   }

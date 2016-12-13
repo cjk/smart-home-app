@@ -4,8 +4,7 @@
 /* TODO: Move to components- or lib-directory */
 import io from 'socket.io-client';
 import Promise from 'bluebird';
-import type { Action, KnxAddress, BusEvent } from '../types';
-import R from 'ramda';
+import type { KnxAddress } from '../types';
 
 const config = {
   host: 'localhost', /* NOTE: Must use IP-address i.e. 192.168.1.28, zircon.local is not available on HOME-LAN! :( */
@@ -46,7 +45,7 @@ function subscribeToFermenterState(eventAction: Function) {
 
 function fetchInitialState() {
   const promise = new Promise((resolve) => {
-    socket.on('initialstate', (state) => resolve(state));
+    socket.on('initialstate', state => resolve(state));
   });
 
   socket.emit('initialstate', { request: true });
@@ -69,7 +68,7 @@ function sendFermenterCommand(cmd: string) {
 
 function fetchFermenterHistory() {
   const promise = new Promise((resolve) => {
-    socket.on('fermenterhistory', (state) => resolve(state));
+    socket.on('fermenterhistory', state => resolve(state));
   });
 
   socket.emit('fermenterhistory', { request: true });
