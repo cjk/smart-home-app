@@ -36,11 +36,10 @@ export const switchToTab = (tabId: number): Action => ({
 const requestInitialStateEpic = (action$: any, { fetchInitialState }: Deps) =>
   action$
     .filter((action: Action) => action.type === 'REQUEST_INITIAL_STATE') /* aka action$.ofType(REQUEST_INITIAL_STATE) */
-    .mergeMap(({ payload }) => {
-      console.log(`[fetchInitialStateEpic] payload: ${JSON.stringify(payload)}`);
-      return Observable.from(fetchInitialState())
-                       .map(requestInitialStateSuccess);
-    });
+    .mergeMap(() => (
+      Observable.from(fetchInitialState())
+                .map(requestInitialStateSuccess)
+    ));
 
 const writeGroupAddrEpic = (action$: any, { writeGroupAddr }: Deps) =>
   action$
