@@ -8,6 +8,10 @@ export const writeGroupAddr = (addr: KnxAddress): Action => ({
   payload: { addr },
 });
 
+export const writeGroupAddrDone = () => ({
+  type: 'WRITE_GROUP_ADDRESS_DONE',
+});
+
 export const requestInitialState = () => ({
   type: 'REQUEST_INITIAL_STATE',
 });
@@ -44,10 +48,10 @@ const requestInitialStateEpic = (action$: any, { fetchInitialState }: Deps) =>
 const writeGroupAddrEpic = (action$: any, { writeGroupAddr }: Deps) =>
   action$
     .filter((action: Action) => action.type === 'WRITE_GROUP_ADDRESS') /* aka action$.ofType(WRITE_GROUP_ADDRESS) */
-    .mergeMap(({ addr }) => {
-      console.log(`[writeGroupAddrEpic] address: ${JSON.stringify(addr)}`);
-      return Observable.from(writeGroupAddr())
-                       .map(Observable.to());
+    .mergeMap((action) => {
+      const { addr } = action.payload;
+      return Observable.from(writeGroupAddr(addr))
+                       .map(writeGroupAddrDone);
     });
 
 export const epics = [

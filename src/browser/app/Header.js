@@ -1,6 +1,7 @@
 /* @flow */
 import type { State } from '../../common/types';
 import React from 'react';
+import { GoHome, GoHistory } from 'react-icons/lib/go';
 import { connect } from 'react-redux';
 import { FormattedMessage } from 'react-intl';
 import linksMessages from '../../common/app/linksMessages';
@@ -18,14 +19,14 @@ const styles = {
 const Header = ({ viewer }) => (
   <Toolbar style={styles.toolbar}>
     <Link bold inverted exactly to="/">
-      <FormattedMessage {...linksMessages.home} />
+      <GoHome size="2em" />
     </Link>
-    <Space x={2} />
+    <Space auto />
 
     <Link bold inverted to="/events">
-      <FormattedMessage {...linksMessages.events} />
+      <GoHistory size="2em" />
     </Link>
-    <Space x={2} />
+    <Space px={2} />
 
     <Link bold inverted to="/fermenter">
       <FormattedMessage {...linksMessages.fermenter} />

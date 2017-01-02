@@ -1,24 +1,24 @@
 /* @flow */
-import { DataTable, TableHeader } from 'react-mdl/lib';
-import { List, OrderedMap } from 'immutable';
-import moment from 'moment';
+import type { BusEvent } from '../../common/types';
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
+import R from 'ramda';
 import React from 'react';
-import { FormattedMessage, defineMessages } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
+import eventMessages from './messages';
 
-const messages = defineMessages({
-  emptyList: {
-    defaultMessage: 'no events yet',
-    id: 'event.emptyList',
-  },
-});
+import { Table, View } from '../app/components';
 
 /* How many events to show in events-history table */
 const maxListEntries = 50;
 
-const EventList = ({ eventlist }) => {
-  const sortedEventlist = eventlist.sortBy(e => e.created, (a, b) => a < b);
+type Props = {
+  eventHistory: Array<BusEvent>,
+};
 
-  const columns = List([
+const EventList = ({ eventHistory }: Props) => {
+  const sortEventHistory = R.sort((a, b) => a.created < b.created);
+
+  const headings = R.pluck('name', [
     { name: 'created', label: 'Time' },
     { name: 'action', label: 'Action' },
     { name: 'dest', label: 'Address' },
@@ -27,34 +27,28 @@ const EventList = ({ eventlist }) => {
     { name: 'value', label: 'Value' },
   ]);
 
-  const rows = sortedEventlist.take(maxListEntries).map(event => (
-    columns.reduce((row, col) => {
-      const colName = col.name;
-      const content = (colName === 'created' ?
-                       moment(event[colName]).fromNow(true) :
-                       event[colName]);
+  const createdLens = R.lensProp('created');
+  const dateIntoWords = e => R.set(createdLens, `${distanceInWordsToNow(R.view(createdLens, e))} ago`)(e);
 
-      return row.merge({ [colName]: content });
-    }, OrderedMap())
-  ));
+  const rows = R.compose(
+    R.map(R.props(headings)),
+    R.map(dateIntoWords),
+    R.take(maxListEntries),
+    sortEventHistory)(eventHistory);
 
-  if (!eventlist.size) return (
-    <h4><FormattedMessage {...messages.emptyList} /></h4>
+  if (R.isEmpty(rows)) return (
+    <h4><FormattedMessage {...eventMessages.emptyList} /></h4>
   );
 
   return (
-    <DataTable rows={rows.toJS()}>
-      {
-        columns.map((col) => (
-          <TableHeader key={col.name} name={col.name}>{col.label}</TableHeader>
-        ))
-      }
-    </DataTable>
+    <View>
+      <Table data={rows} headings={headings} />
+    </View>
   );
 };
 
 EventList.propTypes = {
-  eventlist: React.PropTypes.object.isRequired,
+  eventHistory: React.PropTypes.array.isRequired,
 };
 
 export default EventList;

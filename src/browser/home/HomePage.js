@@ -1,10 +1,9 @@
 /* @flow */
 import type { State } from '../../common/types';
-/* MERGE-TODO: */
-// import AddressListByState from './AddressList';
-// import AddressListByRoom from './AddressListByRoom';
 import R from 'ramda';
 import React from 'react';
+import AddrListByRoom from './AddressListByRoom';
+import AddrList from './AddressList';
 import * as actions from '../../common/home/actions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -43,7 +42,7 @@ class HomePage extends React.Component {
   }
 
   updateAddr = (addr) => {
-    const toggleAddrVal = addr => addr.set('value', !addr.value | 0);
+    const toggleAddrVal = addr => R.assoc('value', !addr.value | 0, addr);
     const { writeGroupAddr } = this.props.actions;
 
     return writeGroupAddr(toggleAddrVal(addr));
@@ -55,19 +54,19 @@ class HomePage extends React.Component {
   }
 
   render() {
-    console.log(`[HomePage] Props: ${JSON.stringify(this.props)}`);
     const { smartHome: { livestate, activeTab, prefs } } = this.props;
     const actions = { updateAddr: this.updateAddr, updateList: this.updateList };
+    /* TODO: */
     /* Built address-list, remove some address-types which should not be displayed */
-    //     const addresses = addressMap.toList().filter(a => a.type !== 'fb');
-    const addresses = [];
-    const { switchToTab } = this.props.actions;
+    //     const { switchToTab } = this.props.actions;
 
     // const addrList = activeTab === 0
     //                ? <AddressListByState {...{ addresses, actions }} />
     //                : <AddressListByRoom {...{ addresses, actions, prefs }} />;
 
-    if (R.isEmpty(livestate)) {
+    const addresses = R.reject(addr => addr.type === 'fb', livestate);
+
+    if (R.isEmpty(addresses)) {
       return (
         <Block>
           <p>Waiting for SmartHome-State...</p>
@@ -82,6 +81,8 @@ class HomePage extends React.Component {
           description="A smart remote control for your smart home."
           heading="SmartHome-App"
         />
+        <AddrList {...{ addresses, actions }} />
+        <AddrListByRoom {...{ addresses, actions, prefs }} />
       </View>
     );
   }

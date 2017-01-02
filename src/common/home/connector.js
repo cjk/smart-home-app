@@ -66,6 +66,7 @@ function sendFermenterCommand(cmd: string) {
   return promise;
 }
 
+/* PENDING: Not used, needs update */
 function fetchFermenterHistory() {
   const promise = new Promise((resolve) => {
     socket.on('fermenterhistory', state => resolve(state));

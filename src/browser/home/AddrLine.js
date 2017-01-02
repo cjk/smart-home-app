@@ -1,41 +1,51 @@
-import R from 'ramda';
-import React, { PropTypes } from 'react';
-import { ListItem, ListItemContent, ListItemAction } from 'react-mdl/lib/List';
-import { Switch } from 'react-mdl/lib';
-
+/* @flow */
 /* Presentational component to render address-list lines */
-const AddrLine = ({ address, updateAddr }) => {
-  const switchable = (addr) => addr.type === 'switch';
+import type { KnxAddress } from '../../common/types';
+import React, { PropTypes } from 'react';
+import { GoLightBulb, GoPlug, GoCalendar, GoScreenNormal,
+         GoCircleSlash, GoAlignmentUnalign, GoStop } from 'react-icons/lib/go';
+import { Flex } from 'reflexbox';
+import {
+  Switch,
+  Text,
+} from '../app/components';
 
-  /* Tweak MDL styles so address-name + id fit into main-content area */
-  const addressLineText = {
-    lineHeight: '1.2em',
-  };
+type Props = {
+  address: KnxAddress,
+  updateAddr: () => void,
+};
 
-  /* Decides which action-item to display */
+const AddrLine = ({ address, updateAddr }: Props) => {
+  const switchable = addr => addr.type === 'switch';
+
+  /* Decides which address-item to display */
   const chooseIcon = (addr) => {
     switch (addr.func) {
-      case 'light': return 'wb_incandescent';
-      case 'shut': return 'web_asset';
-      case 'outlet': return 'power';
-      case 'scene': return 'wb_iridescent';
-      default: return 'all_inclusive';
+      case 'light': return GoLightBulb;
+      case 'shut': return GoScreenNormal;
+      case 'outlet': return GoPlug;
+      case 'scene': return GoCalendar;
+      case 'contact': return GoAlignmentUnalign;
+      case 'inhibit': return GoStop;
+      default: return GoCircleSlash;
     }
   };
+  const Icon = chooseIcon(address);
 
   return (
-    <ListItem twoLine className="addressRow">
-      <ListItemContent avatar={chooseIcon(address)} subtitle={address.id} style={addressLineText}>{address.name}</ListItemContent>
-      <ListItemAction info={R.isNil(address.value) ? '???' : address.value.toString()}>
-        <Switch ripple checked={!!address.value} disabled={!switchable(address)} id={address.id} onChange={() => updateAddr(address)} />
-      </ListItemAction>
-    </ListItem>
+    <Flex align="center" my={2} justify="space-between">
+      <Icon size="2em" />
+      <Text key={address.id}>
+        { address.name }
+      </Text>
+      <Text small>[{ address.id }]</Text>
+      <Switch checked={!!address.value} disabled={!switchable(address)} onClick={() => updateAddr(address)} />
+    </Flex>
   );
 };
 
 AddrLine.propTypes = {
   address: PropTypes.object.isRequired,
-  msg: PropTypes.object,
   updateAddr: PropTypes.func.isRequired,
 };
 

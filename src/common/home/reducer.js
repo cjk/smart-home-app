@@ -13,6 +13,8 @@ const initialState = {
   activeTab: 0,
 };
 
+const eHstLens = R.lens(R.prop('eventHistory'), R.assoc('eventHistory'));
+
 const reducer = (
   state: SmartHomeState = initialState,
   action: Action,
@@ -20,40 +22,27 @@ const reducer = (
   switch (action.type) {
 
     case 'PROCESS_EVENT': {
-      console.log(`[home-reducer] PROCESS_EVENT: ${JSON.stringify(state)}`)
       const { newEvent } = action.payload;
 
-      const eHstLens = R.lens(R.prop('eventHistory'), R.assoc('eventHistory'));
-      const newEventHistory = R.prepend(newEvent, R.view(eHstLens, state))
-      const  { dest, value, action: eventAct } = newEvent;
+      const newState = R.pipe(
+        R.view(eHstLens),
+        R.prepend(newEvent),
+        R.set(eHstLens, R.__, state),
+      )(state);
+      // const newEventHistory = R.prepend(newEvent, R.view(eHstLens, state));
+      // const updateEventHistory = R.set(eHstLens, newEventHistory);
+
+      const { dest, value, action: eventAct } = newEvent;
 
       /* Livestate is only affected if address is present and is a mutating action */
-      if (!R.has(dest, state.livestate) || !eventAct.match(/^(write|response)$/))
-        /* Update only event-history */
-        return R.set(eHstLens, newEventHistory, state);
+      if (!R.has(dest, state.livestate) || !eventAct.match(/^(write|response)$/)) {
+        /* Return only updated event-history */
+        return newState;
+      }
 
-      //       const addrLens = R.lensProp(dest);
+      /* Also update livestate with new address-value */
       const addrValLens = R.lensPath(['livestate', dest, 'value']);
-      return R.set(addrValLens, value, state);
-
-      // const addr = liveState
-      //   .find((v, k) => k === addrId)
-      //   .set('value', newValue)
-      // ;
-
-      /* List of addrId/addr pairs of addresses to update in livestate */
-      //       const addrLstToUpdate = [[addrId, addr]];
-
-      /* If it's a feedback-address event, update address that references this event-id as it's feedback-addr. instead.
-       */
-      // if (addr.type === 'fb') {
-      //   const fbFor = liveState.find((v, _) => v.fbAddr === addrId);
-      //   if (fbFor) {
-      //     addrLstToUpdate.push([fbFor.id, fbFor.set('value', newValue)]);
-      //   }
-      // }
-
-      //       return newState.set('livestate', updateLivestateAddr(liveState, addrLstToUpdate));
+      return R.set(addrValLens, value, newState);
     }
 
     case 'REQUEST_INITIAL_STATE': {
@@ -62,7 +51,6 @@ const reducer = (
     }
 
     case 'REQUEST_INITIAL_STATE_SUCCESS': {
-      console.log(`[home-Reducer] REQUEST_INITIAL_STATE_SUCCESS: ${action.payload}`);
       return R.assoc('livestate', action.payload, state);
     }
 
@@ -82,9 +70,8 @@ const reducer = (
     }
 
     default:
-      console.log(`[home-reducer] returning default state: ${JSON.stringify(state)}`);
       return state;
   }
-}
+};
 
 export default reducer;

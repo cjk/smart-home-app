@@ -3,6 +3,8 @@
 // Algebraic types are composable, so it makes sense to have them at one place.
 // blog.ploeh.dk/2016/11/28/easy-domain-modelling-with-types
 
+import type FermenterState from './fermenter/fermenterState';
+
 // Core
 
 export type Deps = {
@@ -17,6 +19,7 @@ export type Deps = {
   /* SmartHome-methods */
   fetchInitialState: Function,
   writeGroupAddr: Function,
+  sendFermenterCmd: Function,
 };
 
 // Models
@@ -125,6 +128,7 @@ export type State = {
   intl: IntlState,
   themes: ThemeState,
   smartHome: SmartHomeState,
+  fermenter: FermenterState,
   users: UsersState,
 };
 
@@ -134,6 +138,7 @@ export type Action =
   { type: 'APP_ERROR', payload: { error: Error } }
   | { type: 'PROCESS_EVENT', payload: { newEvent: BusEvent } }
   | { type: 'WRITE_GROUP_ADDRESS', payload: { addr: KnxAddress } }
+  | { type: 'WRITE_GROUP_ADDRESS_DONE' }
   | { type: 'REQUEST_INITIAL_STATE' }
   | { type: 'REQUEST_INITIAL_STATE_SUCCESS', payload: SmartHomeState }
   | { type: 'SWITCH_TO_TAB', payload: { tabId: number } }

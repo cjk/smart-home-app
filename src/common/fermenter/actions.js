@@ -1,50 +1,38 @@
-export const CLEAR_ALL = 'CLEAR_ALL';
-export const PROCESS_STATE = 'PROCESS_STATE';
-export const FETCH_HISTORY = 'FETCH_HISTORY';
-export const FERMENTER_START = 'FERMENTER_START';
-export const FERMENTER_STOP = 'FERMENTER_STOP';
+/* @flow */
+import type { Deps } from '../types';
+import type { Action, FermenterState } from './types';
+import { Observable } from 'rxjs/Observable';
 
-export function clearAll() {
-  return {
-    type: CLEAR_ALL
-  };
-}
+export const sendFermenterCmd = (cmd: string): Action => ({
+  //   return ({ sendFermenterCommand }) => ({
+  type: 'SEND_FERMENTER_CMD',
+  payload: { cmd },
+  //   promise: sendFermenterCommand('fermenterStart')
+});
 
-export function fermenterStart() {
-  console.log(`~~~ Sending START-fermenter-command`);
+export const sendFermenterCmdSuccess = () => ({
+  type: 'SEND_FERMENTER_CMD_SUCCESS',
+});
 
-  return ({ sendFermenterCommand }) => ({
-    type: 'FERMENTER_START',
-    payload: {
-      promise: sendFermenterCommand('fermenterStart')
-    },
-  });
-}
+export const processState = (newState: FermenterState): Action => ({
+  type: 'PROCESS_STATE',
+  payload: { newState },
+});
 
-export function fermenterStop() {
-  console.log(`~~~ Sending STOP-fermenter-command`);
+/* PENDING: not yet implemented */
+// export const fetchHistory = (): Action => ({
+//   type: 'FETCH_HISTORY',
+//   //     payload: { history },
+// });
 
-  return ({ sendFermenterCommand }) => ({
-    type: 'FERMENTER_STOP',
-    payload: {
-      promise: sendFermenterCommand('fermenterStop')
-    },
-  });
-}
+const sendFermenterCmdEpic = (action$: any, { sendFermenterCmd }: Deps) =>
+  action$
+  .filter((action: Action) => action.type === 'SEND_FERMENTER_CMD') /* aka action$.ofType(SEND_FERMENTER_CMD) */
+  .mergeMap(action => (
+    Observable.from(sendFermenterCmd(action.payload.cmd))
+              .map(sendFermenterCmdSuccess)
+  ));
 
-export function processState(newState) {
-  return {
-    type: PROCESS_STATE,
-    payload: newState,
-  };
-}
-
-/* TODO: not yet implemented */
-export function fetchHistory() {
-  return ({ fetchFermenterHistory }) => ({
-    type: 'FETCH_HISTORY',
-    payload: {
-      promise: fetchFermenterHistory()
-    }
-  });
-}
+export const epics = [
+  sendFermenterCmdEpic,
+];
