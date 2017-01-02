@@ -1,3 +1,4 @@
+/* DEPRECATED - use flow-types instead - see ./types.js */
 /* NOTE / IMPORTANT: This is *almost* a 1:1 verbatim copy of the file
    'initialState.js' from our fermenter-project. Both files should be kept in
    sync most of the time. */
@@ -44,7 +45,7 @@ const RunTimeState = new Record({
   notifications: new List()
 });
 
-const InitialState = new Map({
+const FermenterState = new Map({
   rts: new RunTimeState(),
   env: new Env(),
   devices: new Map({
@@ -55,4 +56,4 @@ const InitialState = new Map({
 });
 
 export { Env, Device, History, SwitchOp, Emergency };
-export default InitialState;
+export default FermenterState;

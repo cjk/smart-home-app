@@ -1,4 +1,5 @@
 /* @flow */
+import type { State } from '../../common/types';
 import React from 'react';
 import buttonsMessages from '../../common/app/buttonsMessages';
 import emailMessages from '../../common/auth/emailMessages';
@@ -9,7 +10,7 @@ import { ValidationError } from '../../common/lib/validation';
 import { connect } from 'react-redux';
 import { fields } from '../../common/lib/redux-fields';
 import { injectIntl, intlShape } from 'react-intl';
-import { resetPassword, signIn, signUp } from '../../common/lib/redux-firebase/actions';
+import { resetPassword, signIn, signUp } from '../../common/auth/actions';
 
 const styles = StyleSheet.create({
   legend: {
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
   },
 });
 
-type State = {
+type LocalState = {
   forgetPasswordIsShown: boolean,
   recoveryEmailSent: boolean,
 };
@@ -46,7 +47,7 @@ class Email extends React.Component {
     style: View.propTypes.style,
   };
 
-  state: State = {
+  state: LocalState = {
     forgetPasswordIsShown: false,
     recoveryEmailSent: false,
   };
@@ -162,12 +163,15 @@ class Email extends React.Component {
 
 Email = injectIntl(Email);
 
-Email = fields(Email, {
+Email = fields({
   path: ['auth', 'email'],
   fields: ['email', 'password'],
-});
+})(Email);
 
-export default connect(state => ({
-  disabled: state.auth.formDisabled,
-  error: state.auth.error,
-}), { resetPassword, signIn, signUp })(Email);
+export default connect(
+  (state: State) => ({
+    disabled: state.auth.formDisabled,
+    error: state.auth.error,
+  }),
+  { resetPassword, signIn, signUp },
+)(Email);

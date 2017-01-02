@@ -1,11 +1,12 @@
 /* @flow */
+import type { State } from '../../common/types';
 import React from 'react';
 import linksMessages from '../../common/app/linksMessages';
 import theme from './themes/initial';
 import { FormattedMessage, Link } from './components';
 import { ScrollView, StyleSheet } from 'react-native';
+import { appShowMenu } from '../../common/app/actions';
 import { connect } from 'react-redux';
-import { showMenu } from '../../common/app/actions';
 
 const styles = StyleSheet.create({
   contentContainer: {
@@ -23,13 +24,13 @@ const styles = StyleSheet.create({
   },
 });
 
-let MenuLink = ({ message, showMenu, ...props }) => (
+let MenuLink = ({ appShowMenu, message, ...props }) => (
   <FormattedMessage {...message}>
     {message =>
       <Link
         {...props}
         activeStyle={styles.tabLinkActive}
-        onPress={() => setTimeout(() => showMenu(false), 0)}
+        onPress={() => setTimeout(() => appShowMenu(false), 0)}
         style={styles.tabLink}
       >{message}</Link>
     }
@@ -37,11 +38,14 @@ let MenuLink = ({ message, showMenu, ...props }) => (
 );
 
 MenuLink.propTypes = {
+  appShowMenu: React.PropTypes.func.isRequired,
   message: React.PropTypes.object.isRequired,
-  showMenu: React.PropTypes.func.isRequired,
 };
 
-MenuLink = connect(null, { showMenu })(MenuLink);
+MenuLink = connect(
+  null,
+  { appShowMenu },
+)(MenuLink);
 
 const Menu = ({ viewer }) => (
   <ScrollView
@@ -64,6 +68,8 @@ Menu.propTypes = {
   viewer: React.PropTypes.object,
 };
 
-export default connect(state => ({
-  viewer: state.users.viewer,
-}))(Menu);
+export default connect(
+  (state: State) => ({
+    viewer: state.users.viewer,
+  }),
+)(Menu);

@@ -1,37 +1,53 @@
 /* @flow */
+import type RunTimeState from '../../common/fermenter/fermenterState';
 import R from 'ramda';
 import React, { PropTypes } from 'react';
-import { injectIntl, intlShape } from 'react-intl';
-import { IconButton, Menu } from 'react-mdl/lib';
-import { MenuItem } from 'react-mdl/lib/Menu';
 
-const FermenterCommander = ({ runtimeState, fermenterStart, fermenterStop }) => {
+import { Flex } from 'reflexbox';
+import {
+  Panel,
+  PanelHeader,
+  Switch,
+  Text,
+} from '../app/components';
+
+type Props = {
+  runtimeState: RunTimeState,
+  sendFermenterCmd: () => void,
+};
+
+const fermenterIsRunning = fermStatus => fermStatus === 'running';
+
+const Commander = ({ runtimeState, sendFermenterCmd }: Props) => {
   const maybeShowCurrentCmd = R.defaultTo(' -- ');
 
-  if (R.isEmpty(runtimeState.status)) {
-    return (<div>No status yet...</div>);
-  }
+  const toggleFermenter = () => fermenterIsRunning(runtimeState.status) ?
+                              sendFermenterCmd('fermenterStop') :
+                              sendFermenterCmd('fermenterStart');
+
+  const content = R.isEmpty(runtimeState.status) ? (
+    <Flex>
+      <Text small>No status yet...</Text>
+    </Flex>
+  ) : (
+    <Flex>
+      <Switch checked={!!fermenterIsRunning(runtimeState.status)} onClick={() => toggleFermenter()} />
+      <Text small>Last command was: {maybeShowCurrentCmd(runtimeState.currentCmd)}</Text>
+    </Flex>
+  );
 
   return (
-    <div style={{ position: 'relative' }}>
-      <IconButton name="more_vert" id="fermenter_menu_upper_left" />
-      <Menu target="fermenter_menu_upper_left" >
-        <MenuItem onClick={fermenterStart}>Switch fermenter on</MenuItem>
-        <MenuItem onClick={fermenterStop}>Switch fermenter off</MenuItem>
-        <MenuItem disabled>Emergency off</MenuItem>
-      </Menu>
-      <p style={{ display: 'inline' }}>Current status: [{runtimeState.status}]</p>
-      <p style={{ display: 'inline' }}>| Last command: [{maybeShowCurrentCmd(runtimeState.currentCmd)}]</p>
-    </div>
+    <Panel theme="secondary">
+      <PanelHeader>Control</PanelHeader>
+      { content }
+    </Panel>
   );
 };
 
-FermenterCommander.propTypes = {
+Commander.propTypes = {
   runtimeState: PropTypes.object.isRequired,
-  fermenterStart: PropTypes.func.isRequired,
-  fermenterStop: PropTypes.func.isRequired,
-  intl: intlShape.isRequired,
+  sendFermenterCmd: PropTypes.func.isRequired,
 };
 
 
-export default injectIntl(FermenterCommander);
+export default Commander;

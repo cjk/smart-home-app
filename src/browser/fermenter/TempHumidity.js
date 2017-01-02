@@ -1,9 +1,15 @@
 /* @flow */
-import './TempHumidity.scss';
-
-import cx from 'classnames';
+import type FermenterState from '../../common/fermenter/fermenterState';
 import React from 'react';
 import { FormattedMessage, defineMessages, injectIntl, intlShape } from 'react-intl';
+
+import { Flex, Box } from 'reflexbox';
+import {
+  Panel,
+  PanelHeader,
+  Space,
+  Text,
+} from '../app/components';
 
 const messages = defineMessages({
   environment: {
@@ -20,30 +26,27 @@ const messages = defineMessages({
   },
 });
 
-const TempHumidity = ({ fermenterState }) => {
-  const env = fermenterState.get('env');
-  const devices = fermenterState.get('devices');
+const TempHumidity = ({ fermenterState }: FermenterState) => {
+  const { env, devices } = fermenterState;
 
-  if (!env.createdAt) {
-    return (<div>No information yet...</div>);
-  }
+  const content = !env.createdAt ? (
+    <Flex>
+      <Text small>No status yet...</Text>
+    </Flex>
+  ) : (
+    <Flex>
+      <Text small>Cycle #{env.iterations}</Text>
+      <Text small children="TODO..." />
+      <Space auto />
+      <Text small children="TODO..." />
+    </Flex>
+  );
 
   return (
-    <div id="fermenterEnv">
-      <h4>Environment (iteration #{env.iterations}):</h4>
-      <p><FormattedMessage {...messages.temperature} />: {env.temperature}</p>
-      <p><FormattedMessage {...messages.humidity} />: {env.humidity}</p>
-      <hr />
-      {
-        devices.entrySeq().map(([key, dev]) => (
-          <section className="fermDevice" key={key}>
-            <h4 className="fermDevHeader">{key}:</h4>
-            <p className="fermDevStatusLine">{key} is currently [<span className={cx('fermDevStatus', { fermDevStatusOn: dev.isOn })}>{dev.isOn ? 'running' : 'off'}</span>]</p>
-          </section>
-        ))
-      }
-      <hr />
-    </div>
+    <Panel theme="secondary">
+      <PanelHeader>Status</PanelHeader>
+      { content }
+    </Panel>
   );
 };
 

@@ -1,33 +1,33 @@
 /* @flow */
-import './App.scss';
+import type { State } from '../../common/types';
+import './App.css';
 import * as themes from './themes';
 import Header from './Header';
 import Footer from './Footer';
 import Helmet from 'react-helmet';
+import R from 'ramda';
 import React from 'react';
 import favicon from '../../common/app/favicon';
 import start from '../../common/app/start';
-
-// import { Container } from '../app/components';
+import { Box, Container, Flex } from '../app/components';
 import { Match, ThemeProvider } from '../../common/app/components';
 import { Miss } from 'react-router';
 import { connect } from 'react-redux';
 
-/* Material-Design-Lite imports */
-import { Content } from 'react-mdl/lib/Layout';
-import Layout from 'react-mdl/lib/Layout/Layout';
-
 // Pages
-import Home from '../home/HomePage';
-// import Intl from '../intl/IntlPage';
-// import Me from '../me/MePage';
-import NotFound from '../notfound/NotFoundPage';
-// import Offline from '../offline/OfflinePage';
-// import Profile from '../me/ProfilePage';
-// import Settings from '../me/SettingsPage';
-// import SignIn from '../auth/SignInPage';
-import Events from '../events/EventsPage';
-import Fermenter from '../fermenter/FermenterPage';
+import HomePage from '../home/HomePage';
+import EventsPage from '../events/EventsPage';
+import FermenterPage from '../fermenter/FermenterPage';
+import NotFoundPage from '../notfound/NotFoundPage';
+
+const styles = {
+  container: {
+    minHeight: '100vh',
+  },
+  page: {
+    flex: 1,
+  },
+};
 
 // v4-alpha.getbootstrap.com/getting-started/introduction/#starter-template
 const bootstrap4Metas: any = [
@@ -42,12 +42,12 @@ const bootstrap4Metas: any = [
   },
 ];
 
-let App = ({ currentLocale, currentTheme }) => (
+const App = ({ currentLocale, currentTheme }) => (
   <ThemeProvider
     key={currentTheme} // github.com/yahoo/react-intl/issues/234#issuecomment-163366518
     theme={themes[currentTheme] || themes.initial}
   >
-    <div className="container">
+    <Container>
       <Helmet
         htmlAttributes={{ lang: currentLocale }}
         meta={[
@@ -62,23 +62,17 @@ let App = ({ currentLocale, currentTheme }) => (
           ...favicon.link,
         ]}
       />
-
-      <Layout fixedHeader>
-        {/* Pathname enforces rerender so activeClassName is updated. */}
-
+      <Flex flexColumn style={styles.container}>
         <Header />
-
-        <Content className="page-content">
-          <Match exactly pattern="/" component={Home} />
-          <Match pattern="/events" component={Events} />
-          <Match pattern="/fermenter" component={Fermenter} />
-          <Miss component={NotFound} />
-        </Content>
-
+        <Box style={styles.page}>
+          <Match exactly pattern="/" component={HomePage} />
+          <Match pattern="/events" component={EventsPage} />
+          <Match pattern="/fermenter" component={FermenterPage} />
+          <Miss component={NotFoundPage} />
+        </Box>
         <Footer />
-
-      </Layout>
-    </div>
+      </Flex>
+    </Container>
   </ThemeProvider>
 );
 
@@ -87,9 +81,12 @@ App.propTypes = {
   currentTheme: React.PropTypes.string,
 };
 
-App = connect(state => ({
-  currentLocale: state.intl.currentLocale,
-  currentTheme: state.themes.currentTheme,
-}))(App);
-
-export default start(App);
+export default R.compose(
+  connect(
+    (state: State) => ({
+      currentLocale: state.intl.currentLocale,
+      currentTheme: state.themes.currentTheme,
+    }),
+  ),
+  start,
+)(App);

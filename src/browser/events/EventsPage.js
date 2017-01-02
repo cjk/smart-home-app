@@ -1,24 +1,26 @@
 /* @flow */
+import type { State } from '../../common/types';
 import Events from './Events';
-import Helmet from 'react-helmet';
 import React from 'react';
 import { connect } from 'react-redux';
 import linksMessages from '../../common/app/linksMessages';
-import { FormattedMessage } from 'react-intl';
 
-const EventsPage = ({ eventlist }) => (
-  <div className="events-page" id="events">
-    <FormattedMessage {...linksMessages.events}>
-      {message => <Helmet title={message} />}
-    </FormattedMessage>
-    <Events {...{ eventlist }} />
-  </div>
+import { PageHeader, Title, View } from '../app/components';
+
+const EventsPage = ({ eventHistory }) => (
+  <View>
+    <Title message={linksMessages.events} />
+    <PageHeader description="Past events in chronological order" heading="Event-History" />
+    <Events {...{ eventHistory }} />
+  </View>
 );
 
 EventsPage.propTypes = {
-  eventlist: React.PropTypes.object,
+  eventHistory: React.PropTypes.array.isRequired,
 };
 
-export default connect(state => ({
-  eventlist: state.smartHome.eventHistory,
-}))(EventsPage);
+export default connect(
+  (state: State) => ({
+    eventHistory: state.smartHome.eventHistory,
+  })
+)(EventsPage);

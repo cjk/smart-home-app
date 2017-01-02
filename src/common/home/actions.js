@@ -1,51 +1,60 @@
-export const PROCESS_EVENT = 'PROCESS_EVENT';
+/* @flow */
+import type { Action, BusEvent, Deps, KnxAddress, SmartHomeState } from '../types';
+import R from 'ramda';
+import { Observable } from 'rxjs/Observable';
 
-export const REQUEST_INITIAL_STATE_START = 'REQUEST_INITIAL_STATE_START';
-export const REQUEST_INITIAL_STATE_SUCCESS = 'REQUEST_INITIAL_STATE_SUCCESS';
-export const REQUEST_INITIAL_STATE_ERROR = 'REQUEST_INITIAL_STATE_ERROR';
+export const writeGroupAddr = (addr: KnxAddress): Action => ({
+  type: 'WRITE_GROUP_ADDRESS',
+  payload: { addr },
+});
 
-export const WRITE_GROUP_ADDRESS_START = 'WRITE_GROUP_ADDRESS_START';
-export const WRITE_GROUP_ADDRESS_SUCCESS = 'WRITE_GROUP_ADDRESS_SUCCESS';
-export const WRITE_GROUP_ADDRESS_ERROR = 'WRITE_GROUP_ADDRESS_ERROR';
+export const writeGroupAddrDone = () => ({
+  type: 'WRITE_GROUP_ADDRESS_DONE',
+});
 
-export const SWITCH_TO_TAB = 'SWITCH_TO_TAB';
+export const requestInitialState = () => ({
+  type: 'REQUEST_INITIAL_STATE',
+});
 
-export function writeGroupAddr(addr) {
-  return ({ writeGroupAddr }) => ({
-    type: 'WRITE_GROUP_ADDRESS',
-    payload: {
-      promise: writeGroupAddr(addr)
-    }
-  });
-}
+export const requestInitialStateSuccess = (smartHomeState: SmartHomeState): Action => ({
+  type: 'REQUEST_INITIAL_STATE_SUCCESS',
+  payload: smartHomeState,
+});
 
-export function requestInitialState(/* {location, params} */) {
-  // We can use location and params to create custom endpoint.
-  return ({ fetchInitialState }) => ({
-    type: 'REQUEST_INITIAL_STATE',
-    payload: {
-      // We could use location and params to create custom endpoint.
-      promise: fetchInitialState()
-    }
-  });
-}
+export const processEvent = (event: BusEvent) => ({ getUid }: Function): Action => {
+  const newEvent = R.assoc('id', getUid(), event);
 
-export function processEvent(event) {
-  return ({ getUid }) => {
-    const newEvent = event.merge({
-      id: getUid()
+  return {
+    type: 'PROCESS_EVENT',
+    payload: { newEvent }
+  };
+};
+
+export const switchToTab = (tabId: number): Action => ({
+  type: 'SWITCH_TO_TAB',
+  payload: { tabId }
+});
+
+/* SmartHome-Epics */
+
+const requestInitialStateEpic = (action$: any, { fetchInitialState }: Deps) =>
+  action$
+    .filter((action: Action) => action.type === 'REQUEST_INITIAL_STATE') /* aka action$.ofType(REQUEST_INITIAL_STATE) */
+    .mergeMap(() => (
+      Observable.from(fetchInitialState())
+                .map(requestInitialStateSuccess)
+    ));
+
+const writeGroupAddrEpic = (action$: any, { writeGroupAddr }: Deps) =>
+  action$
+    .filter((action: Action) => action.type === 'WRITE_GROUP_ADDRESS') /* aka action$.ofType(WRITE_GROUP_ADDRESS) */
+    .mergeMap((action) => {
+      const { addr } = action.payload;
+      return Observable.from(writeGroupAddr(addr))
+                       .map(writeGroupAddrDone);
     });
 
-    return {
-      type: PROCESS_EVENT,
-      payload: { newEvent }
-    };
-  };
-}
-
-export function switchToTab(tabId) {
-  return {
-    type: SWITCH_TO_TAB,
-    payload: { tabId }
-  };
-}
+export const epics = [
+  requestInitialStateEpic,
+  writeGroupAddrEpic,
+];

@@ -41,11 +41,6 @@ const Html = ({
       {helmet.link.toComponent()}
       {helmet.script.toComponent()}
 
-      {/* Insert adapted react-mdl javascript lib */}
-      <script src="/assets/js/material.js"></script>
-      {/* react-mdl also needs a Material-design font */}
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-
       {appCssFilename &&
         <link href={appCssFilename} rel="stylesheet" />
       }

@@ -1,12 +1,13 @@
+/* @flow */
 /* eslint no-console: "off" */
 
 /* TODO: Move to components- or lib-directory */
 import io from 'socket.io-client';
-import Event from '../events/event';
 import Promise from 'bluebird';
+import type { KnxAddress } from '../types';
 
 const config = {
-  host: '192.168.0.28', /* NOTE: zircon.local is not available on HOME-LAN! :( */
+  host: 'localhost', /* NOTE: Must use IP-address i.e. 192.168.1.28, zircon.local is not available on HOME-LAN! :( */
   port: 4001
 };
 
@@ -27,14 +28,13 @@ socket
   .on('error', () =>
     console.log('#### ERROR'));
 
-function subscribeToBusEvents(eventAction) {
+function subscribeToBusEvents(eventAction: Function) {
   socket.on('knx-event', (event) => {
-    const e = new Event(event);
-    eventAction(e);
+    eventAction(event);
   });
 }
 
-function subscribeToFermenterState(eventAction) {
+function subscribeToFermenterState(eventAction: Function) {
   socket.on('fermenter-state', (event) => {
     eventAction(event);
   });
@@ -45,30 +45,31 @@ function subscribeToFermenterState(eventAction) {
 
 function fetchInitialState() {
   const promise = new Promise((resolve) => {
-    socket.on('initialstate', (state) => resolve(state));
+    socket.on('initialstate', state => resolve(state));
   });
 
   socket.emit('initialstate', { request: true });
   return promise;
 }
 
-function writeGroupAddr(addr) {
+function writeGroupAddr(addr: KnxAddress) {
   const promise = new Promise((resolve) => {
     socket.emit('writeToBus', addr, resolve(addr));
   });
   return promise;
 }
 
-function sendFermenterCommand(cmd) {
+function sendFermenterCommand(cmd: string) {
   const promise = new Promise((resolve) => {
     socket.emit('fermenterCommand', cmd, resolve(cmd));
   });
   return promise;
 }
 
+/* PENDING: Not used, needs update */
 function fetchFermenterHistory() {
   const promise = new Promise((resolve) => {
-    socket.on('fermenterhistory', (state) => resolve(state));
+    socket.on('fermenterhistory', state => resolve(state));
   });
 
   socket.emit('fermenterhistory', { request: true });

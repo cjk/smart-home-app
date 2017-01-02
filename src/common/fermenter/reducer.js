@@ -1,29 +1,51 @@
-import * as actions from './actions';
-import FermenterState from './fermenterState';
-import { Map } from 'immutable';
+/* @flow */
+import type { Action, FermenterState } from './types';
+// import R from 'ramda';
 
-const State = FermenterState;
+const initialState = {
+  rts: {
+  },
+  env: {
+    createdAt: 0,
+    temperature: 0,
+    humidity: 0,
+    isValid: false,
+    errors: 0,
+    iterations: 0,
+  },
+  devices: {
+    heater: {
+      isOn: false,
+      shouldSwitchTo: null,
+      willSwitch: false,
+    },
+    humidifier: {
+      isOn: false,
+      shouldSwitchTo: null,
+      willSwitch: false,
+    }
+  },
+  history: {
+    switchOps: [],
+    emergencies: [],
+  }
+};
 
-// TODO: Probably better to not merge here - see
-// https://github.com/este/este/commit/03cebd9ad7152d5f4147bcb6e8bc023671409bac
-const revive = (state) => State.mergeDeep(state);
+const reducer =
+  (state: FermenterState = initialState,
+   action: Action,
+  ): FermenterState => {
+    switch (action.type) {
 
-export default function fermenterReducer(state = State, action) {
-  if (!(Map.isMap(state))) return revive(state);
+      case 'PROCESS_STATE': {
+        const newState = action.payload.fermenterState;
 
-  switch (action.type) {
-
-    case actions.PROCESS_STATE: {
-      const newState = action.payload.fermenterState;
-
-      /* fermenter state is not available */
-      if (!newState) {
         return newState;
       }
-      return revive(newState);
-    }
 
-    default:
-      return state;
-  }
-}
+      default:
+        return state;
+    }
+  };
+
+export default reducer;

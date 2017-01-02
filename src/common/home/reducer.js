@@ -1,91 +1,77 @@
-import * as actions from './actions';
-import { AddrRecord } from './address';
-import Prefs from './preferences';
-import { List, Map } from 'immutable';
-import { Record } from '../transit';
+/* @flow */
+import type { Action, SmartHomeState } from '../types';
+import R from 'ramda';
 
-const State = Record({
-  livestate: new Map(),
-  eventHistory: new List(),
-  prefs: new Prefs({
-    rooms: List.of(
+const initialState = {
+  livestate: {},
+  eventHistory: [],
+  prefs: {
+    rooms: [
       'hall-1', 'hall-2', 'hby', 'wz', 'ez', 'kit', 'knd-1', 'knd-2', 'knd-3', 'cel-1', 'cel-2', 'cel-3', 'office',
-    ),
-  }),
+    ]
+  },
   activeTab: 0,
-}, 'smartHome');
+};
 
-/* PENDING: This should no longer be needed once we use transit-js to serialize
- * backend-communication */
-const buildLivestate = (livestate) => new Map(livestate).map(addr => new AddrRecord(addr));
+const eHstLens = R.lens(R.prop('eventHistory'), R.assoc('eventHistory'));
 
-/* Updates address-objects in a Map (key == address-id) with a new address-object. 'addrLstToUpdate' must be an array
-   including another array with address-id/addr-object pairs. */
-const updateLivestateAddr = (state, addrLstToUpdate) =>
-  addrLstToUpdate.reduce((newState, [id, addr]) => newState.set(id, addr), state);
-
-export default function smartHomeReducer(state = new State, action) {
+const reducer = (
+  state: SmartHomeState = initialState,
+  action: Action,
+): SmartHomeState => {
   switch (action.type) {
 
-    case actions.PROCESS_EVENT: {
+    case 'PROCESS_EVENT': {
       const { newEvent } = action.payload;
 
-      /* Update event-history and/or livestate */
-      const newState = state.update('eventHistory', list => list.unshift(newEvent));
-      const liveState = newState.livestate;
-      const newValue = newEvent.value;
-      const addrId = newEvent.dest;
-      // console.log(JSON.stringify(newState.livestate));
+      const newState = R.pipe(
+        R.view(eHstLens),
+        R.prepend(newEvent),
+        R.set(eHstLens, R.__, state),
+      )(state);
+      // const newEventHistory = R.prepend(newEvent, R.view(eHstLens, state));
+      // const updateEventHistory = R.set(eHstLens, newEventHistory);
 
-      /* We're done if it's not a write-request or no address matches */
-      if (!liveState.has(addrId) || !newEvent.action.match(/^(write|response)$/))
+      const { dest, value, action: eventAct } = newEvent;
+
+      /* Livestate is only affected if address is present and is a mutating action */
+      if (!R.has(dest, state.livestate) || !eventAct.match(/^(write|response)$/)) {
+        /* Return only updated event-history */
         return newState;
-
-      const addr = liveState
-        .find((v, k) => k === addrId)
-        .set('value', newValue)
-      ;
-
-      /* List of addrId/addr pairs of addresses to update in livestate */
-      const addrLstToUpdate = [[addrId, addr]];
-
-      /* If it's a feedback-address event, update address that references this event-id as it's feedback-addr. instead.
-      */
-      if (addr.type === 'fb') {
-        const fbFor = liveState.find((v, _) => v.fbAddr === addrId);
-        if (fbFor) {
-          addrLstToUpdate.push([fbFor.id, fbFor.set('value', newValue)]);
-        }
       }
 
-      return newState.set('livestate', updateLivestateAddr(liveState, addrLstToUpdate));
+      /* Also update livestate with new address-value */
+      const addrValLens = R.lensPath(['livestate', dest, 'value']);
+      return R.set(addrValLens, value, newState);
     }
 
-    case actions.REQUEST_INITIAL_STATE_START: {
+    case 'REQUEST_INITIAL_STATE': {
       /* Currently no state change on this event */
       return state;
     }
 
-    case actions.REQUEST_INITIAL_STATE_SUCCESS: {
-      return state.set('livestate', buildLivestate(action.payload));
+    case 'REQUEST_INITIAL_STATE_SUCCESS': {
+      return R.assoc('livestate', action.payload, state);
     }
 
-    case actions.WRITE_GROUP_ADDRESS_START: {
+    case 'WRITE_GROUP_ADDRESS_START': {
       /* Currently no state change on this event */
       return state;
     }
 
-    case actions.WRITE_GROUP_ADDRESS_SUCCESS: {
+    case 'WRITE_GROUP_ADDRESS_SUCCESS': {
       /* Currently no state change on this event */
       return state;
     }
 
-    case actions.SWITCH_TO_TAB: {
+    case 'SWITCH_TO_TAB': {
       const { tabId } = action.payload;
-      return state.set('activeTab', tabId);
+      return R.assoc('activeTab', tabId, state);
     }
 
     default:
       return state;
   }
-}
+};
+
+export default reducer;

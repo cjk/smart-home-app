@@ -1,36 +1,66 @@
 /* @flow */
-import './AddressList.scss';
-import AddrLine from './AddrLine';
-import Button from 'react-mdl/lib/Button';
-import { List } from 'react-mdl/lib/List';
-import { Card, CardTitle, CardText, CardMenu } from 'react-mdl/lib/Card';
+
+/* Presentational component to render a simple address-list sorted by most-recently changed */
+import type { KnxAddress } from '../../common/types';
+import R from 'ramda';
 import React, { PropTypes } from 'react';
 
-const AddressList = ({ addresses, actions }) => {
+import { Flex, Box } from 'reflexbox';
+import {
+  Badge,
+  Block,
+  ButtonCircle,
+  Card,
+  Text,
+} from '../app/components';
+import { FaSquare, FaSquareO } from 'react-icons/lib/fa';
+
+type Props = {
+  addresses: Array<KnxAddress>,
+  actions: Object,
+};
+
+const AddressList = ({ addresses, actions }: Props) => {
+  /* TODO: Re-add support for actions on addresses */
   const { updateAddr, updateList } = actions;
 
+  const boxedAddress = address => (
+    <Box p={1} col={4} key={address.id}>
+      <Block p={1} borderBottom >
+        <Flex justify="space-between">
+          <Box>
+            <Badge rounded theme="info">{address.id}</Badge>
+          </Box>
+          <Box px={1} auto>
+            <Text>{address.name}</Text>
+          </Box>
+          <Box>
+            <ButtonCircle title="status" backgroundColor={!!address.value ? 'primary' : 'inverted'} >
+              { !!address.value ? <FaSquare /> : <FaSquareO /> }
+            </ButtonCircle>
+          </Box>
+        </Flex>
+      </Block>
+    </Box>
+  );
+
+  const addrLstByDate = R.pipe(
+    R.values,
+    R.sort((a, b) => a.updatedAt < b.updatedAt),
+    R.map(boxedAddress),
+    R.values, /* NOTE: Make last result an array, otherwise React complains about an Object returned by #mapObjIndexed */
+  );
+
   return (
-    <section className="addressList">
-      <Card className="addrLstContainer">
-        <CardTitle expand>Device list</CardTitle>
-        <CardMenu className="addrLstActions">
-          <Button colored className="listRefresher">
-            <i className="material-icons" onClick={updateList}>update</i>
-          </Button>
-        </CardMenu>
-        <CardText className="addrLstBody">
-          <List>
-            {
-              addresses.sortBy(addr => addr.name)
-                       .sortBy(addr => !addr.value)
-                       .map(address =>
-                         <AddrLine {...{ address, updateAddr }} key={address.get('id')} />
-                       )
-            }
-          </List>
-        </CardText>
+    <Flex column>
+      <Card p={0}>
+        <Flex wrap>
+          {
+            addrLstByDate(addresses)
+          }
+        </Flex>
       </Card>
-    </section>
+    </Flex>
   );
 };
 

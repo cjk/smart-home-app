@@ -10,9 +10,7 @@ const rootDir = require('path').resolve(__dirname, '..', '..');
 const webpackIsomorphicAssets = require('../../webpack/assets').default;
 
 if (!process.env.NODE_ENV) {
-  throw new Error(
-    'Environment variable NODE_ENV must be set to development or production.'
-  );
+  throw new Error('Environment variable NODE_ENV must be set to development or production.');
 }
 
 polyfillLocales(global, config.locales);
@@ -20,7 +18,6 @@ polyfillLocales(global, config.locales);
 global.Promise = require('../common/configureBluebird');
 
 global.webpackIsomorphicTools = new WebpackIsomorphicTools(webpackIsomorphicAssets)
-  .development(!config.isProduction)
   .server(rootDir, () => {
     require('./main');
   });
