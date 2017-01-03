@@ -2,6 +2,7 @@
 
 /* Presentational component to render a simple address-list sorted by most-recently changed */
 import type { KnxAddress } from '../../common/types';
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import R from 'ramda';
 import React, { PropTypes } from 'react';
 
@@ -20,6 +21,8 @@ type Props = {
   actions: Object,
 };
 
+const lastUpdated = timestamp => `updated ${distanceInWordsToNow(timestamp)} ago`;
+
 const AddressList = ({ addresses, actions }: Props) => {
   /* TODO: Re-add support for actions on addresses */
   const { updateAddr, updateList } = actions;
@@ -35,7 +38,7 @@ const AddressList = ({ addresses, actions }: Props) => {
             <Text>{address.name}</Text>
           </Box>
           <Box>
-            <ButtonCircle title="status" backgroundColor={!!address.value ? 'primary' : 'inverted'} >
+            <ButtonCircle title={lastUpdated(address.updatedAt)} backgroundColor={!!address.value ? 'primary' : 'inverted'} >
               { !!address.value ? <FaSquare /> : <FaSquareO /> }
             </ButtonCircle>
           </Box>
@@ -46,6 +49,7 @@ const AddressList = ({ addresses, actions }: Props) => {
 
   const addrLstByDate = R.pipe(
     R.values,
+    R.sort((a, b) => !a.value), /* put active / on addresses first, but behind recently updated ones (s. below) */
     R.sort((a, b) => a.updatedAt < b.updatedAt),
     R.map(boxedAddress),
     R.values, /* NOTE: Make last result an array, otherwise React complains about an Object returned by #mapObjIndexed */
