@@ -18,15 +18,11 @@ import { FaSquare, FaSquareO } from 'react-icons/lib/fa';
 
 type Props = {
   addresses: Array<KnxAddress>,
-  actions: Object,
 };
 
 const lastUpdated = timestamp => `updated ${distanceInWordsToNow(timestamp)} ago`;
 
-const AddressList = ({ addresses, actions }: Props) => {
-  /* TODO: Re-add support for actions on addresses */
-  const { updateAddr, updateList } = actions;
-
+const AddressList = ({ addresses }: Props) => {
   const boxedAddress = address => (
     <Box p={1} col={4} key={address.id}>
       <Block p={1} borderBottom >
@@ -66,11 +62,6 @@ const AddressList = ({ addresses, actions }: Props) => {
       </Card>
     </Flex>
   );
-};
-
-AddressList.propTypes = {
-  actions: PropTypes.object.isRequired,
-  addresses: PropTypes.object.isRequired,
 };
 
 export default AddressList;

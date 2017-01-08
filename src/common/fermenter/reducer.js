@@ -2,7 +2,7 @@
 import type { Action, FermenterState } from './types';
 // import R from 'ramda';
 
-const initialState = {
+const initialState: FermenterState = {
   rts: {
   },
   env: {
@@ -28,7 +28,7 @@ const initialState = {
   history: {
     switchOps: [],
     emergencies: [],
-  }
+  },
 };
 
 const reducer =
@@ -38,9 +38,8 @@ const reducer =
     switch (action.type) {
 
       case 'PROCESS_STATE': {
-        const newState = action.payload.fermenterState;
-
-        return newState;
+        //         console.log(`[fermenterReducer]: new fermenter-state: ${JSON.stringify(action.payload)}`);
+        return action.payload.newState;
       }
 
       default:

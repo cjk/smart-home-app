@@ -1,4 +1,5 @@
 /* @flow */
+
 /* Presentational component to render address-list lines */
 import type { KnxAddress } from '../../common/types';
 import AddrLine from './AddrLine';
@@ -16,7 +17,6 @@ import {
 
 type Props = {
   addresses: Array<KnxAddress>,
-  actions: Object,
   prefs: Object,
 };
 
@@ -26,9 +26,7 @@ const createBoxedItem = (item, key) => (
   </Box>
 );
 
-const AddressList = ({ addresses, actions, prefs }: Props) => {
-  const { updateAddr, updateList } = actions;
-
+const AddressList = ({ addresses, prefs }: Props) => {
   const hasRoom = room => R.any(R.equals(room), prefs.rooms);
   const addressesWithRoom = R.keys(R.filter(hasRoom, R.pluck('room', addresses)));
 
@@ -38,7 +36,7 @@ const AddressList = ({ addresses, actions, prefs }: Props) => {
         <PanelHeader><FormattedMessage {...messages[room]} /></PanelHeader>
         {
           addrLst.map(address => (
-            <AddrLine {...{ address, updateAddr }} key={address.id} />
+            <AddrLine address={address} key={address.id} />
           ))
         }
       </Panel>
@@ -66,12 +64,6 @@ const AddressList = ({ addresses, actions, prefs }: Props) => {
       </Flex>
     </View>
   );
-};
-
-AddressList.propTypes = {
-  actions: PropTypes.object.isRequired,
-  addresses: PropTypes.object.isRequired,
-  prefs: PropTypes.object.isRequired,
 };
 
 export default AddressList;

@@ -4,11 +4,8 @@ import R from 'ramda';
 import React from 'react';
 import AddrListByRoom from './AddressListByRoom';
 import AddrList from './AddressList';
-import * as actions from '../../common/home/actions';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import linksMessages from '../../common/app/linksMessages';
-import smartHomeConnect from '../../common/home/connector';
 
 import {
   Block,
@@ -17,79 +14,44 @@ import {
   View,
 } from '../app/components';
 
-const homeActions = dispatch => ({ actions: bindActionCreators(actions, dispatch) });
+import { Box } from 'reflexbox';
 
-class HomePage extends React.Component {
+type HomePageProps = {
+  smartHomeState: Object,
+  location: Object,
+};
 
-  static propTypes = {
-    actions: React.PropTypes.object.isRequired,
-    smartHome: React.PropTypes.object.isRequired,
-  };
+const HomePage = ({ smartHomeState, location }: HomePageProps) => {
+  const { livestate, prefs }  = smartHomeState;
 
-  constructor(props) {
-    super(props);
-    this.updateAddr = this.updateAddr.bind(this);
-    this.updateList = this.updateList.bind(this);
-  }
+  /* Built address-list, remove some address-types which should not be displayed */
+  const addresses = R.reject(addr => addr.type === 'fb', livestate);
 
-  componentDidMount() {
-    /* Request and wait for loading of smart-home-state from backend */
-    const { actions: { requestInitialState, processEvent } } = this.props;
-    requestInitialState();
-
-    const { subscribeToBusEvents } = smartHomeConnect();
-    subscribeToBusEvents(processEvent);
-  }
-
-  updateAddr = (addr) => {
-    const toggleAddrVal = addr => R.assoc('value', !addr.value | 0, addr);
-    const { writeGroupAddr } = this.props.actions;
-
-    return writeGroupAddr(toggleAddrVal(addr));
-  }
-
-  updateList = () => {
-    const { requestInitialState } = this.props.actions;
-    return requestInitialState();
-  }
-
-  render() {
-    const { smartHome: { livestate, activeTab, prefs } } = this.props;
-    const actions = { updateAddr: this.updateAddr, updateList: this.updateList };
-    /* TODO: */
-    /* Built address-list, remove some address-types which should not be displayed */
-    //     const { switchToTab } = this.props.actions;
-
-    // const addrList = activeTab === 0
-    //                ? <AddressListByState {...{ addresses, actions }} />
-    //                : <AddressListByRoom {...{ addresses, actions, prefs }} />;
-
-    const addresses = R.reject(addr => addr.type === 'fb', livestate);
-
-    if (R.isEmpty(addresses)) {
-      return (
-        <Block>
-          <p>Waiting for SmartHome-State...</p>
-        </Block>
-      );
-    }
-
+  if (R.isEmpty(addresses)) {
     return (
-      <View>
-        <Title message={linksMessages.home} />
-        <PageHeader
-          description="A smart remote control for your smart home."
-          heading="SmartHome-App"
-        />
-        <AddrList {...{ addresses, actions }} />
-        <AddrListByRoom {...{ addresses, actions, prefs }} />
-      </View>
+      <Block>
+        <p>Waiting for SmartHome-State...</p>
+      </Block>
     );
   }
+
+  const listStyle = R.pathOr('byState', ['query', 'listStyle'], location);
+  const addrList = listStyle === 'byState'
+                 ? <AddrList addresses={addresses} />
+                 : <AddrListByRoom addresses={addresses} prefs={prefs} />;
+
+  return (
+    <View>
+      <Title message={linksMessages.home} />
+      <Box py={2}>
+        {addrList}
+      </Box>
+    </View>
+  );
 }
 
 export default connect(
   (state: State) => ({
-    smartHome: state.smartHome,
-  }), homeActions,
+    smartHomeState: state.smartHome,
+  }),
 )(HomePage);

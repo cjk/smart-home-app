@@ -1,7 +1,6 @@
 /* @flow */
 import type { State } from '../../common/types';
-import React, { Component, PropTypes } from 'react';
-import smartHomeConnect from '../../common/home/connector';
+import React from 'react';
 import * as fermenterActions from '../../common/fermenter/actions';
 import TempHumidityInfo from './TempHumidity';
 import Commander from './Commander';
@@ -15,20 +14,24 @@ import {
   View,
 } from '../app/components';
 
-class FermenterPage extends Component {
+class FermenterPage extends React.Component {
 
   static propTypes = {
-    fermenter: PropTypes.object.isRequired,
-    processState: PropTypes.func.isRequired,
-    sendFermenterCmd: PropTypes.func.isRequired,
+    fermenter: React.PropTypes.object.isRequired,
+    subscribeToState: React.PropTypes.func.isRequired,
+    unsubscribeToState: React.PropTypes.func.isRequired,
+    processState: React.PropTypes.func.isRequired,
+    sendFermenterCmd: React.PropTypes.func.isRequired,
   };
 
-  /* TODO: Refactor out in HOC + action */
   componentDidMount() {
-    const { processState } = this.props;
-    const { subscribeToFermenterState } = smartHomeConnect();
+    const { subscribeToState } = this.props;
+    subscribeToState();
+  }
 
-    subscribeToFermenterState(processState);
+  componentWillUnmount() {
+    const { unsubscribeToState } = this.props;
+    unsubscribeToState();
   }
 
   render() {
@@ -38,9 +41,9 @@ class FermenterPage extends Component {
       <View>
         <Title message={linksMessages.fermenter} />
         <PageHeader description="Fermenter Remote Control" heading="Fermenter" />
-        <Flex flexAuto gutter={1}>
+        <Flex wrap gutter={1}>
           <Box p={2}>
-            <Commander runtimeState={fermenter.rts} sendFermenterCmd={sendFermenterCmd} />
+            <Commander fermenterState={fermenter} sendFermenterCmd={sendFermenterCmd} />
           </Box>
           <Box p={2}>
             <TempHumidityInfo fermenterState={fermenter} />

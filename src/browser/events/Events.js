@@ -28,7 +28,7 @@ const EventList = ({ eventHistory }: Props) => {
   ]);
 
   const createdLens = R.lensProp('created');
-  const dateIntoWords = e => R.set(createdLens, `${distanceInWordsToNow(R.view(createdLens, e))} ago`)(e);
+  const dateIntoWords = e => R.set(createdLens, `${distanceInWordsToNow(R.view(createdLens, e), { includeSeconds: true })} ago`)(e);
 
   const rows = R.compose(
     R.map(R.props(headings)),

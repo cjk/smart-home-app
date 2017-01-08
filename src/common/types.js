@@ -17,9 +17,7 @@ export type Deps = {
   now: () => number,
   validate: (json: Object) => any,
   /* SmartHome-methods */
-  fetchInitialState: Function,
-  writeGroupAddr: Function,
-  sendFermenterCmd: Function,
+  homeConnect: Function,
 };
 
 // Models
@@ -105,7 +103,6 @@ export type SmartHomeState = {
   livestate: {[id: string]: KnxAddress},
   eventHistory: Array<BusEvent>,
   prefs: ?Object,
-  activeTab: number,
 };
 
 export type TodosState = {

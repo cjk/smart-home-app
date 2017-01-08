@@ -1,9 +1,9 @@
 /* @flow */
-import type RunTimeState from '../../common/fermenter/fermenterState';
+import type FermenterState from '../../common/fermenter/fermenterState';
 import R from 'ramda';
-import React, { PropTypes } from 'react';
+import React from 'react';
 
-import { Flex } from 'reflexbox';
+import { Flex, Box } from 'reflexbox';
 import {
   Panel,
   PanelHeader,
@@ -12,27 +12,57 @@ import {
 } from '../app/components';
 
 type Props = {
-  runtimeState: RunTimeState,
+  fermenterState: FermenterState,
   sendFermenterCmd: () => void,
 };
 
-const fermenterIsRunning = fermStatus => fermStatus === 'running';
+const fermenterIsRunning = rts => rts.active;
 
-const Commander = ({ runtimeState, sendFermenterCmd }: Props) => {
+const Commander = ({ fermenterState, sendFermenterCmd }: Props) => {
+  const { rts: runtimeState, devices } = fermenterState;
+
   const maybeShowCurrentCmd = R.defaultTo(' -- ');
 
-  const toggleFermenter = () => fermenterIsRunning(runtimeState.status) ?
-                              sendFermenterCmd('fermenterStop') :
-                              sendFermenterCmd('fermenterStart');
+  const toggleDevice = (name) => {
+    /* Only allow switching fermenter itself on/off for now */
+    if (name !== 'fermenter') {
+      return false;
+    }
+    return fermenterIsRunning(runtimeState) ? sendFermenterCmd('fermenterStop') : sendFermenterCmd('fermenterStart');
+  };
 
-  const content = R.isEmpty(runtimeState.status) ? (
+  const deviceStateBox = (name, isOn) =>
+    (
+      <Box p={1} key={name}>
+        <Text>{name}</Text>
+        <Switch checked={isOn} onClick={() => toggleDevice(name)} />
+      </Box>
+    );
+
+  const lastCmdBox = () => (
+    <Box p={1}>
+      <Text small>Last command was: {maybeShowCurrentCmd(runtimeState.currentCmd)}</Text>
+      { deviceStateBox('fermenter', fermenterIsRunning(runtimeState)) }
+    </Box>
+  );
+
+  const content = R.or(R.isEmpty(runtimeState), R.isEmpty(devices)) ? (
     <Flex>
       <Text small>No status yet...</Text>
     </Flex>
   ) : (
-    <Flex>
-      <Switch checked={!!fermenterIsRunning(runtimeState.status)} onClick={() => toggleFermenter()} />
-      <Text small>Last command was: {maybeShowCurrentCmd(runtimeState.currentCmd)}</Text>
+    <Flex column>
+      {
+        lastCmdBox()
+      }
+      {
+        R.compose(
+          R.values,
+          R.mapObjIndexed((dev, name) => (
+            deviceStateBox(name, dev.isOn)
+          )),
+        )(devices)
+      }
     </Flex>
   );
 
@@ -43,11 +73,5 @@ const Commander = ({ runtimeState, sendFermenterCmd }: Props) => {
     </Panel>
   );
 };
-
-Commander.propTypes = {
-  runtimeState: PropTypes.object.isRequired,
-  sendFermenterCmd: PropTypes.func.isRequired,
-};
-
 
 export default Commander;

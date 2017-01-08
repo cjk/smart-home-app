@@ -53,15 +53,16 @@ type Devices = {
 }
 
 export type FermenterState = {
-  rts: RunTimeState,
+  rts: ?RunTimeState,
   env: Env,
   devices: Devices,
-  history: History
+  history: History,
 };
 
 export type Action =
   { type: 'PROCESS_STATE', payload: { newState: FermenterState } }
+  | { type: 'SUBSCRIBE_TO_STATE' }
+  | { type: 'UNSUBSCRIBE_TO_STATE' }
   | { type: 'SEND_FERMENTER_CMD', payload: { cmd: string } }
   | { type: 'SEND_FERMENTER_CMD_SUCCESS' }
-//   | { type: 'FETCH_HISTORY', payload: { fermenterHistory: fermenterHistory } }
 ;

@@ -1,7 +1,10 @@
 /* @flow */
 /* Presentational component to render address-list lines */
 import type { KnxAddress } from '../../common/types';
-import React, { PropTypes } from 'react';
+import R from 'ramda';
+import React from 'react';
+import { connect } from 'react-redux';
+import { writeGroupAddr } from '../../common/home/actions';
 import { GoLightBulb, GoPlug, GoCalendar, GoScreenNormal,
          GoCircleSlash, GoAlignmentUnalign, GoStop } from 'react-icons/lib/go';
 import { Flex } from 'reflexbox';
@@ -12,10 +15,10 @@ import {
 
 type Props = {
   address: KnxAddress,
-  updateAddr: () => void,
+  writeGroupAddr: typeof writeGroupAddr,
 };
 
-const AddrLine = ({ address, updateAddr }: Props) => {
+const AddrLine = ({ address, writeGroupAddr }: Props) => {
   const switchable = addr => addr.type === 'switch';
 
   /* Decides which address-item to display */
@@ -32,6 +35,12 @@ const AddrLine = ({ address, updateAddr }: Props) => {
   };
   const Icon = chooseIcon(address);
 
+  const toggleAddrVal = addr => R.assoc('value', !addr.value | 0, addr);
+
+  const updateAddr = (addr) => {
+    return writeGroupAddr(toggleAddrVal(addr));
+  }
+
   return (
     <Flex align="center" my={2} justify="space-between">
       <Icon size="2em" />
@@ -44,9 +53,7 @@ const AddrLine = ({ address, updateAddr }: Props) => {
   );
 };
 
-AddrLine.propTypes = {
-  address: PropTypes.object.isRequired,
-  updateAddr: PropTypes.func.isRequired,
-};
-
-export default AddrLine;
+export default connect(
+  null,
+  { writeGroupAddr }
+)(AddrLine);
