@@ -31,7 +31,8 @@ const createFirebaseDeps = (firebaseConfig) => {
 
 const configureDeps = (initialState, platformDeps) => ({
   ...platformDeps,
-  ...createFirebaseDeps(initialState.config.firebase),
+  /* CjK 24.01.2017 - Firebase-connection deactivated */
+  //   ...createFirebaseDeps(initialState.config.firebase),
   getUid: () => platformDeps.uuid.v4(),
   now: () => Date.now(),
   validate,

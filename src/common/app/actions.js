@@ -137,12 +137,14 @@ const appStartedFirebaseEpic = (action$: any, deps: Deps) => {
   });
 
   const streams = [
-    appOnline$,
-    onAuth$,
+    /* CjK 24.01.2017 - Firebase-connection deactivated */
+    //     appOnline$,
+    //     onAuth$,
   ];
 
   if (process.env.IS_BROWSER) {
-    streams.push(signInAfterRedirect$);
+    /* CjK 24.01.2017 - Firebase-connection deactivated */
+    //     streams.push(signInAfterRedirect$);
   }
 
   return action$
