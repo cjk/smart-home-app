@@ -6,7 +6,7 @@
 // So we have to import everything.
 import firebase from 'firebase';
 import validate from './validate';
-import smartHomeConnect from './home/connector';
+import homeConnect from './app/homeConnect';
 
 // Ensure only one Firebase instance. I don't know how costly new instance is
 // and how to dispose of it. Yes, firebase.initializeApp is weird API.
@@ -29,17 +29,14 @@ const createFirebaseDeps = (firebaseConfig) => {
   return firebaseDeps;
 };
 
-/* Enable smart-home backend communication */
-const homeConnect = smartHomeConnect();
-
 const configureDeps = (initialState, platformDeps) => ({
   ...platformDeps,
-  ...createFirebaseDeps(initialState.config.firebase),
+  /* CjK 24.01.2017 - Firebase-connection deactivated */
+  //   ...createFirebaseDeps(initialState.config.firebase),
   getUid: () => platformDeps.uuid.v4(),
   now: () => Date.now(),
   validate,
-  ...homeConnect,
-
+  homeConnect,
 });
 
 export default configureDeps;

@@ -1,7 +1,7 @@
 /* @flow */
 import type { BusEvent } from '../../common/types';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
-import R from 'ramda';
+import { compose, isEmpty, lensProp, map, pluck, props, sort, take, set, view } from 'ramda';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import eventMessages from './messages';
@@ -16,9 +16,9 @@ type Props = {
 };
 
 const EventList = ({ eventHistory }: Props) => {
-  const sortEventHistory = R.sort((a, b) => a.created < b.created);
+  const sortEventHistory = sort((a, b) => a.created < b.created);
 
-  const headings = R.pluck('name', [
+  const headings = pluck('name', [
     { name: 'created', label: 'Time' },
     { name: 'action', label: 'Action' },
     { name: 'dest', label: 'Address' },
@@ -27,16 +27,18 @@ const EventList = ({ eventHistory }: Props) => {
     { name: 'value', label: 'Value' },
   ]);
 
-  const createdLens = R.lensProp('created');
-  const dateIntoWords = e => R.set(createdLens, `${distanceInWordsToNow(R.view(createdLens, e))} ago`)(e);
+  const createdLens = lensProp('created');
+  const dateIntoWords = e => set(
+    createdLens,
+    `${distanceInWordsToNow(view(createdLens, e), { includeSeconds: true })} ago`)(e);
 
-  const rows = R.compose(
-    R.map(R.props(headings)),
-    R.map(dateIntoWords),
-    R.take(maxListEntries),
+  const rows = compose(
+    map(props(headings)),
+    map(dateIntoWords),
+    take(maxListEntries),
     sortEventHistory)(eventHistory);
 
-  if (R.isEmpty(rows)) return (
+  if (isEmpty(rows)) return (
     <h4><FormattedMessage {...eventMessages.emptyList} /></h4>
   );
 

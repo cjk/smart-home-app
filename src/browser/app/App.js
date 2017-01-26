@@ -5,10 +5,10 @@ import * as themes from './themes';
 import Header from './Header';
 import Footer from './Footer';
 import Helmet from 'react-helmet';
-import R from 'ramda';
 import React from 'react';
 import favicon from '../../common/app/favicon';
 import start from '../../common/app/start';
+import { compose } from 'ramda';
 import { Box, Container, Flex } from '../app/components';
 import { Match, ThemeProvider } from '../../common/app/components';
 import { Miss } from 'react-router';
@@ -19,6 +19,11 @@ import HomePage from '../home/HomePage';
 import EventsPage from '../events/EventsPage';
 import FermenterPage from '../fermenter/FermenterPage';
 import NotFoundPage from '../notfound/NotFoundPage';
+
+type AppProps = {
+  currentLocale: string,
+  currentTheme: string,
+};
 
 const styles = {
   container: {
@@ -42,7 +47,10 @@ const bootstrap4Metas: any = [
   },
 ];
 
-const App = ({ currentLocale, currentTheme }) => (
+const App = ({
+  currentLocale,
+  currentTheme,
+}): AppProps => (
   <ThemeProvider
     key={currentTheme} // github.com/yahoo/react-intl/issues/234#issuecomment-163366518
     theme={themes[currentTheme] || themes.initial}
@@ -76,12 +84,7 @@ const App = ({ currentLocale, currentTheme }) => (
   </ThemeProvider>
 );
 
-App.propTypes = {
-  currentLocale: React.PropTypes.string.isRequired,
-  currentTheme: React.PropTypes.string,
-};
-
-export default R.compose(
+export default compose(
   connect(
     (state: State) => ({
       currentLocale: state.intl.currentLocale,

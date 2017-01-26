@@ -15,7 +15,7 @@ const LinkMessages = defineMessages({
     id: 'app.links.users',
   },
   home: {
-    defaultMessage: 'Home',
+    defaultMessage: 'SmartHome - Zustand',
     id: 'app.links.home',
   },
   me: {
@@ -38,9 +38,13 @@ const LinkMessages = defineMessages({
     defaultMessage: 'Fermenter',
     id: 'app.links.fermenter',
   },
-  rooms: {
-    defaultMessage: 'Rooms',
-    id: 'app.links.rooms',
+  listByState: {
+    defaultMessage: 'nach Zustand',
+    id: 'app.links.listByState',
+  },
+  listByRoom: {
+    defaultMessage: 'nach Raum',
+    id: 'app.links.listByRoom',
   },
   profile: {
     defaultMessage: 'Profile',

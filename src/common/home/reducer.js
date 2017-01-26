@@ -1,4 +1,5 @@
 /* @flow */
+
 import type { Action, SmartHomeState } from '../types';
 import R from 'ramda';
 
@@ -7,10 +8,10 @@ const initialState = {
   eventHistory: [],
   prefs: {
     rooms: [
-      'hall-1', 'hall-2', 'hby', 'wz', 'ez', 'kit', 'knd-1', 'knd-2', 'knd-3', 'cel-1', 'cel-2', 'cel-3', 'office',
+      'hall-1', 'hall-2', 'hby', 'wz', 'ez', 'kit', 'knd-1', 'knd-2', 'knd-3', 'cel-1', 'cel-2', 'cel-3',
+      'office', 'rest',
     ]
   },
-  activeTab: 0,
 };
 
 const eHstLens = R.lens(R.prop('eventHistory'), R.assoc('eventHistory'));
@@ -45,28 +46,8 @@ const reducer = (
       return R.set(addrValLens, value, newState);
     }
 
-    case 'REQUEST_INITIAL_STATE': {
-      /* Currently no state change on this event */
-      return state;
-    }
-
     case 'REQUEST_INITIAL_STATE_SUCCESS': {
       return R.assoc('livestate', action.payload, state);
-    }
-
-    case 'WRITE_GROUP_ADDRESS_START': {
-      /* Currently no state change on this event */
-      return state;
-    }
-
-    case 'WRITE_GROUP_ADDRESS_SUCCESS': {
-      /* Currently no state change on this event */
-      return state;
-    }
-
-    case 'SWITCH_TO_TAB': {
-      const { tabId } = action.payload;
-      return R.assoc('activeTab', tabId, state);
     }
 
     default:

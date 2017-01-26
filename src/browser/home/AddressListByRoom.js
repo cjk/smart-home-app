@@ -1,11 +1,12 @@
 /* @flow */
+
 /* Presentational component to render address-list lines */
 import type { KnxAddress } from '../../common/types';
 import AddrLine from './AddrLine';
-import R from 'ramda';
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
+import { any, equals, filter, groupBy, keys, mapObjIndexed, pick, pipe, pluck, prop, sort, values } from 'ramda';
 
 import { Flex, Box } from 'reflexbox';
 import {
@@ -16,7 +17,6 @@ import {
 
 type Props = {
   addresses: Array<KnxAddress>,
-  actions: Object,
   prefs: Object,
 };
 
@@ -26,11 +26,9 @@ const createBoxedItem = (item, key) => (
   </Box>
 );
 
-const AddressList = ({ addresses, actions, prefs }: Props) => {
-  const { updateAddr, updateList } = actions;
-
-  const hasRoom = room => R.any(R.equals(room), prefs.rooms);
-  const addressesWithRoom = R.keys(R.filter(hasRoom, R.pluck('room', addresses)));
+const AddressList = ({ addresses, prefs }: Props) => {
+  const hasRoom = room => any(equals(room), prefs.rooms);
+  const addressesWithRoom = keys(filter(hasRoom, pluck('room', addresses)));
 
   const createRoomPanels = (addrLst, room) => (
     createBoxedItem(
@@ -38,20 +36,20 @@ const AddressList = ({ addresses, actions, prefs }: Props) => {
         <PanelHeader><FormattedMessage {...messages[room]} /></PanelHeader>
         {
           addrLst.map(address => (
-            <AddrLine {...{ address, updateAddr }} key={address.id} />
+            <AddrLine address={address} key={address.id} />
           ))
         }
       </Panel>
     , room)
   );
 
-  const addrLstByRoom = R.pipe(
-    R.pick(addressesWithRoom),
-    R.values,
-    R.sort((a, b) => a.room < b.room),
-    R.groupBy(R.prop('room')),
-    R.mapObjIndexed(createRoomPanels),
-    R.values /* NOTE: Make last result an array, otherwise React complains about an Object returned by #mapObjIndexed */
+  const addrLstByRoom = pipe(
+    pick(addressesWithRoom),
+    values,
+    sort((a, b) => a.room < b.room),
+    groupBy(prop('room')),
+    mapObjIndexed(createRoomPanels),
+    values /* NOTE: Make last result an array, otherwise React complains about an Object returned by #mapObjIndexed */
   );
 
   /* DEBUGGING */
@@ -66,12 +64,6 @@ const AddressList = ({ addresses, actions, prefs }: Props) => {
       </Flex>
     </View>
   );
-};
-
-AddressList.propTypes = {
-  actions: PropTypes.object.isRequired,
-  addresses: PropTypes.object.isRequired,
-  prefs: PropTypes.object.isRequired,
 };
 
 export default AddressList;

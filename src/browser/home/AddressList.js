@@ -3,8 +3,8 @@
 /* Presentational component to render a simple address-list sorted by most-recently changed */
 import type { KnxAddress } from '../../common/types';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
-import R from 'ramda';
-import React, { PropTypes } from 'react';
+import React from 'react';
+import { map, pipe, sort, values } from 'ramda';
 
 import { Flex, Box } from 'reflexbox';
 import {
@@ -18,15 +18,11 @@ import { FaSquare, FaSquareO } from 'react-icons/lib/fa';
 
 type Props = {
   addresses: Array<KnxAddress>,
-  actions: Object,
 };
 
 const lastUpdated = timestamp => `updated ${distanceInWordsToNow(timestamp)} ago`;
 
-const AddressList = ({ addresses, actions }: Props) => {
-  /* TODO: Re-add support for actions on addresses */
-  const { updateAddr, updateList } = actions;
-
+const AddressList = ({ addresses }: Props) => {
   const boxedAddress = address => (
     <Box p={1} col={4} key={address.id}>
       <Block p={1} borderBottom >
@@ -38,8 +34,8 @@ const AddressList = ({ addresses, actions }: Props) => {
             <Text>{address.name}</Text>
           </Box>
           <Box>
-            <ButtonCircle title={lastUpdated(address.updatedAt)} backgroundColor={!!address.value ? 'primary' : 'inverted'} >
-              { !!address.value ? <FaSquare /> : <FaSquareO /> }
+            <ButtonCircle title={lastUpdated(address.updatedAt)} backgroundColor={address.value ? 'primary' : 'inverted'} >
+              { address.value ? <FaSquare /> : <FaSquareO /> }
             </ButtonCircle>
           </Box>
         </Flex>
@@ -47,12 +43,12 @@ const AddressList = ({ addresses, actions }: Props) => {
     </Box>
   );
 
-  const addrLstByDate = R.pipe(
-    R.values,
-    R.sort((a, b) => !a.value), /* put active / on addresses first, but behind recently updated ones (s. below) */
-    R.sort((a, b) => a.updatedAt < b.updatedAt),
-    R.map(boxedAddress),
-    R.values, /* NOTE: Make last result an array, otherwise React complains about an Object returned by #mapObjIndexed */
+  const addrLstByDate = pipe(
+    values,
+    sort((a, b) => !a.value), /* put active / on addresses first, but behind recently updated ones (s. below) */
+    sort((a, b) => a.updatedAt < b.updatedAt),
+    map(boxedAddress),
+    values, /* NOTE: Make last result an array, otherwise React complains about an Object returned by #mapObjIndexed */
   );
 
   return (
@@ -66,11 +62,6 @@ const AddressList = ({ addresses, actions }: Props) => {
       </Card>
     </Flex>
   );
-};
-
-AddressList.propTypes = {
-  actions: PropTypes.object.isRequired,
-  addresses: PropTypes.object.isRequired,
 };
 
 export default AddressList;

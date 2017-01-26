@@ -16,7 +16,7 @@ const Link = ({ bold, exactly, inverted, pseudo, to, ...props }, { rebass }) => 
     baseStyle,
     className: 'Link',
   };
-  const isExternalLink = to.includes('://');
+  const isExternalLink = typeof to !== 'object' && to.includes('://');
   return isExternalLink ? (
     <Base
       {...linkProps}
@@ -39,7 +39,7 @@ Link.propTypes = {
   exactly: React.PropTypes.bool,
   inverted: React.PropTypes.bool,
   pseudo: React.PropTypes.object.isRequired,
-  to: React.PropTypes.string.isRequired,
+  to: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.object]),
 };
 
 Link.contextTypes = {

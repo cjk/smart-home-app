@@ -4,10 +4,8 @@ import type { Action, FermenterState } from './types';
 import { Observable } from 'rxjs/Observable';
 
 export const sendFermenterCmd = (cmd: string): Action => ({
-  //   return ({ sendFermenterCommand }) => ({
   type: 'SEND_FERMENTER_CMD',
   payload: { cmd },
-  //   promise: sendFermenterCommand('fermenterStart')
 });
 
 export const sendFermenterCmdSuccess = () => ({
@@ -19,20 +17,56 @@ export const processState = (newState: FermenterState): Action => ({
   payload: { newState },
 });
 
-/* PENDING: not yet implemented */
-// export const fetchHistory = (): Action => ({
-//   type: 'FETCH_HISTORY',
-//   //     payload: { history },
-// });
+export const subscribeToState = (): Action => ({
+  type: 'SUBSCRIBE_TO_STATE',
+});
 
-const sendFermenterCmdEpic = (action$: any, { sendFermenterCmd }: Deps) =>
+export const unsubscribeToState = (): Action => ({
+  type: 'UNSUBSCRIBE_TO_STATE',
+});
+
+const subscribeToStateEpic = (action$: any, { homeConnect }: Deps) =>
   action$
-  .filter((action: Action) => action.type === 'SEND_FERMENTER_CMD') /* aka action$.ofType(SEND_FERMENTER_CMD) */
-  .mergeMap(action => (
-    Observable.from(sendFermenterCmd(action.payload.cmd))
-              .map(sendFermenterCmdSuccess)
-  ));
+    .ofType('SUBSCRIBE_TO_STATE')
+    .switchMap(() => homeConnect()
+      .connOpen()
+      .switchMap(client =>
+        Observable.create((observer) => {
+          const rsState = client.record.getRecord('fermenter/state');
+          const onState = newState => observer.next(newState);
+          rsState.subscribe(onState);
+
+          return () => {
+            rsState.unsubscribe(onState);
+          };
+        }).takeUntil(action$.filter((action: Action) =>
+          (action.type === 'UNSUBSCRIBE_TO_STATE' || action.type === 'APP_STOP')))
+      )
+      .switchMap(newState =>
+        Observable.of(processState(newState))
+      )
+    );
+
+const sendFermenterCmdEpic = (action$: any, { homeConnect }: Deps) =>
+  action$
+    .ofType('SEND_FERMENTER_CMD')
+    .switchMap(action => (
+      homeConnect()
+        .connOpen()
+        .switchMap((client) => {
+          const cmdRecord = client.record.getRecord('fermenter/command');
+          const rsReady = Observable.bindCallback(cb => (
+            cmdRecord.whenReady(cb)
+          ));
+          return rsReady();
+        })
+        .switchMap((rs) => {
+          rs.set('fermenter/command', action.payload.cmd);
+          return Observable.of();
+        })
+    ));
 
 export const epics = [
   sendFermenterCmdEpic,
+  subscribeToStateEpic,
 ];
