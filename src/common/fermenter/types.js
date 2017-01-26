@@ -53,7 +53,7 @@ type Devices = {
 }
 
 export type FermenterState = {
-  rts: ?RunTimeState,
+  rts: RunTimeState,
   env: Env,
   devices: Devices,
   history: History,

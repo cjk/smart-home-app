@@ -1,7 +1,7 @@
 /* @flow */
 /* Presentational component to render address-list lines */
 import type { KnxAddress } from '../../common/types';
-import R from 'ramda';
+import { assoc } from 'ramda';
 import React from 'react';
 import { connect } from 'react-redux';
 import { writeGroupAddr } from '../../common/home/actions';
@@ -35,11 +35,11 @@ const AddrLine = ({ address, writeGroupAddr }: Props) => {
   };
   const Icon = chooseIcon(address);
 
-  const toggleAddrVal = addr => R.assoc('value', !addr.value | 0, addr);
+  const toggleAddrVal = addr => assoc('value', !addr.value | 0, addr);
 
-  const updateAddr = (addr) => {
-    return writeGroupAddr(toggleAddrVal(addr));
-  }
+  const updateAddr = addr =>
+    writeGroupAddr(toggleAddrVal(addr));
+
 
   return (
     <Flex align="center" my={2} justify="space-between">

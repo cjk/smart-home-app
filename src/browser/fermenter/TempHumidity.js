@@ -1,14 +1,12 @@
 /* @flow */
-import type FermenterState from '../../common/fermenter/fermenterState';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import React from 'react';
-import { FormattedMessage, defineMessages, injectIntl, intlShape } from 'react-intl';
+import { defineMessages, injectIntl, intlShape } from 'react-intl';
 
 import { Flex, Box } from 'reflexbox';
 import {
   Panel,
   PanelHeader,
-  Space,
   Stat,
   Text,
 } from '../app/components';
@@ -28,7 +26,7 @@ const messages = defineMessages({
   },
 });
 
-const TempHumidity = ({ fermenterState }: FermenterState) => {
+const TempHumidity = ({ fermenterState }) => {
   const { env, devices } = fermenterState;
 
   const content = !env.createdAt ? (

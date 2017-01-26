@@ -8,7 +8,8 @@ const initialState = {
   eventHistory: [],
   prefs: {
     rooms: [
-      'hall-1', 'hall-2', 'hby', 'wz', 'ez', 'kit', 'knd-1', 'knd-2', 'knd-3', 'cel-1', 'cel-2', 'cel-3', 'office',
+      'hall-1', 'hall-2', 'hby', 'wz', 'ez', 'kit', 'knd-1', 'knd-2', 'knd-3', 'cel-1', 'cel-2', 'cel-3',
+      'office', 'rest',
     ]
   },
 };

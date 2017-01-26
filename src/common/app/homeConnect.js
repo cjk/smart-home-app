@@ -6,8 +6,8 @@ import { ReplaySubject } from 'rxjs';
 import deepstream from 'deepstream.io-client-js';
 
 const config = {
-  host: 'localhost', /* NOTE: Must use IP-address i.e. 192.168.1.28, zircon.local is not available on HOME-LAN! :( */
-  //   host: '192.168.1.28', /* NOTE: Must use IP-address i.e. 192.168.1.28, zircon.local is not available on HOME-LAN! :( */
+  //   host: 'localhost', /* NOTE: Must use IP-address i.e. 192.168.1.28, zircon.local is not available on HOME-LAN! :( */
+  host: '192.168.1.28', /* NOTE: Must use IP-address i.e. 192.168.1.28, zircon.local is not available on HOME-LAN! :( */
   port: 6020,
   namespace: 'smartHomeFrontend',
 };

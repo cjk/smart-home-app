@@ -1,6 +1,6 @@
 /* @flow */
-import type FermenterState from '../../common/fermenter/fermenterState';
-import R from 'ramda';
+import type { FermenterState } from '../../common/fermenter/types';
+import { compose, defaultTo, isEmpty, mapObjIndexed, or, values } from 'ramda';
 import React from 'react';
 
 import { Flex, Box } from 'reflexbox';
@@ -21,7 +21,7 @@ const fermenterIsRunning = rts => rts.active;
 const Commander = ({ fermenterState, sendFermenterCmd }: Props) => {
   const { rts: runtimeState, devices } = fermenterState;
 
-  const maybeShowCurrentCmd = R.defaultTo(' -- ');
+  const maybeShowCurrentCmd = defaultTo(' -- ');
 
   const toggleDevice = (name) => {
     /* Only allow switching fermenter itself on/off for now */
@@ -46,7 +46,7 @@ const Commander = ({ fermenterState, sendFermenterCmd }: Props) => {
     </Box>
   );
 
-  const content = R.or(R.isEmpty(runtimeState), R.isEmpty(devices)) ? (
+  const content = or(isEmpty(runtimeState), isEmpty(devices)) ? (
     <Flex>
       <Text small>No status yet...</Text>
     </Flex>
@@ -56,9 +56,9 @@ const Commander = ({ fermenterState, sendFermenterCmd }: Props) => {
         lastCmdBox()
       }
       {
-        R.compose(
-          R.values,
-          R.mapObjIndexed((dev, name) => (
+        compose(
+          values,
+          mapObjIndexed((dev, name) => (
             deviceStateBox(name, dev.isOn)
           )),
         )(devices)
