@@ -4,7 +4,7 @@
 import type { KnxAddress } from '../../common/types';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import React from 'react';
-import { map, pipe, sort, values } from 'ramda';
+import { isNil, map, pipe, sort, values } from 'ramda';
 
 import { Flex, Box } from 'reflexbox';
 import {
@@ -12,6 +12,7 @@ import {
   Block,
   ButtonCircle,
   Card,
+  Space,
   Text,
 } from '../app/components';
 import { FaSquare, FaSquareO } from 'react-icons/lib/fa';
@@ -24,15 +25,16 @@ const lastUpdated = timestamp => `updated ${distanceInWordsToNow(timestamp)} ago
 
 const AddressList = ({ addresses }: Props) => {
   const boxedAddress = address => (
-    <Box p={1} col={4} key={address.id}>
-      <Block p={1} borderBottom >
+    <Box p={1} sm={8} md={6} lg={4} key={address.id}>
+      <Block p={1} borderTop >
         <Flex justify="space-between">
           <Box>
             <Badge rounded theme="info">{address.id}</Badge>
           </Box>
-          <Box px={1} auto>
+          <Box px={1}>
             <Text>{address.name}</Text>
           </Box>
+          <Space />
           <Box>
             <ButtonCircle title={lastUpdated(address.updatedAt)} backgroundColor={address.value ? 'primary' : 'inverted'} >
               { address.value ? <FaSquare /> : <FaSquareO /> }
@@ -45,7 +47,7 @@ const AddressList = ({ addresses }: Props) => {
 
   const addrLstByDate = pipe(
     values,
-    sort((a, b) => !a.value), /* put active / on addresses first, but behind recently updated ones (s. below) */
+    sort((a, b) => isNil(a.value)), /* put active / on addresses first, but behind recently updated ones (s. below) */
     sort((a, b) => a.updatedAt < b.updatedAt),
     map(boxedAddress),
     values, /* NOTE: Make last result an array, otherwise React complains about an Object returned by #mapObjIndexed */

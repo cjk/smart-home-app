@@ -5,12 +5,9 @@ import * as fermenterActions from '../../common/fermenter/actions';
 import TempHumidityInfo from './TempHumidity';
 import Commander from './Commander';
 import { connect } from 'react-redux';
-import linksMessages from '../../common/app/linksMessages';
 
 import { Flex, Box } from 'reflexbox';
 import {
-  PageHeader,
-  Title,
   View,
 } from '../app/components';
 
@@ -39,13 +36,11 @@ class FermenterPage extends React.Component {
 
     return (
       <View>
-        <Title message={linksMessages.fermenter} />
-        <PageHeader description="Fermenter Remote Control" heading="Fermenter" />
-        <Flex wrap gutter={1}>
-          <Box p={2}>
+        <Flex wrap align="center">
+          <Box auto px={2} py={1}>
             <Commander fermenterState={fermenter} sendFermenterCmd={sendFermenterCmd} />
           </Box>
-          <Box p={2}>
+          <Box auto px={2} py={1}>
             <TempHumidityInfo fermenterState={fermenter} />
           </Box>
         </Flex>
