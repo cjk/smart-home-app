@@ -28,7 +28,7 @@ const Commander = ({ fermenterState, sendFermenterCmd }: Props) => {
     if (name !== 'fermenter') {
       return false;
     }
-    return fermenterIsRunning(runtimeState) ? sendFermenterCmd('fermenterStop') : sendFermenterCmd('fermenterStart');
+    return fermenterIsRunning(runtimeState) ? sendFermenterCmd('stop') : sendFermenterCmd('start');
   };
 
   const deviceStateBox = (name, isOn) =>
