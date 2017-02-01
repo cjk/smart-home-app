@@ -4,7 +4,7 @@
 import type { KnxAddress } from '../../common/types';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import React from 'react';
-import { isNil, map, pipe, sort, values } from 'ramda';
+import { comparator, complement, isNil, map, pipe, sort, values } from 'ramda';
 
 import { Flex, Box } from 'reflexbox';
 import {
@@ -22,6 +22,9 @@ type Props = {
 };
 
 const lastUpdated = timestamp => `updated ${distanceInWordsToNow(timestamp)} ago`;
+
+const hasStatus = complement(isNil);
+const byHasValue = comparator((a, b) => isNil(b.value) ? hasStatus(a.value) : a.updatedAt > b.updatedAt);
 
 const AddressList = ({ addresses }: Props) => {
   const boxedAddress = address => (
@@ -47,8 +50,7 @@ const AddressList = ({ addresses }: Props) => {
 
   const addrLstByDate = pipe(
     values,
-    sort((a, b) => isNil(a.value)), /* put active / on addresses first, but behind recently updated ones (s. below) */
-    sort((a, b) => a.updatedAt < b.updatedAt),
+    sort(byHasValue), /* put active / on addresses first, but behind recently updated ones (s. below) */
     map(boxedAddress),
     values, /* NOTE: Make last result an array, otherwise React complains about an Object returned by #mapObjIndexed */
   );
