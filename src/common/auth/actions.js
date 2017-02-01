@@ -96,6 +96,7 @@ const signInEpic = (
 ) => {
   // groups.google.com/forum/#!msg/firebase-talk/643d_lwUAMI/bfQyn8D-BQAJ
   // stackoverflow.com/a/33997042/233902
+  // Workaround still needed with Firebase 3.6.8
   const isMobileFacebookApp = () => {
     const ua = navigator.userAgent || navigator.vendor; // eslint-disable-line no-undef
     return ua.indexOf('FBAN') > -1 || ua.indexOf('FBAV') > -1;
