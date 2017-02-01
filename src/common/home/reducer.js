@@ -1,7 +1,7 @@
 /* @flow */
 
 import type { Action, SmartHomeState } from '../types';
-import R from 'ramda';
+import { __, assoc, find, identity, indexOf, has, lens, lensPath, merge, pipe, prepend, prop, propEq, set, update, view } from 'ramda';
 
 const initialState = {
   livestate: {},
@@ -14,7 +14,7 @@ const initialState = {
   },
 };
 
-const eHstLens = R.lens(R.prop('eventHistory'), R.assoc('eventHistory'));
+const eHstLens = lens(prop('eventHistory'), assoc('eventHistory'));
 
 const reducer = (
   state: SmartHomeState = initialState,
@@ -25,29 +25,30 @@ const reducer = (
     case 'PROCESS_EVENT': {
       const { newEvent } = action.payload;
 
-      const newState = R.pipe(
-        R.view(eHstLens),
-        R.prepend(newEvent),
-        R.set(eHstLens, R.__, state),
+      const newState = pipe(
+        view(eHstLens),
+        prepend(newEvent),
+        set(eHstLens, __, state),
       )(state);
-      // const newEventHistory = R.prepend(newEvent, R.view(eHstLens, state));
-      // const updateEventHistory = R.set(eHstLens, newEventHistory);
 
       const { dest, value, action: eventAct } = newEvent;
 
       /* Livestate is only affected if address is present and is a mutating action */
-      if (!R.has(dest, state.livestate) || !eventAct.match(/^(write|response)$/)) {
+      if (!has(dest, state.livestate) || !eventAct.match(/^(write|response)$/)) {
         /* Return only updated event-history */
         return newState;
       }
 
       /* Also update livestate with new address-value */
-      const addrValLens = R.lensPath(['livestate', dest, 'value']);
-      return R.set(addrValLens, value, newState);
+      const address = newState.livestate[dest];
+      const addrValLens = lensPath(['livestate', dest]);
+
+      return set(addrValLens, merge(address, { value, updatedAt: Date.now() }), newState);
     }
 
     case 'REQUEST_INITIAL_STATE_SUCCESS': {
-      return R.assoc('livestate', action.payload, state);
+      console.info(JSON.stringify(action.payload));
+      return assoc('livestate', action.payload, state);
     }
 
     default:
