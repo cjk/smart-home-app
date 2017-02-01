@@ -1,7 +1,7 @@
 /* @flow */
 
 import type { Action, BusEvent, Deps, KnxAddress, SmartHomeState } from '../types';
-import R from 'ramda';
+import { assoc } from 'ramda';
 import { Observable } from 'rxjs/Observable';
 
 export const requestInitialStateSuccess = (smartHomeState: SmartHomeState): Action => ({
@@ -10,7 +10,7 @@ export const requestInitialStateSuccess = (smartHomeState: SmartHomeState): Acti
 });
 
 export const processEvent = (event: BusEvent) => ({ getUid }: Function): Action => {
-  const newEvent = R.assoc('id', getUid(), event);
+  const newEvent = assoc('id', getUid(), event);
   return {
     type: 'PROCESS_EVENT',
     payload: { newEvent },

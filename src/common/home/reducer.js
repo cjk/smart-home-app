@@ -1,7 +1,7 @@
 /* @flow */
 
 import type { Action, SmartHomeState } from '../types';
-import { __, assoc, find, identity, indexOf, has, lens, lensPath, merge, pipe, prepend, prop, propEq, set, update, view } from 'ramda';
+import { __, assoc, has, lens, lensPath, merge, pipe, prepend, prop, set, view } from 'ramda';
 
 const initialState = {
   livestate: {},
@@ -47,7 +47,6 @@ const reducer = (
     }
 
     case 'REQUEST_INITIAL_STATE_SUCCESS': {
-      console.info(JSON.stringify(action.payload));
       return assoc('livestate', action.payload, state);
     }
 
