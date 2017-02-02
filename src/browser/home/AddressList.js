@@ -12,7 +12,6 @@ import {
   Block,
   ButtonCircle,
   Card,
-  Space,
   Text,
 } from '../app/components';
 import { FaSquare, FaSquareO } from 'react-icons/lib/fa';
@@ -28,17 +27,16 @@ const byHasValue = comparator((a, b) => isNil(b.value) ? hasStatus(a.value) : a.
 
 const AddressList = ({ addresses }: Props) => {
   const boxedAddress = address => (
-    <Box p={1} sm={8} md={6} lg={4} key={address.id}>
-      <Block p={1} borderTop >
+    <Box p={1} col={12} key={address.id}>
+      <Block py={1} borderTop >
         <Flex justify="space-between">
-          <Box>
+          <Box col={2}>
             <Badge rounded theme="info">{address.id}</Badge>
           </Box>
-          <Box px={1}>
+          <Box col={8}>
             <Text>{address.name}</Text>
           </Box>
-          <Space />
-          <Box>
+          <Box col={2}>
             <ButtonCircle title={lastUpdated(address.updatedAt)} backgroundColor={address.value ? 'primary' : 'inverted'} >
               { address.value ? <FaSquare /> : <FaSquareO /> }
             </ButtonCircle>
