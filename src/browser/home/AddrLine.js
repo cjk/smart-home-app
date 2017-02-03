@@ -1,8 +1,8 @@
 /* @flow */
 /* Presentational component to render address-list lines */
 import type { KnxAddress } from '../../common/types';
-import { assoc } from 'ramda';
 import React from 'react';
+import { assoc } from 'ramda';
 import { connect } from 'react-redux';
 import { writeGroupAddr } from '../../common/home/actions';
 import { GoLightBulb, GoPlug, GoCalendar, GoScreenNormal,
@@ -11,6 +11,7 @@ import { Flex } from 'reflexbox';
 import {
   Switch,
   Text,
+  Tooltip,
 } from '../app/components';
 
 type Props = {
@@ -42,12 +43,13 @@ const AddrLine = ({ address, writeGroupAddr }: Props) => {
 
 
   return (
-    <Flex align="center" my={2} justify="space-between">
-      <Icon size="2em" />
+    <Flex my={2} justify="space-between">
+      <Tooltip title={address.id}>
+        <Icon size="2em" />
+      </Tooltip>
       <Text key={address.id}>
         { address.name }
       </Text>
-      <Text small>[{ address.id }]</Text>
       <Switch checked={!!address.value} disabled={!switchable(address)} onClick={() => updateAddr(address)} />
     </Flex>
   );
