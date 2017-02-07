@@ -2,68 +2,72 @@
 import { defineMessages } from 'react-intl';
 
 export default defineMessages({
-  'hall-1': {
-    defaultMessage: 'Flur-EG',
-    id: 'app.rooms.hall-1',
+  "bath": {
+    "defaultMessage": "Bad",
+    "id": "app.rooms.bath"
   },
-  'hall-2': {
-    defaultMessage: 'Flur-DG',
-    id: 'app.rooms.hall-2',
+  "cel-1": {
+    "defaultMessage": "Keller-1",
+    "id": "app.rooms.cel-1"
   },
-  hby: {
-    defaultMessage: 'Hobby',
-    id: 'app.rooms.hby',
+  "cel-2": {
+    "defaultMessage": "Keller-2",
+    "id": "app.rooms.cel-2"
   },
-  'cel-1': {
-    defaultMessage: 'Keller-1',
-    id: 'app.rooms.cel-1',
+  "cel-3": {
+    "defaultMessage": "Keller-3",
+    "id": "app.rooms.cel-3"
   },
-  'cel-2': {
-    defaultMessage: 'Keller-2',
-    id: 'app.rooms.cel-2',
+  "ez": {
+    "defaultMessage": "Esszimmer",
+    "id": "app.rooms.ez"
   },
-  'cel-3': {
-    defaultMessage: 'Keller-3',
-    id: 'app.rooms.cel-3',
+  "hall-1": {
+    "defaultMessage": "Flur-EG",
+    "id": "app.rooms.hall-1"
   },
-  kit: {
-    defaultMessage: 'Küche',
-    id: 'app.rooms.kit',
+  "hall-2": {
+    "defaultMessage": "Flur-DG",
+    "id": "app.rooms.hall-2"
   },
-  wz: {
-    defaultMessage: 'Wohnzimmer',
-    id: 'app.rooms.wz',
+  "hby": {
+    "defaultMessage": "Hobby",
+    "id": "app.rooms.hby"
   },
-  ez: {
-    defaultMessage: 'Esszimmer',
-    id: 'app.rooms.ez',
+  "kit": {
+    "defaultMessage": "Küche",
+    "id": "app.rooms.kit"
   },
-  office: {
-    defaultMessage: 'Büro',
-    id: 'app.rooms.office',
+  "knd-1": {
+    "defaultMessage": "Kind-1",
+    "id": "app.rooms.knd-1"
   },
-  bath: {
-    defaultMessage: 'Bad',
-    id: 'app.rooms.bath',
+  "knd-2": {
+    "defaultMessage": "Kind-2",
+    "id": "app.rooms.knd-2"
   },
-  rest: {
-    defaultMessage: 'WC',
-    id: 'app.rooms.rest',
+  "knd-3": {
+    "defaultMessage": "Kind-3",
+    "id": "app.rooms.knd-3"
   },
-  tec: {
-    defaultMessage: 'Technik',
-    id: 'app.rooms.tec',
+  "office": {
+    "defaultMessage": "Büro",
+    "id": "app.rooms.office"
   },
-  'knd-1': {
-    defaultMessage: 'Kind-1',
-    id: 'app.rooms.knd-1',
+  "outer": {
+    "defaultMessage": "Außenbereich",
+    "id": "app.rooms.outer"
   },
-  'knd-2': {
-    defaultMessage: 'Kind-2',
-    id: 'app.rooms.knd-2',
+  "rest": {
+    "defaultMessage": "WC",
+    "id": "app.rooms.rest"
   },
-  'knd-3': {
-    defaultMessage: 'Kind-3',
-    id: 'app.rooms.knd-3',
+  "tec": {
+    "defaultMessage": "Technik",
+    "id": "app.rooms.tec"
   },
+  "wz": {
+    "defaultMessage": "Wohnzimmer",
+    "id": "app.rooms.wz"
+  }
 });
