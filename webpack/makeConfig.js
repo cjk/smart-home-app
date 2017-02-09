@@ -16,33 +16,44 @@ const webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(webpackIso
 // You may want 'cheap-module-source-map' instead if you prefer source maps.
 const devtools = 'eval';
 
-const loaders = {
-  css: '',
-};
-
 const serverIp = config.remoteHotReload
   ? ip.address() // Dynamic IP address enables hot reload on remote devices.
   : 'localhost';
+
+/* PENDING: PostCSS-options are also in {projectRoot}/postcss.config.js - can probably remove these here */
+const postCssOptions = () => ([
+  autoprefixer({
+    browsers: ['last 1 versions'],
+    compress: true,
+  }),
+]);
 
 const makeConfig = (options) => {
   const {
     isDevelopment,
   } = options;
 
-  const stylesLoaders = Object.keys(loaders).map((ext) => {
-    const prefix = 'css-loader!postcss-loader';
-    const extLoaders = prefix + loaders[ext];
-    const loader = isDevelopment
-      ? `style-loader!${extLoaders}`
-      : ExtractTextPlugin.extract({
-        fallbackLoader: 'style-loader',
-        loader: extLoaders,
-      });
-    return {
-      loader,
-      test: new RegExp(`\\.(${ext})$`),
-    };
-  });
+  const stylesLoaders = [{
+    test: /\.css$/,
+    use: isDevelopment ? [
+      'style-loader',
+      'css-loader?importLoaders=1',
+      'postcss-loader'
+    ] : ExtractTextPlugin.extract({
+      fallback: 'style-loader',
+      use: [
+        { loader: 'css-loader',
+          options: {
+            sourceMap: true,
+          },
+        },
+        { loader: 'postcss-loader',
+          options: {
+            plugins: postCssOptions,
+          },
+        }],
+    })
+  }];
 
   const config = {
     cache: isDevelopment,
@@ -102,7 +113,7 @@ const makeConfig = (options) => {
             },
           },
         },
-        ...stylesLoaders,
+        ...stylesLoaders
       ],
     },
     output: isDevelopment ? {
@@ -125,11 +136,6 @@ const makeConfig = (options) => {
           // Loaders should be updated to allow passing options via loader options in module.rules.
           // Alternatively, LoaderOptionsPlugin can be used to pass options to loaders
           hotPort: constants.HOT_RELOAD_PORT,
-          options: {
-            postcss: {
-              plugins: [autoprefixer({ browsers: 'last 2 version' })],
-            },
-          },
         }),
         new webpack.DefinePlugin({
           'process.env': {
@@ -142,7 +148,7 @@ const makeConfig = (options) => {
       if (isDevelopment) {
         plugins.push(
           new webpack.HotModuleReplacementPlugin(),
-          new webpack.NoErrorsPlugin(),
+          new webpack.NoEmitOnErrorsPlugin(),
           webpackIsomorphicToolsPlugin.development(),
         );
       } else {
