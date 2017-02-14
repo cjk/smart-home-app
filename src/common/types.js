@@ -45,13 +45,6 @@ export type BusEvent = {
   value: string,
 };
 
-export type Todo = {
-  completed: boolean,
-  createdAt: number,
-  id: string,
-  title: string,
-};
-
 export type User = {
   displayName: string,
   email: ?string,
@@ -103,10 +96,6 @@ export type SmartHomeState = {
   livestate: {[id: string]: KnxAddress},
   eventHistory: Array<BusEvent>,
   prefs: ?Object,
-};
-
-export type TodosState = {
-  all: {[id: string]: Todo},
 };
 
 export type UsersState = {

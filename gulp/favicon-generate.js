@@ -24,7 +24,7 @@ gulp.task('favicon-generate', (done) => {
         pictureAspect: 'noChange',
         themeColor: '#ffffff',
         manifest: {
-          name: 'este',
+          name: 'SmartHomeApp',
           display: 'browser',
           orientation: 'notSet',
           onConflict: 'override',

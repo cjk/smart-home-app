@@ -7,8 +7,7 @@ export default {
       firebase: 'Firebase',
       home: 'Home',
       login: 'Login',
-      me: 'Me',
-      todos: 'Todos'
+      me: 'Me'
     }
   },
   auth: {
@@ -75,19 +74,6 @@ export default {
     header: 'This page isn\'t available',
     message: 'The link may be broken, or the page may have been removed.',
     title: 'Page Not Found'
-  },
-  todos: {
-    add100: 'Add 100 Todos',
-    clearAll: 'Clear All',
-    clearCompleted: 'Clear Completed',
-    empty: 'It\'s rather empty here...',
-    leftList: `{size, plural,
-      =0 {Nothing, enjoy}
-      one {You are almost done}
-      other {You have {size} tasks to go}
-    }`,
-    newTodoPlaceholder: 'What needs to be done?',
-    title: 'Todos'
   },
   profile: {
     title: 'Profile'
