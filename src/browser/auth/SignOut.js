@@ -6,8 +6,10 @@ import { Button, View } from '../app/components';
 import { connect } from 'react-redux';
 import { signOut } from '../../common/auth/actions';
 
-// $FlowFixMe
-const SignOut = ({ signOut }, { router }) => {
+type SignOutProps = { signOut: typeof signOut };
+type SignOutContext = { router: any };
+
+const SignOut = ({ signOut }: SignOutProps, { router }: SignOutContext) => {
   const onClick = () => {
     // We have to redirect to home before signOut.
     router.transitionTo({ pathname: '/' });
@@ -23,13 +25,7 @@ const SignOut = ({ signOut }, { router }) => {
   );
 };
 
-SignOut.propTypes = {
-  signOut: React.PropTypes.func.isRequired,
-};
-
-SignOut.contextTypes = {
-  router: React.PropTypes.object,
-};
+SignOut.contextTypes = { router: React.PropTypes.object };
 
 export default connect(
   null,
