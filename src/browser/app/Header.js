@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { compose } from 'ramda';
 import { FormattedMessage } from 'react-intl';
 import linksMessages from '../../common/app/linksMessages';
-import { Link, Space, Toolbar } from '../app/components';
+import { Link, Space, Toolbar } from '../components';
 
 const styles = {
   toolbar: {

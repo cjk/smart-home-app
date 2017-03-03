@@ -12,7 +12,7 @@ import {
   Block,
   Card,
   Text,
-} from '../app/components';
+} from '../components';
 
 type Props = {
   addresses: Array<KnxAddress>,

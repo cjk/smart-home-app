@@ -12,7 +12,7 @@ import {
   Switch,
   Text,
   Tooltip,
-} from '../app/components';
+} from '../components';
 
 type Props = {
   address: KnxAddress,

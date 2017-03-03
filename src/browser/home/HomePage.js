@@ -11,7 +11,7 @@ import {
   Block,
   Title,
   View,
-} from '../app/components';
+} from '../components';
 
 import { Box } from 'reflexbox';
 

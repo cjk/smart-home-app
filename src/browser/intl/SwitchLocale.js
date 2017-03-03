@@ -1,7 +1,7 @@
 /* @flow */
 import type { State } from '../../common/types';
 import React from 'react';
-import { Button, View } from '../app/components';
+import { Button, View } from '../components';
 import { connect } from 'react-redux';
 import { setCurrentLocale } from '../../common/intl/actions';
 

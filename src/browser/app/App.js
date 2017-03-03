@@ -1,7 +1,7 @@
 /* @flow */
 import type { State } from '../../common/types';
 import './App.css';
-import * as themes from './themes';
+import * as themes from '../themes';
 import Header from './Header';
 import Footer from './Footer';
 import Helmet from 'react-helmet';
@@ -9,8 +9,8 @@ import React from 'react';
 import favicon from '../../common/app/favicon';
 import start from '../../common/app/start';
 import { compose } from 'ramda';
-import { Box, Container, Flex } from '../app/components';
-import { Match, ThemeProvider } from '../../common/app/components';
+import { Box, Container, Flex } from '../components';
+import { Match, ThemeProvider } from '../../common/components';
 import { Miss } from 'react-router';
 import { connect } from 'react-redux';
 
@@ -47,10 +47,12 @@ const bootstrap4Metas: any = [
   },
 ];
 
-const App = ({
+const App = (
+  {
   currentLocale,
   currentTheme,
-}): AppProps => (
+  }: AppProps,
+) => (
   <ThemeProvider
     key={currentTheme} // github.com/yahoo/react-intl/issues/234#issuecomment-163366518
     theme={themes[currentTheme] || themes.initial}

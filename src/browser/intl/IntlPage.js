@@ -2,7 +2,7 @@
 import Locales from './SwitchLocale';
 import React from 'react';
 import linksMessages from '../../common/app/linksMessages';
-import { Block, PageHeader, Text, Title, View } from '../app/components';
+import { Block, PageHeader, Text, Title, View } from '../components';
 import {
   FormattedDate,
   FormattedMessage,

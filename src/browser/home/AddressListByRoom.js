@@ -13,7 +13,7 @@ import {
   Panel,
   PanelHeader,
   View,
-} from '../app/components';
+} from '../components';
 
 type Props = {
   addresses: Array<KnxAddress>,

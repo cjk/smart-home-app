@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { Flex, Box } from 'reflexbox';
 import {
   View,
-} from '../app/components';
+} from '../components';
 
 class FermenterPage extends React.Component {
 

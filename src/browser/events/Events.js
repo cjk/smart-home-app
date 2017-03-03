@@ -6,7 +6,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import eventMessages from './messages';
 
-import { Table, View } from '../app/components';
+import { Table, View } from '../components';
 
 /* How many events to show in events-history table */
 const maxListEntries = 50;

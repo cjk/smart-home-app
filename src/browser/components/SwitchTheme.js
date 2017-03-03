@@ -1,10 +1,10 @@
 /* @flow */
-import type { State } from '../../../common/types';
+import type { State } from '../../common/types';
 import * as themes from '../themes';
 import React from 'react';
 import { Button, View } from './';
 import { connect } from 'react-redux';
-import { setTheme } from '../../../common/themes/actions';
+import { setTheme } from '../../common/themes/actions';
 
 const getSortedThemeKeys = () => {
   const customThemesKeys = Object.keys(themes)

@@ -5,7 +5,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import linksMessages from '../../common/app/linksMessages';
 
-import { Title, View } from '../app/components';
+import { Title, View } from '../components';
 
 const EventsPage = ({ eventHistory }) => (
   <View>

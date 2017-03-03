@@ -1,11 +1,11 @@
 // @flow
-import type { State } from '../../../common/types';
+import type { State } from '../../common/types';
 import Box from './Box';
 import Button from './Button';
 import React from 'react';
 import { compose } from 'ramda';
 import { connect } from 'react-redux';
-import { toggleBaseline } from '../../../common/app/actions';
+import { toggleBaseline } from '../../common/app/actions';
 
 type ToggleBaselineProps = {
   baselineShown: boolean,

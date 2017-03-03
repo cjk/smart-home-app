@@ -1,6 +1,6 @@
 /* @flow */
 import React from 'react';
-import { Input, View } from '../app/components';
+import { Input, View } from '../components';
 import { fields } from '../../common/lib/redux-fields';
 
 type Props = {

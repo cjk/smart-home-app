@@ -2,7 +2,7 @@
 import React from 'react';
 import { FormattedMessage, defineMessages } from 'react-intl';
 import { Message } from './';
-import { ValidationError } from '../../../common/lib/validation';
+import { ValidationError } from '../../common/lib/validation';
 
 const messages = defineMessages({
   required: {

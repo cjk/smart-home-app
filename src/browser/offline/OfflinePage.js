@@ -2,7 +2,7 @@
 import type { State } from '../../common/types';
 import React from 'react';
 import linksMessages from '../../common/app/linksMessages';
-import { PageHeader, Pre, Title, View } from '../app/components';
+import { PageHeader, Pre, Title, View } from '../components';
 import { connect } from 'react-redux';
 
 const OfflinePage = ({ online }) => (

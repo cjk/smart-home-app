@@ -9,7 +9,7 @@ import {
   PanelHeader,
   Switch,
   Text,
-} from '../app/components';
+} from '../components';
 
 type Props = {
   fermenterState: FermenterState,

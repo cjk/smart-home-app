@@ -9,7 +9,7 @@ import {
   PanelHeader,
   Stat,
   Text,
-} from '../app/components';
+} from '../components';
 
 const messages = defineMessages({
   environment: {

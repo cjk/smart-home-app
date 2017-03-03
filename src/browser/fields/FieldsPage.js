@@ -14,7 +14,7 @@ import {
   PageHeader,
   Radio,
   Title,
-} from '../app/components';
+} from '../components';
 
 const FieldsPage = ({ fields }) => {
   const onSubmit = () => {
