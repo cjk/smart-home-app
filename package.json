@@ -64,7 +64,6 @@
     "fela-plugin-validator": "^4.1.0",
     "fela-preset-web": "^4.1.0",
     "file-loader": "^0.10.1",
-    "firebase": "^3.1.0",
     "flow-bin": "^0.40.0",
     "gravatar": "^1.6.0",
     "gulp": "^3.9.0",

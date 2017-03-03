@@ -4,7 +4,6 @@ import type { ConfigState } from '../types';
 const initialState = {
   appName: '',
   appVersion: '',
-  firebase: null,
   sentryUrl: '',
 };
 

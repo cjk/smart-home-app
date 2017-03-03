@@ -16,17 +16,6 @@ const captureException = (error) => {
   }
 };
 
-const setRavenUserContext = (user) => {
-  if (!user) {
-    Raven.setUserContext();
-    return;
-  }
-  Raven.setUserContext({
-    email: user.email,
-    id: user.uid,
-  });
-};
-
 // TODO: Add www.youtube.com/watch?v=5yHFTN-_mOo for total imperative reporting.
 const contextWithoutPrivateData = (state, actions) => ({
   actions: actions.map(action => action.type),
@@ -45,8 +34,6 @@ const createReportingMiddleware = () => {
   return store => next => (action: Action) => {
     if (action.type === 'APP_ERROR') {
       captureException(action.payload.error);
-    } else if (action.type === 'ON_AUTH') {
-      setRavenUserContext(action.payload.firebaseUser);
     }
     setExtraContext(store.getState(), action);
     return next(action);
@@ -79,11 +66,6 @@ const configureReporting = (options) => {
       'bmi_SafeAddOnload',
       'EBCallBackMessageReceived',
       'conduitPage',
-      // Firebase
-      'Access is denied.',
-      'An internal error has occurred.',
-      'PERMISSION_DENIED: Permission denied',
-      'A network error (such as timeout, interrupted connection or unreachable host) has occurred',
     ],
     ignoreUrls: [
       // Facebook flakiness

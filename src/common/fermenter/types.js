@@ -28,17 +28,17 @@ export type Emergency = {
   at: ?number,
 };
 
-export type History = {
-  switchOps: Array<SwitchOp>,
-  emergencies: Array<Emergency>
-};
-
 type Notification = {
   level: string,
   msg: ?string
 }
 
-type RunTimeState = {
+export type History = {
+  switchOps: Array<SwitchOp>,
+  emergencies: Array<Emergency>
+};
+
+export type RunTimeState = {
   active: boolean,
   status: string,
   hasEnvEmergency: boolean,

@@ -9,9 +9,6 @@ import type { FermenterState } from './fermenter/types';
 
 export type Deps = {
   FBSDK: any,
-  firebase: any,
-  firebaseAuth: Function,
-  firebaseDatabase: any,
   getState: () => Object,
   getUid: () => string,
   now: () => number,
@@ -45,13 +42,6 @@ export type BusEvent = {
   value: string,
 };
 
-export type User = {
-  displayName: string,
-  email: ?string,
-  id: string,
-  photoURL: ?string,
-};
-
 // Reducers
 
 export type AppState = {
@@ -61,15 +51,9 @@ export type AppState = {
   started: boolean,
 };
 
-export type AuthState = {
-  formDisabled: boolean,
-  error: ?Error,
-};
-
 export type ConfigState = {
   appName: string,
   appVersion: string,
-  firebase: ?Object,
   sentryUrl: string,
 };
 
@@ -98,16 +82,10 @@ export type SmartHomeState = {
   prefs: ?Object,
 };
 
-export type UsersState = {
-  online: ?Array<User>,
-  viewer: ?User,
-};
-
 // State
 
 export type State = {
   app: AppState,
-  auth: AuthState,
   config: ConfigState,
   device: DeviceState,
   fields: any,
@@ -115,7 +93,6 @@ export type State = {
   themes: ThemeState,
   smartHome: SmartHomeState,
   fermenter: FermenterState,
-  users: UsersState,
 };
 
 // Actions
@@ -134,17 +111,6 @@ export type Action =
   | { type: 'APP_STARTED' }
   | { type: 'APP_STOP' }
   | { type: 'APP_STORAGE_LOADED' }
-  | { type: 'ON_AUTH', payload: { firebaseUser: ?Object } }
-  | { type: 'ON_USERS_PRESENCE', payload: { presence: Object } }
-  | { type: 'RESET_PASSWORD', payload: { email: string } }
-  | { type: 'SAVE_USER_DONE' }
   | { type: 'SET_CURRENT_LOCALE', payload: { locale: string } }
   | { type: 'SET_THEME', payload: { theme: string } }
-  | { type: 'SIGN_IN', payload: { providerName: string, options?: Object } }
-  | { type: 'SIGN_IN_DONE', payload: { user: ?User } }
-  | { type: 'SIGN_IN_FAIL', payload: { error: Error } }
-  | { type: 'SIGN_OUT' }
-  | { type: 'SIGN_UP', payload: { providerName: string, options?: Object } }
-  | { type: 'SIGN_UP_DONE', payload: { user: ?User } }
-  | { type: 'SIGN_UP_FAIL', payload: { error: Error } }
 ;

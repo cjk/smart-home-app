@@ -2,7 +2,6 @@
 import type { Action, Deps } from '../types';
 import { Observable } from 'rxjs/Observable';
 import { REHYDRATE } from 'redux-persist/constants';
-import { onAuth, signInDone, signInFail } from '../auth/actions';
 import { processEvent, requestInitialStateSuccess } from '../home/actions';
 
 export const appError = (error: Object): Action => ({
@@ -97,69 +96,7 @@ const appStartedDeepstreamEpic = (action$: any, deps: Deps) => {
       ));
 };
 
-const appStartedFirebaseEpic = (action$: any, deps: Deps) => {
-  const { firebase, firebaseAuth, getState } = deps;
-
-  const appOnline$ = Observable.create((observer) => {
-    const onValue = (snap) => {
-      const online = snap.val();
-      if (online === getState().app.online) return;
-      observer.next(appOnline(online));
-    };
-    firebase.child('.info/connected').on('value', onValue);
-    return () => {
-      firebase.child('.info/connected').off('value', onValue);
-    };
-  });
-
-  // firebase.google.com/docs/reference/js/firebase.auth.Auth#onAuthStateChanged
-  const onAuth$ = Observable.create((observer) => {
-    const unsubscribe = firebaseAuth().onAuthStateChanged((firebaseUser) => {
-      observer.next(onAuth(firebaseUser));
-    });
-    return unsubscribe;
-  });
-
-  const signInAfterRedirect$ = Observable.create((observer) => {
-    let unsubscribed = false;
-    firebaseAuth().getRedirectResult()
-      .then(({ user: firebaseUser }) => {
-        if (unsubscribed || !firebaseUser) return;
-        observer.next(signInDone(firebaseUser));
-      })
-      .catch((error) => {
-        if (unsubscribed) return;
-        observer.error(signInFail(error));
-      });
-    return () => {
-      unsubscribed = true;
-    };
-  });
-
-  const streams = [
-    /* CjK 24.01.2017 - Firebase-connection deactivated */
-    //     appOnline$,
-    //     onAuth$,
-  ];
-
-  if (process.env.IS_BROWSER) {
-    /* CjK 24.01.2017 - Firebase-connection deactivated */
-    //     streams.push(signInAfterRedirect$);
-  }
-
-  return action$
-    .filter((action: Action) => action.type === 'APP_STARTED')
-    .mergeMap(() => Observable
-      .merge(...streams)
-      // takeUntil unsubscribes all merged streams on APP_STOP.
-      .takeUntil(
-        action$.filter((action: Action) => action.type === 'APP_STOP'),
-      ),
-    );
-};
-
 export const epics = [
   appStartEpic,
-  appStartedFirebaseEpic,
   appStartedDeepstreamEpic,
 ];

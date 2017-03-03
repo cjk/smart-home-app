@@ -1,5 +1,6 @@
 /* @flow */
-import type { State, User } from '../../common/types';
+import type { State } from '../../common/types';
+import type { RunTimeState } from '../../common/fermenter/types';
 import React from 'react';
 import { GoHome, GoHistory } from 'react-icons/lib/go';
 import { connect } from 'react-redux';
@@ -18,11 +19,11 @@ const styles = {
 };
 
 type HeaderProps = {
-  viewer: ?User,
+  fermenterRuntime: ?RunTimeState,
 };
 
 const Header = ({
-  viewer
+  fermenterRuntime
 }: HeaderProps) => (
   <Toolbar style={styles.toolbar}>
     <Link bold inverted exactly to="/">
@@ -53,7 +54,7 @@ const Header = ({
 export default compose(
   connect(
     (state: State) => ({
-      viewer: state.users.viewer,
+      fermenterRuntime: state.fermenter.rts,
     }),
   )
 )(Header);

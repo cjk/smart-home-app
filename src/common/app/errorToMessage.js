@@ -1,15 +1,11 @@
 /* @flow */
-import authErrorMessages from '../auth/errorMessages';
 import { ValidationError } from '../lib/validation';
-import { firebaseMessages } from '../lib/redux-firebase';
 
 const isInnocuousError = error =>
   error.code === 'auth/popup-closed-by-user'; // Firebase stuff.
 
 const validationErrorToMessage = error => ({
-  message:
-    authErrorMessages[error.name] ||
-    firebaseMessages[error.name],
+  message: error.name,
   values: error.params,
 });
 
@@ -26,10 +22,6 @@ const errorToMessage = (error: Object) => {
   // and it's not a component responsibility to project an error to UI.
   if (error instanceof ValidationError) {
     return validationErrorToMessage(error);
-  }
-
-  if (firebaseMessages[error.code]) {
-    return { message: firebaseMessages[error.code] };
   }
 
   // Return null for unknown error, so it will be reported.
