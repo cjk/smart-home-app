@@ -2,13 +2,18 @@
 import React from 'react';
 import pseudo from './pseudo';
 import { Base } from 'rebass';
-import { Link as RouterLink } from 'react-router';
+import { Link as FoundRouterLink } from 'found';
 
-const Link = ({ bold, exactly, inverted, pseudo, to, ...props }, { rebass }) => {
+const isExternalLink = to => to.includes('://');
+
+const Link = (
+  { bold, exactly, inverted, pseudo, to, ...props },
+  { rebass }
+) => {
   const baseStyle = {
     color: inverted ? rebass.inverted : rebass.link.color,
     ...(bold && rebass.link.bold),
-    ...(rebass.link.link),
+    ...rebass.link.link,
     ...(pseudo.hover && rebass.link.hover),
   };
   const linkProps = {
@@ -16,22 +21,16 @@ const Link = ({ bold, exactly, inverted, pseudo, to, ...props }, { rebass }) => 
     baseStyle,
     className: 'Link',
   };
-  const isExternalLink = typeof to !== 'object' && to.includes('://');
-  return isExternalLink ? (
-    <Base
-      {...linkProps}
-      href={to}
-      is="a"
-    />
-  ) : (
-    <Base
-      {...linkProps}
-      activeOnlyWhenExact={exactly}
-      activeStyle={rebass.link.active}
-      is={RouterLink}
-      to={to}
-    />
-  );
+
+  return isExternalLink
+    ? <Base {...linkProps} href={to} is="a" />
+    : <Base
+        {...linkProps}
+        exact={exactly}
+        activeStyle={rebass.link.active}
+        is={FoundRouterLink}
+        to={to}
+      />;
 };
 
 Link.propTypes = {
@@ -39,7 +38,10 @@ Link.propTypes = {
   exactly: React.PropTypes.bool,
   inverted: React.PropTypes.bool,
   pseudo: React.PropTypes.object.isRequired,
-  to: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.object]),
+  to: React.PropTypes.oneOfType([
+    React.PropTypes.string,
+    React.PropTypes.object,
+  ]),
 };
 
 Link.contextTypes = {

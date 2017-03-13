@@ -1,8 +1,7 @@
-/* @flow */
+// @flow
 import { ValidationError } from '../lib/validation';
 
-const isInnocuousError = error =>
-  error.code === 'auth/popup-closed-by-user'; // Firebase stuff.
+const isInnocuousError = error => error.code === 'auth/popup-closed-by-user'; // Firebase stuff.
 
 const validationErrorToMessage = error => ({
   message: error.name,

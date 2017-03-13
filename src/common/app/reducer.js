@@ -8,10 +8,7 @@ const initialState = {
   started: false,
 };
 
-const reducer = (
-  state: AppState = initialState,
-  action: Action,
-): AppState => {
+const reducer = (state: AppState = initialState, action: Action): AppState => {
   // Map all app errors into state.app.error.
   // In React Native, we show errors in one nicely animated unobtrusive alert.
   // In the browser, we prefer local error messages rendering.
@@ -22,7 +19,6 @@ const reducer = (
   }
 
   switch (action.type) {
-
     case 'APP_ERROR':
       return { ...state, error: action.payload.error };
 

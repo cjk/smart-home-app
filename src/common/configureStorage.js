@@ -1,4 +1,4 @@
-/* @flow weak */
+/* @flow */
 import { createTransform } from 'redux-persist';
 import { pick } from 'ramda';
 
@@ -22,10 +22,9 @@ paths.forEach(([feature, props]) => {
   transforms.push(createTransform(inOut, inOut, { whitelist: [feature] }));
 });
 
-const configureStorage = (appName, storage) => ({
+const configureStorage = (appName: string) => ({
   debounce: 100,
   keyPrefix: `${appName}:`,
-  storage,
   transforms,
   whitelist,
 });

@@ -89,6 +89,7 @@ export type State = {
   config: ConfigState,
   device: DeviceState,
   fields: any,
+  found: Object, // found router
   intl: IntlState,
   themes: ThemeState,
   smartHome: SmartHomeState,
@@ -98,7 +99,7 @@ export type State = {
 // Actions
 
 export type Action =
-  { type: 'APP_ERROR', payload: { error: Error } }
+  | { type: 'APP_ERROR', payload: { error: Error } }
   | { type: 'PROCESS_EVENT', payload: { newEvent: BusEvent } }
   | { type: 'WRITE_GROUP_ADDRESS', payload: { addr: KnxAddress } }
   | { type: 'WRITE_GROUP_ADDRESS_DONE' }
@@ -107,9 +108,7 @@ export type Action =
   | { type: 'SWITCH_TO_TAB', payload: { tabId: number } }
   | { type: 'APP_ONLINE', payload: { online: boolean } }
   | { type: 'APP_SHOW_MENU', payload: { menuShown: boolean } }
-  | { type: 'APP_START' }
   | { type: 'APP_STARTED' }
-  | { type: 'APP_STOP' }
   | { type: 'APP_STORAGE_LOADED' }
   | { type: 'SET_CURRENT_LOCALE', payload: { locale: string } }
   | { type: 'SET_THEME', payload: { theme: string } }

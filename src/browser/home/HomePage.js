@@ -34,8 +34,8 @@ const HomePage = ({ smartHomeState, location }: HomePageProps) => {
     );
   }
 
-  const listStyle = pathOr('byState', ['query', 'listStyle'], location);
-  const addrList = listStyle === 'byState'
+  const viewType = pathOr('changes', ['pathname'], location);
+  const addrList = viewType === 'changes'
                  ? <AddrList addresses={addresses} />
                  : <AddrListByRoom addresses={addresses} prefs={prefs} />;
 

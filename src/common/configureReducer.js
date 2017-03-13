@@ -7,14 +7,13 @@ import fermenter from './fermenter/reducer';
 import intl from './intl/reducer';
 import themes from './themes/reducer';
 import { combineReducers } from 'redux';
-import { fieldsReducer as fields } from './lib/redux-fields';
 
-const configureReducer = (initialState: Object) =>
+const configureReducer = (platformReducers: Object, initialState: Object) =>
   combineReducers({
+    ...platformReducers,
     app,
     config,
     device,
-    fields,
     intl,
     themes,
     smartHome,

@@ -1,11 +1,15 @@
 /* @flow */
+import type { Action } from '../common/types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './app/Root';
+import configureFound from './configureFound';
 import configureReporting from '../common/configureReporting';
+import configureStorage from '../common/configureStorage';
 import configureStore from '../common/configureStore';
 import localforage from 'localforage';
 import uuid from 'uuid';
+import { persistStore } from 'redux-persist';
 
 const initialState = window.__INITIAL_STATE__; // eslint-disable-line no-underscore-dangle
 
@@ -15,27 +19,57 @@ const reportingMiddleware = configureReporting({
   unhandledRejection: fn => window.addEventListener('unhandledrejection', fn),
 });
 
+/* Found is more powerful than React-Router */
+const found = configureFound(Root.routeConfig);
+
 const store = configureStore({
   initialState,
-  platformDeps: { uuid, storageEngine: localforage },
+  platformDeps: { uuid },
+  platformReducers: { found: found.reducer },
   platformMiddleware: [reportingMiddleware],
+  platformStoreEnhancers: found.storeEnhancers,
 });
 
 const appElement = document.getElementById('app');
 
-// Initial render.
-ReactDOM.render(
-  <Root store={store} />
-, appElement);
+// 1. get found render args
+// 2. initial render (before rehydrate, to match client and server render)
+// 3. rehydrate local app state
+// 4. dispatch APP_STARTED
+found.getRenderArgs(store, renderArgs => {
+  const onRehydrate = () => {
+    // Don't import appStarted action creator since it would break hot reload.
+    store.dispatch(({ type: 'APP_STARTED' }: Action));
 
-// Hot reload render.
-// gist.github.com/gaearon/06bd9e2223556cb0d841#file-naive-js
-if (module.hot && typeof module.hot.accept === 'function') {
-  module.hot.accept('./app/Root', () => {
-    const NextRoot = require('./app/Root').default;
+    // gist.github.com/gaearon/06bd9e2223556cb0d841#file-naive-js
+    if (!module.hot || typeof module.hot.accept !== 'function') return;
+    module.hot.accept('./app/Root', () => {
+      const NextRoot = require('./app/Root').default;
 
-    ReactDOM.render(
-      <NextRoot store={store} />
-    , appElement);
-  });
-}
+      found.replaceRouteConfig(NextRoot.routeConfig);
+      found.getRenderArgs(store, renderArgs => {
+        ReactDOM.render(
+          <NextRoot renderArgs={renderArgs} store={store} />,
+          appElement,
+        );
+      });
+    });
+  };
+
+  const afterInitialRender = () => {
+    persistStore(
+      store,
+      {
+        ...configureStorage(initialState.config.appName),
+        storage: localforage,
+      },
+      onRehydrate,
+    );
+  };
+
+  ReactDOM.render(
+    <Root renderArgs={renderArgs} store={store} />,
+    appElement,
+    afterInitialRender,
+  );
+});

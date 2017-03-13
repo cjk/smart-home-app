@@ -1,20 +1,35 @@
 /* @flow */
-import App from './App';
+import BaseRoot from './BaseRoot';
 import React from 'react';
-import { BrowserRouter } from 'react-router';
-import { Provider as Redux } from 'react-redux';
+import renderError from './renderError';
+import routeConfig from './routeConfig';
+import { ScrollManager } from 'found-scroll';
+import { createConnectedRouter, createRender, resolveElements } from 'found';
 
-type Props = {
+const ConnectedRouter = createConnectedRouter({
+  render: renderArgs => (
+    <ScrollManager renderArgs={renderArgs}>
+      {createRender({ renderError })(renderArgs)}
+    </ScrollManager>
+  ),
+});
+
+type RootProps = {
+  renderArgs: Object,
   store: Object,
 };
 
-// We needs such Root for vanilla hot reloading.
-const Root = ({ store }: Props) => (
-  <Redux store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Redux>
+const Root = ({ renderArgs, store }: RootProps) => (
+  <BaseRoot store={store}>
+    <ConnectedRouter
+      initialRenderArgs={renderArgs}
+      matchContext={{ store }}
+      resolveElements={resolveElements}
+    />
+  </BaseRoot>
 );
+
+// For hot reloading.
+Root.routeConfig = routeConfig;
 
 export default Root;

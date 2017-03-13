@@ -26,16 +26,16 @@ const Header = ({
   fermenterRuntime
 }: HeaderProps) => (
   <Toolbar style={styles.toolbar}>
-    <Link bold inverted exactly to="/">
+    <Link inverted to="/">
       <GoHome size="2em" />
     </Link>
     <Space px={2} />
-    <Link inverted to={{ pathname: '/', query: { listStyle: 'byState' } }}>
+    <Link inverted to="/">
       <FormattedMessage {...linksMessages.home} />
     </Link>
     <Space auto />
 
-    <Link inverted to={{ pathname: '/', query: { listStyle: 'byRoom' } }}>
+    <Link inverted to="/rooms">
       <FormattedMessage {...linksMessages.listByRoom} />
     </Link>
     <Space px={2} />

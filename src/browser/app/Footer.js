@@ -1,6 +1,7 @@
 /* @flow */
 import React from 'react';
-import { Footer, Link } from '../components';
+import { Link } from 'found';
+import { Footer } from '../components';
 import { FormattedMessage, defineMessages } from 'react-intl';
 
 const messages = defineMessages({
