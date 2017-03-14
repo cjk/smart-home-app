@@ -5,13 +5,9 @@ import AddrListByRoom from './AddressListByRoom';
 import AddrList from './AddressList';
 import { connect } from 'react-redux';
 import linksMessages from '../../common/app/linksMessages';
-import { isEmpty, pathOr, reject } from 'ramda';
+import { isEmpty, pathOr, reject, test } from 'ramda';
 
-import {
-  Block,
-  Title,
-  View,
-} from '../components';
+import { Block, Title, View } from '../components';
 
 import { Box } from 'reflexbox';
 
@@ -35,9 +31,9 @@ const HomePage = ({ smartHomeState, location }: HomePageProps) => {
   }
 
   const viewType = pathOr('changes', ['pathname'], location);
-  const addrList = viewType === 'changes'
-                 ? <AddrList addresses={addresses} />
-                 : <AddrListByRoom addresses={addresses} prefs={prefs} />;
+  const addrList = test(/rooms$/, viewType)
+    ? <AddrListByRoom addresses={addresses} prefs={prefs} />
+    : <AddrList addresses={addresses} />;
 
   return (
     <View>
@@ -49,8 +45,6 @@ const HomePage = ({ smartHomeState, location }: HomePageProps) => {
   );
 };
 
-export default connect(
-  (state: State) => ({
-    smartHomeState: state.smartHome,
-  }),
-)(HomePage);
+export default connect((state: State) => ({
+  smartHomeState: state.smartHome,
+}))(HomePage);
