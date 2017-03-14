@@ -59,8 +59,6 @@ export type ConfigState = {
 
 export type DeviceState = {
   host: string,
-  isReactNative: boolean,
-  platform: string,
 };
 
 export type IntlState = {

@@ -5,9 +5,9 @@ import AddrListByRoom from './AddressListByRoom';
 import AddrList from './AddressList';
 import { connect } from 'react-redux';
 import linksMessages from '../../common/app/linksMessages';
-import { isEmpty, pathOr, reject, test } from 'ramda';
+import { pathOr, reject, test } from 'ramda';
 
-import { Block, Title, View } from '../components';
+import { Title, View } from '../components';
 
 import { Box } from 'reflexbox';
 
@@ -21,14 +21,6 @@ const HomePage = ({ smartHomeState, location }: HomePageProps) => {
 
   /* Built address-list, remove some address-types which should not be displayed */
   const addresses = reject(addr => addr.type === 'fb', livestate);
-
-  if (isEmpty(addresses)) {
-    return (
-      <Block>
-        <p>Waiting for SmartHome-State...</p>
-      </Block>
-    );
-  }
 
   const viewType = pathOr('changes', ['pathname'], location);
   const addrList = test(/rooms$/, viewType)

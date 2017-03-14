@@ -3,14 +3,13 @@ import BaseRoot from '../../browser/app/BaseRoot';
 import Helmet from 'react-helmet';
 import Html from './Html';
 import React from 'react';
-import Root from '../../browser/app/Root';
+import Root, { createRouterRender } from '../../browser/app/Root';
 import config from '../config';
 import configureFound from '../../browser/configureFound';
 import configureStore from '../../common/configureStore';
 import createInitialState from './createInitialState';
-import renderError from '../../browser/app/renderError';
 import serialize from 'serialize-javascript';
-import { RedirectException, createRender } from 'found';
+import { RedirectException } from 'found';
 import { RouterProvider } from 'found/lib/server';
 import { ServerProtocol } from 'farce';
 import { renderToStaticMarkup, renderToString } from 'react-dom/server';
@@ -47,12 +46,12 @@ const renderBody = (renderArgs, store) => {
   const html = renderToString(
     <BaseRoot store={store}>
       <RouterProvider router={renderArgs.router}>
-        {createRender({ renderError })(renderArgs)}
+        {createRouterRender(renderArgs)}
       </RouterProvider>
     </BaseRoot>
   );
   const helmet = Helmet.rewind();
-  const css = ''; // felaRenderer.renderToString(); /* PENDING: no body-css for now :( */
+  const css = ''; // felaRenderer.renderToString();
   return { html, helmet, css };
 };
 
@@ -93,7 +92,7 @@ const render = async (req: Object, res: Object, next: Function) => {
   const found = configureFound(Root.routeConfig, new ServerProtocol(req.url));
   const store = createStore(found, req);
   try {
-    await found.getRenderArgs(store, (renderArgs) => {
+    await found.getRenderArgs(store, renderArgs => {
       const body = renderBody(renderArgs, store);
       const html = renderHtml(store.getState(), body);
       res.status(renderArgs.error ? renderArgs.error.status : 200).send(html);

@@ -8,16 +8,6 @@ export const appError = (error: Object): Action => ({
   payload: { error },
 });
 
-export const appOnline = (online: boolean): Action => ({
-  type: 'APP_ONLINE',
-  payload: { online },
-});
-
-export const appShowMenu = (menuShown: boolean): Action => ({
-  type: 'APP_SHOW_MENU',
-  payload: { menuShown },
-});
-
 const createBusEventSubStream = client =>
   Observable.create((observer) => {
     const onEvent = (e) => {

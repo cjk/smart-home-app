@@ -19,7 +19,7 @@ const reportingMiddleware = configureReporting({
   unhandledRejection: fn => window.addEventListener('unhandledrejection', fn),
 });
 
-/* Found is more powerful than React-Router */
+/* Why Found instead of React Router? Because Found is more powerful. */
 const found = configureFound(Root.routeConfig);
 
 const store = configureStore({
