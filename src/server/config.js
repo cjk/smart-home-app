@@ -24,7 +24,7 @@ nconf.defaults({
   // because it depends on ip.address(), which doesn't work with disabled wifi.
   // How do we access a website running on localhost from mobile browser?
   // stackoverflow.com/questions/3132105
-  remoteHotReload: false,
+  remoteHotReload: true,
   sentryUrl: 'https://4cc8a3d9b7524380a73f0b68efa268b5@app.getsentry.com/82537',
 });
 

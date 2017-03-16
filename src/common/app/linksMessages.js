@@ -3,7 +3,7 @@ import { defineMessages } from 'react-intl';
 
 const LinkMessages = defineMessages({
   home: {
-    defaultMessage: 'SmartHome - Zustand',
+    defaultMessage: 'SmartHome-Control',
     id: 'app.links.home',
   },
   notFound: {
@@ -19,7 +19,7 @@ const LinkMessages = defineMessages({
     id: 'app.links.fermenter',
   },
   listByState: {
-    defaultMessage: 'nach Zustand',
+    defaultMessage: 'letzte Änderungen',
     id: 'app.links.listByState',
   },
   listByRoom: {

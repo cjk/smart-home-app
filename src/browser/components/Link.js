@@ -7,7 +7,7 @@ import { Link as FoundRouterLink } from 'found';
 const isExternalLink = to => to.includes('://');
 
 const Link = (
-  { bold, exactly, inverted, pseudo, to, ...props },
+  { bold, exactly, inverted, pseudo, to, activeStyle, ...props },
   { rebass }
 ) => {
   const baseStyle = {
@@ -22,12 +22,12 @@ const Link = (
     className: 'Link',
   };
 
-  return isExternalLink
+  return isExternalLink(to)
     ? <Base {...linkProps} href={to} is="a" />
     : <Base
         {...linkProps}
         exact={exactly}
-        activeStyle={rebass.link.active}
+        activeStyle={activeStyle}
         is={FoundRouterLink}
         to={to}
       />;

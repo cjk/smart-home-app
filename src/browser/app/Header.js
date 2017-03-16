@@ -1,13 +1,9 @@
 /* @flow */
-import type { State } from '../../common/types';
-import type { RunTimeState } from '../../common/fermenter/types';
 import React from 'react';
-import { GoHome, GoHistory } from 'react-icons/lib/go';
-import { connect } from 'react-redux';
-import { compose } from 'ramda';
-import { FormattedMessage } from 'react-intl';
+import { GoHome, GoDiff, GoHubot, GoHistory } from 'react-icons/lib/go';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import linksMessages from '../../common/app/linksMessages';
-import { Link, Space, Toolbar } from '../components';
+import { Link, Space, Text, Toolbar, Tooltip } from '../components';
 
 const styles = {
   toolbar: {
@@ -18,43 +14,45 @@ const styles = {
   },
 };
 
-type HeaderProps = {
-  fermenterRuntime: ?RunTimeState,
+const activeStyle = {
+  color: 'hsla(214, 100%, 84%, 1)',
 };
 
-const Header = ({
-  fermenterRuntime
-}: HeaderProps) => (
+type HeaderProps = {
+  intl: any,
+};
+
+const Header = ({ intl }: HeaderProps) => (
   <Toolbar style={styles.toolbar}>
-    <Link inverted to="/">
+    <Link inverted to="/rooms">
       <GoHome size="2em" />
     </Link>
     <Space px={2} />
-    <Link inverted to="/">
+    <Text>
       <FormattedMessage {...linksMessages.home} />
-    </Link>
+    </Text>
     <Space auto />
 
-    <Link inverted to="/rooms">
-      <FormattedMessage {...linksMessages.listByRoom} />
+    <Link inverted activeStyle={activeStyle} exactly to="/">
+      <Tooltip title={intl.formatMessage(linksMessages.listByState)}>
+        <GoDiff size="2em" />
+      </Tooltip>
     </Link>
     <Space px={2} />
 
-    <Link bold inverted to="/events">
-      <GoHistory size="2em" />
+    <Link inverted activeStyle={activeStyle} to="/events">
+      <Tooltip title={intl.formatMessage(linksMessages.events)}>
+        <GoHistory size="2em" />
+      </Tooltip>
     </Link>
     <Space px={2} />
 
-    <Link bold inverted to="/fermenter">
-      <FormattedMessage {...linksMessages.fermenter} />
+    <Link inverted activeStyle={activeStyle} to="/fermenter">
+      <Tooltip title={intl.formatMessage(linksMessages.fermenter)}>
+        <GoHubot size="2em" />
+      </Tooltip>
     </Link>
   </Toolbar>
 );
 
-export default compose(
-  connect(
-    (state: State) => ({
-      fermenterRuntime: state.fermenter.rts,
-    }),
-  )
-)(Header);
+export default injectIntl(Header);
