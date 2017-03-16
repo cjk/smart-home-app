@@ -3,7 +3,7 @@ import { defineMessages } from 'react-intl';
 
 const LinkMessages = defineMessages({
   home: {
-    defaultMessage: 'SmartHome-Control',
+    defaultMessage: 'SmartHome',
     id: 'app.links.home',
   },
   notFound: {

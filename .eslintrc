@@ -3,7 +3,6 @@
   "plugins": [
     "flowtype",
     "fp",
-    "react-native"
   ],
   "extends" : [
     "airbnb",
