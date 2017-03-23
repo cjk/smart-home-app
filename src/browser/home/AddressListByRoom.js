@@ -6,14 +6,24 @@ import AddrLine from './AddrLine';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import messages from './messages';
-import { any, equals, filter, groupBy, keys, mapObjIndexed, pick, pipe, pluck, prop, sort, values } from 'ramda';
+import R, {
+  any,
+  equals,
+  filter,
+  groupBy,
+  keys,
+  mapObjIndexed,
+  pick,
+  pipe,
+  pluck,
+  prop,
+  propEq,
+  sort,
+  values,
+} from 'ramda';
 
 import { Flex, Box } from 'reflexbox';
-import {
-  Panel,
-  PanelHeader,
-  View,
-} from '../components';
+import { Panel, PanelHeader, View } from '../components';
 
 type Props = {
   addresses: Array<KnxAddress>,
@@ -30,37 +40,33 @@ const AddressList = ({ addresses, prefs }: Props) => {
   const hasRoom = room => any(equals(room), prefs.rooms);
   const addressesWithRoom = keys(filter(hasRoom, pluck('room', addresses)));
 
-  const createRoomPanels = (addrLst, room) => (
+  const createRoomPanels = (addrLst, room) =>
     createBoxedItem(
       <Panel m={2} theme="primary">
         <PanelHeader><FormattedMessage {...messages[room]} /></PanelHeader>
-        {
-          addrLst.map(address => (
-            <AddrLine address={address} key={address.id} />
-          ))
-        }
-      </Panel>
-    , room)
-  );
+        {addrLst.map(address => (
+          <AddrLine address={address} key={address.id} />
+        ))}
+      </Panel>,
+      room
+    );
+
+  const onlyActiveRooms = rooms => filter(any(propEq('value', 1)), rooms);
 
   const addrLstByRoom = pipe(
     pick(addressesWithRoom),
     values,
     sort((a, b) => a.room < b.room),
     groupBy(prop('room')),
+    prefs.showOnlyActive ? onlyActiveRooms : R.identity,
     mapObjIndexed(createRoomPanels),
     values /* NOTE: Make last result an array, otherwise React complains about an Object returned by #mapObjIndexed */
   );
 
-  /* DEBUGGING */
-  //   console.log(`[addrLstByRoom] ${JSON.stringify(addrLstByRoom)}`);
-
   return (
     <View className="addressListByRoom">
       <Flex wrap gutter={2}>
-        {
-          addrLstByRoom(addresses)
-        }
+        {addrLstByRoom(addresses)}
       </Flex>
     </View>
   );

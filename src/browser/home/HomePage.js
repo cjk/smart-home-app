@@ -1,26 +1,38 @@
 /* @flow */
 import type { State } from '../../common/types';
 import React from 'react';
-import AddrListByRoom from './AddressListByRoom';
-import AddrList from './AddressList';
 import { connect } from 'react-redux';
 import linksMessages from '../../common/app/linksMessages';
 import { pathOr, reject, test } from 'ramda';
 
-import { Title, View } from '../components';
-
+import { toggleShowOnlyActive } from '../../common/home/actions';
+import AddrListByRoom from './AddressListByRoom';
+import AddrList from './AddressList';
+import { GoRadioTower } from 'react-icons/lib/go';
+import { ButtonCircle, Title, View } from '../components';
 import { Box } from 'reflexbox';
 
 type HomePageProps = {
   smartHomeState: Object,
   location: Object,
+  toggleShowOnlyActive: typeof toggleShowOnlyActive,
 };
 
-const HomePage = ({ smartHomeState, location }: HomePageProps) => {
+const HomePage = ({ smartHomeState, location, toggleShowOnlyActive }: HomePageProps) => {
   const { livestate, prefs } = smartHomeState;
 
   /* Built address-list, remove some address-types which should not be displayed */
   const addresses = reject(addr => addr.type === 'fb', livestate);
+
+  const toggleOnlyActive = () => {
+    toggleShowOnlyActive(prefs.showOnlyActive);
+  };
+
+  const toggleActiveButton = () => (
+    <ButtonCircle style={{ transitionDuration: '.9s' }} title="Like" onClick={() => toggleOnlyActive()}>
+      <GoRadioTower />
+    </ButtonCircle>
+  );
 
   const viewType = pathOr('changes', ['pathname'], location);
   const addrList = test(/rooms$/, viewType)
@@ -31,12 +43,16 @@ const HomePage = ({ smartHomeState, location }: HomePageProps) => {
     <View>
       <Title message={linksMessages.home} />
       <Box py={2}>
+        {toggleActiveButton()}
         {addrList}
       </Box>
     </View>
   );
 };
 
-export default connect((state: State) => ({
-  smartHomeState: state.smartHome,
-}))(HomePage);
+export default connect(
+  (state: State) => ({
+    smartHomeState: state.smartHome,
+  }),
+  { toggleShowOnlyActive }
+)(HomePage);

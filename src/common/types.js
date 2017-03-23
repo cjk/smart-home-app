@@ -75,7 +75,7 @@ export type ThemeState = {
 
 /* TODO: Split into KNX- and App-parts */
 export type SmartHomeState = {
-  livestate: {[id: string]: KnxAddress},
+  livestate: { [id: string]: KnxAddress },
   eventHistory: Array<BusEvent>,
   prefs: ?Object,
 };
@@ -110,4 +110,4 @@ export type Action =
   | { type: 'APP_STORAGE_LOADED' }
   | { type: 'SET_CURRENT_LOCALE', payload: { locale: string } }
   | { type: 'SET_THEME', payload: { theme: string } }
-;
+  | { type: 'TOGGLE_SHOW_ONLY_ACTIVE', payload: { newValue: boolean } };
