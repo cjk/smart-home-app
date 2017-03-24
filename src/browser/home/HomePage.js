@@ -12,25 +12,36 @@ import { GoRadioTower } from 'react-icons/lib/go';
 import { ButtonCircle, Title, View } from '../components';
 import { Box } from 'reflexbox';
 
+import { Motion, spring } from 'react-motion';
+
 type HomePageProps = {
   smartHomeState: Object,
   location: Object,
   toggleShowOnlyActive: typeof toggleShowOnlyActive,
 };
 
-const HomePage = ({ smartHomeState, location, toggleShowOnlyActive }: HomePageProps) => {
+const HomePage = (
+  { smartHomeState, location, toggleShowOnlyActive }: HomePageProps
+) => {
   const { livestate, prefs } = smartHomeState;
+  const onlyActive = prefs.showOnlyActive;
 
   /* Built address-list, remove some address-types which should not be displayed */
   const addresses = reject(addr => addr.type === 'fb', livestate);
 
   const toggleOnlyActive = () => {
-    toggleShowOnlyActive(prefs.showOnlyActive);
+    toggleShowOnlyActive(onlyActive);
   };
 
   const toggleActiveButton = () => (
-    <ButtonCircle style={{ transitionDuration: '.9s' }} title="Like" onClick={() => toggleOnlyActive()}>
-      <GoRadioTower />
+    <ButtonCircle
+      theme={onlyActive ? 'primary' : 'secondary'}
+      title="Like"
+      onClick={() => toggleOnlyActive()}
+    >
+      <Motion style={{ size: spring(onlyActive ? 1.2 : 1) }}>
+        {({ size }) => <GoRadioTower size={`${size}em`} />}
+      </Motion>
     </ButtonCircle>
   );
 
