@@ -12,6 +12,7 @@ export type Deps = {
   getState: () => Object,
   getUid: () => string,
   now: () => number,
+  uuid: Object,
   validate: (json: Object) => any,
   /* SmartHome-methods */
   homeConnect: Function,
