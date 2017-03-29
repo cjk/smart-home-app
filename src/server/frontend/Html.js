@@ -53,13 +53,4 @@ const Html = (
   </html>
 );
 
-// TODO: Use babel-plugin-flow-react-proptypes one day.
-Html.propTypes = {
-  appCssFilename: React.PropTypes.string,
-  bodyHtml: React.PropTypes.string.isRequired,
-  googleAnalyticsId: React.PropTypes.string.isRequired,
-  helmet: React.PropTypes.object.isRequired,
-  isProduction: React.PropTypes.bool.isRequired,
-};
-
 export default Html;
