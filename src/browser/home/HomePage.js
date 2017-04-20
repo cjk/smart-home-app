@@ -1,4 +1,4 @@
-/* @flow weak */
+/* @flow */
 import type { State } from '../../common/types';
 import React from 'react';
 import { connect } from 'react-redux';
@@ -41,7 +41,7 @@ const HomePage = (
     <ButtonCircle
       theme={onlyActive ? 'primary' : 'secondary'}
       style={{ marginBottom: '15px' }}
-      title="Like"
+      title="only active"
       onClick={() => toggleOnlyActive()}
     >
       <Motion style={buttonMotionStyle}>

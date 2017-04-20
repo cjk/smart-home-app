@@ -13,7 +13,7 @@
   },
   "rules": {
     // Soften some rules.
-"arrow-parens": 0, // Does not work with Flow generic types.
+    "arrow-parens": 0, // Does not work with Flow generic types.
     "global-require": 0, // Used by webpack isomorphic tools and React Native.
     "import/first": 0, // Este sorts by atom/sort lines natural order.
     "import/prefer-default-export": 0, // No. Actions can have just one action.
