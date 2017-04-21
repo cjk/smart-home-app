@@ -3,6 +3,7 @@
 import type {
   Action,
   BusEvent,
+  CronJob,
   Deps,
   KnxAddress,
   SmartHomeState,
@@ -17,18 +18,24 @@ export const requestInitialStateSuccess = (
   payload: smartHomeState,
 });
 
-export const processEvent = (event: BusEvent) =>
-  ({ getUid }: Function): Action => {
-    const newEvent = assoc('id', getUid(), event);
-    return {
-      type: 'PROCESS_EVENT',
-      payload: { newEvent },
-    };
+export const processEvent = (event: BusEvent) => ({
+  getUid,
+}: Function): Action => {
+  const newEvent = assoc('id', getUid(), event);
+  return {
+    type: 'PROCESS_EVENT',
+    payload: { newEvent },
   };
+};
 
 export const toggleShowOnlyActive = (value: boolean): Action => ({
   type: 'TOGGLE_SHOW_ONLY_ACTIVE',
   payload: !value,
+});
+
+export const createCronjob = (job: CronJob): Action => ({
+  type: 'CREATE_CRONJOB',
+  payload: job,
 });
 
 export const writeGroupAddr = (addr: KnxAddress): Action => ({
@@ -48,4 +55,23 @@ const writeGroupAddrEpic = (action$: any, { homeConnect }: Deps) =>
     return Observable.of(writeGroupAddrDone);
   });
 
-export const epics = [writeGroupAddrEpic];
+const createCronjobEpic = (action$: any, { homeConnect }: Deps) =>
+  action$.ofType('CREATE_CRONJOB').switchMap(action => {
+    console.log(`Creating cronjob from ${action.payload}`);
+    const j = action.payload;
+    const client = homeConnect().client;
+    const cronjobLst = client.record.getList('smartHome/cronjobs');
+
+    cronjobLst.whenReady(lst => {
+      const newJobRecord = client.record.getRecord(j.jobId);
+      newJobRecord.whenReady(record => {
+        record.set(j);
+        lst.addEntry(j.jobId);
+        console.log(`[HomeActions] Record set to ${JSON.stringify(j)} `);
+      });
+    });
+
+    return Observable.of();
+  });
+
+export const epics = [writeGroupAddrEpic, createCronjobEpic];

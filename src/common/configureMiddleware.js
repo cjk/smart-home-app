@@ -1,20 +1,19 @@
 /* @flow weak */
 import configureDeps from './configureDeps';
 import configureEpics from './configureEpics';
-import createLoggerMiddleware from 'redux-logger';
+import { createLogger } from 'redux-logger';
 import isClient from './app/isClient';
 import { createEpicMiddleware } from 'redux-observable';
 
 // Like redux-thunk, but with just one argument for dependencies.
-const injectMiddleware = deps =>
-  ({ dispatch, getState }: any) =>
-    (next: any) =>
-      (action: any) =>
-        next(
-          typeof action === 'function'
-            ? action({ ...deps, dispatch, getState })
-            : action
-        );
+const injectMiddleware = deps => ({ dispatch, getState }: any) => (
+  next: any
+) => (action: any) =>
+  next(
+    typeof action === 'function'
+      ? action({ ...deps, dispatch, getState })
+      : action
+  );
 
 const configureMiddleware = (
   initialState: any,
@@ -35,7 +34,7 @@ const configureMiddleware = (
 
   // Logger must be the last middleware in chain.
   if (enableLogger) {
-    const logger = createLoggerMiddleware({
+    const logger = createLogger({
       collapsed: true,
     });
     middleware.push(logger);

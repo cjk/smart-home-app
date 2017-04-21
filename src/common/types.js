@@ -81,6 +81,23 @@ export type SmartHomeState = {
   prefs: ?Object,
 };
 
+/* Cronjob types */
+export type CrontabTask = {
+  targets: Array<string>,
+  act: string,
+};
+
+export type CronJob = {
+  jobId: string,
+  name: string,
+  at: string,
+  repeat: string,
+  scheduled: boolean,
+  running: boolean,
+  lastRun: Date | null,
+  tasks: Array<CrontabTask>,
+};
+
 // State
 
 export type State = {
@@ -99,6 +116,7 @@ export type State = {
 
 export type Action =
   | { type: 'APP_ERROR', payload: { error: Error } }
+  | { type: 'CREATE_CRONJOB', payload: CronJob }
   | { type: 'PROCESS_EVENT', payload: { newEvent: BusEvent } }
   | { type: 'WRITE_GROUP_ADDRESS', payload: { addr: KnxAddress } }
   | { type: 'WRITE_GROUP_ADDRESS_DONE' }
@@ -111,4 +129,4 @@ export type Action =
   | { type: 'APP_STORAGE_LOADED' }
   | { type: 'SET_CURRENT_LOCALE', payload: { locale: string } }
   | { type: 'SET_THEME', payload: { theme: string } }
-  | { type: 'TOGGLE_SHOW_ONLY_ACTIVE', payload: { newValue: boolean } };
+  | { type: 'TOGGLE_SHOW_ONLY_ACTIVE', payload: boolean };

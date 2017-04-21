@@ -4,52 +4,62 @@ import React from 'react';
 import { connect } from 'react-redux';
 import linksMessages from '../../common/app/linksMessages';
 import { pathOr, reject, test } from 'ramda';
+import { Flex, Box } from 'reflexbox';
 
-import { toggleShowOnlyActive } from '../../common/home/actions';
+import { toggleShowOnlyActive, createCronjob } from '../../common/home/actions';
 import AddrListByRoom from './AddressListByRoom';
 import AddrList from './AddressList';
-import { GoRadioTower } from 'react-icons/lib/go';
-import { ButtonCircle, Title, View } from '../components';
-import { Box } from 'reflexbox';
-
-import { Motion, spring } from 'react-motion';
+import { ButtonCircle, Title, ToggleButton, View } from '../components';
 
 type HomePageProps = {
   smartHomeState: Object,
   location: Object,
   toggleShowOnlyActive: typeof toggleShowOnlyActive,
+  createCronjob: typeof createCronjob,
 };
 
-const HomePage = (
-  { smartHomeState, location, toggleShowOnlyActive }: HomePageProps
-) => {
+const HomePage = ({
+  smartHomeState,
+  location,
+  toggleShowOnlyActive,
+  createCronjob,
+}: HomePageProps) => {
   const { livestate, prefs } = smartHomeState;
   const onlyActive = prefs.showOnlyActive;
-  const buttonMotionStyle = {
-    s: spring(onlyActive ? 1.2 : 1),
-    r: spring(onlyActive ? 360 : 0),
-  };
 
   /* Built address-list, remove some address-types which should not be displayed */
   const addresses = reject(addr => addr.type === 'fb', livestate);
 
-  const toggleOnlyActive = () => {
-    toggleShowOnlyActive(onlyActive);
-  };
+  const toggleOnlyActive = () => toggleShowOnlyActive(onlyActive);
 
-  const toggleActiveButton = () => (
+  const addCronjob = () =>
+    createCronjob({
+      jobId: 'cronjobs/j1esevoj-blalblalblald',
+      name: 'Hobby-Licht Auto',
+      at: '23:12:00',
+      repeat: 'daily',
+      scheduled: false,
+      running: false,
+      lastRun: null,
+      tasks: [
+        {
+          act: 'off',
+          id: 7,
+          status: 'idle',
+          startedAt: null,
+          endedAt: null,
+          target: '1/1/7',
+        },
+      ],
+    });
+
+  const newCronjobButton = () => (
     <ButtonCircle
-      theme={onlyActive ? 'primary' : 'secondary'}
+      theme="primary"
       style={{ marginBottom: '15px' }}
-      title="only active"
-      onClick={() => toggleOnlyActive()}
-    >
-      <Motion style={buttonMotionStyle}>
-        {({ s, r }) => (
-          <GoRadioTower style={{ transform: `scale(${s}) rotate(${r}deg)` }} />
-        )}
-      </Motion>
-    </ButtonCircle>
+      title="add cronjob"
+      onClick={() => addCronjob()}
+    />
   );
 
   const viewType = pathOr('changes', ['pathname'], location);
@@ -60,10 +70,23 @@ const HomePage = (
   return (
     <View>
       <Title message={linksMessages.home} />
-      <Box py={2}>
-        {toggleActiveButton()}
-        {addrList}
-      </Box>
+      <Flex wrap>
+        <Box col={2} py={2}>
+          <ToggleButton
+            title="show only active"
+            isActive={onlyActive}
+            theme={onlyActive ? 'primary' : 'secondary'}
+            style={{ marginBottom: '15px' }}
+            onClick={() => toggleOnlyActive()}
+          />
+        </Box>
+        <Box col={2} py={2}>
+          {newCronjobButton()}
+        </Box>
+        <Box col={12} py={2}>
+          {addrList}
+        </Box>
+      </Flex>
     </View>
   );
 };
@@ -72,5 +95,5 @@ export default connect(
   (state: State) => ({
     smartHomeState: state.smartHome,
   }),
-  { toggleShowOnlyActive }
+  { toggleShowOnlyActive, createCronjob }
 )(HomePage);
