@@ -31,9 +31,10 @@
     "react/jsx-closing-bracket-location": 0, // Prettier ftw.
     "react/jsx-indent": 0, // Prettier ftw.
     "react/jsx-indent-props": 0, // Prettier ftw.
+    "react/jsx-wrap-multilines": ["error", {"declaration": false, "assignment": false}], // Prettier and Airbnd's conf disagree here - see https://github.com/prettier/prettier/issues/1009
     "react/no-unused-prop-types": 0, // Este is going to use Flow types.
     "react/prop-types": 0, // Can not detect flowtype correctly.
-    "react/require-default-props": 0, // Checked by flowtype.    // Override external defaults
+    "react/require-default-props": 0, // Checked by flowtype.
     // Flow.
     "flowtype/space-after-type-colon": 0, // Prettier ftw.
     // misc (CjK)

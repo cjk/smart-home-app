@@ -63,7 +63,7 @@
     "fela-plugin-validator": "^4.1.0",
     "fela-preset-web": "^4.1.0",
     "file-loader": "^0.11.1",
-    "flow-bin": "^0.44.2",
+    "flow-bin": "^0.45.0",
     "found": "^0.2.2",
     "found-scroll": "^0.1.2",
     "gravatar": "^1.6.0",
