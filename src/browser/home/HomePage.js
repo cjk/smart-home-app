@@ -71,7 +71,7 @@ const HomePage = ({
     <View>
       <Title message={linksMessages.home} />
       <Flex wrap>
-        <Box col={2} py={2}>
+        <Box col={1} py={2}>
           <ToggleButton
             title="show only active"
             isActive={onlyActive}
@@ -80,7 +80,7 @@ const HomePage = ({
             onClick={() => toggleOnlyActive()}
           />
         </Box>
-        <Box col={2} py={2}>
+        <Box col={1} py={2}>
           {newCronjobButton()}
         </Box>
         <Box col={12} py={2}>

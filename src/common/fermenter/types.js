@@ -30,13 +30,15 @@ export type Emergency = {
 
 type Notification = {
   level: string,
-  msg: ?string
-}
+  msg: ?string,
+};
 
 export type History = {
   switchOps: Array<SwitchOp>,
-  emergencies: Array<Emergency>
+  emergencies: Array<Emergency>,
 };
+
+export type EnvLimits = Array<number>;
 
 export type RunTimeState = {
   active: boolean,
@@ -44,13 +46,15 @@ export type RunTimeState = {
   hasEnvEmergency: boolean,
   hasDeviceMalfunction: boolean,
   currentCmd: ?string,
-  notifications: Array<Notification>
+  tempLimits: EnvLimits,
+  humidityLimits: EnvLimits,
+  notifications: Array<Notification>,
 };
 
 type Devices = {
   heater: Device,
-  humidifier: Device
-}
+  humidifier: Device,
+};
 
 export type FermenterState = {
   rts: RunTimeState,
@@ -60,9 +64,11 @@ export type FermenterState = {
 };
 
 export type Action =
-  { type: 'PROCESS_STATE', payload: { newState: FermenterState } }
+  | { type: 'PROCESS_STATE', payload: { newState: FermenterState } }
   | { type: 'SUBSCRIBE_TO_STATE' }
   | { type: 'UNSUBSCRIBE_TO_STATE' }
-  | { type: 'SEND_FERMENTER_CMD', payload: { cmd: string } }
-  | { type: 'SEND_FERMENTER_CMD_SUCCESS' }
-;
+  | { type: 'SEND_FERMENTER_CMD', payload: { currentCmd: string } }
+  | {
+      type: 'SEND_FERMENTER_TEMPLIMITS',
+      payload: { tempLimits: EnvLimits },
+    };

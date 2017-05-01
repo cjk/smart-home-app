@@ -1,5 +1,6 @@
 /* @flow */
 import type { State } from '../../common/types';
+import type { FermenterState } from '../../common/fermenter/types';
 import React from 'react';
 import * as fermenterActions from '../../common/fermenter/actions';
 import TempHumidityInfo from './TempHumidity';
@@ -7,20 +8,18 @@ import Commander from './Commander';
 import { connect } from 'react-redux';
 
 import { Flex, Box } from 'reflexbox';
-import {
-  View,
-} from '../components';
+import { View } from '../components';
 
-class FermenterPage extends React.Component {
+type props = {
+  fermenter: FermenterState,
+  subscribeToState: Function,
+  unsubscribeToState: Function,
+  processState: Function,
+  sendFermenterCmd: Function,
+  sendFermenterTempLimits: Function,
+};
 
-  static propTypes = {
-    fermenter: React.PropTypes.object.isRequired,
-    subscribeToState: React.PropTypes.func.isRequired,
-    unsubscribeToState: React.PropTypes.func.isRequired,
-    processState: React.PropTypes.func.isRequired,
-    sendFermenterCmd: React.PropTypes.func.isRequired,
-  };
-
+class FermenterPage extends React.Component<void, props, void> {
   componentDidMount() {
     const { subscribeToState } = this.props;
     subscribeToState();
@@ -32,13 +31,17 @@ class FermenterPage extends React.Component {
   }
 
   render() {
-    const { fermenter, sendFermenterCmd } = this.props;
+    const { fermenter, sendFermenterCmd, sendFermenterTempLimits } = this.props;
 
     return (
       <View>
         <Flex wrap align="center">
           <Box auto px={2} py={1}>
-            <Commander fermenterState={fermenter} sendFermenterCmd={sendFermenterCmd} />
+            <Commander
+              fermenterState={fermenter}
+              sendFermenterCmd={sendFermenterCmd}
+              sendFermenterTempLimits={sendFermenterTempLimits}
+            />
           </Box>
           <Box auto px={2} py={1}>
             <TempHumidityInfo fermenterState={fermenter} />
@@ -52,5 +55,6 @@ class FermenterPage extends React.Component {
 export default connect(
   (state: State) => ({
     fermenter: state.fermenter,
-  }), fermenterActions,
+  }),
+  fermenterActions
 )(FermenterPage);

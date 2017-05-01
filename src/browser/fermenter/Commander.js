@@ -1,75 +1,95 @@
 /* @flow */
 import type { FermenterState } from '../../common/fermenter/types';
-import { compose, defaultTo, isEmpty, mapObjIndexed, or, values } from 'ramda';
+import { compose, isEmpty, mapObjIndexed, or, values } from 'ramda';
 import React from 'react';
+import { capitalize } from '../../common/lib/util';
+import { Flex } from 'reflexbox';
+import { Panel, PanelHeader, Text } from '../components';
 
-import { Flex, Box } from 'reflexbox';
 import {
-  Panel,
-  PanelHeader,
-  Switch,
-  Text,
-} from '../components';
+  DeviceStateBox,
+  LastCmdBox,
+  RadioSelectorBox,
+} from './fermenterControls';
 
 type Props = {
   fermenterState: FermenterState,
-  sendFermenterCmd: () => void,
+  sendFermenterCmd: Function,
+  sendFermenterTempLimits: Function,
 };
 
-const fermenterIsRunning = rts => rts.active;
-
-const Commander = ({ fermenterState, sendFermenterCmd }: Props) => {
+const Commander = ({
+  fermenterState,
+  sendFermenterCmd,
+  sendFermenterTempLimits,
+}: Props) => {
   const { rts: runtimeState, devices } = fermenterState;
 
-  const maybeShowCurrentCmd = defaultTo(' -- ');
+  const fermenterIsRunning = () => runtimeState.active;
 
-  const toggleDevice = (name) => {
+  const toggleDevice = name => {
     /* Only allow switching fermenter itself on/off for now */
     if (name !== 'fermenter') {
       return false;
     }
-    return fermenterIsRunning(runtimeState) ? sendFermenterCmd('stop') : sendFermenterCmd('start');
+    return fermenterIsRunning()
+      ? sendFermenterCmd('stop')
+      : sendFermenterCmd('start');
   };
 
-  const deviceStateBox = (name, isOn) =>
-    (
-      <Box p={1} key={name}>
-        <Text>{name}</Text>
-        <Switch checked={isOn} onClick={() => toggleDevice(name)} />
-      </Box>
-    );
+  const tempLimitsAsStr = runtimeState.tempLimits
+    ? runtimeState.tempLimits.toString()
+    : '';
 
-  const lastCmdBox = () => (
-    <Box p={1}>
-      <Text small>Last command was: {maybeShowCurrentCmd(runtimeState.currentCmd)}</Text>
-      { deviceStateBox('fermenter', fermenterIsRunning(runtimeState)) }
-    </Box>
-  );
+  const setTempRange = e =>
+    /* Call action with new selected temp-range but convert numbers it from strings to floats first */
+    sendFermenterTempLimits(e.target.value.split(',').map(n => parseFloat(n)));
 
-  const content = or(isEmpty(runtimeState), isEmpty(devices)) ? (
-    <Flex>
-      <Text small>No status yet...</Text>
-    </Flex>
-  ) : (
-    <Flex column>
-      {
-        lastCmdBox()
-      }
-      {
-        compose(
+  const content = or(isEmpty(runtimeState), isEmpty(devices))
+    ? <Flex>
+        <Text small>No status yet...</Text>
+      </Flex>
+    : <Flex column>
+        {
+          <LastCmdBox
+            lastCmd={runtimeState.currentCmd}
+            isOn={fermenterIsRunning()}
+            onChange={() => toggleDevice('fermenter')}
+          />
+        }
+        {compose(
           values,
           mapObjIndexed((dev, name) => (
-            deviceStateBox(name, dev.isOn)
-          )),
-        )(devices)
-      }
-    </Flex>
-  );
+            <DeviceStateBox
+              name={capitalize(name)}
+              isOn={dev.isOn}
+              key={name}
+              onChange={() => toggleDevice(name)}
+            />
+          ))
+        )(devices)}
+
+        <Text>Temperature range</Text>
+        <RadioSelectorBox
+          name="Temperature"
+          label="29 - 31"
+          checked={tempLimitsAsStr === '29,31'}
+          value={[29, 31]}
+          onChange={setTempRange}
+        />
+        <RadioSelectorBox
+          name="Temperature"
+          label="30 - 32"
+          checked={tempLimitsAsStr === '30,32'}
+          value={[30, 32]}
+          onChange={setTempRange}
+        />
+      </Flex>;
 
   return (
     <Panel theme="secondary">
       <PanelHeader>Control</PanelHeader>
-      { content }
+      {content}
     </Panel>
   );
 };

@@ -1,15 +1,17 @@
 /* @flow */
 import type { Deps } from '../types';
-import type { Action, FermenterState } from './types';
+import type { Action, EnvLimits, FermenterState } from './types';
 import { Observable } from 'rxjs/Observable';
+import { merge } from 'ramda';
 
 export const sendFermenterCmd = (cmd: string): Action => ({
   type: 'SEND_FERMENTER_CMD',
-  payload: { cmd },
+  payload: { currentCmd: cmd },
 });
 
-export const sendFermenterCmdSuccess = () => ({
-  type: 'SEND_FERMENTER_CMD_SUCCESS',
+export const sendFermenterTempLimits = (limits: EnvLimits): Action => ({
+  type: 'SEND_FERMENTER_TEMPLIMITS',
+  payload: { tempLimits: limits },
 });
 
 export const processState = (newState: FermenterState): Action => ({
@@ -26,12 +28,11 @@ export const unsubscribeToState = (): Action => ({
 });
 
 const subscribeToStateEpic = (action$: any, { homeConnect }: Deps) =>
-  action$
-    .ofType('SUBSCRIBE_TO_STATE')
-    .switchMap(() => homeConnect()
+  action$.ofType('SUBSCRIBE_TO_STATE').switchMap(() =>
+    homeConnect()
       .connOpen()
       .switchMap(client =>
-        Observable.create((observer) => {
+        Observable.create(observer => {
           const rsState = client.record.getRecord('fermenter/state');
           const onState = newState => observer.next(newState);
           rsState.subscribe(onState);
@@ -39,34 +40,35 @@ const subscribeToStateEpic = (action$: any, { homeConnect }: Deps) =>
           return () => {
             rsState.unsubscribe(onState);
           };
-        }).takeUntil(action$.filter((action: Action) =>
-          (action.type === 'UNSUBSCRIBE_TO_STATE' || action.type === 'APP_STOP')))
+        }).takeUntil(
+          action$.filter(
+            (action: Action) =>
+              action.type === 'UNSUBSCRIBE_TO_STATE' ||
+              action.type === 'APP_STOP'
+          )
+        )
       )
-      .switchMap(newState =>
-        Observable.of(processState(newState))
-      )
-    );
+      .switchMap(newState => Observable.of(processState(newState)))
+  );
 
-const sendFermenterCmdEpic = (action$: any, { homeConnect }: Deps) =>
+const sendFermenterCmdsEpic = (action$: any, { homeConnect }: Deps) =>
   action$
-    .ofType('SEND_FERMENTER_CMD')
-    .switchMap(action => (
+    .ofType('SEND_FERMENTER_CMD', 'SEND_FERMENTER_TEMPLIMITS')
+    .switchMap(action =>
       homeConnect()
         .connOpen()
-        .switchMap((client) => {
-          const cmdRecord = client.record.getRecord('fermenter/command');
-          const rsReady = Observable.bindCallback(cb => (
+        .switchMap(client => {
+          const cmdRecord = client.record.getRecord('fermenter/commands');
+          const rsReady = Observable.bindCallback(cb =>
             cmdRecord.whenReady(cb)
-          ));
+          );
           return rsReady();
         })
-        .switchMap((rs) => {
-          rs.set('fermenter/command', action.payload.cmd);
+        .switchMap(rs => {
+          const currentCmds = rs.get();
+          rs.set(merge(currentCmds, action.payload));
           return Observable.of();
         })
-    ));
+    );
 
-export const epics = [
-  sendFermenterCmdEpic,
-  subscribeToStateEpic,
-];
+export const epics = [sendFermenterCmdsEpic, subscribeToStateEpic];
