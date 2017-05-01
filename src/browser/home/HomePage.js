@@ -9,7 +9,7 @@ import { Flex, Box } from 'reflexbox';
 import { toggleShowOnlyActive, createCronjob } from '../../common/home/actions';
 import AddrListByRoom from './AddressListByRoom';
 import AddrList from './AddressList';
-import { ButtonCircle, Title, ToggleButton, View } from '../components';
+import { Title, ToggleButton, View } from '../components';
 
 type HomePageProps = {
   smartHomeState: Object,
@@ -22,7 +22,6 @@ const HomePage = ({
   smartHomeState,
   location,
   toggleShowOnlyActive,
-  createCronjob,
 }: HomePageProps) => {
   const { livestate, prefs } = smartHomeState;
   const onlyActive = prefs.showOnlyActive;
@@ -31,36 +30,6 @@ const HomePage = ({
   const addresses = reject(addr => addr.type === 'fb', livestate);
 
   const toggleOnlyActive = () => toggleShowOnlyActive(onlyActive);
-
-  const addCronjob = () =>
-    createCronjob({
-      jobId: 'cronjobs/j1esevoj-blalblalblald',
-      name: 'Hobby-Licht Auto',
-      at: '23:12:00',
-      repeat: 'daily',
-      scheduled: false,
-      running: false,
-      lastRun: null,
-      tasks: [
-        {
-          act: 'off',
-          id: 7,
-          status: 'idle',
-          startedAt: null,
-          endedAt: null,
-          target: '1/1/7',
-        },
-      ],
-    });
-
-  const newCronjobButton = () => (
-    <ButtonCircle
-      theme="primary"
-      style={{ marginBottom: '15px' }}
-      title="add cronjob"
-      onClick={() => addCronjob()}
-    />
-  );
 
   const viewType = pathOr('changes', ['pathname'], location);
   const addrList = test(/rooms$/, viewType)
@@ -79,9 +48,6 @@ const HomePage = ({
             style={{ marginBottom: '15px' }}
             onClick={() => toggleOnlyActive()}
           />
-        </Box>
-        <Box col={1} py={2}>
-          {newCronjobButton()}
         </Box>
         <Box col={12} py={2}>
           {addrList}
