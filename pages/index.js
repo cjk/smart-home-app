@@ -7,6 +7,7 @@ import { doAction } from '../lib/app/actions';
 
 class SmartHome extends React.Component {
   static getInitialProps({ store, isServer }) {
+    console.log(doAction);
     store.dispatch(doAction(isServer));
 
     return { isServer };
