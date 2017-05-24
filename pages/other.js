@@ -5,15 +5,14 @@ import withRedux from 'next-redux-wrapper';
 import Page from '../components/Page';
 import { doAction } from '../lib/app/actions';
 
-class SmartHome extends React.Component {
+class OtherPage extends React.Component {
   static getInitialProps({ store, isServer }) {
-    store.dispatch(doAction(isServer));
-
+    store.dispatch(doAction());
     return { isServer };
   }
 
   render() {
-    return <Page title="Index Page" linkTo="/other" />;
+    return <Page title="Other Page" linkTo="/" />;
   }
 }
 
@@ -23,4 +22,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default withRedux(createStore, null, mapDispatchToProps)(SmartHome);
+export default withRedux(createStore, null, mapDispatchToProps)(OtherPage);
