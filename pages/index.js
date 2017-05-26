@@ -1,26 +1,50 @@
 import React from 'react';
+
 import { bindActionCreators } from 'redux';
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
-import Page from '../components/Page';
 import { doAction } from '../lib/app/actions';
+import App from '../components/App';
+import Page from '../components/Page';
 
-class SmartHome extends React.Component {
+import Button from 'material-ui/Button';
+
+import Typography from 'material-ui/Typography';
+
+const styles = {
+  container: {
+    textAlign: 'center',
+    paddingTop: 200,
+  },
+};
+
+class Index extends React.Component {
   static getInitialProps({ store, isServer }) {
     store.dispatch(doAction(isServer));
 
-    return { isServer };
+    return { isServer }; // we can pass custom props to our component from here
   }
 
   render() {
-    return <Page title="Index Page" linkTo="/other" />;
+    return (
+      <App>
+        <div style={styles.container}>
+          <Typography type="display1" gutterBottom>Material-UI</Typography>
+          <Typography type="subheading" gutterBottom>
+            example project
+          </Typography>
+          <Button raised accent>
+            Super Secret Password
+          </Button>
+          <Page title="Index Page" linkTo="/other" />
+        </div>
+      </App>
+    );
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    doAction: bindActionCreators(doAction, dispatch),
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  doAction: bindActionCreators(doAction, dispatch),
+});
 
-export default withRedux(createStore, null, mapDispatchToProps)(SmartHome);
+export default withRedux(createStore, null, mapDispatchToProps)(Index);
