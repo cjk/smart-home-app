@@ -1,13 +1,14 @@
 import Link from 'next/link';
 import { connect } from 'react-redux';
+import { keys } from 'ramda';
 
-export default connect(state => state)(({ title, status, linkTo }) => {
+export default connect(state => state)(({ home }) => {
   return (
     <div>
-      <h1>{title}</h1>
+      <h1>SmartHome Entry</h1>
       <p>Welcome to your NG smarthome-control!</p>
-      <p>our status right now is {status}</p>
-      <p>go to <Link href={linkTo}><a>other</a></Link> page.</p>
+      <p>our status right now is {keys(home.livestate).length}</p>
+      <p>go to <Link href="/other"><a>other</a></Link> page.</p>
     </div>
   );
 });

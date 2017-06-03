@@ -1,9 +1,8 @@
 import React from 'react';
 
-import { bindActionCreators } from 'redux';
+import type { Action } from '../types';
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
-import { doAction } from '../lib/app/actions';
 import App from '../components/App';
 import Page from '../components/Page';
 
@@ -19,10 +18,15 @@ const styles = {
 };
 
 class Index extends React.Component {
-  static getInitialProps({ store, isServer }) {
-    store.dispatch(doAction(isServer));
-
+  static async getInitialProps({ store, isServer }) {
+    console.log(`Dispatching connect client - on server?: ${isServer}`);
+    await store.dispatch(({ type: 'CONNECT_CLIENT' }: Action));
     return { isServer }; // we can pass custom props to our component from here
+  }
+
+  componentDidMount() {
+    console.log('Index page mounted! Home-props:');
+    console.log(this.props);
   }
 
   render() {
@@ -43,8 +47,4 @@ class Index extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  doAction: bindActionCreators(doAction, dispatch),
-});
-
-export default withRedux(createStore, null, mapDispatchToProps)(Index);
+export default withRedux(createStore)(Index);
