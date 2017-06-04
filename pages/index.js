@@ -6,13 +6,13 @@ import withRedux from 'next-redux-wrapper';
 import App from '../components/App';
 import Page from '../components/Page';
 
+import { bindActionCreators } from 'redux';
+import connectClient from '../lib/client';
+import { createInitialstateReq$ } from '../lib/shared/create-state-streams';
+import { requestInitialStateSuccess } from '../lib/home/actions';
+
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-
-import { bindActionCreators } from 'redux';
-import { Observable } from 'rxjs/Observable';
-import connectClient from '../lib/client';
-import { requestInitialStateSuccess } from '../lib/home/actions';
 
 const styles = {
   container: {
@@ -21,38 +21,26 @@ const styles = {
   },
 };
 
-// TODO: Refactor (out)?
-const reqInitState = client =>
-  Observable.create(observer => {
-    client.record.snapshot('knx/initialBusState', (error, record) => {
-      if (error) {
-        console.error('Error requesting initialBusState from deepstream');
-        observer.error('Error requesting initialBusState from deepstream');
-      }
-      observer.next(record);
-      observer.complete();
-    });
-    /* No cleanup necessary, we only requested a snapshot above */
-    return () => {};
-  });
-
 class Index extends React.Component {
   static async getInitialProps({ store, isServer }) {
-    console.log(`[getInitialProps] Dispatching connect client - on server?: ${isServer}`);
+    console.log(
+      `[getInitialProps] Dispatching connect client - on server?: ${isServer}`
+    );
 
     if (isServer) {
       const state = await connectClient()
         .connOpen()
-        .switchMap(client => reqInitState(client))
+        .switchMap(client => createInitialstateReq$(client))
         .take(1)
-      // DEBUGGING:
-      // .do(state => {
-      //   console.log(
-      //     `[getInitialProps] initial-state: ${JSON.stringify(state)}`
-      //   );
-      // })
+        // DEBUGGING:
+        // .do(state => {
+        //   console.log(
+        //     `[getInitialProps] initial-state: ${JSON.stringify(state)}`
+        //   );
+        // })
         .toPromise();
 
+      // Send livestate to the redux-store as well, so it's available client-side
       await store.dispatch(requestInitialStateSuccess(state));
       return { livestate: state, isServer };
     }
@@ -77,14 +65,5 @@ class Index extends React.Component {
     );
   }
 }
-
-const mapDispatchToProps = dispatch => {
-  return {
-    reqInitialStateSuccess: bindActionCreators(
-      requestInitialStateSuccess,
-      dispatch
-    ),
-  };
-};
 
 export default withRedux(createStore)(Index);
