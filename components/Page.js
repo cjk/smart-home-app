@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { connect } from 'react-redux';
 import { keys } from 'ramda';
 
-export default connect(state => state)(({ home }) => {
+export default connect(state => state)(({ title, linkTo, home }) => {
   return (
     <div>
       <h1>SmartHome Entry</h1>
