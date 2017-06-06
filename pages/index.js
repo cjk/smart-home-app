@@ -1,12 +1,10 @@
 import React from 'react';
 
-import type { Action } from '../types';
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
 import App from '../components/App';
 import Page from '../components/Page';
 
-import { bindActionCreators } from 'redux';
 import connectClient from '../lib/client';
 import { createInitialstateReq$ } from '../lib/shared/create-state-streams';
 import { requestInitialStateSuccess } from '../lib/home/actions';
