@@ -9,13 +9,14 @@ import connectClient from '../lib/client';
 import { createInitialstateReq$ } from '../lib/shared/create-state-streams';
 import { requestInitialStateSuccess } from '../lib/home/actions';
 
+import AppBar from '../components/App-bar';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 
 const styles = {
   container: {
     textAlign: 'center',
-    paddingTop: 200,
+    padding: '50px',
   },
 };
 
@@ -49,15 +50,18 @@ class Index extends React.Component {
   render() {
     return (
       <App>
-        <div style={styles.container}>
-          <Typography type="display1" gutterBottom>Material-UI</Typography>
-          <Typography type="subheading" gutterBottom>
-            example project
-          </Typography>
-          <Button raised accent>
-            Super Secret Password
-          </Button>
-          <Page title="Index Page" linkTo="/other" />
+        <div className="app">
+          <AppBar />
+          <div style={styles.container}>
+            <Typography type="display1" gutterBottom>Material-UI</Typography>
+            <Typography type="subheading" gutterBottom>
+              example project
+            </Typography>
+            <Button raised accent>
+              Super Secret Password
+            </Button>
+            <Page title="Index Page" linkTo="/other" />
+          </div>
         </div>
       </App>
     );
