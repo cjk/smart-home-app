@@ -14,9 +14,12 @@ export default class MyDocument extends Document {
     return {
       ...page,
       styles: (
-        <style id="jss-server-side" type="text/css">
-          {styleContext.styleManager.sheetsToString()}
-        </style>
+        <style
+          id="jss-server-side"
+          dangerouslySetInnerHTML={{
+            __html: styleContext.styleManager.sheetsToString(),
+          }}
+        />
       ),
     };
   }
@@ -26,14 +29,14 @@ export default class MyDocument extends Document {
     return (
       <html lang="en">
         <Head>
-          <title>My page</title>
+          <title>CjK&#39;s smart-home</title>
           <meta charSet="utf-8" />
           {/* Use minimum-scale=1 to enable GPU rasterization */}
           <meta
             name="viewport"
             content={
               'user-scalable=0, initial-scale=1, maximum-scale=1, ' +
-                'minimum-scale=1, width=device-width, height=device-height'
+              'minimum-scale=1, width=device-width, height=device-height'
             }
           />
           {/* PWA primary color */}
