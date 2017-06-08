@@ -1,6 +1,5 @@
 // @flow
 import React from 'react';
-import PropTypes from 'prop-types';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 
 import AppBar from 'material-ui/AppBar';
@@ -8,10 +7,13 @@ import Toolbar from 'material-ui/Toolbar';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
 
+type AppBarProps = {
+  classes: Object,
+};
+
 const styleSheet = createStyleSheet('ButtonAppBar', {
   root: {
     position: 'relative',
-    marginTop: 30,
     width: '100%',
   },
   appBar: {
@@ -22,7 +24,7 @@ const styleSheet = createStyleSheet('ButtonAppBar', {
   },
 });
 
-const ButtonAppBar = props => {
+const MainAppBar = (props: AppBarProps) => {
   const classes = props.classes;
   return (
     <div className={classes.root}>
@@ -38,8 +40,4 @@ const ButtonAppBar = props => {
   );
 };
 
-ButtonAppBar.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styleSheet)(ButtonAppBar);
+export default withStyles(styleSheet)(MainAppBar);

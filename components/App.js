@@ -1,14 +1,18 @@
 // Root-HOC concerned with:
 // 1. setting up everything around Material-UI and make it work with SSR
 // 2. ...
+import type { Children } from 'react';
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
   withStyles,
   createStyleSheet,
   MuiThemeProvider,
 } from 'material-ui/styles';
 import { getDefaultContext } from '../styles/createDefaultContext';
+
+type AppProps = {
+  children: Children,
+};
 
 const styleSheet = createStyleSheet('App', theme => ({
   '@global': {
@@ -31,7 +35,7 @@ let AppWrapper = props => props.children;
 
 AppWrapper = withStyles(styleSheet)(AppWrapper);
 
-class App extends Component {
+class App extends Component<void, AppProps, void> {
   componentDidMount() {
     // Remove the server-side injected CSS.
     const jssStyles = document.querySelector('#jss-server-side');
@@ -51,9 +55,5 @@ class App extends Component {
     );
   }
 }
-
-App.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export default App;
