@@ -1,17 +1,17 @@
+// @flow
 import React from 'react';
 
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
 import App from '../components/App';
-import Page from '../components/Page';
+import AddressList from '../components/Address-List';
 
 import connectClient from '../lib/client';
 import { createInitialstateReq$ } from '../lib/shared/create-state-streams';
 import { requestInitialStateSuccess } from '../lib/home/actions';
+import { reject } from 'ramda';
 
 import AppBar from '../components/App-bar';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
 
 const styles = {
   container: {
@@ -20,6 +20,9 @@ const styles = {
   },
 };
 
+/* Built address-list, remove some address-types which should not be displayed */
+const addrFilter = reject(addr => addr.type === 'fb');
+
 class Index extends React.Component {
   static async getInitialProps({ store, isServer }) {
     console.log(
@@ -27,40 +30,29 @@ class Index extends React.Component {
     );
 
     if (isServer) {
-      const state = await connectClient()
+      const livestate = await connectClient()
         .connOpen()
         .switchMap(client => createInitialstateReq$(client))
         .take(1)
-        // DEBUGGING:
-        // .do(state => {
-        //   console.log(
-        //     `[getInitialProps] initial-state: ${JSON.stringify(state)}`
-        //   );
-        // })
         .toPromise();
 
       // Send livestate to the redux-store as well, so it's available client-side
-      await store.dispatch(requestInitialStateSuccess(state));
-      return { livestate: state, isServer };
+      await store.dispatch(requestInitialStateSuccess(livestate));
+      return { addresses: addrFilter(livestate), isServer };
     }
 
     return { isServer };
   }
 
   render() {
+    const { addresses } = this.props;
+
     return (
       <App>
         <div className="app">
           <AppBar />
           <div style={styles.container}>
-            <Typography type="display1" gutterBottom>Material-UI</Typography>
-            <Typography type="subheading" gutterBottom>
-              example project
-            </Typography>
-            <Button raised accent>
-              Super Secret Password
-            </Button>
-            <Page title="Index Page" linkTo="/other" />
+            <AddressList addresses={addresses} />
           </div>
         </div>
       </App>
