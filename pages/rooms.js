@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { bindActionCreators } from 'redux';
+// import { bindActionCreators } from 'redux';
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
 import App from '../components/App';
-import Page from '../components/Page';
+import AppBar from '../components/AppBar';
 
 const styles = {
   container: {
@@ -22,8 +22,11 @@ class OtherPage extends React.Component {
   render() {
     return (
       <App>
-        <div style={styles.container}>
-          <Page />
+        <div className="app">
+          <AppBar />
+          <div style={styles.container}>
+            <h3>nothing yet :(</h3>
+          </div>
         </div>
       </App>
     );

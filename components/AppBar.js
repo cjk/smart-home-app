@@ -1,7 +1,8 @@
 // @flow
 import React from 'react';
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import Link from 'next/link';
 
+import { withStyles, createStyleSheet } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Button from 'material-ui/Button';
@@ -33,7 +34,8 @@ const MainAppBar = (props: AppBarProps) => {
           <Typography type="title" colorInherit className={classes.flex}>
             SmartHome
           </Typography>
-          <Button contrast>Home</Button>
+          <Button contrast><Link href="/"><a>Home</a></Link></Button>
+          <Button contrast><Link href="/rooms"><a>Rooms</a></Link></Button>
         </Toolbar>
       </AppBar>
     </div>

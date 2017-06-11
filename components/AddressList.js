@@ -1,8 +1,10 @@
 /* @flow */
+import type { KnxAddress, State } from '../types';
 
 /* Presentational component to render a simple address-list sorted by most-recently changed */
 import React from 'react';
-import type { KnxAddress } from '../types';
+import { connect } from 'react-redux';
+
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import visualizeAddrValue from '../lib/shared/visualizeAddresses';
 import {
@@ -13,7 +15,6 @@ import {
   map,
   pipe,
   sort,
-  tap,
   values,
 } from 'ramda';
 
@@ -66,4 +67,6 @@ const AddressList = ({ addresses }: Props) => {
   );
 };
 
-export default AddressList;
+export default connect((state: State) => ({ addresses: state.smartHome.livestate }))(
+  AddressList
+);
