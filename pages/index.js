@@ -4,14 +4,13 @@ import React from 'react';
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
 import App from '../components/App';
-import AddressList from '../components/Address-List';
+import AddressList from '../components/AddressList';
+import AppBar from '../components/AppBar';
 
 import connectClient from '../lib/client';
 import { createInitialstateReq$ } from '../lib/shared/create-state-streams';
 import { requestInitialStateSuccess } from '../lib/home/actions';
 import { reject } from 'ramda';
-
-import AppBar from '../components/App-bar';
 
 const styles = {
   container: {
