@@ -5,6 +5,7 @@ import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
 import App from '../components/App';
 import AppBar from '../components/AppBar';
+import RoomList from '../components/RoomList';
 
 const styles = {
   container: {
@@ -16,6 +17,7 @@ const styles = {
 class OtherPage extends React.Component {
   static getInitialProps({ store, isServer }) {
     console.log(`on other page - isServer: ${isServer}`);
+    // TODO: request props for SSR here!
     return { isServer };
   }
 
@@ -25,7 +27,7 @@ class OtherPage extends React.Component {
         <div className="app">
           <AppBar />
           <div style={styles.container}>
-            <h3>nothing yet :(</h3>
+            <RoomList />
           </div>
         </div>
       </App>

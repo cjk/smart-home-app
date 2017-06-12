@@ -29,11 +29,16 @@ export type BusEvent = {
   value: string,
 };
 
+export type Prefs = {
+  rooms: Array<string>,
+  showOnlyActive: boolean,
+}
+
 /* TODO: Split into KNX- and App-parts */
 export type SmartHomeState = {
   livestate: { [id: string]: KnxAddress },
   eventHistory: Array<BusEvent>,
-  prefs: ?Object,
+  prefs: Prefs,
 };
 
 /* Cronjob types */
