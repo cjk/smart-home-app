@@ -10,6 +10,7 @@ import visualizeAddrValue from '../lib/shared/visualizeAddresses';
 import {
   comparator,
   complement,
+  compose,
   curry,
   isNil,
   map,
@@ -18,10 +19,12 @@ import {
   values,
 } from 'ramda';
 
+import { withStyles, createStyleSheet } from 'material-ui/styles';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 
 type Props = {
   addresses: Array<KnxAddress>,
+  classes: Object,
 };
 
 const hasStatus = complement(isNil);
@@ -32,17 +35,19 @@ const byHasValue = comparator(
 // PENDING: We're getting errors when using a functional-component instead of a React-component using #withStyles from
 // material-ui@next.
 // Thus we're using inline-styles for now
-const listStyles = {
-  width: '100%',
-  maxWidth: 480,
-  //     background: theme.palette.background.paper,
-};
+const listStyles = createStyleSheet('AddressList', theme => ({
+  addrList: {
+    width: '100%',
+    maxWidth: 480,
+    background: theme.palette.background.paper,
+  },
+}));
 
 // Generate last-updated time in words
 const lastUpdated = timestamp => ` - ${distanceInWordsToNow(timestamp)} ago`;
 const genTitle = curry(addr => `${addr.func} ${lastUpdated(addr.updatedAt)}`);
 
-const AddressList = ({ addresses }: Props) => {
+const AddressList = ({ addresses, classes }: Props) => {
   const itemizedAddress = addr =>
     <ListItem dense button key={addr.id}>
       {visualizeAddrValue(addr)}
@@ -61,12 +66,13 @@ const AddressList = ({ addresses }: Props) => {
   );
 
   return (
-    <List style={listStyles}>
+    <List className={classes.addrList}>
       {addrLstByDate(addresses)}
     </List>
   );
 };
 
-export default connect((state: State) => ({ addresses: state.smartHome.livestate }))(
-  AddressList
-);
+export default compose(
+  connect((state: State) => ({ addresses: state.smartHome.livestate })),
+  withStyles(listStyles)
+)(AddressList);
