@@ -25,8 +25,10 @@ import {
 
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Card, { CardContent } from 'material-ui/Card';
+import List from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 import AddressLine from '../components/AddressLine';
+import AddressListItem from '../components/AddrListItem';
 
 type Props = {
   addresses: Array<KnxAddress>,
@@ -38,6 +40,11 @@ const addrListStyles = createStyleSheet('AddressListByRoom', theme => ({
   card: {
     minWidth: 100,
     maxWidth: 768,
+  },
+  addrList: {
+    flexGrow: 1,
+    maxWidth: 768,
+    background: theme.palette.background.paper,
   },
   title: {
     marginBottom: 16,
@@ -54,9 +61,11 @@ const RoomList = ({ addresses, prefs, classes }: Props) => {
     <Card key={room} className={classes.card}>
       <CardContent>
         <Typography type="body1" className={classes.title}>{room}</Typography>
-        {addrLst.map(address =>
-          <AddressLine key={address.id} address={address} room={room} />
-        )}
+        <List className={classes.addrList}>
+          {addrLst.map(address =>
+            <AddressListItem key={address.id} address={address} room={room} />
+          )}
+        </List>
       </CardContent>
     </Card>;
 
@@ -84,5 +93,5 @@ export default compose(
     addresses: state.smartHome.livestate,
     prefs: state.smartHome.prefs,
   })),
-  withStyles(addrListStyles),
+  withStyles(addrListStyles)
 )(RoomList);
