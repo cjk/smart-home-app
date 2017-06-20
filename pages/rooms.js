@@ -7,14 +7,7 @@ import App from '../components/App';
 import AppBar from '../components/AppBar';
 import RoomList from '../components/RoomList';
 
-const styles = {
-  container: {
-    textAlign: 'center',
-    paddingTop: 200,
-  },
-};
-
-class OtherPage extends React.Component {
+class RoomsPage extends React.Component {
   static getInitialProps({ store, isServer }) {
     console.log(`on other page - isServer: ${isServer}`);
     // TODO: request props for SSR here!
@@ -26,7 +19,7 @@ class OtherPage extends React.Component {
       <App>
         <div className="app">
           <AppBar />
-          <div style={styles.container}>
+          <div>
             <RoomList />
           </div>
         </div>
@@ -41,4 +34,4 @@ class OtherPage extends React.Component {
 //   };
 // };
 
-export default withRedux(createStore)(OtherPage);
+export default withRedux(createStore)(RoomsPage);

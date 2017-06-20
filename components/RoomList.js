@@ -1,5 +1,5 @@
 /* @flow */
-import type { KnxAddress, Prefs, State } from '../types';
+import type { KnxAddress, Prefs, Rooms, State } from '../types';
 
 /* Presentational component to render a simple address-list sorted by most-recently changed */
 import React from 'react';
@@ -24,50 +24,54 @@ import {
 } from 'ramda';
 
 import { withStyles, createStyleSheet } from 'material-ui/styles';
-import Card, { CardContent } from 'material-ui/Card';
+import Paper from 'material-ui/Paper';
 import List from 'material-ui/List';
 import Typography from 'material-ui/Typography';
-import AddressLine from '../components/AddressLine';
+
+// import AddressLine from '../components/AddressLine';
 import AddressListItem from '../components/AddrListItem';
 
 type Props = {
   addresses: Array<KnxAddress>,
   prefs: Prefs,
+  rooms: Rooms,
   classes: Object,
 };
 
 const addrListStyles = createStyleSheet('AddressListByRoom', theme => ({
-  card: {
-    minWidth: 100,
-    maxWidth: 768,
+  room: {
+    // maxWidth: 1024,
+    // minWidth: 100,
+    margin: 10,
+    textAlign: 'center',
   },
-  addrList: {
-    flexGrow: 1,
-    maxWidth: 768,
-    background: theme.palette.background.paper,
-  },
-  title: {
-    marginBottom: 16,
+  roomTitle: {
+    padding: 16,
     fontSize: 14,
     color: theme.palette.text.secondary,
   },
+  addrList: {
+    background: theme.palette.background.paper,
+    textAlign: 'auto',
+  },
 }));
 
-const RoomList = ({ addresses, prefs, classes }: Props) => {
+const RoomList = ({ addresses, prefs, rooms, classes }: Props) => {
   const hasRoom = room => any(equals(room), prefs.rooms);
   const addressesWithRoom = keys(filter(hasRoom, pluck('room', addresses)));
+  const getRoomName = room => rooms[room].name;
 
   const createRoomPanels = (addrLst, room) =>
-    <Card key={room} className={classes.card}>
-      <CardContent>
-        <Typography type="body1" className={classes.title}>{room}</Typography>
-        <List className={classes.addrList}>
-          {addrLst.map(address =>
-            <AddressListItem key={address.id} address={address} room={room} />
-          )}
-        </List>
-      </CardContent>
-    </Card>;
+    <Paper key={room} className={classes.room}>
+      <Typography type="body1" className={classes.roomTitle}>
+        {getRoomName(room)}
+      </Typography>
+      <List className={classes.addrList}>
+        {addrLst.map(address =>
+          <AddressListItem key={address.id} address={address} />
+        )}
+      </List>
+    </Paper>;
 
   const onlyActiveRooms = rooms => filter(any(propEq('value', 1)), rooms);
 
@@ -91,7 +95,8 @@ const RoomList = ({ addresses, prefs, classes }: Props) => {
 export default compose(
   connect((state: State) => ({
     addresses: state.smartHome.livestate,
-    prefs: state.smartHome.prefs,
+    prefs: state.app.prefs,
+    rooms: state.app.rooms,
   })),
   withStyles(addrListStyles)
 )(RoomList);

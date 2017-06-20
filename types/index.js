@@ -29,10 +29,19 @@ export type BusEvent = {
   value: string,
 };
 
+type Room = {
+  name: string,
+  story: string,
+};
+
+export type Rooms = {
+  [id: string]: Room,
+};
+
 export type Prefs = {
   rooms: Array<string>,
   showOnlyActive: boolean,
-}
+};
 
 /* TODO: Split into KNX- and App-parts */
 export type SmartHomeState = {
@@ -59,8 +68,8 @@ export type CronJob = {
 };
 
 export type AppState = {
-  +name: string,
-  +version: string,
+  prefs: Prefs,
+  rooms: Rooms,
 };
 
 export type State = {

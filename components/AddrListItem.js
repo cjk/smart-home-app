@@ -5,6 +5,7 @@ import React from 'react';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import { ListItem, ListItemText } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
+import Grid from 'material-ui/Grid';
 
 import { curry } from 'ramda';
 
@@ -19,7 +20,8 @@ type Props = {
 };
 
 const addrLineStyles = createStyleSheet('AddressLine', theme => ({
-  addrId: {
+  addrItemContainer: {
+    flexGrow: 1,
     marginBottom: 12,
     color: theme.palette.text.secondary,
   },
@@ -30,10 +32,18 @@ const lastUpdated = timestamp => ` - ${distanceInWordsToNow(timestamp)} ago`;
 const genTitle = curry(addr => `${addr.func} ${lastUpdated(addr.updatedAt)}`);
 
 const AddressListItem = ({ address, classes }: Props) =>
-  <ListItem className={classes.addrId}>
-    {visualizeAddrValue(address)}
-    <ListItemText primary={address.name} secondary={address.id} />
-    <ListItemText primary={address.story} secondary={genTitle(address)} />
+  <ListItem className={classes.addrItemContainer}>
+    <Grid container gutter={24}>
+      <Grid item xs>
+        {visualizeAddrValue(address)}
+      </Grid>
+      <Grid item xs={6}>
+        <ListItemText primary={address.name} secondary={address.id} />
+      </Grid>
+      <Grid item xs>
+        <ListItemText primary={address.story} secondary={genTitle(address)} />
+      </Grid>
+    </Grid>
   </ListItem>;
 
 export default withStyles(addrLineStyles)(AddressListItem);
