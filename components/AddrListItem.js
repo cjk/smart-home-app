@@ -32,16 +32,16 @@ const lastUpdated = timestamp => ` - ${distanceInWordsToNow(timestamp)} ago`;
 const genTitle = curry(addr => `${addr.func} ${lastUpdated(addr.updatedAt)}`);
 
 const AddressListItem = ({ address, classes }: Props) =>
-  <ListItem className={classes.addrItemContainer}>
+  <ListItem dense className={classes.addrItemContainer}>
     <Grid container gutter={24}>
       <Grid item xs>
         {visualizeAddrValue(address)}
       </Grid>
       <Grid item xs={6}>
-        <ListItemText primary={address.name} secondary={address.id} />
+        <ListItemText primary={address.name} secondary={address.story} />
       </Grid>
       <Grid item xs>
-        <ListItemText primary={address.story} secondary={genTitle(address)} />
+        <ListItemText primary={address.id} secondary={genTitle(address)} />
       </Grid>
     </Grid>
   </ListItem>;
