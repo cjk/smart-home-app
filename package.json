@@ -39,6 +39,6 @@
     "babel-plugin-transform-define": "^1.2.0",
     "babel-preset-env": "^1.5.2",
     "eslint-plugin-flowtype": "^2.33.0",
-    "flow-bin": "^0.46.0"
+    "flow-bin": "^0.48.0"
   }
 }

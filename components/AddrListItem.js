@@ -4,7 +4,6 @@ import type { KnxAddress } from '../types';
 import React from 'react';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import { ListItem, ListItemText } from 'material-ui/List';
-import Typography from 'material-ui/Typography';
 import Grid from 'material-ui/Grid';
 
 import { curry } from 'ramda';

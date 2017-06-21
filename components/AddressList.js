@@ -30,9 +30,6 @@ const byHasValue = comparator(
   (a, b) => (isNil(b.value) ? hasStatus(a.value) : a.updatedAt > b.updatedAt)
 );
 
-// PENDING: We're getting errors when using a functional-component instead of a React-component using #withStyles from
-// material-ui@next.
-// Thus we're using inline-styles for now
 const listStyles = createStyleSheet('AddressList', theme => ({
   addrList: {
     width: '100%',
@@ -42,7 +39,7 @@ const listStyles = createStyleSheet('AddressList', theme => ({
 }));
 
 const AddressList = ({ addresses, classes }: Props) => {
-  const itemizedAddress = addr => <AddressListItem key={addr.id} address={addr} />;
+  const itemizedAddress = (addr: KnxAddress) => <AddressListItem key={addr.id} address={addr} />;
 
   const addrLstByDate = pipe(
     values,
