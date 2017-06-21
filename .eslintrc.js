@@ -30,6 +30,7 @@ module.exports = {
     'react/jsx-filename-extension': 0, // JSX belongs to .js files.
     'react/jsx-indent': 0, // Prettier.
     'react/jsx-indent-props': 0, // Prettier.
+    'react/jsx-wrap-multilines': 0, // Prettier.
     'react/no-unused-prop-types': 0, // Buggy and we don't need it with Flow.
     'react/prop-types': 0, // We don't need it with Flow.
     'react/react-in-jsx-scope': 0, // Next.js injects it. Should be default.
