@@ -5,13 +5,10 @@ import type { KnxAddress, State } from '../types';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
-import visualizeAddrValue from '../lib/shared/visualizeAddresses';
 import {
   comparator,
   complement,
   compose,
-  curry,
   isNil,
   map,
   pipe,
@@ -19,8 +16,9 @@ import {
   values,
 } from 'ramda';
 
+import AddressListItem from '../components/AddrListItem';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
-import List, { ListItem, ListItemText } from 'material-ui/List';
+import List from 'material-ui/List';
 
 type Props = {
   addresses: Array<KnxAddress>,
@@ -43,17 +41,8 @@ const listStyles = createStyleSheet('AddressList', theme => ({
   },
 }));
 
-// Generate last-updated time in words
-const lastUpdated = timestamp => ` - ${distanceInWordsToNow(timestamp)} ago`;
-const genTitle = curry(addr => `${addr.func} ${lastUpdated(addr.updatedAt)}`);
-
 const AddressList = ({ addresses, classes }: Props) => {
-  const itemizedAddress = addr =>
-    <ListItem dense button key={addr.id}>
-      {visualizeAddrValue(addr)}
-      <ListItemText primary={`${addr.name}`} secondary={genTitle(addr)} />
-      <ListItemText primary={`${addr.story}`} secondary={`${addr.id}`} />
-    </ListItem>;
+  const itemizedAddress = addr => <AddressListItem key={addr.id} address={addr} />;
 
   const addrLstByDate = pipe(
     values,

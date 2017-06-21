@@ -14,7 +14,6 @@ import visualizeAddrValue from '../lib/shared/visualizeAddresses';
 
 type Props = {
   address: KnxAddress,
-  room: Object,
   classes: Object,
   //   writeGroupAddr: typeof writeGroupAddr,
 };

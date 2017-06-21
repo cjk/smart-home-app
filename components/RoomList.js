@@ -28,7 +28,6 @@ import Paper from 'material-ui/Paper';
 import List from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 
-// import AddressLine from '../components/AddressLine';
 import AddressListItem from '../components/AddrListItem';
 
 type Props = {
