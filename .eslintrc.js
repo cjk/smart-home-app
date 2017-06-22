@@ -40,6 +40,6 @@ module.exports = {
     'react/jsx-boolean-value': 0, // Control freaky.
     // misc (CjK)
     'comma-dangle': ['error', 'only-multiline'],
-    'max-len': ['error', 120],
+    'max-len': ['error', 120, { "ignoreComments": true }],
   },
 };
