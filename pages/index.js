@@ -28,6 +28,7 @@ class Index extends React.Component {
       `[getInitialProps] Dispatching connect client - on server?: ${isServer}`
     );
 
+    // TODO: Perhaps move initial-state-fetching into HOC, like so: https://github.com/zeit/next.js/tree/v3-beta/examples/with-higher-order-component
     if (isServer) {
       const livestate = await connectClient()
         .connOpen()
