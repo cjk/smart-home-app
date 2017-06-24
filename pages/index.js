@@ -1,4 +1,6 @@
 // @flow
+import type { AddressMap, KnxAddress, SmartHomeState } from '../types';
+
 import React from 'react';
 
 import createStore from '../lib/create-store';
@@ -9,7 +11,6 @@ import AppBar from '../components/AppBar';
 
 import connectClient from '../lib/client';
 import { createInitialstateReq$ } from '../lib/shared/create-state-streams';
-import { requestInitialStateSuccess } from '../lib/home/actions';
 import { reject } from 'ramda';
 
 const styles = {
@@ -20,7 +21,7 @@ const styles = {
 };
 
 /* Built address-list, remove some address-types which should not be displayed */
-const addrFilter = reject(addr => addr.type === 'fb');
+const addrFilter = reject((addr: KnxAddress) => addr.type === 'fb');
 
 class Index extends React.Component {
   static async getInitialProps({ store, isServer }) {
@@ -30,14 +31,17 @@ class Index extends React.Component {
 
     // TODO: Perhaps move initial-state-fetching into HOC, like so: https://github.com/zeit/next.js/tree/v3-beta/examples/with-higher-order-component
     if (isServer) {
-      const livestate = await connectClient()
+      const livestate: SmartHomeState = await connectClient()
         .connOpen()
         .switchMap(client => createInitialstateReq$(client))
         .take(1)
         .toPromise();
 
       // Send livestate to the redux-store as well, so it's available client-side
-      await store.dispatch(requestInitialStateSuccess(livestate));
+      await store.dispatch({
+        type: 'REQUEST_INITIAL_STATE_SUCCESS',
+        livestate,
+      });
       return { addresses: addrFilter(livestate), isServer };
     }
 
@@ -45,7 +49,7 @@ class Index extends React.Component {
   }
 
   render() {
-    const { addresses } = this.props;
+    const { addresses }: AddressMap = this.props;
 
     return (
       <App>

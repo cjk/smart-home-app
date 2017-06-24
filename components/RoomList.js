@@ -1,5 +1,5 @@
 /* @flow */
-import type { KnxAddress, Prefs, Rooms, State } from '../types';
+import type { Dispatch, KnxAddress, Prefs, Rooms, State } from '../types';
 
 /* Presentational component to render a simple address-list sorted by most-recently changed */
 import React from 'react';
@@ -29,12 +29,15 @@ import List from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 
 import AddressListItem from '../components/AddrListItem';
+import AddressSwitch from '../components/AddrItemSwitch';
+import { toggleAddrVal } from '../lib/shared/address-utils';
 
 type Props = {
   addresses: Array<KnxAddress>,
   prefs: Prefs,
   rooms: Rooms,
   classes: Object,
+  dispatch: Dispatch,
 };
 
 const addrListStyles = createStyleSheet('AddressListByRoom', theme => ({
@@ -55,10 +58,12 @@ const addrListStyles = createStyleSheet('AddressListByRoom', theme => ({
   },
 }));
 
-const RoomList = ({ addresses, prefs, rooms, classes }: Props) => {
+const RoomList = ({ addresses, dispatch, prefs, rooms, classes }: Props) => {
   const hasRoom = room => any(equals(room), prefs.rooms);
   const addressesWithRoom = keys(filter(hasRoom, pluck('room', addresses)));
   const getRoomName = room => rooms[room].name;
+  const onAddrSwitch = addr =>
+    dispatch({ type: 'WRITE_GROUP_ADDRESS', addr: toggleAddrVal(addr) });
 
   const createRoomPanels = (addrLst, room) =>
     <Paper key={room} className={classes.room}>
@@ -67,7 +72,13 @@ const RoomList = ({ addresses, prefs, rooms, classes }: Props) => {
       </Typography>
       <List className={classes.addrList}>
         {addrLst.map(address =>
-          <AddressListItem key={address.id} address={address} />
+          <AddressListItem
+            key={address.id}
+            address={address}
+            addrSwitch={
+              <AddressSwitch switchAction={onAddrSwitch} address={address} />
+            }
+          />
         )}
       </List>
     </Paper>;

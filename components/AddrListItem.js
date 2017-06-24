@@ -14,6 +14,7 @@ import visualizeAddrValue from '../lib/shared/visualizeAddresses';
 type Props = {
   address: KnxAddress,
   classes: Object,
+  addrSwitch: React.Element<*>,
   //   writeGroupAddr: typeof writeGroupAddr,
 };
 
@@ -29,7 +30,7 @@ const addrLineStyles = createStyleSheet('AddressLine', theme => ({
 const lastUpdated = timestamp => ` - ${distanceInWordsToNow(timestamp)} ago`;
 const genTitle = curry(addr => `${addr.func} ${lastUpdated(addr.updatedAt)}`);
 
-const AddressListItem = ({ address, classes }: Props) =>
+const AddressListItem = ({ address, classes, addrSwitch }: Props) =>
   <ListItem dense className={classes.addrItemContainer}>
     <Grid container gutter={24}>
       <Grid item xs>
@@ -40,6 +41,9 @@ const AddressListItem = ({ address, classes }: Props) =>
       </Grid>
       <Grid item xs>
         <ListItemText primary={address.id} secondary={genTitle(address)} />
+      </Grid>
+      <Grid item xs>
+        {addrSwitch}
       </Grid>
     </Grid>
   </ListItem>;
