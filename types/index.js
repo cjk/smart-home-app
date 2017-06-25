@@ -88,7 +88,7 @@ export type Dependencies = {
 // Actions
 export type Action =
   | { type: 'CREATE_CRONJOB', payload: CronJob }
-  | { type: 'PROCESS_EVENT', payload: { newEvent: BusEvent } }
+  | { type: 'PROCESS_EVENT', event: BusEvent }
   | { type: 'WRITE_GROUP_ADDRESS', addr: KnxAddress }
   | { type: 'WRITE_GROUP_ADDRESS_DONE' }
   | { type: 'REQUEST_INITIAL_STATE' }
@@ -96,7 +96,7 @@ export type Action =
   | { type: 'SWITCH_TO_TAB', payload: { tabId: number } }
   | { type: 'APP_ONLINE', payload: { online: boolean } }
   | { type: 'APP_SHOW_MENU', payload: { menuShown: boolean } }
-  | { type: 'CONNECT_CLIENT' }
+  | { type: 'SUBSCRIBE_TO_BUS' }
   | { type: 'TOGGLE_SHOW_ONLY_ACTIVE', payload: boolean }
   | { type: 'SET_THEME', payload: { theme: string } };
 

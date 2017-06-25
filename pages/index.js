@@ -6,12 +6,14 @@ import React from 'react';
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
 import App from '../components/App';
+import WithBusSubsribe from '../components/WithBusSubribe';
 import AddressList from '../components/AddressList';
 import AppBar from '../components/AppBar';
 
+import { compose, reject } from 'ramda';
+
 import connectClient from '../lib/client';
 import { createInitialstateReq$ } from '../lib/shared/create-state-streams';
-import { reject } from 'ramda';
 
 const styles = {
   container: {
@@ -45,7 +47,7 @@ class Index extends React.Component {
       return { addresses: addrFilter(livestate), isServer };
     }
 
-    return { isServer };
+    return { isServer, dispatch: store.dispatch };
   }
 
   render() {
@@ -64,4 +66,4 @@ class Index extends React.Component {
   }
 }
 
-export default withRedux(createStore)(Index);
+export default compose(withRedux(createStore), WithBusSubsribe)(Index);
