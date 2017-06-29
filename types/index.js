@@ -22,7 +22,6 @@ export type KnxAddress = {
 };
 
 export type BusEvent = {
-  id: string,
   created: number,
   action: string,
   type: string,
@@ -93,7 +92,6 @@ export type Action =
   | { type: 'WRITE_GROUP_ADDRESS_DONE' }
   | { type: 'REQUEST_INITIAL_STATE' }
   | { type: 'REQUEST_INITIAL_STATE_SUCCESS', livestate: SmartHomeState }
-  | { type: 'SWITCH_TO_TAB', payload: { tabId: number } }
   | { type: 'APP_ONLINE', payload: { online: boolean } }
   | { type: 'APP_SHOW_MENU', payload: { menuShown: boolean } }
   | { type: 'SUBSCRIBE_TO_BUS' }
