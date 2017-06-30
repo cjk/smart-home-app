@@ -1,21 +1,23 @@
 import React from 'react';
 
-const WithBusSubsribe = Child =>
+const WithBusSubsribe = Page =>
   class WithBusSubsribe extends React.Component {
-    static getInitialProps(ctx) {
-      return Child.getInitialProps(ctx);
+    static async getInitialProps(ctx) {
+      let composedInitialProps = {};
+      if (Page.getInitialProps) {
+        composedInitialProps = await Page.getInitialProps(ctx);
+      }
+      return { ...composedInitialProps };
     }
 
     // your client-only actions go here:
     componentDidMount() {
-      console.log('[withBusSubscribe] - mounted!');
-      console.log(this.props);
       const { dispatch } = this.props;
       dispatch({ type: 'SUBSCRIBE_TO_BUS' });
     }
 
     render() {
-      return <Child {...this.props} />;
+      return <Page {...this.props} />;
     }
   };
 

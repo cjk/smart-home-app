@@ -71,6 +71,7 @@ export type CronJob = {
 export type AppState = {
   prefs: Prefs,
   rooms: Rooms,
+  isSubscribedToBus: boolean,
 };
 
 export type State = {
@@ -95,6 +96,7 @@ export type Action =
   | { type: 'APP_ONLINE', payload: { online: boolean } }
   | { type: 'APP_SHOW_MENU', payload: { menuShown: boolean } }
   | { type: 'SUBSCRIBE_TO_BUS' }
+  | { type: 'SUBSCRIBE_TO_BUS_SUCCESS' }
   | { type: 'TOGGLE_SHOW_ONLY_ACTIVE', payload: boolean }
   | { type: 'SET_THEME', payload: { theme: string } };
 

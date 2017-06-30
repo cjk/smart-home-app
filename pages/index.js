@@ -25,7 +25,7 @@ const styles = {
 /* Built address-list, remove some address-types which should not be displayed */
 const addrFilter = reject((addr: KnxAddress) => addr.type === 'fb');
 
-class Index extends React.Component {
+class IndexPage extends React.Component {
   static async getInitialProps({ store, isServer }) {
     console.log(
       `[getInitialProps] Dispatching connect client - on server?: ${isServer}`
@@ -66,4 +66,4 @@ class Index extends React.Component {
   }
 }
 
-export default compose(withRedux(createStore), WithBusSubsribe)(Index);
+export default compose(withRedux(createStore), WithBusSubsribe)(IndexPage);
