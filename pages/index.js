@@ -1,5 +1,5 @@
 // @flow
-import type { AddressMap, KnxAddress, SmartHomeState } from '../types';
+import type { AddressMap, KnxAddress } from '../types';
 
 import React from 'react';
 
@@ -12,9 +12,6 @@ import AppBar from '../components/AppBar';
 
 import { compose, reject } from 'ramda';
 
-import connectClient from '../lib/client';
-import { createInitialstateReq$ } from '../lib/shared/create-state-streams';
-
 const styles = {
   container: {
     textAlign: 'center',
@@ -26,39 +23,15 @@ const styles = {
 const addrFilter = reject((addr: KnxAddress) => addr.type === 'fb');
 
 class IndexPage extends React.Component {
-  static async getInitialProps({ store, isServer }) {
-    console.log(
-      `[getInitialProps] Dispatching connect client - on server?: ${isServer}`
-    );
-
-    // TODO: Perhaps move initial-state-fetching into HOC, like so: https://github.com/zeit/next.js/tree/v3-beta/examples/with-higher-order-component
-    if (isServer) {
-      const livestate: SmartHomeState = await connectClient()
-        .connOpen()
-        .switchMap(client => createInitialstateReq$(client))
-        .take(1)
-        .toPromise();
-
-      // Send livestate to the redux-store as well, so it's available client-side
-      await store.dispatch({
-        type: 'REQUEST_INITIAL_STATE_SUCCESS',
-        livestate,
-      });
-      return { addresses: addrFilter(livestate), isServer };
-    }
-
-    return { isServer, dispatch: store.dispatch };
-  }
-
   render() {
-    const { addresses }: AddressMap = this.props;
+    const { livestate }: AddressMap = addrFilter(this.props.smartHome);
 
     return (
       <App>
         <div className="app">
           <AppBar />
           <div style={styles.container}>
-            <AddressList addresses={addresses} />
+            <AddressList addresses={livestate} />
           </div>
         </div>
       </App>
@@ -66,4 +39,7 @@ class IndexPage extends React.Component {
   }
 }
 
-export default compose(withRedux(createStore), WithBusSubsribe)(IndexPage);
+export default compose(
+  withRedux(createStore, state => ({ smartHome: state.smartHome })),
+  WithBusSubsribe
+)(IndexPage);

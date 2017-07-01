@@ -11,12 +11,6 @@ import RoomList from '../components/RoomList';
 import { compose } from 'ramda';
 
 class RoomsPage extends React.Component {
-  static getInitialProps({ store, isServer }) {
-    console.log(`on other page - isServer: ${isServer}`);
-    // TODO: request props for SSR here!
-    return { isServer };
-  }
-
   render() {
     return (
       <App>
