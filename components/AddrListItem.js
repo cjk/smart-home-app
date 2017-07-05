@@ -42,9 +42,10 @@ const AddressListItem = ({ address, classes, addrSwitch }: Props) =>
       <Grid item xs>
         <ListItemText primary={address.id} secondary={genTitle(address)} />
       </Grid>
-      <Grid item xs>
-        {addrSwitch}
-      </Grid>
+      {addrSwitch &&
+        <Grid item xs>
+          {addrSwitch}
+        </Grid>}
     </Grid>
   </ListItem>;
 
