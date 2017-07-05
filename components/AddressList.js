@@ -33,7 +33,7 @@ const byHasValue = comparator(
 const listStyles = createStyleSheet('AddressList', theme => ({
   addrList: {
     width: '100%',
-    maxWidth: 480,
+    maxWidth: 1024,
     background: theme.palette.background.paper,
   },
 }));
