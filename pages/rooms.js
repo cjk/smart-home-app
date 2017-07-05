@@ -10,20 +10,15 @@ import RoomList from '../components/RoomList';
 
 import { compose } from 'ramda';
 
-class RoomsPage extends React.Component {
-  render() {
-    return (
-      <App>
-        <div className="app">
-          <AppBar />
-          <div>
-            <RoomList />
-          </div>
-        </div>
-      </App>
-    );
-  }
-}
+const RoomsPage = () =>
+  <App>
+    <div className="app">
+      <AppBar />
+      <div>
+        <RoomList />
+      </div>
+    </div>
+  </App>;
 
 // const mapDispatchToProps = dispatch => {
 //   return {

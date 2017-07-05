@@ -22,22 +22,20 @@ const styles = {
 /* Built address-list, remove some address-types which should not be displayed */
 const addrFilter = reject((addr: KnxAddress) => addr.type === 'fb');
 
-class IndexPage extends React.Component {
-  render() {
-    const { livestate }: AddressMap = addrFilter(this.props.smartHome);
+const IndexPage = props => {
+  const { livestate }: AddressMap = addrFilter(props.smartHome);
 
-    return (
-      <App>
-        <div className="app">
-          <AppBar />
-          <div style={styles.container}>
-            <AddressList addresses={livestate} />
-          </div>
+  return (
+    <App>
+      <div className="app">
+        <AppBar />
+        <div style={styles.container}>
+          <AddressList addresses={livestate} />
         </div>
-      </App>
-    );
-  }
-}
+      </div>
+    </App>
+  );
+};
 
 export default compose(
   withRedux(createStore, state => ({ smartHome: state.smartHome })),
