@@ -12,3 +12,6 @@ types/app.js.flow
 ;all=true
 ; https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/issues/107#issuecomment-299516612
 module.ignore_non_literal_requires=true
+
+; https://stackoverflow.com/questions/43376241/using-flow-union-types-for-redux-actions
+experimental.const_params=true
