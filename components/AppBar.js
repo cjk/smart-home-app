@@ -43,8 +43,21 @@ const MainAppBar = (props: AppBarProps) => {
           <Typography type="title" colorInherit className={classes.flex}>
             SmartHome
           </Typography>
-          <Button contrast><Link href="/"><a>Home</a></Link></Button>
-          <Button contrast><Link href="/rooms"><a>Rooms</a></Link></Button>
+          <Button contrast>
+            <Link href="/">
+              <a>Home</a>
+            </Link>
+          </Button>
+          <Button contrast>
+            <Link href="/rooms">
+              <a>Rooms</a>
+            </Link>
+          </Button>
+          <Button contrast>
+            <Link href="/fermenter">
+              <a>Fermenter</a>
+            </Link>
+          </Button>
         </Toolbar>
       </AppBar>
     </div>

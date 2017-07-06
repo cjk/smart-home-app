@@ -112,3 +112,5 @@ export type Epic = (
   actions$: Observable<Action>,
   dependencies: Dependencies
 ) => Observable<Action>;
+
+export type Action$ = Observable<Action>;
