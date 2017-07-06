@@ -1,5 +1,6 @@
 // @flow
-import type { FermenterState } from '../types/fermenter';
+import type { Action, FermenterState } from '../types/fermenter';
+import type { Dispatch } from '../types';
 
 import React from 'react';
 import createStore from '../lib/create-store';
@@ -9,25 +10,28 @@ import AppBar from '../components/AppBar';
 
 import { compose } from 'ramda';
 
-type props = {
+type Props = {
   fermenter: FermenterState,
-  subscribeToState: Function,
-  unsubscribeToState: Function,
-  processState: Function,
-  sendFermenterCmd: Function,
-  sendFermenterTempLimits: Function,
+  dispatch: Dispatch,
+  // sendFermenterCmd: Function,
+  // sendFermenterTempLimits: Function,
 };
 
-class FermenterPage extends React.Component<void, props, void> {
+class FermenterPage extends React.Component<void, Props, void> {
+  // TODO: No server-side-rendering supported yet :(
+  static async getInitialProps(ctx) {
+    const { store } = ctx;
+    return store;
+  }
+
   componentDidMount() {
-    // const { subscribeToState } = this.props;
-    // subscribeToState();
-    console.log(`Fermenter-State: ${JSON.stringify(this.props.fermenter)}`)
+    const { dispatch } = this.props;
+    dispatch(({ type: 'SUBSCRIBE_TO_STATE' }: Action));
   }
 
   componentWillUnmount() {
-    // const { unsubscribeToState } = this.props;
-    // unsubscribeToState();
+    const { dispatch } = this.props;
+    dispatch(({ type: 'UNSUBSCRIBE_TO_STATE' }: Action));
   }
 
   render() {
@@ -36,7 +40,10 @@ class FermenterPage extends React.Component<void, props, void> {
         <div className="app">
           <AppBar />
           <div>
-            <h2>Fermenter</h2>
+            <h2>Fermenter:</h2>
+            <p>
+              {this.props.fermenter.rts.status}
+            </p>
           </div>
         </div>
       </App>

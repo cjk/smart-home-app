@@ -1,11 +1,15 @@
-import type { SmartHomeState } from '../types';
+import type { Action, Dispatch, SmartHomeState } from '../types';
 
 import React from 'react';
 import connectClient from '../lib/client';
 import { createInitialstateReq$ } from '../lib/shared/create-state-streams';
 
+type Props = {
+  dispatch: Dispatch,
+};
+
 const WithBusSubsribe = Page =>
-  class WithBusSubsribe extends React.Component {
+  class WithBusSubsribe extends React.Component<void, Props, void> {
     static async getInitialProps(ctx) {
       let composedInitialProps = {};
       if (Page.getInitialProps) {
@@ -22,10 +26,12 @@ const WithBusSubsribe = Page =>
           .toPromise();
 
         // Send livestate to the redux-store as well, so it's available client-side
-        await store.dispatch({
-          type: 'REQUEST_INITIAL_STATE_SUCCESS',
-          livestate,
-        });
+        await store.dispatch(
+          ({
+            type: 'REQUEST_INITIAL_STATE_SUCCESS',
+            livestate,
+          }: Action)
+        );
       }
       return { ...composedInitialProps };
     }
@@ -33,7 +39,7 @@ const WithBusSubsribe = Page =>
     // your client-only actions go here:
     componentDidMount() {
       const { dispatch } = this.props;
-      dispatch({ type: 'SUBSCRIBE_TO_BUS' });
+      dispatch(({ type: 'SUBSCRIBE_TO_BUS' }: Action));
     }
 
     render() {

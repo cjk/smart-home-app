@@ -64,9 +64,9 @@ export type FermenterState = {
 };
 
 export type Action =
-  | { type: 'PROCESS_STATE', newState: FermenterState }
   | { type: 'SUBSCRIBE_TO_STATE' }
   | { type: 'UNSUBSCRIBE_TO_STATE' }
+  | { type: 'PROCESS_STATE', newState: FermenterState }
   | { type: 'SEND_FERMENTER_CMD', currentCmd: string }
   | {
       type: 'SEND_FERMENTER_TEMPLIMITS',
