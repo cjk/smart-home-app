@@ -10,10 +10,15 @@ export type Env = {
   iterations: number,
 };
 
-export type Device = {
+type Device = {
   isOn: boolean,
   shouldSwitchTo: ?string,
   willSwitch: boolean,
+};
+
+export type Devices = {
+  heater: Device,
+  humidifier: Device,
 };
 
 export type SwitchOp = {
@@ -49,11 +54,6 @@ export type RunTimeState = {
   tempLimits: EnvLimits,
   humidityLimits: EnvLimits,
   notifications: Array<Notification>,
-};
-
-type Devices = {
-  heater: Device,
-  humidifier: Device,
 };
 
 export type FermenterState = {
