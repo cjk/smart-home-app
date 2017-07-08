@@ -1,5 +1,5 @@
 // @flow
-import type { Action, FermenterState } from '../types/fermenter';
+import type { FermenterState } from '../types/fermenter';
 import type { Dispatch } from '../types';
 
 import React from 'react';
@@ -23,8 +23,10 @@ import { compose } from 'ramda';
 type Props = {
   fermenter: FermenterState,
   dispatch: Dispatch,
-  sendFermenterCmd: Action,
-  sendFermenterTempLimits: Action,
+  sendFermenterCmd: Function,
+  sendFermenterTempLimits: Function,
+  subscribeToState: Function,
+  unsubscribeToState: Function,
 };
 
 class FermenterPage extends React.Component<void, Props, void> {
@@ -35,11 +37,11 @@ class FermenterPage extends React.Component<void, Props, void> {
   }
 
   componentDidMount() {
-    subscribeToState();
+    this.props.subscribeToState();
   }
 
   componentWillUnmount() {
-    unsubscribeToState();
+    this.props.unsubscribeToState();
   }
 
   render() {
@@ -49,7 +51,6 @@ class FermenterPage extends React.Component<void, Props, void> {
         <div className="app">
           <AppBar />
           <div>
-            <h2>Fermenter:</h2>
             <FermenterInfo />
             <FermenterControl {...controllerActions} />
           </div>
@@ -65,6 +66,8 @@ const mapDispatchToProps = dispatch => ({
     sendFermenterTempLimits,
     dispatch
   ),
+  subscribeToState: bindActionCreators(subscribeToState, dispatch),
+  unsubscribeToState: bindActionCreators(unsubscribeToState, dispatch),
 });
 
 export default compose(withRedux(createStore, null, mapDispatchToProps))(
