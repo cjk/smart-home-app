@@ -7,15 +7,15 @@ import { connect } from 'react-redux';
 
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
+import Button from 'material-ui/Button';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
-import IconButton from 'material-ui/IconButton';
-import HumidifierIcon from 'material-ui-icons/Cloud';
-import HeaterIcon from 'material-ui-icons/AcUnit';
+import Grid from 'material-ui/Grid';
 import StartIcon from 'material-ui-icons/PlayArrow';
 import StopIcon from 'material-ui-icons/Stop';
 import FermenterIcon from 'material-ui-icons/CallToAction';
+import FermenterDevice from './fermenterDevice';
 
-import { compose } from 'ramda';
+import { compose, isEmpty, mapObjIndexed, or, values } from 'ramda';
 
 type Props = {
   rts: RunTimeState,
@@ -26,24 +26,20 @@ type Props = {
 };
 
 const fermenterControlStyles = createStyleSheet('FermenterControl', theme => ({
-  controlsContainer: {},
-  FermenterControl: {
+  controlsContainer: { flexGrow: 1, marginLeft: 10, marginRight: 10 },
+  fermenterDetails: {
     display: 'flex',
     flexDirection: 'column',
+    textAlign: 'center',
   },
-  controlCard: {
+  fermenterIcon: { display: 'block', margin: 'auto' },
+  fermenterCard: {
     display: 'flex',
-    margin: 20,
-    padding: 10,
   },
   devControls: {
     display: 'flex',
     alignItems: 'center',
-    paddingLeft: 8,
-    paddingBottom: 8,
-  },
-  deviceState: {
-    padding: 10,
+    padding: 20,
   },
 }));
 
@@ -53,31 +49,48 @@ const FermenterControl = ({
   classes,
   sendFermenterCmd,
   sendFermenterTempLimits,
-}: Props) =>
-  <div className={classes.controlsContainer}>
-    <Card className={classes.controlCard}>
-      <div className={classes.fermenterControl}>
-        <CardContent>
-          <Avatar>
-            <FermenterIcon />
-          </Avatar>
-        </CardContent>
-        <div className={classes.devControls}>
-          <IconButton>
-            <StartIcon />
-          </IconButton>
-          <IconButton>
-            <StopIcon />
-          </IconButton>
-        </div>
-      </div>
-      <div className={classes.deviceState}>
-        <Avatar>
-          <HumidifierIcon />
-        </Avatar>
-      </div>
-    </Card>
-  </div>;
+}: Props) => {
+  const fermenterIsRunning = () => rts.active;
+
+  const toggleDevice = name => {
+    /* Only allow switching fermenter itself on/off for now */
+    if (name !== 'fermenter') {
+      return false;
+    }
+    return fermenterIsRunning()
+      ? sendFermenterCmd('stop')
+      : sendFermenterCmd('start');
+  };
+
+  return (
+    <Grid container gutter={24} className={classes.controlsContainer}>
+      <Grid item className={classes.controlItem}>
+        <Card className={classes.fermenterCard}>
+          <div className={classes.fermenterDetails}>
+            <CardContent className={classes.fermenterIcon}>
+              <Avatar>
+                <FermenterIcon />
+              </Avatar>
+            </CardContent>
+            <div className={classes.devControls}>
+              <Button color="primary" onClick={() => toggleDevice('fermenter')}>
+                <StartIcon />
+              </Button>
+            </div>
+          </div>
+        </Card>
+      </Grid>
+      {compose(
+        values,
+        mapObjIndexed((dev, name) =>
+          <Grid item className={classes.controlItem} key={name}>
+            <FermenterDevice name={name} isOn={dev.isOn} />
+          </Grid>
+        )
+      )(devices)}
+    </Grid>
+  );
+};
 
 export default compose(
   withStyles(fermenterControlStyles),

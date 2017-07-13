@@ -21,7 +21,7 @@ type Props = {
 
 const fermenterInfoStyles = createStyleSheet('FermenterInfo', theme => ({
   infoCard: {
-    maxWidth: 350,
+    // maxWidth: 350,
     margin: 20,
     padding: 25,
   },

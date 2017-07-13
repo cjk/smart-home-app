@@ -3,13 +3,7 @@ import type { FermenterState } from '../types/fermenter';
 import type { Dispatch } from '../types';
 
 import React from 'react';
-import { bindActionCreators } from 'redux';
-import {
-  subscribeToState,
-  unsubscribeToState,
-  sendFermenterCmd,
-  sendFermenterTempLimits,
-} from '../lib/fermenter/actions';
+import * as fermenterActions from '../lib/fermenter/actions';
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
 
@@ -17,16 +11,25 @@ import App from '../components/App';
 import AppBar from '../components/AppBar';
 import FermenterInfo from '../components/fermenterInfo';
 import FermenterControl from '../components/fermenterControl';
+import Paper from 'material-ui/Paper';
 
 import { compose } from 'ramda';
 
 type Props = {
   fermenter: FermenterState,
+  classes: Object,
   dispatch: Dispatch,
   sendFermenterCmd: Function,
   sendFermenterTempLimits: Function,
   subscribeToState: Function,
   unsubscribeToState: Function,
+};
+
+const styles = {
+  fermenterRoot: {
+    margin: 20,
+    padding: 10,
+  },
 };
 
 class FermenterPage extends React.Component<void, Props, void> {
@@ -45,31 +48,25 @@ class FermenterPage extends React.Component<void, Props, void> {
   }
 
   render() {
-    const controllerActions = { sendFermenterCmd, sendFermenterTempLimits };
+    const { sendFermenterCmd, sendFermenterTempLimits } = this.props;
+
     return (
       <App>
         <div className="app">
           <AppBar />
-          <div>
+          <Paper style={styles.fermenterRoot}>
+            <FermenterControl
+              sendFermenterCmd={sendFermenterCmd}
+              sendFermenterTempLimits={sendFermenterTempLimits}
+            />
             <FermenterInfo />
-            <FermenterControl {...controllerActions} />
-          </div>
+          </Paper>
         </div>
       </App>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  sendFermenterCmd: bindActionCreators(sendFermenterCmd, dispatch),
-  sendFermenterTempLimits: bindActionCreators(
-    sendFermenterTempLimits,
-    dispatch
-  ),
-  subscribeToState: bindActionCreators(subscribeToState, dispatch),
-  unsubscribeToState: bindActionCreators(unsubscribeToState, dispatch),
-});
-
-export default compose(withRedux(createStore, null, mapDispatchToProps))(
+export default compose(withRedux(createStore, null, fermenterActions))(
   FermenterPage
 );
