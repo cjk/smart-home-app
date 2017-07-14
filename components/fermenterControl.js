@@ -72,11 +72,11 @@ const FermenterControl = ({
                 <FermenterIcon />
               </Avatar>
             </CardContent>
-            <div className={classes.devControls}>
-              <Button color="primary" onClick={() => toggleDevice('fermenter')}>
-                <StartIcon />
+            <CardActions className={classes.devControls}>
+              <Button color="secondary" onClick={() => toggleDevice('fermenter')}>
+                {fermenterIsRunning() ? <StopIcon /> : <StartIcon />}
               </Button>
-            </div>
+            </CardActions>
           </div>
         </Card>
       </Grid>

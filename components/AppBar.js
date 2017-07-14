@@ -40,20 +40,20 @@ const MainAppBar = (props: AppBarProps) => {
           <IconButton aria-label="Menu" className={classes.homeButton}>
             <HomeIcon />
           </IconButton>
-          <Typography type="title" colorInherit className={classes.flex}>
+          <Typography type="title" color="inherit" className={classes.flex}>
             SmartHome
           </Typography>
-          <Button contrast>
+          <Button color="contrast">
             <Link href="/">
               <a>Home</a>
             </Link>
           </Button>
-          <Button contrast>
+          <Button color="contrast">
             <Link href="/rooms">
               <a>Rooms</a>
             </Link>
           </Button>
-          <Button contrast>
+          <Button color="contrast">
             <Link href="/fermenter">
               <a>Fermenter</a>
             </Link>

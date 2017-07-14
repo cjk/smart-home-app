@@ -4,7 +4,7 @@ import Avatar from 'material-ui/Avatar';
 import Card, { CardContent } from 'material-ui/Card';
 import HeaterIcon from 'material-ui-icons/AcUnit';
 import HumidifierIcon from 'material-ui-icons/Cloud';
-import { green, grey } from 'material-ui/styles/colors';
+import { green, grey } from 'material-ui/colors';
 
 type Props = {
   name: string,
