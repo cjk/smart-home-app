@@ -9,13 +9,15 @@ import { withStyles, createStyleSheet } from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
+import Divider from 'material-ui/Divider';
 import Grid from 'material-ui/Grid';
 import StartIcon from 'material-ui-icons/PlayArrow';
 import StopIcon from 'material-ui-icons/Stop';
 import FermenterIcon from 'material-ui-icons/CallToAction';
 import FermenterDevice from './fermenterDevice';
+import FermenterTempRangeControl from './fermenterTempRangeControl';
 
-import { compose, isEmpty, mapObjIndexed, or, values } from 'ramda';
+import { compose, mapObjIndexed, values } from 'ramda';
 
 type Props = {
   rts: RunTimeState,
@@ -26,13 +28,20 @@ type Props = {
 };
 
 const fermenterControlStyles = createStyleSheet('FermenterControl', theme => ({
-  controlsContainer: { flexGrow: 1, marginLeft: 10, marginRight: 10 },
+  controlsContainer: {
+    flexGrow: 1,
+    marginLeft: 10,
+    marginRight: 10,
+  },
   fermenterDetails: {
     display: 'flex',
     flexDirection: 'column',
     textAlign: 'center',
   },
-  fermenterIcon: { display: 'block', margin: 'auto' },
+  fermenterIcon: {
+    display: 'block',
+    margin: 'auto',
+  },
   fermenterCard: {
     display: 'flex',
   },
@@ -40,6 +49,11 @@ const fermenterControlStyles = createStyleSheet('FermenterControl', theme => ({
     display: 'flex',
     alignItems: 'center',
     padding: 20,
+    flexDirection: 'column',
+    height: 'auto',
+  },
+  tempRangeControl: {
+    marginTop: 10,
   },
 }));
 
@@ -73,9 +87,16 @@ const FermenterControl = ({
               </Avatar>
             </CardContent>
             <CardActions className={classes.devControls}>
-              <Button color="secondary" onClick={() => toggleDevice('fermenter')}>
+              <Button color="default" onClick={() => toggleDevice('fermenter')}>
                 {fermenterIsRunning() ? <StopIcon /> : <StartIcon />}
               </Button>
+
+              <Divider className={classes.tempRangeControl} />
+
+              <FermenterTempRangeControl
+                tempLimits={rts.tempLimits}
+                changeAction={sendFermenterTempLimits}
+              />
             </CardActions>
           </div>
         </Card>
