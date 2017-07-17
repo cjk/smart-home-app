@@ -1,10 +1,10 @@
-/* @flow */
+// @flow
 
 /* Fermenter related type definitions for Flow */
 export type Env = {
   createdAt: number,
-  temperature: ?number,
-  humidity: ?number,
+  temperature: number,
+  humidity: number,
   isValid: boolean,
   errors: number,
   iterations: number,
@@ -46,14 +46,14 @@ export type History = {
 export type EnvLimits = Array<number>;
 
 export type RunTimeState = {
-  active: boolean,
+  active: ?boolean,
   status: string,
   hasEnvEmergency: boolean,
   hasDeviceMalfunction: boolean,
-  currentCmd: ?string,
-  tempLimits: EnvLimits,
-  humidityLimits: EnvLimits,
-  notifications: Array<Notification>,
+  currentCmd: string,
+  tempLimits: ?EnvLimits,
+  humidityLimits: ?EnvLimits,
+  notifications: ?Array<Notification>,
 };
 
 export type FermenterState = {

@@ -9,8 +9,8 @@ import withRedux from 'next-redux-wrapper';
 
 import App from '../components/App';
 import AppBar from '../components/AppBar';
-import FermenterInfo from '../components/fermenterInfo';
-import FermenterControl from '../components/fermenterControl';
+import FermenterInfo from '../components/FermenterInfo';
+import FermenterControl from '../components/FermenterControl';
 import Paper from 'material-ui/Paper';
 
 import { compose } from 'ramda';

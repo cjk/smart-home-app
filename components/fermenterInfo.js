@@ -19,7 +19,7 @@ type Props = {
   classes: Object,
 };
 
-const fermenterInfoStyles = createStyleSheet('FermenterInfo', theme => ({
+const fermenterInfoStyles = createStyleSheet('FermenterInfo', {
   infoCard: {
     // maxWidth: 350,
     margin: 20,
@@ -32,7 +32,7 @@ const fermenterInfoStyles = createStyleSheet('FermenterInfo', theme => ({
   deviceReading: {
     marginRight: 50,
   },
-}));
+});
 
 const FermenterInfo = ({ env, classes }: Props) =>
   <Card className={classes.infoCard}>

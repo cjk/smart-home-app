@@ -14,8 +14,8 @@ import Grid from 'material-ui/Grid';
 import StartIcon from 'material-ui-icons/PlayArrow';
 import StopIcon from 'material-ui-icons/Stop';
 import FermenterIcon from 'material-ui-icons/CallToAction';
-import FermenterDevice from './fermenterDevice';
-import FermenterTempRangeControl from './fermenterTempRangeControl';
+import FermenterDevice from './FermenterDevice';
+import FermenterTempRangeControl from './FermenterTempRangeControl';
 
 import { compose, mapObjIndexed, values } from 'ramda';
 
@@ -27,7 +27,7 @@ type Props = {
   sendFermenterTempLimits: Function,
 };
 
-const fermenterControlStyles = createStyleSheet('FermenterControl', theme => ({
+const fermenterControlStyles = createStyleSheet('FermenterControl', {
   controlsContainer: {
     flexGrow: 1,
     marginLeft: 10,
@@ -55,7 +55,7 @@ const fermenterControlStyles = createStyleSheet('FermenterControl', theme => ({
   tempRangeControl: {
     marginTop: 10,
   },
-}));
+});
 
 const FermenterControl = ({
   rts,

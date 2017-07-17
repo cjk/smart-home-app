@@ -1,6 +1,5 @@
 import React from 'react';
 
-// import { bindActionCreators } from 'redux';
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
 import App from '../components/App';
@@ -19,11 +18,5 @@ const RoomsPage = () =>
       </div>
     </div>
   </App>;
-
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     doAction: bindActionCreators(doAction, dispatch),
-//   };
-// };
 
 export default compose(withRedux(createStore), WithBusSubsribe)(RoomsPage);
