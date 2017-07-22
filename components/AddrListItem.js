@@ -15,14 +15,16 @@ type Props = {
   address: KnxAddress,
   classes: Object,
   addrSwitch: React.Element<*>,
-  //   writeGroupAddr: typeof writeGroupAddr,
 };
 
 const addrLineStyles = createStyleSheet('AddressLine', theme => ({
-  addrItemContainer: {
+  listContainer: {
     flexGrow: 1,
     marginBottom: 12,
     color: theme.palette.text.secondary,
+  },
+  gridContainer: {
+    flexWrap: 'nowrap',
   },
 }));
 
@@ -31,19 +33,24 @@ const lastUpdated = timestamp => ` - ${distanceInWordsToNow(timestamp)} ago`;
 const genTitle = curry(addr => `${addr.func} ${lastUpdated(addr.updatedAt)}`);
 
 const AddressListItem = ({ address, classes, addrSwitch }: Props) =>
-  <ListItem dense className={classes.addrItemContainer}>
-    <Grid container gutter={24}>
-      <Grid item xs>
+  <ListItem dense className={classes.listContainer}>
+    <Grid
+      className={classes.gridContainer}
+      style={{ flexWrap: 'nowrap' }}
+      container
+      gutter={8}
+    >
+      <Grid item xs className="gridItem">
         {visualizeAddrValue(address)}
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={4} className="gridItem">
         <ListItemText primary={address.name} secondary={address.story} />
       </Grid>
-      <Grid item xs>
+      <Grid item xs className="gridItem">
         <ListItemText primary={address.id} secondary={genTitle(address)} />
       </Grid>
       {addrSwitch &&
-        <Grid item xs>
+        <Grid item xs className="gridItem">
           {addrSwitch}
         </Grid>}
     </Grid>
