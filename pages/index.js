@@ -15,7 +15,7 @@ import { compose, reject } from 'ramda';
 const styles = {
   container: {
     textAlign: 'center',
-    padding: '50px',
+    padding: '10px',
   },
 };
 
