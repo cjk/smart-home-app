@@ -2502,9 +2502,9 @@ next-redux-wrapper@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-1.2.0.tgz#ae254ee84b77bf8cb2cea2c69ec53bdec1461c38"
 
-next@3.0.1-beta.16:
-  version "3.0.1-beta.16"
-  resolved "https://registry.yarnpkg.com/next/-/next-3.0.1-beta.16.tgz#a972a1bf39c78cd4c1bcb7d41ebda4a128718fac"
+next@3.0.1-beta.18:
+  version "3.0.1-beta.18"
+  resolved "https://registry.yarnpkg.com/next/-/next-3.0.1-beta.18.tgz#fa09e59c54a2c1ed23bbc89746ed74545bebcaa0"
   dependencies:
     ansi-html "0.0.7"
     babel-core "6.25.0"

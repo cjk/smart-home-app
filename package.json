@@ -19,7 +19,7 @@
     "deepstream.io-client-js": "^2.1.4",
     "material-ui": "1.0.0-alpha.21",
     "material-ui-icons": "1.0.0-alpha.19",
-    "next": "3.0.1-beta.16",
+    "next": "3.0.1-beta.18",
     "next-redux-wrapper": "^1.2.0",
     "prop-types": "^15.5.10",
     "ramda": "^0.24.1",
