@@ -2,8 +2,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toggleShowOnlyActive } from '../lib/app/actions';
-import BottomNavigation, { BottomNavigationButton } from 'material-ui/BottomNavigation';
-import FolderIcon from 'material-ui-icons/Folder';
 import { LabelSwitch } from 'material-ui/Switch';
 
 type Props = {
@@ -19,7 +17,6 @@ const showOnlyActiveToggle = (props: Props) => {
         style={{ color: 'inherit' }}
         checked={showActive}
         onChange={(event, checked) => onToggleClick(!checked)}
-        label="only active"
       />
     </div>
   );
