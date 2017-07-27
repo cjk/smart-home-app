@@ -21,7 +21,7 @@
     "jss-preset-default": "^3.0.0",
     "material-ui": "next",
     "material-ui-icons": "1.0.0-alpha.19",
-    "next": "3.0.1-beta.18",
+    "next": "3.0.1-beta.19",
     "next-redux-wrapper": "^1.2.0",
     "prop-types": "^15.5.10",
     "ramda": "^0.24.1",

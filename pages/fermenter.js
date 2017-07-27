@@ -6,8 +6,8 @@ import React from 'react';
 import * as fermenterActions from '../lib/fermenter/actions';
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
+import withRoot from '../components/withRoot';
 
-import App from '../components/App';
 import AppBar from '../components/AppBar';
 import FermenterInfo from '../components/FermenterInfo';
 import FermenterControl from '../components/FermenterControl';
@@ -51,22 +51,21 @@ class FermenterPage extends React.Component<void, Props, void> {
     const { sendFermenterCmd, sendFermenterTempLimits } = this.props;
 
     return (
-      <App>
-        <div className="app">
-          <AppBar />
-          <Paper style={styles.fermenterRoot}>
-            <FermenterControl
-              sendFermenterCmd={sendFermenterCmd}
-              sendFermenterTempLimits={sendFermenterTempLimits}
-            />
-            <FermenterInfo />
-          </Paper>
-        </div>
-      </App>
+      <div className="app">
+        <AppBar />
+        <Paper style={styles.fermenterRoot}>
+          <FermenterControl
+            sendFermenterCmd={sendFermenterCmd}
+            sendFermenterTempLimits={sendFermenterTempLimits}
+          />
+          <FermenterInfo />
+        </Paper>
+      </div>
     );
   }
 }
 
-export default compose(withRedux(createStore, null, fermenterActions))(
-  FermenterPage
-);
+export default compose(
+  withRedux(createStore, null, fermenterActions),
+  withRoot
+)(FermenterPage);

@@ -67,7 +67,6 @@ const createCronjobEpic = (action$: any, { homeConnect }: Deps) =>
       newJobRecord.whenReady(record => {
         record.set(j);
         lst.addEntry(j.jobId);
-        console.log(`[HomeActions] Record set to ${JSON.stringify(j)} `);
       });
     });
 

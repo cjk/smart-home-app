@@ -36,7 +36,7 @@ const IndexPage = props => {
 };
 
 export default compose(
-  withRoot,
-  withBusSubscribe,
   withRedux(createStore, state => ({ smartHome: state.smartHome })),
+  withBusSubscribe,
+  withRoot
 )(IndexPage);

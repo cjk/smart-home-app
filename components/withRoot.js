@@ -27,7 +27,7 @@ AppWrapper = withStyles(styleSheet)(AppWrapper);
 
 function withRoot(BaseComponent) {
   class WithRoot extends Component {
-    static getInitialProps(ctx) {
+    static async getInitialProps(ctx) {
       if (BaseComponent.getInitialProps) {
         return BaseComponent.getInitialProps(ctx);
       }
@@ -45,7 +45,6 @@ function withRoot(BaseComponent) {
 
     render() {
       const context = getContext();
-
       return (
         <JssProvider registry={context.sheetsRegistry} jss={context.jss}>
           <MuiThemeProvider
@@ -53,7 +52,7 @@ function withRoot(BaseComponent) {
             sheetsManager={context.sheetsManager}
           >
             <AppWrapper>
-              <BaseComponent />
+              <BaseComponent {...this.props} />
             </AppWrapper>
           </MuiThemeProvider>
         </JssProvider>

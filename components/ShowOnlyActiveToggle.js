@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { toggleShowOnlyActive } from '../lib/app/actions';
-import { LabelSwitch } from 'material-ui/Switch';
+import Switch from 'material-ui/Switch';
 
 type Props = {
   showActive: boolean,
@@ -13,7 +13,7 @@ const showOnlyActiveToggle = (props: Props) => {
   const { showActive, onToggleClick } = props;
   return (
     <div>
-      <LabelSwitch
+      <Switch
         style={{ color: 'inherit' }}
         checked={showActive}
         onChange={(event, checked) => onToggleClick(!checked)}
