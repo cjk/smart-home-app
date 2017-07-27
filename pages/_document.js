@@ -1,23 +1,22 @@
 // Right now this code is mostly about making Material-UI work with nextjs
 import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
-import {
-  getDefaultContext,
-  setDefaultContext,
-} from '../styles/createDefaultContext';
+import { getContext, setContext } from '../styles/context';
 
 export default class MyDocument extends Document {
   static async getInitialProps(ctx) {
-    setDefaultContext();
+    // Reset the context for handling a new request.
+    setContext();
     const page = ctx.renderPage();
-    const styleContext = getDefaultContext();
+    // Get the context with the collected side effects.
+    const context = getContext();
     return {
       ...page,
       styles: (
         <style
           id="jss-server-side"
           dangerouslySetInnerHTML={{
-            __html: styleContext.styleManager.sheetsToString(),
+            __html: context.sheetsRegistry.toString(),
           }}
         />
       ),
@@ -25,7 +24,7 @@ export default class MyDocument extends Document {
   }
 
   render() {
-    const styleContext = getDefaultContext();
+    const context = getContext();
     return (
       <html lang="en">
         <Head>
@@ -42,7 +41,7 @@ export default class MyDocument extends Document {
           {/* PWA primary color */}
           <meta
             name="theme-color"
-            content={styleContext.theme.palette.primary[500]}
+            content={context.theme.palette.primary[500]}
           />
           <link
             rel="stylesheet"

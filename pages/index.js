@@ -5,8 +5,8 @@ import React from 'react';
 
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
-import App from '../components/App';
-import WithBusSubsribe from '../components/WithBusSubribe';
+import withRoot from '../components/withRoot';
+import withBusSubscribe from '../components/withBusSubscribe';
 import AddressList from '../components/AddressList';
 import AppBar from '../components/AppBar';
 
@@ -26,18 +26,17 @@ const IndexPage = props => {
   const { livestate }: AddressMap = addrFilter(props.smartHome);
 
   return (
-    <App>
-      <div className="app">
-        <AppBar />
-        <div style={styles.container}>
-          <AddressList addresses={livestate} />
-        </div>
+    <div className="app">
+      <AppBar />
+      <div style={styles.container}>
+        <AddressList addresses={livestate} />
       </div>
-    </App>
+    </div>
   );
 };
 
 export default compose(
+  withRoot,
+  withBusSubscribe,
   withRedux(createStore, state => ({ smartHome: state.smartHome })),
-  WithBusSubsribe
 )(IndexPage);

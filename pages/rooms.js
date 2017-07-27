@@ -3,7 +3,7 @@ import React from 'react';
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
 import App from '../components/App';
-import WithBusSubsribe from '../components/WithBusSubribe';
+import withBusSubscribe from '../components/withBusSubscribe';
 import AppBar from '../components/AppBar';
 import RoomList from '../components/RoomList';
 
@@ -19,4 +19,4 @@ const RoomsPage = () =>
     </div>
   </App>;
 
-export default compose(withRedux(createStore), WithBusSubsribe)(RoomsPage);
+export default compose(withRedux(createStore), withBusSubscribe)(RoomsPage);
