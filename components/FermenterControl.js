@@ -6,14 +6,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import { withStyles, createStyleSheet } from 'material-ui/styles';
-import Avatar from 'material-ui/Avatar';
 import Button from 'material-ui/Button';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
 import Grid from 'material-ui/Grid';
 import StartIcon from 'material-ui-icons/PlayArrow';
 import StopIcon from 'material-ui-icons/Stop';
-import FermenterIcon from 'material-ui-icons/CallToAction';
+import FermenterIndicator from './FermenterIndicator';
 import FermenterDevice from './FermenterDevice';
 import FermenterTempRangeControl from './FermenterTempRangeControl';
 
@@ -30,9 +29,9 @@ type Props = {
 const fermenterControlStyles = createStyleSheet('FermenterControl', {
   controlsContainer: {
     flexGrow: 1,
-    marginLeft: 10,
-    marginRight: 10,
+    flexDirection: 'column',
   },
+  controlItem: {},
   fermenterDetails: {
     display: 'flex',
     flexDirection: 'column',
@@ -82,12 +81,10 @@ const FermenterControl = ({
         <Card className={classes.fermenterCard}>
           <div className={classes.fermenterDetails}>
             <CardContent className={classes.fermenterIcon}>
-              <Avatar>
-                <FermenterIcon />
-              </Avatar>
+              <FermenterIndicator isOn={fermenterIsRunning()} />
             </CardContent>
             <CardActions className={classes.devControls}>
-              <Button color="default" onClick={() => toggleDevice('fermenter')}>
+              <Button color="default" raised onClick={() => toggleDevice('fermenter')}>
                 {fermenterIsRunning() ? <StopIcon /> : <StartIcon />}
               </Button>
 

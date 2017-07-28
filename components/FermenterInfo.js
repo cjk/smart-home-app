@@ -21,16 +21,15 @@ type Props = {
 
 const fermenterInfoStyles = createStyleSheet('FermenterInfo', {
   infoCard: {
-    // maxWidth: 350,
-    margin: 20,
-    padding: 25,
+    marginTop: 20,
+    padding: 15,
   },
   infoDetails: {
     display: 'flex',
     alignItems: 'baseline',
   },
   deviceReading: {
-    marginRight: 50,
+    marginRight: 20,
   },
 });
 
