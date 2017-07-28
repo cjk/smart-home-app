@@ -8,7 +8,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import HomeIcon from 'material-ui-icons/Home';
-import { blue } from 'material-ui/colors';
+import { grey, indigo } from 'material-ui/colors';
 
 import ShowOnlyActiveToggle from './ShowOnlyActiveToggle';
 
@@ -23,10 +23,13 @@ const styleSheet = createStyleSheet('ButtonAppBar', {
     marginBottom: 80,
   },
   appBar: {
-    backgroundColor: blue[500],
+    backgroundColor: indigo[200],
   },
   homeButton: {
     // color: theme.palette.text.icon[500],
+  },
+  linkText: {
+    color: grey[900]
   },
   flex: {
     flex: 1,
@@ -41,7 +44,7 @@ const MainAppBar = (props: AppBarProps) => {
         <Toolbar>
           <IconButton aria-label="Menu" className={classes.homeButton}>
             <Link href="/">
-              <a>
+              <a className={classes.linkText}>
                 <HomeIcon />
               </a>
             </Link>
@@ -49,14 +52,14 @@ const MainAppBar = (props: AppBarProps) => {
 
           <ShowOnlyActiveToggle />
 
-          <Button color="contrast">
+          <Button>
             <Link href="/rooms">
-              <a>Rooms</a>
+              <a className={classes.linkText}>Rooms</a>
             </Link>
           </Button>
-          <Button color="contrast">
+          <Button>
             <Link href="/fermenter">
-              <a>Fermenter</a>
+              <a className={classes.linkText}>Fermenter</a>
             </Link>
           </Button>
         </Toolbar>
