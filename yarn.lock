@@ -2514,9 +2514,9 @@ next-redux-wrapper@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/next-redux-wrapper/-/next-redux-wrapper-1.2.0.tgz#ae254ee84b77bf8cb2cea2c69ec53bdec1461c38"
 
-next@3.0.1-beta.19:
-  version "3.0.1-beta.19"
-  resolved "https://registry.yarnpkg.com/next/-/next-3.0.1-beta.19.tgz#4871f5597b99831913f64eae2e0f287ec80a7a4e"
+next@3.0.1-beta.20:
+  version "3.0.1-beta.20"
+  resolved "https://registry.yarnpkg.com/next/-/next-3.0.1-beta.20.tgz#d531780c1824fe6935c437db45a79c0041307823"
   dependencies:
     ansi-html "0.0.7"
     babel-core "6.25.0"
@@ -2563,7 +2563,6 @@ next@3.0.1-beta.19:
     strip-ansi "4.0.0"
     styled-jsx "^1.0.8"
     touch "3.1.0"
-    uglifyjs-webpack-plugin "0.4.6"
     unfetch "3.0.0"
     url "0.11.0"
     uuid "3.1.0"
@@ -3766,7 +3765,7 @@ uglify-to-browserify@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
 
-uglifyjs-webpack-plugin@0.4.6, uglifyjs-webpack-plugin@^0.4.6:
+uglifyjs-webpack-plugin@^0.4.6:
   version "0.4.6"
   resolved "https://registry.yarnpkg.com/uglifyjs-webpack-plugin/-/uglifyjs-webpack-plugin-0.4.6.tgz#b951f4abb6bd617e66f63eb891498e391763e309"
   dependencies:
