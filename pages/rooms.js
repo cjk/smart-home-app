@@ -6,13 +6,14 @@ import withRoot from '../components/withRoot';
 import withBusSubscribe from '../components/withBusSubscribe';
 import AppBar from '../components/AppBar';
 import RoomList from '../components/RoomList';
-
+import ShowOnlyActiveToggle from '../components/ShowOnlyActiveToggle';
 import { compose } from 'ramda';
 
 const RoomsPage = () =>
   <div className="app">
     <AppBar />
     <div>
+      <ShowOnlyActiveToggle />
       <RoomList />
     </div>
   </div>;

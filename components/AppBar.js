@@ -10,8 +10,6 @@ import IconButton from 'material-ui/IconButton';
 import HomeIcon from 'material-ui-icons/Home';
 import { grey, indigo } from 'material-ui/colors';
 
-import ShowOnlyActiveToggle from './ShowOnlyActiveToggle';
-
 type AppBarProps = {
   classes: Object,
 };
@@ -49,8 +47,6 @@ const MainAppBar = (props: AppBarProps) => {
               </a>
             </Link>
           </IconButton>
-
-          <ShowOnlyActiveToggle />
 
           <Button>
             <Link href="/rooms">
