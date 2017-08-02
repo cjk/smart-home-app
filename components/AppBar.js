@@ -8,6 +8,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import HomeIcon from 'material-ui-icons/Home';
+import FloorIcon from 'material-ui-icons/Dashboard';
 import { grey, indigo } from 'material-ui/colors';
 
 type AppBarProps = {
@@ -40,10 +41,18 @@ const MainAppBar = (props: AppBarProps) => {
     <div className={classes.root}>
       <AppBar className={classes.appBar}>
         <Toolbar>
-          <IconButton aria-label="Menu" className={classes.homeButton}>
+          <IconButton aria-label="Home" className={classes.homeButton}>
             <Link href="/">
               <a className={classes.linkText}>
                 <HomeIcon />
+              </a>
+            </Link>
+          </IconButton>
+
+          <IconButton aria-label="Plan" className={classes.floorplan}>
+            <Link href="/floorplan">
+              <a className={classes.linkText}>
+                <FloorIcon />
               </a>
             </Link>
           </IconButton>
