@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { withStyles, createStyleSheet } from 'material-ui/styles';
 import { compose } from 'ramda';
 
-import Foo from 'material-ui-icons/Language';
+import Light from './mapIcons/Light';
 
 type Props = {
   addresses: Array<KnxAddress>,
@@ -16,7 +16,10 @@ type Props = {
 };
 
 const groundFloorStyles = createStyleSheet('Groundfloor', theme => ({
-  invincible: {
+  furniture: {
+    pointerEvents: 'none',
+  },
+  actorIcon: {
     pointerEvents: 'none',
   },
 }));
@@ -27,15 +30,15 @@ const Groundfloor = ({ addresses, dispatch, prefs, rooms, classes }: Props) =>
     version="1.1"
     viewBox="0 0 800 600"
     preserveAspectRatio="xMidYMid meet"
-    onClick={e => console.log(e.target)}
+    onClick={e => console.log(e.target.parentNode)}
   >
-    <g stroke="#000">
+    <g stroke="#000" className={classes.furniture}>
       <path
         d="m290 30v90h-280v470.94h770v-470.94l-250 1.6002v-91.6z"
         fill="#fff"
         strokeWidth="1.0188"
       />
-      <g fill="none">
+      <g fill="none" className={classes.furniture}>
         <path d="m10 470h210v120" strokeWidth=".723px" />
         <path d="m220 470v-180h-210" strokeWidth=".82158px" />
         <path
@@ -53,13 +56,31 @@ const Groundfloor = ({ addresses, dispatch, prefs, rooms, classes }: Props) =>
         height="220"
         strokeDasharray="0.14832843, 0.14832843000000001"
         strokeWidth=".59331"
+        className={classes.furniture}
       />
       <g strokeDasharray="0.16125, 0.16125000000000000" strokeWidth=".645">
-        <rect x="570" y="150" width="170" height="70" />
-        <rect x="40" y="470" width="80" height="60" />
-        <rect x="30" y="560" width="190" height="30" />
+        <rect
+          x="570"
+          y="150"
+          width="170"
+          height="70"
+          className={classes.furniture}
+        />
+        <rect
+          x="40"
+          y="470"
+          width="80"
+          height="60"
+          className={classes.furniture}
+        />
+        <rect
+          x="30"
+          y="560"
+          width="190"
+          height="30"
+          className={classes.furniture}
+        />
         <circle opacity="0.10" cx="505.22" cy="274.66" r="25" />
-        <Foo className={classes.invincible} color="green" x="510" y="280" width="20" height="20" />
       </g>
       <rect
         x="250"
@@ -68,6 +89,7 @@ const Groundfloor = ({ addresses, dispatch, prefs, rooms, classes }: Props) =>
         height="110"
         strokeDasharray="0.16912043, 0.16912042999999999"
         strokeWidth=".67648"
+        className={classes.furniture}
       />
       <rect
         x="220"
@@ -76,6 +98,7 @@ const Groundfloor = ({ addresses, dispatch, prefs, rooms, classes }: Props) =>
         height="90"
         strokeDasharray="0.15834435, 0.15834434999999999"
         strokeWidth=".63338"
+        className={classes.furniture}
       />
       <rect
         x="220"
@@ -84,12 +107,24 @@ const Groundfloor = ({ addresses, dispatch, prefs, rooms, classes }: Props) =>
         height="50"
         strokeDasharray="0.14720044, 0.14720043999999999"
         strokeWidth=".5888"
+        className={classes.furniture}
       />
       <g strokeDasharray="0.16125, 0.16125000000000000" strokeWidth=".645">
         <rect x="550" y="560" width="230" height="30" />
         <rect x="510" y="320" width="40" height="270" />
         <rect x="10" y="260" width="210" height="30" />
       </g>
+    </g>
+    <g className="actors">
+      <Light
+        id="1/2/4"
+        className="actorIcon"
+        color="green"
+        x="650"
+        y="180"
+        width="20"
+        height="20"
+      />
     </g>
   </svg>;
 
