@@ -2,7 +2,7 @@ import type { Dispatch, KnxAddress, Prefs, Rooms, State } from '../types';
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 import { compose } from 'ramda';
 
 import Light from './mapIcons/Light';
@@ -15,16 +15,16 @@ type Props = {
   dispatch: Dispatch,
 };
 
-const groundFloorStyles = createStyleSheet('Groundfloor', theme => ({
+const groundFloorStyles = {
   furniture: {
     pointerEvents: 'none',
   },
   actorIcon: {
     pointerEvents: 'none',
   },
-}));
+};
 
-const Groundfloor = ({ addresses, dispatch, prefs, rooms, classes }: Props) =>
+const Groundfloor = ({ addresses, dispatch, prefs, rooms, classes }: Props) => (
   <svg
     id="SVGRoot"
     version="1.1"
@@ -126,7 +126,8 @@ const Groundfloor = ({ addresses, dispatch, prefs, rooms, classes }: Props) =>
         height="20"
       />
     </g>
-  </svg>;
+  </svg>
+);
 
 export default compose(
   connect((state: State) => ({

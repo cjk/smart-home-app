@@ -1,11 +1,11 @@
 // @flow
 
 import React from 'react';
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 import Radio from 'material-ui/Radio';
 import Typography from 'material-ui/Typography';
 
-const tempRangeControl = createStyleSheet('TempRangeControl', theme => ({
+const tempRangeControl = theme => ({
   group: {
     display: 'flex',
     flexDirection: 'row',
@@ -13,7 +13,7 @@ const tempRangeControl = createStyleSheet('TempRangeControl', theme => ({
   selectors: {
     margin: `${theme.spacing.unit}px 0`,
   },
-}));
+});
 
 type Props = {
   tempLimits: string,

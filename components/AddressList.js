@@ -17,7 +17,7 @@ import {
 } from 'ramda';
 
 import AddressListItem from '../components/AddrListItem';
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 import List from 'material-ui/List';
 
 type Props = {
@@ -30,15 +30,17 @@ const byHasValue = comparator(
   (a, b) => (isNil(b.value) ? hasStatus(a.value) : a.updatedAt > b.updatedAt)
 );
 
-const listStyles = createStyleSheet('AddressList', theme => ({
+const listStyles = theme => ({
   addrList: {
     maxWidth: 1024,
     background: theme.palette.background.paper,
   },
-}));
+});
 
 const AddressList = ({ addresses, classes }: Props) => {
-  const itemizedAddress = (addr: KnxAddress) => <AddressListItem key={addr.id} address={addr} />;
+  const itemizedAddress = (addr: KnxAddress) => (
+    <AddressListItem key={addr.id} address={addr} />
+  );
 
   const addrLstByDate = pipe(
     values,
@@ -50,11 +52,7 @@ const AddressList = ({ addresses, classes }: Props) => {
     values /* NOTE: Make last result an array, otherwise React complains about an Object returned by #mapObjIndexed */
   );
 
-  return (
-    <List className={classes.addrList}>
-      {addrLstByDate(addresses)}
-    </List>
-  );
+  return <List className={classes.addrList}>{addrLstByDate(addresses)}</List>;
 };
 
 export default compose(

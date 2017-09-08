@@ -2,7 +2,7 @@
 import React from 'react';
 import Link from 'next/link';
 
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Button from 'material-ui/Button';
@@ -15,7 +15,7 @@ type AppBarProps = {
   classes: Object,
 };
 
-const styleSheet = createStyleSheet('ButtonAppBar', {
+const styles = {
   root: {
     position: 'relative',
     width: '100%',
@@ -28,12 +28,12 @@ const styleSheet = createStyleSheet('ButtonAppBar', {
     // color: theme.palette.text.icon[500],
   },
   linkText: {
-    color: grey[900]
+    color: grey[900],
   },
   flex: {
     flex: 1,
   },
-});
+};
 
 const MainAppBar = (props: AppBarProps) => {
   const classes = props.classes;
@@ -73,4 +73,4 @@ const MainAppBar = (props: AppBarProps) => {
   );
 };
 
-export default withStyles(styleSheet)(MainAppBar);
+export default withStyles(styles)(MainAppBar);

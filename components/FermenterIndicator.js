@@ -1,7 +1,7 @@
 import Avatar from 'material-ui/Avatar';
 import { green, grey } from 'material-ui/colors';
 import FermenterIcon from 'material-ui-icons/CallToAction';
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 
 import { compose } from 'ramda';
 
@@ -10,7 +10,7 @@ type Props = {
   isOn: boolean,
 };
 
-const fermenterIconStyles = createStyleSheet('FermenterIcon', {
+const fermenterIconStyles = {
   fermenterIconOn: {
     color: '#fff',
     background: green[500],
@@ -19,11 +19,12 @@ const fermenterIconStyles = createStyleSheet('FermenterIcon', {
     color: '#fff',
     background: grey[500],
   },
-});
+};
 
-const FermenterIndicator = ({ classes, isOn }: Props) =>
+const FermenterIndicator = ({ classes, isOn }: Props) => (
   <Avatar className={isOn ? classes.fermenterIconOn : classes.fermenterIconOff}>
     <FermenterIcon />
-  </Avatar>;
+  </Avatar>
+);
 
 export default compose(withStyles(fermenterIconStyles))(FermenterIndicator);

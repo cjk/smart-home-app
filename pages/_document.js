@@ -1,32 +1,15 @@
-// Right now this code is mostly about making Material-UI work with nextjs
+// Right now this code is mostly about making Material-UI work with nextjs - see
+// https://github.com/callemall/material-ui/blob/v1-beta/examples/nextjs/pages/_document.js
+
 import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
-import { getContext, setContext } from '../styles/context';
+import { JssProvider } from 'react-jss';
+import getContext from '../styles/getContext';
 
-export default class MyDocument extends Document {
-  static async getInitialProps(ctx) {
-    // Reset the context for handling a new request.
-    setContext();
-    const page = ctx.renderPage();
-    // Get the context with the collected side effects.
-    const context = getContext();
-    return {
-      ...page,
-      styles: (
-        <style
-          id="jss-server-side"
-          dangerouslySetInnerHTML={{
-            __html: context.sheetsRegistry.toString(),
-          }}
-        />
-      ),
-    };
-  }
-
+class MyDocument extends Document {
   render() {
-    const context = getContext();
     return (
-      <html lang="en">
+      <html lang="en" dir="ltr">
         <Head>
           <title>CjK&#39;s smart-home</title>
           <meta charSet="utf-8" />
@@ -34,14 +17,19 @@ export default class MyDocument extends Document {
           <meta
             name="viewport"
             content={
-              'user-scalable=0, initial-scale=1, maximum-scale=1, ' +
-              'minimum-scale=1, width=device-width, height=device-height'
+              'user-scalable=0, initial-scale=1, ' +
+                     'minimum-scale=1, width=device-width, height=device-height'
             }
           />
+          {/*
+              manifest.json provides metadata used when your web app is added to the
+              homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+            */}
+          <link rel="manifest" href="/static/manifest.json" />
           {/* PWA primary color */}
           <meta
             name="theme-color"
-            content={context.theme.palette.primary[500]}
+            content={this.props.stylesContext.theme.palette.primary[500]}
           />
           <link
             rel="stylesheet"
@@ -56,3 +44,44 @@ export default class MyDocument extends Document {
     );
   }
 }
+
+MyDocument.getInitialProps = ctx => {
+  // Resolution order
+  //
+  // On the server:
+  // 1. page.getInitialProps
+  // 2. document.getInitialProps
+  // 3. page.render
+  // 4. document.render
+  //
+  // On the server with error:
+  // 2. document.getInitialProps
+  // 3. page.render
+  // 4. document.render
+  //
+  // On the client
+  // 1. page.getInitialProps
+  // 3. page.render
+
+  // Get the context to collected side effects.
+  const context = getContext();
+  const page = ctx.renderPage(Component => props =>
+    <JssProvider registry={context.sheetsRegistry} jss={context.jss}>
+      <Component {...props} />
+    </JssProvider>
+  );
+
+  return {
+    ...page,
+    stylesContext: context,
+    styles: (
+      <style
+        id="jss-server-side"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: context.sheetsRegistry.toString() }}
+      />
+    ),
+  };
+};
+
+export default MyDocument;

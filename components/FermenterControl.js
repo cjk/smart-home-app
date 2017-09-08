@@ -5,7 +5,7 @@ import type { RunTimeState, Devices } from '../types/fermenter';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
 import Card, { CardActions, CardContent } from 'material-ui/Card';
 import Divider from 'material-ui/Divider';
@@ -26,12 +26,13 @@ type Props = {
   sendFermenterTempLimits: Function,
 };
 
-const fermenterControlStyles = createStyleSheet('FermenterControl', {
+const fermenterControlStyles = {
   controlsContainer: {
     flexGrow: 1,
-    flexDirection: 'column',
+    //     flexDirection: 'column',
   },
-  controlItem: {},
+  controlItem: {
+  },
   fermenterDetails: {
     display: 'flex',
     flexDirection: 'column',
@@ -54,7 +55,7 @@ const fermenterControlStyles = createStyleSheet('FermenterControl', {
   tempRangeControl: {
     marginTop: 10,
   },
-});
+};
 
 const FermenterControl = ({
   rts,
@@ -76,15 +77,19 @@ const FermenterControl = ({
   };
 
   return (
-    <Grid container gutter={24} className={classes.controlsContainer}>
-      <Grid item className={classes.controlItem}>
+    <Grid container spacing={24} className={classes.controlsContainer}>
+      <Grid item xs={12} sm={6} className={classes.controlItem}>
         <Card className={classes.fermenterCard}>
           <div className={classes.fermenterDetails}>
             <CardContent className={classes.fermenterIcon}>
               <FermenterIndicator isOn={fermenterIsRunning()} />
             </CardContent>
             <CardActions className={classes.devControls}>
-              <Button color="default" raised onClick={() => toggleDevice('fermenter')}>
+              <Button
+                color="default"
+                raised
+                onClick={() => toggleDevice('fermenter')}
+              >
                 {fermenterIsRunning() ? <StopIcon /> : <StartIcon />}
               </Button>
 
@@ -100,11 +105,11 @@ const FermenterControl = ({
       </Grid>
       {compose(
         values,
-        mapObjIndexed((dev, name) =>
-          <Grid item className={classes.controlItem} key={name}>
+        mapObjIndexed((dev, name) => (
+          <Grid item xs={6} sm={3} className={classes.controlItem} key={name}>
             <FermenterDevice name={name} isOn={dev.isOn} />
           </Grid>
-        )
+        ))
       )(devices)}
     </Grid>
   );

@@ -2,7 +2,7 @@
 
 import type { KnxAddress } from '../types';
 import React from 'react';
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 import { ListItem, ListItemText } from 'material-ui/List';
 import Grid from 'material-ui/Grid';
 
@@ -17,7 +17,7 @@ type Props = {
   addrSwitch: React.Element<*>,
 };
 
-const addrLineStyles = createStyleSheet('AddressLine', theme => ({
+const addrLineStyles = theme => ({
   listContainer: {
     flexGrow: 1,
     marginBottom: 12,
@@ -26,19 +26,18 @@ const addrLineStyles = createStyleSheet('AddressLine', theme => ({
   gridContainer: {
     flexWrap: 'nowrap',
   },
-}));
+});
 
 // Generate last-updated time in words
 const lastUpdated = timestamp => ` - ${distanceInWordsToNow(timestamp)} ago`;
 const genTitle = curry(addr => `${addr.func} ${lastUpdated(addr.updatedAt)}`);
 
-const AddressListItem = ({ address, classes, addrSwitch }: Props) =>
+const AddressListItem = ({ address, classes, addrSwitch }: Props) => (
   <ListItem dense className={classes.listContainer}>
     <Grid
       className={classes.gridContainer}
       style={{ flexWrap: 'nowrap' }}
       container
-      gutter={8}
     >
       <Grid item xs className="gridItem">
         {visualizeAddrValue(address)}
@@ -49,11 +48,13 @@ const AddressListItem = ({ address, classes, addrSwitch }: Props) =>
       <Grid item xs className="gridItem">
         <ListItemText primary={address.id} secondary={genTitle(address)} />
       </Grid>
-      {addrSwitch &&
+      {addrSwitch && (
         <Grid item xs className="gridItem">
           {addrSwitch}
-        </Grid>}
+        </Grid>
+      )}
     </Grid>
-  </ListItem>;
+  </ListItem>
+);
 
 export default withStyles(addrLineStyles)(AddressListItem);

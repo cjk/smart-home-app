@@ -23,7 +23,7 @@ import {
   values,
 } from 'ramda';
 
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 import Paper from 'material-ui/Paper';
 import List from 'material-ui/List';
 import Typography from 'material-ui/Typography';
@@ -40,7 +40,7 @@ type Props = {
   dispatch: Dispatch,
 };
 
-const addrListStyles = createStyleSheet('AddressListByRoom', theme => ({
+const addrListStyles = theme => ({
   room: {
     // maxWidth: 1024,
     // minWidth: 100,
@@ -56,7 +56,7 @@ const addrListStyles = createStyleSheet('AddressListByRoom', theme => ({
     background: theme.palette.background.paper,
     textAlign: 'auto',
   },
-}));
+});
 
 const RoomList = ({ addresses, dispatch, prefs, rooms, classes }: Props) => {
   const hasRoom = room => any(equals(room), prefs.rooms);
@@ -65,13 +65,13 @@ const RoomList = ({ addresses, dispatch, prefs, rooms, classes }: Props) => {
   const onAddrSwitch = addr =>
     dispatch({ type: 'WRITE_GROUP_ADDRESS', addr: toggleAddrVal(addr) });
 
-  const createRoomPanels = (addrLst, room) =>
+  const createRoomPanels = (addrLst, room) => (
     <Paper key={room} className={classes.room}>
       <Typography type="body1" className={classes.roomTitle}>
         {getRoomName(room)}
       </Typography>
       <List className={classes.addrList}>
-        {addrLst.map(address =>
+        {addrLst.map(address => (
           <AddressListItem
             key={address.id}
             address={address}
@@ -79,9 +79,10 @@ const RoomList = ({ addresses, dispatch, prefs, rooms, classes }: Props) => {
               <AddressSwitch switchAction={onAddrSwitch} address={address} />
             }
           />
-        )}
+        ))}
       </List>
-    </Paper>;
+    </Paper>
+  );
 
   const onlyActiveRooms = rooms => filter(any(propEq('value', 1)), rooms);
 
@@ -95,11 +96,7 @@ const RoomList = ({ addresses, dispatch, prefs, rooms, classes }: Props) => {
     values /* NOTE: Make last result an array, otherwise React complains about an Object returned by #mapObjIndexed */
   );
 
-  return (
-    <div>
-      {addrLstByRoom(addresses)}
-    </div>
-  );
+  return <div>{addrLstByRoom(addresses)}</div>;
 };
 
 export default compose(

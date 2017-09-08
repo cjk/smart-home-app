@@ -5,7 +5,7 @@ import type { Env } from '../types/fermenter';
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 import Avatar from 'material-ui/Avatar';
 import Card, { CardContent } from 'material-ui/Card';
 import HumIcon from 'material-ui-icons/Cloud';
@@ -19,7 +19,7 @@ type Props = {
   classes: Object,
 };
 
-const fermenterInfoStyles = createStyleSheet('FermenterInfo', {
+const fermenterInfoStyles = {
   infoCard: {
     marginTop: 20,
     padding: 15,
@@ -31,9 +31,9 @@ const fermenterInfoStyles = createStyleSheet('FermenterInfo', {
   deviceReading: {
     marginRight: 20,
   },
-});
+};
 
-const FermenterInfo = ({ env, classes }: Props) =>
+const FermenterInfo = ({ env, classes }: Props) => (
   <Card className={classes.infoCard}>
     <div className={classes.infoDetails}>
       <Avatar>
@@ -53,7 +53,8 @@ const FermenterInfo = ({ env, classes }: Props) =>
         </Typography>
       </CardContent>
     </div>
-  </Card>;
+  </Card>
+);
 
 export default compose(
   withStyles(fermenterInfoStyles),

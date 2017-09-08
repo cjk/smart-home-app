@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles, createStyleSheet } from 'material-ui/styles';
+import { withStyles } from 'material-ui/styles';
 import { compose } from 'ramda';
 
 import LightIcon from 'material-ui-icons/Language';
@@ -12,7 +12,7 @@ type Props = {
   classes: Object,
 };
 
-const LightIconStyles = createStyleSheet('LightIcon', theme => ({
+const LightIconStyles = theme => ({
   container: {
     position: 'absolute',
   },
@@ -21,9 +21,9 @@ const LightIconStyles = createStyleSheet('LightIcon', theme => ({
     overflow: 'visible',
     pointerEvents: 'none',
   },
-}));
+});
 
-const Light = ({ id, x, y, color, classes }: Props) =>
+const Light = ({ id, x, y, color, classes }: Props) => (
   <svg
     version="1.1"
     x={x}
@@ -43,7 +43,7 @@ const Light = ({ id, x, y, color, classes }: Props) =>
     />
 
     <LightIcon className={classes.icon} color={color} width="20" height="20" />
-
-  </svg>;
+  </svg>
+);
 
 export default compose(withStyles(LightIconStyles))(Light);
