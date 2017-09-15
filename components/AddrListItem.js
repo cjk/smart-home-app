@@ -9,7 +9,7 @@ import Grid from 'material-ui/Grid';
 import { curry } from 'ramda';
 
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
-import visualizeAddrValue from '../lib/shared/visualizeAddresses';
+import VisualizedAddress from '../lib/shared/visualizeAddress';
 
 type Props = {
   address: KnxAddress,
@@ -30,7 +30,31 @@ const addrLineStyles = theme => ({
 
 // Generate last-updated time in words
 const lastUpdated = timestamp => ` - ${distanceInWordsToNow(timestamp)} ago`;
-const genTitle = curry(addr => `${addr.func} ${lastUpdated(addr.updatedAt)}`);
+
+const genValue = addr => {
+  switch (addr.func) {
+    case null:
+      return addr.value;
+    case 'light':
+      return addr.value ? 'ON' : 'OFF';
+    case 'inhibit':
+      return addr.value ? 'ON' : 'OFF';
+    case 'scene':
+      return addr.value === null ? '?' : addr.value;
+    case 'shut':
+      return addr.value ? 'UP' : 'DOWN';
+    case 'contact':
+      return addr.value ? 'OPEN' : 'CLOSED';
+    case 'outlet':
+      return addr.value ? 'ON' : 'OFF';
+    default:
+      return addr.value;
+  }
+};
+
+const genTitle = curry(
+  addr => `${genValue(addr)} ${lastUpdated(addr.updatedAt)}`
+);
 
 const AddressListItem = ({ address, classes, addrSwitch }: Props) => (
   <ListItem dense className={classes.listContainer}>
@@ -39,8 +63,8 @@ const AddressListItem = ({ address, classes, addrSwitch }: Props) => (
       style={{ flexWrap: 'nowrap' }}
       container
     >
-      <Grid item xs className="gridItem">
-        {visualizeAddrValue(address)}
+      <Grid item xs={4} className="gridItem">
+        <VisualizedAddress addr={address} />
       </Grid>
       <Grid item xs={4} className="gridItem">
         <ListItemText primary={address.name} secondary={address.story} />
