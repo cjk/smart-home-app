@@ -67,7 +67,7 @@ const RoomList = ({ addresses, dispatch, prefs, rooms, classes }: Props) => {
 
   const createRoomPanels = (addrLst, room) => (
     <Paper key={room} className={classes.room}>
-      <Typography type="body1" className={classes.roomTitle}>
+      <Typography type="title" className={classes.roomTitle}>
         {getRoomName(room)}
       </Typography>
       <List className={classes.addrList}>
