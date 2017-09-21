@@ -14,7 +14,6 @@
     "node": ">=6.10.0"
   },
   "dependencies": {
-    "bluebird": "^3.0.5",
     "date-fns": "^1.28.3",
     "deepstream.io-client-js": "^2.1.4",
     "jss": "^8.1.0",
@@ -42,6 +41,7 @@
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-plugin-transform-define": "^1.2.0",
-    "babel-preset-env": "^1.6.0"
+    "babel-preset-env": "^1.6.0",
+    "eslint-plugin-flowtype": "^2.35.1"
   }
 }
