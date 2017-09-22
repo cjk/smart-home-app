@@ -30,6 +30,7 @@ const fermenterInfoStyles = {
   },
   deviceReading: {
     marginRight: 20,
+    padding: 10,
   },
 };
 
