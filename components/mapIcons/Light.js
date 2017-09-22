@@ -1,18 +1,21 @@
+// @flow
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import { compose } from 'ramda';
 
-import LightIcon from 'material-ui-icons/Language';
+import LightIconOff from 'material-ui-icons/LightbulbOutline';
+// import LightIconOn from 'material-ui-icons/WbIncandescent';
 
 type Props = {
   id: string,
+  desc: string,
+  isOn: boolean,
   x: number,
   y: number,
-  color: string,
   classes: Object,
 };
 
-const LightIconStyles = theme => ({
+const LightIconStyles = {
   container: {
     position: 'absolute',
   },
@@ -21,11 +24,12 @@ const LightIconStyles = theme => ({
     overflow: 'visible',
     pointerEvents: 'none',
   },
-});
+};
 
-const Light = ({ id, x, y, color, classes }: Props) => (
+const Light = ({ id, desc, x, y, isOn, classes }: Props) => (
   <svg
     version="1.1"
+    desc={desc}
     x={x}
     y={y}
     onClick={e => console.log(e.target)}
@@ -42,7 +46,12 @@ const Light = ({ id, x, y, color, classes }: Props) => (
       strokeWidth=".64488"
     />
 
-    <LightIcon className={classes.icon} color={color} width="20" height="20" />
+    <LightIconOff
+      className={classes.icon}
+      color={isOn ? 'orange' : 'grey'}
+      width="20"
+      height="20"
+    />
   </svg>
 );
 
