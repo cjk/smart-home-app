@@ -1,6 +1,11 @@
 module.exports = {
-  extends: ['airbnb', 'plugin:flowtype/recommended'],
   parser: 'babel-eslint',
+  parserOptions: { ecmaVersion: 6 },
+  env: {
+    browser: true,
+    node: true
+  },
+  extends: ['airbnb', 'plugin:flowtype/recommended'],
   plugins: ['flowtype'],
   globals: {
     APP_NAME: true,
@@ -12,7 +17,7 @@ module.exports = {
     $Exact: true,
     Event: true,
     EventHandler: true,
-    ReactClass: true,
+    ReactClass: true
   },
   // AirBnb is great, but very strict. Feel free to add anything.
   rules: {
@@ -41,6 +46,6 @@ module.exports = {
     'react/jsx-boolean-value': 0, // Control freaky.
     // misc (CjK)
     'comma-dangle': ['error', 'only-multiline'],
-    'max-len': ['error', 120, { "ignoreComments": true }],
-  },
+    'max-len': ['error', 120, { "ignoreComments": true }]
+  }
 };
