@@ -1,3 +1,4 @@
+// @flow
 import type { Action, Dispatch, SmartHomeState } from '../types';
 
 import React from 'react';

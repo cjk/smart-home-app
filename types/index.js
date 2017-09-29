@@ -72,6 +72,9 @@ export type AppState = {
   prefs: Prefs,
   rooms: Rooms,
   isSubscribedToBus: boolean,
+  ui: {
+    selectedListTab: number,
+  },
 };
 
 export type State = {
@@ -97,7 +100,8 @@ export type Action =
   | { type: 'APP_SHOW_MENU', payload: { menuShown: boolean } }
   | { type: 'SUBSCRIBE_TO_BUS' }
   | { type: 'SUBSCRIBE_TO_BUS_SUCCESS' }
-  | { type: 'TOGGLE_SHOW_ONLY_ACTIVE', payload: boolean }
+  | { type: 'TOGGLE_SHOW_ONLY_ACTIVE', toggleValue: boolean }
+  | { type: 'CHANGE_SELECTED_LIST_TAB', value: number }
   | { type: 'SET_THEME', payload: { theme: string } };
 
 export type Middleware = Array<ReduxMiddleware<State, Action>>;

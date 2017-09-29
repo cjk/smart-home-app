@@ -58,11 +58,6 @@ const MainAppBar = (props: AppBarProps) => {
           </IconButton>
 
           <Button>
-            <Link href="/rooms">
-              <a className={classes.linkText}>Rooms</a>
-            </Link>
-          </Button>
-          <Button>
             <Link href="/fermenter">
               <a className={classes.linkText}>Fermenter</a>
             </Link>

@@ -3,7 +3,6 @@ import type { Dispatch, KnxAddress, Prefs, Rooms, State } from '../types';
 
 /* Presentational component to render a simple address-list sorted by most-recently changed */
 import React from 'react';
-import { connect } from 'react-redux';
 
 import {
   any,
@@ -99,11 +98,4 @@ const RoomList = ({ addresses, dispatch, prefs, rooms, classes }: Props) => {
   return <div>{addrLstByRoom(addresses)}</div>;
 };
 
-export default compose(
-  connect((state: State) => ({
-    addresses: state.smartHome.livestate,
-    prefs: state.app.prefs,
-    rooms: state.app.rooms,
-  })),
-  withStyles(addrListStyles)
-)(RoomList);
+export default compose(withStyles(addrListStyles))(RoomList);
