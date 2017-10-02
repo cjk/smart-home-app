@@ -29,7 +29,6 @@ const LightIconStyles = {
 const Light = ({ id, desc, x, y, isOn, classes }: Props) => (
   <svg
     version="1.1"
-    desc={desc}
     x={x}
     y={y}
     onClick={e => console.log(e.target)}
@@ -52,6 +51,8 @@ const Light = ({ id, desc, x, y, isOn, classes }: Props) => (
       width="20"
       height="20"
     />
+
+    <desc>{desc}</desc>
   </svg>
 );
 
