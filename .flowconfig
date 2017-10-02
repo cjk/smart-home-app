@@ -1,17 +1,20 @@
 [ignore]
 ; Probably not actual flow.
 .*/node_modules/auth0-lock/.*
+.*/node_modules/jss/.*
 
 [include]
 
 [libs]
 types/app.js.flow
 
+[lints]
+all=warn
+sketchy-null-bool=off
+sketchy-null-mixed=off
+sketchy-null-string=off
+
 [options]
+include_warnings=true
 ; TODO: https://github.com/facebook/flow/issues/3728
 ;all=true
-; https://github.com/oliviertassinari/babel-plugin-transform-react-remove-prop-types/issues/107#issuecomment-299516612
-module.ignore_non_literal_requires=true
-
-; https://stackoverflow.com/questions/43376241/using-flow-union-types-for-redux-actions
-experimental.const_params=true
