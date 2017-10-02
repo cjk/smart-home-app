@@ -31,7 +31,6 @@ const Light = ({ id, desc, x, y, isOn, classes }: Props) => (
     version="1.1"
     x={x}
     y={y}
-    onClick={e => console.log(e.target)}
     className={classes.container}
     viewBox="0 0 800 600"
     preserveAspectRatio="xMidYMid meet"

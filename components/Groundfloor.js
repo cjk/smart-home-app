@@ -4,6 +4,8 @@ import type { Dispatch, KnxAddress, Prefs, Rooms, State } from '../types';
 import React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
+import { toggleAddrVal } from '../lib/shared/address-utils';
+
 import { compose } from 'ramda';
 
 import Light from './mapIcons/Light';
@@ -28,8 +30,13 @@ const styles = {
   },
 };
 
-const Groundfloor = ({ addresses, dispatch, prefs, rooms, classes }: Props) => {
+const Groundfloor = ({ addresses, dispatch, classes }: Props) => {
   const isOn = addr => addresses[addr].value;
+  const onLightSwitch = addrId =>
+    dispatch({
+      type: 'WRITE_GROUP_ADDRESS',
+      addr: toggleAddrVal(addresses[addrId]),
+    });
 
   return (
     <svg
@@ -37,7 +44,7 @@ const Groundfloor = ({ addresses, dispatch, prefs, rooms, classes }: Props) => {
       version="1.1"
       viewBox="0 0 800 600"
       preserveAspectRatio="xMidYMid meet"
-      onClick={e => console.log(e.target.parentNode)}
+      onClick={e => onLightSwitch(e.target.id)}
     >
       <g stroke="#000" className={classes.furniture}>
         <path
@@ -115,12 +122,12 @@ const Groundfloor = ({ addresses, dispatch, prefs, rooms, classes }: Props) => {
           strokeDasharray="0.14720044, 0.14720043999999999"
           strokeWidth=".5888"
           className={classes.furniture}
-    />
-    <g strokeDasharray="0.16125, 0.16125000000000000" strokeWidth=".645">
-      <rect x="550" y="560" width="230" height="30" />
-      <rect x="510" y="320" width="40" height="270" />
-      <rect x="10" y="260" width="210" height="30" />
-    </g>
+        />
+        <g strokeDasharray="0.16125, 0.16125000000000000" strokeWidth=".645">
+          <rect x="550" y="560" width="230" height="30" />
+          <rect x="510" y="320" width="40" height="270" />
+          <rect x="10" y="260" width="210" height="30" />
+        </g>
       </g>
       <g className="actors">
         <Light
