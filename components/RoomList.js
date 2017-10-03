@@ -1,7 +1,8 @@
 /* @flow */
-import type { Dispatch, KnxAddress, Prefs, Rooms } from '../types';
 
-/* Presentational component to render a simple address-list sorted by most-recently changed */
+/* Presentational component for a room-grouped list of switches */
+
+import type { Dispatch, KnxAddress, Prefs, Rooms } from '../types';
 import React from 'react';
 
 import {

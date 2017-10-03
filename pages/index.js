@@ -1,5 +1,5 @@
 // @flow
-import type { KnxAddress, State } from '../types';
+import type { State } from '../types';
 
 import React from 'react';
 import * as appActions from '../lib/app/actions';
@@ -17,21 +17,14 @@ import TabBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
 
 // UI: switches grouped by rooms
-import RoomList from '../components/RoomList';
-import ShowOnlyActiveToggle from '../components/ShowOnlyActiveToggle';
-
+import Rooms from '../components/Rooms';
 // UI: Last changed address-log list
-import AddressList from '../components/AddressList';
+import History from '../components/History';
 
-import { compose, reject } from 'ramda';
-
-/* Built address-list, remove some address-types which should not be displayed */
-const filterAddresses = reject((addr: KnxAddress) => addr.type === 'fb');
+import { compose } from 'ramda';
 
 const IndexPage = props => {
-  const { prefs, rooms, ui: { selectedListTab } } = props.app;
-  const { livestate } = props.smartHome;
-  const { changeSelectedListTab } = props;
+  const { changeSelectedListTab, ui: { selectedListTab } } = props;
   const handleTabChange = (event, value) => changeSelectedListTab(value);
 
   return (
@@ -43,17 +36,8 @@ const IndexPage = props => {
           <Tab label="history" />
         </Tabs>
       </TabBar>
-      {selectedListTab === 0 && (
-         <div>
-           <ShowOnlyActiveToggle />
-           <RoomList
-             prefs={prefs}
-             rooms={rooms}
-             addresses={filterAddresses(livestate)}
-           />
-         </div>
-      )}
-      {selectedListTab === 1 && <AddressList addresses={livestate} />}
+      {selectedListTab === 0 && <Rooms />}
+      {selectedListTab === 1 && <History />}
     </div>
   );
 };
@@ -70,8 +54,7 @@ export default compose(
   withRedux(
     createStore,
     (state: State) => ({
-      app: state.app,
-      smartHome: state.smartHome,
+      ui: state.app.ui,
     }),
     mapDispatchToProps
   ),

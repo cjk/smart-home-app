@@ -1,9 +1,11 @@
 /* @flow */
-import type { KnxAddress, State } from '../types';
+
+// Presentational-component for history visualizations
+
+import type { KnxAddress } from '../types';
 
 /* Presentational component to render a simple address-list sorted by most-recently changed */
 import React from 'react';
-import { connect } from 'react-redux';
 
 import {
   comparator,
@@ -55,7 +57,4 @@ const AddressList = ({ addresses, classes }: Props) => {
   return <List className={classes.addrList}>{addrLstByDate(addresses)}</List>;
 };
 
-export default compose(
-  connect((state: State) => ({ addresses: state.smartHome.livestate })),
-  withStyles(listStyles)
-)(AddressList);
+export default compose(withStyles(listStyles))(AddressList);
