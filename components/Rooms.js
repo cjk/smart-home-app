@@ -6,6 +6,8 @@ import type { State, KnxAddress } from '../types';
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { toggleAddrVal } from '../lib/shared/address-utils';
+
 // UI: switches grouped by rooms
 import RoomList from '../components/RoomList';
 import ShowOnlyActiveToggle from '../components/ShowOnlyActiveToggle';
@@ -16,16 +18,20 @@ import { compose, reject } from 'ramda';
 const filterAddresses = reject((addr: KnxAddress) => addr.type === 'fb');
 
 const Rooms = props => {
-  const { addresses } = props;
+  const { addresses, dispatch } = props;
   const { prefs, rooms } = props.app;
+
+  const onAddrSwitch = addr =>
+    dispatch({ type: 'WRITE_GROUP_ADDRESS', addr: toggleAddrVal(addr) });
 
   return (
     <div>
       <ShowOnlyActiveToggle />
       <RoomList
+        addresses={filterAddresses(addresses)}
         prefs={prefs}
         rooms={rooms}
-        addresses={filterAddresses(addresses)}
+        onAddrSwitch={onAddrSwitch}
       />
     </div>
   );

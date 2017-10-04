@@ -2,7 +2,7 @@
 
 /* Presentational component for a room-grouped list of switches */
 
-import type { Dispatch, KnxAddress, Prefs, Rooms } from '../types';
+import type { KnxAddress, Prefs, Rooms } from '../types';
 import React from 'react';
 
 import {
@@ -30,14 +30,13 @@ import Typography from 'material-ui/Typography';
 
 import AddressListItem from '../components/AddrListItem';
 import AddressSwitch from '../components/AddrItemSwitch';
-import { toggleAddrVal } from '../lib/shared/address-utils';
 
 type Props = {
   addresses: Array<KnxAddress>,
   prefs: Prefs,
   rooms: Rooms,
+  onAddrSwitch: Function,
   classes: Object,
-  dispatch: Dispatch,
 };
 
 const addrListStyles = theme => ({
@@ -58,12 +57,16 @@ const addrListStyles = theme => ({
   },
 });
 
-const RoomList = ({ addresses, dispatch, prefs, rooms, classes }: Props) => {
+const RoomList = ({
+  addresses,
+  prefs,
+  rooms,
+  onAddrSwitch,
+  classes,
+}: Props) => {
   const hasRoom = room => any(equals(room), prefs.rooms);
   const addressesWithRoom = keys(filter(hasRoom, pluck('room', addresses)));
   const getRoomName = room => rooms[room].name;
-  const onAddrSwitch = addr =>
-    dispatch({ type: 'WRITE_GROUP_ADDRESS', addr: toggleAddrVal(addr) });
 
   const createRoomPanels = (addrLst, room) => (
     <Paper key={room} className={classes.room}>
