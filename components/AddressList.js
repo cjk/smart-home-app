@@ -5,7 +5,7 @@
 import type { KnxAddress } from '../types';
 
 /* Presentational component to render a simple address-list sorted by most-recently changed */
-import React from 'react';
+import * as React from 'react';
 
 import {
   comparator,

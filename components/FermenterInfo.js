@@ -2,7 +2,7 @@
 
 import type { Env } from '../types/fermenter';
 
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { withStyles } from 'material-ui/styles';

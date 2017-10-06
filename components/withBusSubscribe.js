@@ -1,7 +1,7 @@
 // @flow
 import type { Action, Dispatch, SmartHomeState } from '../types';
 
-import React from 'react';
+import * as React from 'react';
 import connectClient from '../lib/client';
 import { createInitialstateReq$ } from '../lib/shared/create-state-streams';
 
@@ -9,8 +9,10 @@ type Props = {
   dispatch: Dispatch,
 };
 
-const WithBusSubsribe = Page =>
-  class WithBusSubsribe extends React.Component<void, Props, void> {
+const WithBusSubsribe = (
+  Page: React.ComponentType<Props>
+): React.ComponentType<any> =>
+  class WithBusSubsribe extends React.Component<Props> {
     static async getInitialProps(ctx) {
       let composedInitialProps = {};
       if (Page.getInitialProps) {

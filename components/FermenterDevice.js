@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import Avatar from 'material-ui/Avatar';
 import Card, { CardContent } from 'material-ui/Card';
 import HeaterIcon from 'material-ui-icons/AcUnit';

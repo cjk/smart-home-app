@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'react';
+import * as React from 'react';
 import { withStyles } from 'material-ui/styles';
 import Radio from 'material-ui/Radio';
 import Typography from 'material-ui/Typography';

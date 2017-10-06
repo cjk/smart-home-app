@@ -3,7 +3,7 @@
 // Container-component for Room-grouped visualizations
 
 import type { State, KnxAddress } from '../types';
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { toggleAddrVal } from '../lib/shared/address-utils';

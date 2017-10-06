@@ -1,7 +1,7 @@
 // @flow
 import type { State } from '../types';
 
-import React from 'react';
+import * as React from 'react';
 import * as appActions from '../lib/app/actions';
 import { bindActionCreators } from 'redux';
 import createStore from '../lib/create-store';

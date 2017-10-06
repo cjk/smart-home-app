@@ -2,7 +2,7 @@
 import type { FermenterState } from '../types/fermenter';
 import type { Dispatch } from '../types';
 
-import React from 'react';
+import * as React from 'react';
 import * as fermenterActions from '../lib/fermenter/actions';
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';

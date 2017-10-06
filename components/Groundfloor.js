@@ -1,7 +1,7 @@
 // @flow
 import type { Dispatch, KnxAddress, Prefs, Rooms, State } from '../types';
 
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui/styles';
 import { toggleAddrVal } from '../lib/shared/address-utils';

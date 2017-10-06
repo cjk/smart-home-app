@@ -3,7 +3,7 @@
 /* Presentational component for a room-grouped list of switches */
 
 import type { KnxAddress, Prefs, Rooms } from '../types';
-import React from 'react';
+import * as React from 'react';
 
 import {
   any,

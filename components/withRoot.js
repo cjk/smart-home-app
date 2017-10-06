@@ -3,7 +3,7 @@
 // Right now this code is mostly about making Material-UI work with nextjs - see
 // https://github.com/callemall/material-ui/blob/v1-beta/examples/nextjs/components/withRoot.js
 
-import React, { Component } from 'react';
+import * as React from 'react';
 import { withStyles, MuiThemeProvider } from 'material-ui/styles';
 import wrapDisplayName from 'recompose/wrapDisplayName';
 import getContext from '../styles/getContext';
@@ -27,7 +27,7 @@ let AppWrapper = props => props.children;
 AppWrapper = withStyles(styles)(AppWrapper);
 
 function withRoot(BaseComponent) {
-  class WithRoot extends Component {
+  class WithRoot extends React.Component {
     static getInitialProps(ctx) {
       if (BaseComponent.getInitialProps) {
         return BaseComponent.getInitialProps(ctx);

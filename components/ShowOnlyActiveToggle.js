@@ -1,5 +1,5 @@
 // @flow
-import React from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 import { toggleShowOnlyActive } from '../lib/app/actions';
 import Switch from 'material-ui/Switch';

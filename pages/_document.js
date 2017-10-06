@@ -1,7 +1,7 @@
 // Right now this code is mostly about making Material-UI work with nextjs - see
 // https://github.com/callemall/material-ui/blob/v1-beta/examples/nextjs/pages/_document.js
 
-import React from 'react';
+import * as React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
 import { JssProvider } from 'react-jss';
 import getContext from '../styles/getContext';
