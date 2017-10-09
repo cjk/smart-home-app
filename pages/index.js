@@ -18,6 +18,9 @@ import Tabs, { Tab } from 'material-ui/Tabs';
 
 // UI: switches grouped by rooms
 import Rooms from '../components/Rooms';
+
+// UI: Show available scenes to (de)activate
+import Scenes from '../components/Scenes';
 // UI: Last changed address-log list
 import History from '../components/History';
 
@@ -33,11 +36,13 @@ const IndexPage = props => {
       <TabBar position="static">
         <Tabs value={selectedListTab} onChange={handleTabChange}>
           <Tab label="rooms" />
+          <Tab label="scenes" />
           <Tab label="history" />
         </Tabs>
       </TabBar>
       {selectedListTab === 0 && <Rooms />}
-      {selectedListTab === 1 && <History />}
+      {selectedListTab === 1 && <Scenes />}
+      {selectedListTab === 2 && <History />}
     </div>
   );
 };

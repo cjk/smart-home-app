@@ -68,6 +68,14 @@ export type CronJob = {
   tasks: Array<CrontabTask>,
 };
 
+export type Scene = {
+  id: string,
+  name: string,
+  lastRun: ?number,
+  tasks: Array<CrontabTask>,
+};
+export type Scenes = Array<Scene>;
+
 export type AppState = {
   prefs: Prefs,
   rooms: Rooms,
@@ -100,6 +108,8 @@ export type Action =
   | { type: 'APP_SHOW_MENU', payload: { menuShown: boolean } }
   | { type: 'SUBSCRIBE_TO_BUS' }
   | { type: 'SUBSCRIBE_TO_BUS_SUCCESS' }
+  | { type: 'FETCH_SCENES' }
+  | { type: 'FETCH_SCENES_SUCCESS', scenes: Scenes }
   | { type: 'TOGGLE_SHOW_ONLY_ACTIVE', toggleValue: boolean }
   | { type: 'CHANGE_SELECTED_LIST_TAB', value: number }
   | { type: 'SET_THEME', payload: { theme: string } };
