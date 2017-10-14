@@ -3,7 +3,7 @@ import type { Action, Dispatch, Scenes as ScenesType } from '../types';
 
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { compose, isEmpty } from 'ramda';
+import { compose, isEmpty, map } from 'ramda';
 
 type Props = {
   scenes: ScenesType,
@@ -20,7 +20,7 @@ class Scenes extends React.Component<Props> {
   render() {
     const { scenes } = this.props;
     // TODO: Use render-props / render-callbacks? See https://codedaily.io/tutorials/6/Using-Functions-as-Children-and-Render-Props-in-React-Components
-    return <div>Scenes: { isEmpty(scenes) ? 'loading....' : `${scenes[0]}`}</div>;
+    return <div className="scenesLst">{map(sc => <h3 key={`${sc.id}`}>{`${sc.name}`}</h3>, scenes)} </div>;
   }
 }
 
