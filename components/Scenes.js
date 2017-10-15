@@ -4,6 +4,7 @@ import type { Action, Dispatch, Scenes as ScenesType } from '../types';
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { compose, isEmpty, map } from 'ramda';
+import SceneCard from './SceneCard';
 
 type Props = {
   scenes: ScenesType,
@@ -12,15 +13,18 @@ type Props = {
 
 class Scenes extends React.Component<Props> {
   componentDidMount() {
-    const { dispatch } = this.props;
-    // client-only actions to perform: fetching scenes from cloud
-    dispatch(({ type: 'FETCH_SCENES' }: Action));
+    const { dispatch, scenes } = this.props;
+    // client-only actions to perform: fetching scenes from cloud if not already done so
+    if (isEmpty(scenes)) dispatch(({ type: 'FETCH_SCENES' }: Action));
   }
 
   render() {
     const { scenes } = this.props;
-    // TODO: Use render-props / render-callbacks? See https://codedaily.io/tutorials/6/Using-Functions-as-Children-and-Render-Props-in-React-Components
-    return <div className="scenesLst">{map(sc => <h3 key={`${sc.id}`}>{`${sc.name}`}</h3>, scenes)} </div>;
+    return (
+      <div className="scenesLst">
+        {map(scene => <SceneCard key={scene.id} scene={scene} />, scenes)}
+      </div>
+    );
   }
 }
 
