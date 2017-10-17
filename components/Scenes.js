@@ -1,4 +1,7 @@
 // @flow
+
+// Container-component for interactions with smart-home scenes.
+
 import type { Action, Dispatch, Scenes as ScenesType } from '../types';
 
 import * as React from 'react';
@@ -19,10 +22,22 @@ class Scenes extends React.Component<Props> {
   }
 
   render() {
-    const { scenes } = this.props;
+    const { scenes, dispatch } = this.props;
+    const onSceneActivate = (sceneId: string) =>
+      dispatch({ type: 'SCENE_ACTIVATE', sceneId });
+
     return (
       <div className="scenesLst">
-        {map(scene => <SceneCard key={scene.id} scene={scene} />, scenes)}
+        {map(
+          scene => (
+            <SceneCard
+              key={scene.id}
+              scene={scene}
+              onSceneActivate={onSceneActivate}
+            />
+          ),
+          scenes
+        )}
       </div>
     );
   }

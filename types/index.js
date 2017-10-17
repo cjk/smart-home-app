@@ -68,8 +68,10 @@ export type CronJob = {
   tasks: Array<CrontabTask>,
 };
 
+type SceneId = string;
+
 export type Scene = {
-  id: string,
+  id: SceneId,
   name: string,
   lastRun: ?number,
   tasks: Array<CrontabTask>,
@@ -110,6 +112,7 @@ export type Action =
   | { type: 'SUBSCRIBE_TO_BUS_SUCCESS' }
   | { type: 'FETCH_SCENES' }
   | { type: 'FETCH_SCENES_SUCCESS', scenes: Scenes }
+  | { type: 'SCENE_ACTIVATE', sceneId: SceneId }
   | { type: 'TOGGLE_SHOW_ONLY_ACTIVE', toggleValue: boolean }
   | { type: 'CHANGE_SELECTED_LIST_TAB', value: number }
   | { type: 'SET_THEME', payload: { theme: string } };
