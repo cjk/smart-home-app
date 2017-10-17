@@ -26,6 +26,7 @@ module.exports = {
     'import/first': 0, // Este sorts by atom/sort lines natural order.
     'import/prefer-default-export': 0, // Actions can have just one action.
     indent: 0, // Prettier.
+    'function-paren-newline': 0, // Prettier.
     'no-confusing-arrow': 0, // This rule is confusing.
     'no-mixed-operators': 0, // Prettier.
     'no-nested-ternary': 0, // Buggy for functional componenents.
