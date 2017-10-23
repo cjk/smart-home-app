@@ -52,6 +52,16 @@ export type SmartHomeState = {
 };
 
 /* Cronjob types */
+
+export type Task = {
+  id: number,
+  status: string,
+  startedAt: ?number,
+  endedAt: ?number,
+  target: string,
+  act: string,
+};
+
 export type CrontabTask = {
   targets: Array<string>,
   act: string,
@@ -64,8 +74,8 @@ export type CronJob = {
   repeat: string,
   scheduled: boolean,
   running: boolean,
-  lastRun: Date | null,
-  tasks: Array<CrontabTask>,
+  lastRun: ?Date,
+  tasks: ?CrontabTask[] | ?Task[],
 };
 
 type SceneId = string;
@@ -100,19 +110,17 @@ export type Dependencies = {
 
 // Actions
 export type Action =
-  | { type: 'CREATE_CRONJOB', payload: CronJob }
   | { type: 'PROCESS_EVENT', event: BusEvent }
   | { type: 'WRITE_GROUP_ADDRESS', addr: KnxAddress }
   | { type: 'WRITE_GROUP_ADDRESS_DONE' }
   | { type: 'REQUEST_INITIAL_STATE' }
   | { type: 'REQUEST_INITIAL_STATE_SUCCESS', livestate: SmartHomeState }
-  | { type: 'APP_ONLINE', payload: { online: boolean } }
-  | { type: 'APP_SHOW_MENU', payload: { menuShown: boolean } }
   | { type: 'SUBSCRIBE_TO_BUS' }
   | { type: 'SUBSCRIBE_TO_BUS_SUCCESS' }
   | { type: 'FETCH_SCENES' }
   | { type: 'FETCH_SCENES_SUCCESS', scenes: Scenes }
   | { type: 'SCENE_ACTIVATE', sceneId: SceneId }
+  | { type: 'SCHEDULE_CRONJOB', job: CronJob }
   | { type: 'TOGGLE_SHOW_ONLY_ACTIVE', toggleValue: boolean }
   | { type: 'CHANGE_SELECTED_LIST_TAB', value: number }
   | { type: 'SET_THEME', payload: { theme: string } };
