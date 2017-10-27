@@ -23,8 +23,9 @@ class Scenes extends React.Component<Props> {
 
   render() {
     const { scenes, dispatch } = this.props;
-    const onSceneActivate = (sceneId: string) =>
-      dispatch({ type: 'SCENE_ACTIVATE', sceneId });
+    // For activating + deactivating scenes in presentational component
+    const onSceneAction = (sceneId: string, activate?: boolean = true) =>
+      dispatch({ type: 'SCENE_ACTIVATE', sceneId, activate });
 
     return (
       <div className="scenesLst">
@@ -33,7 +34,7 @@ class Scenes extends React.Component<Props> {
             <SceneCard
               key={scene.id}
               scene={scene}
-              onSceneActivate={onSceneActivate}
+              onSceneAction={onSceneAction}
             />
           ),
           scenes

@@ -75,7 +75,7 @@ export type CronJob = {
   scheduled: boolean,
   running: boolean,
   lastRun: ?Date,
-  tasks: ?CrontabTask[] | ?Task[],
+  tasks: ?(CrontabTask[]) | ?(Task[]),
 };
 
 type SceneId = string;
@@ -83,7 +83,6 @@ type SceneId = string;
 export type Scene = {
   id: SceneId,
   name: string,
-  lastRun: ?number,
   tasks: Array<CrontabTask>,
 };
 export type Scenes = Array<Scene>;

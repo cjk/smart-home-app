@@ -14,30 +14,35 @@ import { compose } from 'ramda';
 
 type Props = {
   scene: Scene,
-  onSceneActivate: Function,
+  onSceneAction: Function,
   classes: Object,
 };
 
-const sceneStyles = theme => ({
+const sceneStyles = {
   card: {
     margin: '2em',
     maxWidth: 275,
     minWidth: 275,
   },
-});
+};
 
-const SceneCard = ({ scene, onSceneActivate, classes }: Props) => (
+const SceneCard = ({ scene, onSceneAction, classes }: Props) => (
   <div className="sceneCard">
     <Card className={classes.card}>
       <CardContent>
         <Typography type="headline" component="h3">
           {scene.name}
         </Typography>
-        <Typography type="body1">Makes my heart beat</Typography>
+        <Typography type="body1">
+          Enthält {`${scene.tasks.length}`} Aktionen
+        </Typography>
       </CardContent>
       <CardActions>
-        <Button color="primary" onClick={() => onSceneActivate(scene.id)}>
+        <Button color="primary" onClick={() => onSceneAction(scene.id)}>
           On
+        </Button>
+        <Button color="primary" onClick={() => onSceneAction(scene.id, false)}>
+          Off
         </Button>
       </CardActions>
     </Card>
