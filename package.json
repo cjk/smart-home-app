@@ -37,7 +37,7 @@
     "redux-logger": "^3.0.1",
     "redux-observable": "0.16.0",
     "rxjs": "^5.4.2",
-    "uuid": "^3.1.0"
+    "shortid": "^2.2.8"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
