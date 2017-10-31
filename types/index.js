@@ -103,7 +103,7 @@ export type State = {
 
 export type Dependencies = {
   getState: () => State,
-  connectClient: () => Function,
+  client: () => Function,
   validate: (json: Object) => any,
 };
 
@@ -116,6 +116,7 @@ export type Action =
   | { type: 'REQUEST_INITIAL_STATE_SUCCESS', livestate: SmartHomeState }
   | { type: 'SUBSCRIBE_TO_BUS' }
   | { type: 'SUBSCRIBE_TO_BUS_SUCCESS' }
+  | { type: 'UNSUBSCRIBE_TO_BUS' }
   | { type: 'FETCH_SCENES' }
   | { type: 'FETCH_SCENES_SUCCESS', scenes: Scenes }
   | { type: 'SCENE_ACTIVATE', sceneId: SceneId }

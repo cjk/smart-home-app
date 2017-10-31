@@ -1,8 +1,10 @@
 // @flow
+
+import type DsClient from '../lib/client';
 import type { Action, Dispatch, SmartHomeState } from '../types';
 
 import * as React from 'react';
-import connectClient from '../lib/client';
+import _DsClient from '../lib/client';
 import { createInitialstateReq$ } from '../lib/shared/create-state-streams';
 
 type Props = {
@@ -15,6 +17,7 @@ const WithBusSubsribe = (
   class WithBusSubsribe extends React.Component<Props> {
     static async getInitialProps(ctx) {
       let composedInitialProps = {};
+
       if (Page.getInitialProps) {
         composedInitialProps = await Page.getInitialProps(ctx);
       }
@@ -22,9 +25,10 @@ const WithBusSubsribe = (
       const { isServer, store } = ctx;
 
       if (isServer) {
-        const livestate: SmartHomeState = await connectClient()
-          .connOpen()
-          .switchMap(client => createInitialstateReq$(client))
+        const dsClient: DsClient = new _DsClient();
+        const livestate: SmartHomeState = await dsClient
+          .login()
+          .switchMap(() => createInitialstateReq$(dsClient.client))
           .take(1)
           .toPromise();
 
@@ -35,6 +39,8 @@ const WithBusSubsribe = (
             livestate,
           }: Action)
         );
+        // On the server, close client-connection after initial-state load.
+        dsClient.close().subscribe(() => {});
       }
       return { ...composedInitialProps };
     }
@@ -43,6 +49,12 @@ const WithBusSubsribe = (
     componentDidMount() {
       const { dispatch } = this.props;
       dispatch(({ type: 'SUBSCRIBE_TO_BUS' }: Action));
+    }
+
+    componentWillUnmount() {
+      // TODO:
+      // const { dispatch } = this.props;
+      // dispatch(({ type: 'UNSUBSCRIBE_TO_BUS' }: Action));
     }
 
     render() {

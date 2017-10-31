@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "date-fns": "^1.28.3",
+    "debug": "^3.1.0",
     "deepstream.io-client-js": "^2.1.4",
     "flow-bin": "^0.57.3",
     "jss": "^8.1.0",
@@ -37,7 +38,8 @@
     "redux-logger": "^3.0.1",
     "redux-observable": "0.16.0",
     "rxjs": "^5.4.2",
-    "shortid": "^2.2.8"
+    "shortid": "^2.2.8",
+    "supports-color": "^5.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
