@@ -8,6 +8,8 @@ import type {
 
 import type { Observable } from 'rxjs';
 
+import type DsClient from '../lib/client';
+
 export type KnxAddress = {
   id: string,
   name: string,
@@ -104,19 +106,22 @@ export type State = {
 export type Dependencies = {
   getState: () => State,
   client: () => Function,
+  clientConnection: DsClient,
   validate: (json: Object) => any,
 };
 
 // Actions
 export type Action =
   | { type: 'PROCESS_EVENT', event: BusEvent }
+  | { type: 'CONNECTION_STATE_START_TRACKING' }
+  | { type: 'CONNECTION_STATE_UPDATE', newState: string }
   | { type: 'WRITE_GROUP_ADDRESS', addr: KnxAddress }
   | { type: 'WRITE_GROUP_ADDRESS_DONE' }
   | { type: 'REQUEST_INITIAL_STATE' }
   | { type: 'REQUEST_INITIAL_STATE_SUCCESS', livestate: SmartHomeState }
   | { type: 'SUBSCRIBE_TO_BUS' }
   | { type: 'SUBSCRIBE_TO_BUS_SUCCESS' }
-  | { type: 'UNSUBSCRIBE_TO_BUS' }
+  | { type: 'UNSUBSCRIBE_TO_BUS' } // TODO
   | { type: 'FETCH_SCENES' }
   | { type: 'FETCH_SCENES_SUCCESS', scenes: Scenes }
   | { type: 'SCENE_ACTIVATE', sceneId: SceneId }

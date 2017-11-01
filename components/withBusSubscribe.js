@@ -48,6 +48,8 @@ const WithBusSubsribe = (
     // your client-only actions go here:
     componentDidMount() {
       const { dispatch } = this.props;
+
+      dispatch(({ type: 'CONNECTION_STATE_START_TRACKING' }: Action));
       dispatch(({ type: 'SUBSCRIBE_TO_BUS' }: Action));
     }
 
