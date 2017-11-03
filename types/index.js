@@ -113,6 +113,8 @@ export type Dependencies = {
 // Actions
 export type Action =
   | { type: 'PROCESS_EVENT', event: BusEvent }
+  | { type: 'CONNECTION_ERROR_START_TRACKING' }
+  | { type: 'CONNECTION_ERROR_UPDATE', newError: string }
   | { type: 'CONNECTION_STATE_START_TRACKING' }
   | { type: 'CONNECTION_STATE_UPDATE', newState: string }
   | { type: 'WRITE_GROUP_ADDRESS', addr: KnxAddress }

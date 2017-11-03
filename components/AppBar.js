@@ -16,7 +16,10 @@ import { grey, indigo } from 'material-ui/colors';
 import { compose } from 'ramda';
 
 type AppBarProps = {
-  connState: string,
+  conn: {
+    state: string,
+    error: string,
+  },
   classes: Object,
 };
 
@@ -41,7 +44,7 @@ const styles = {
 };
 
 const MainAppBar = (props: AppBarProps) => {
-  const { classes, connState } = props;
+  const { classes, conn: { state: connState, error: connErr } } = props;
   return (
     <div className={classes.root}>
       <AppBar className={classes.appBar}>
@@ -68,7 +71,7 @@ const MainAppBar = (props: AppBarProps) => {
             </Link>
           </Button>
 
-          <ConnIndicator connState={connState} />
+          <ConnIndicator connState={connState} connErr={connErr} />
         </Toolbar>
       </AppBar>
     </div>
@@ -77,5 +80,5 @@ const MainAppBar = (props: AppBarProps) => {
 
 export default compose(
   withStyles(styles),
-  connect(state => ({ connState: state.app.connection.state }))
+  connect(state => ({ conn: state.app.connection }))
 )(MainAppBar);
