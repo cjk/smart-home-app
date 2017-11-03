@@ -17,7 +17,7 @@
     "date-fns": "^1.28.3",
     "debug": "^3.1.0",
     "deepstream.io-client-js": "^2.1.4",
-    "flow-bin": "^0.57.3",
+    "flow-bin": "^0.58.0",
     "jss": "^8.1.0",
     "jss-preset-default": "^3.0.0",
     "material-ui": "^1.0.0-beta.17",
@@ -36,7 +36,7 @@
     "redux": "^3.7.2",
     "redux-devtools-extension": "^2.13.2",
     "redux-logger": "^3.0.1",
-    "redux-observable": "0.16.0",
+    "redux-observable": "0.17.0",
     "rxjs": "^5.4.2",
     "shortid": "^2.2.8",
     "supports-color": "^5.0.0"
