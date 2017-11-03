@@ -1,6 +1,7 @@
 // @flow
 import * as React from 'react';
 import Link from 'next/link';
+import { connect } from 'react-redux';
 
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
@@ -9,9 +10,13 @@ import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import HomeIcon from 'material-ui-icons/Home';
 import FloorIcon from 'material-ui-icons/Dashboard';
+import ConnIndicator from './ConnectionIndicator';
 import { grey, indigo } from 'material-ui/colors';
 
+import { compose } from 'ramda';
+
 type AppBarProps = {
+  connState: string,
   classes: Object,
 };
 
@@ -30,13 +35,13 @@ const styles = {
   linkText: {
     color: grey[900],
   },
-  flex: {
+  flexFromHere: {
     flex: 1,
   },
 };
 
 const MainAppBar = (props: AppBarProps) => {
-  const classes = props.classes;
+  const { classes, connState } = props;
   return (
     <div className={classes.root}>
       <AppBar className={classes.appBar}>
@@ -57,15 +62,20 @@ const MainAppBar = (props: AppBarProps) => {
             </Link>
           </IconButton>
 
-          <Button>
+          <Button className={classes.flexFromHere}>
             <Link href="/fermenter">
               <a className={classes.linkText}>Fermenter</a>
             </Link>
           </Button>
+
+          <ConnIndicator connState={connState} />
         </Toolbar>
       </AppBar>
     </div>
   );
 };
 
-export default withStyles(styles)(MainAppBar);
+export default compose(
+  withStyles(styles),
+  connect(state => ({ connState: state.app.connection.state }))
+)(MainAppBar);
