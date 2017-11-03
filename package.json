@@ -1,14 +1,13 @@
 {
   "name": "SmartHomeApp",
-  "authors": [
-    "Claus Klingberg"
-  ],
-  "description": "Universal PWA React-app for controlling your smart home environment.",
+  "authors": ["Claus Klingberg"],
+  "description":
+  "Universal PWA React-app for controlling your smart home environment.",
   "private": true,
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "BACKEND_ADDR='192.168.1.28' next start"
   },
   "engines": {
     "node": ">=6.10.0"
