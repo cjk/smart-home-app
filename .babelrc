@@ -3,13 +3,13 @@
     "development": {
       "presets": ["next/babel"],
       "plugins": [
-        ["inline-dotenv", "transform-define", "./scripts/env-config.js"]
+        ["inline-dotenv"]
       ]
     },
     "production": {
       "presets": ["next/babel"],
       "plugins": [
-        ["transform-inline-environment-variables", "transform-define", "./scripts/env-config.js"]
+        ["transform-inline-environment-variables"]
       ]
     },
     "test": {
@@ -17,7 +17,7 @@
       // github.com/zeit/next.js/tree/master/examples/with-jest
       "presets": [["env", { "modules": "commonjs" }], "next/babel"],
       "plugins": [
-        ["inline-dotenv", "transform-define", "./scripts/env-config.js"]
+        ["inline-dotenv"]
       ]
     }
   }
