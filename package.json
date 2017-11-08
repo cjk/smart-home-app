@@ -1,8 +1,9 @@
 {
   "name": "SmartHomeApp",
-  "authors": ["Claus Klingberg"],
-  "description":
-  "Universal PWA React-app for controlling your smart home environment.",
+  "authors": [
+    "Claus Klingberg"
+  ],
+  "description": "Universal PWA React-app for controlling your smart home environment.",
   "private": true,
   "scripts": {
     "dev": "next",
@@ -19,7 +20,7 @@
     "flow-bin": "^0.58.0",
     "jss": "^8.1.0",
     "jss-preset-default": "^3.0.0",
-    "material-ui": "^1.0.0-beta.17",
+    "material-ui": "1.0.0-beta.20",
     "material-ui-icons": "^1.0.0-beta.17",
     "next": "^4.1.0",
     "next-redux-wrapper": "^1.2.0",
