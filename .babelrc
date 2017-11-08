@@ -3,13 +3,17 @@
     "development": {
       "presets": ["next/babel"],
       "plugins": [
-        ["inline-dotenv"]
+        ["dotenv-import", {
+          "path": ".env"
+        }]
       ]
     },
     "production": {
       "presets": ["next/babel"],
       "plugins": [
-        ["transform-inline-environment-variables"]
+        ["dotenv-import", {
+          "path": ".env.production"
+        }]
       ]
     },
     "test": {
@@ -17,7 +21,7 @@
       // github.com/zeit/next.js/tree/master/examples/with-jest
       "presets": [["env", { "modules": "commonjs" }], "next/babel"],
       "plugins": [
-        ["inline-dotenv"]
+        ["dotenv-import"]
       ]
     }
   }
