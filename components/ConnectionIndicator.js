@@ -9,6 +9,8 @@ import { grey } from 'material-ui/colors';
 import Avatar from 'material-ui/Avatar';
 import Tooltip from 'material-ui/Tooltip';
 import ConnGoodIcon from 'material-ui-icons/SignalCellular4Bar';
+import ConnErrorIcon from 'material-ui-icons/SignalCellularNoSim';
+import ConnReconnIcon from 'material-ui-icons/SignalCellularConnectedNoInternet4Bar';
 import ConnBadIcon from 'material-ui-icons/SignalCellularNull';
 import ConnClosedIcon from 'material-ui-icons/SignalCellularOff';
 
@@ -28,6 +30,8 @@ const styles = {
 };
 
 const iconByConnState = cond([
+  [equals('ERROR'), () => <ConnErrorIcon />],
+  [equals('RECONNECTING'), () => <ConnReconnIcon />],
   [equals('CLOSED'), () => <ConnClosedIcon />],
   [equals('OPEN'), () => <ConnGoodIcon />],
   [T, () => <ConnBadIcon />],
