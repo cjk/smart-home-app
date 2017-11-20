@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles';
 import { compose } from 'ramda';
 
 import LightIconOff from 'material-ui-icons/LightbulbOutline';
-// import LightIconOn from 'material-ui-icons/WbIncandescent';
+import LightIconOn from 'material-ui-icons/WbIridescent';
 
 type Props = {
   id: string,
@@ -44,12 +44,21 @@ const Light = ({ id, desc, x, y, isOn, classes }: Props) => (
       strokeWidth=".64488"
     />
 
-    <LightIconOff
-      className={classes.icon}
-      color={isOn ? 'orange' : 'grey'}
-      width="20"
-      height="20"
-    />
+    {isOn ? (
+      <LightIconOn
+        className={classes.icon}
+        color={isOn ? 'orange' : 'grey'}
+        width="20"
+        height="20"
+      />
+    ) : (
+      <LightIconOff
+        className={classes.icon}
+        color={isOn ? 'orange' : 'grey'}
+        width="20"
+        height="20"
+      />
+    )}
 
     <desc>{desc}</desc>
   </svg>
