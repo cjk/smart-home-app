@@ -151,8 +151,8 @@ const Groundfloor = ({ addresses, dispatch, classes }: Props) => {
           desc="Deckenleuchten Küche"
           className="actorIcon"
           isOn={isOn('1/2/7')}
-          x="540"
-          y="420"
+          x="550"
+          y="430"
         />
         <Light
           id="1/2/13"
@@ -233,6 +233,14 @@ const Groundfloor = ({ addresses, dispatch, classes }: Props) => {
           isOn={isOn('1/2/15')}
           x="400"
           y="170"
+        />
+        <Light
+          id="11/1/0"
+          desc="Wohnzimmer Steckdose / Stehlampe Erker Rechts"
+          className="actorIcon"
+          isOn={isOn('11/1/0')}
+          x="505"
+          y="35"
         />
       </g>
     </svg>
