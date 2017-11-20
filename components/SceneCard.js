@@ -18,22 +18,29 @@ type Props = {
   classes: Object,
 };
 
-const sceneStyles = {
+const sceneStyles = theme => ({
   card: {
     margin: '2em',
     maxWidth: 275,
     minWidth: 275,
   },
-};
+  sceneName: {
+    marginBottom: 5,
+  },
+  sceneInfo: {
+    marginBottom: 5,
+    color: theme.palette.text.secondary,
+  },
+});
 
 const SceneCard = ({ scene, onSceneAction, classes }: Props) => (
   <div className="sceneCard">
     <Card className={classes.card}>
       <CardContent>
-        <Typography type="headline" component="h3">
+        <Typography type="headline" component="h3" className={classes.sceneName}>
           {scene.name}
         </Typography>
-        <Typography type="body1">
+        <Typography type="body1" className={classes.sceneInfo}>
           Enthält {`${scene.tasks.length}`} Aktionen
         </Typography>
       </CardContent>
