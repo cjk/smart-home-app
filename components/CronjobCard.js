@@ -10,6 +10,7 @@ import { withStyles } from 'material-ui/styles';
 import Card, { CardContent } from 'material-ui/Card';
 import Typography from 'material-ui/Typography';
 import { compose, isNil } from 'ramda';
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 
 type Props = {
   cronjob: CronJob,
@@ -49,7 +50,10 @@ const CronjobCard = ({ cronjob, classes }: Props) => (
           {cronjob.running ? 'running' : 'idle'}
         </Typography>
         <Typography component="p" className={classes.jobDetails}>
-          Last run: {isNil(cronjob.lastRun) ? ' - ' : cronjob.lastRun}
+          Last run:{' '}
+          {isNil(cronjob.lastRun)
+            ? ' - '
+            : `${distanceInWordsToNow(cronjob.lastRun)} ago`}
         </Typography>{' '}
       </CardContent>
     </Card>
