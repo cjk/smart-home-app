@@ -20,7 +20,7 @@
     "flow-bin": "^0.59.0",
     "jss": "^9.3.3",
     "jss-preset-default": "^4.0.1",
-    "material-ui": "1.0.0-beta.20",
+    "material-ui": "1.0.0-beta.21",
     "material-ui-icons": "^1.0.0-beta.17",
     "next": "^4.1.0",
     "next-redux-wrapper": "^1.2.0",
