@@ -27,7 +27,7 @@ const styles = {
   root: {
     position: 'relative',
     width: '100%',
-    marginBottom: 80,
+    marginBottom: 65,
   },
   appBar: {
     backgroundColor: indigo[200],
