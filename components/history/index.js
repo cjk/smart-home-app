@@ -2,12 +2,12 @@
 
 // Container-component for history visualizations
 
-import type { State } from '../types';
+import type { State } from '../../types';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
 // UI: Last changed address-log list
-import AddressList from '../components/AddressList';
+import AddressList from '../address/AddressList';
 
 import { compose } from 'ramda';
 

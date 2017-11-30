@@ -2,7 +2,7 @@
 
 // Presentational-component for history visualizations
 
-import type { KnxAddress } from '../types';
+import type { KnxAddress } from '../../types';
 
 /* Presentational component to render a simple address-list sorted by most-recently changed */
 import * as React from 'react';
@@ -18,7 +18,7 @@ import {
   values,
 } from 'ramda';
 
-import AddressListItem from '../components/AddrListItem';
+import AddressListItem from './AddrListItem';
 import { withStyles } from 'material-ui/styles';
 import List from 'material-ui/List';
 

@@ -1,6 +1,6 @@
 // @flow
 
-import type { KnxAddress } from '../types';
+import type { KnxAddress } from '../../types';
 import * as React from 'react';
 import { withStyles } from 'material-ui/styles';
 import { ListItemSecondaryAction } from 'material-ui/List';

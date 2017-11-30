@@ -17,13 +17,13 @@ import TabBar from 'material-ui/AppBar';
 import Tabs, { Tab } from 'material-ui/Tabs';
 
 // UI: switches grouped by rooms
-import Rooms from '../components/Rooms';
+import Rooms from '../components/rooms';
 // UI: Show available scenes to (de)activate
-import Scenes from '../components/Scenes';
+import Scenes from '../components/scenes';
 // UI: Show available scenes to (de)activate
-import Cronjobs from '../components/Cronjobs';
+import Cronjobs from '../components/cron';
 // UI: Last changed address-log list
-import History from '../components/History';
+import History from '../components/history';
 
 import { compose } from 'ramda';
 

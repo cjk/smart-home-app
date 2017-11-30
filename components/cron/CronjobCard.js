@@ -2,7 +2,7 @@
 
 // Presentational-component to visualize a cronjob
 
-import type { CronJob } from '../types';
+import type { CronJob } from '../../types';
 
 import * as React from 'react';
 

@@ -2,7 +2,7 @@
 
 // Presentational-component to visualize a scene
 
-import type { Scene } from '../types';
+import type { Scene } from '../../types';
 
 import * as React from 'react';
 

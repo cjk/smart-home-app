@@ -6,7 +6,7 @@ import * as React from 'react';
 import * as fermenterActions from '../lib/fermenter/actions';
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
-import withRoot from '../hocs/components/withRoot';
+import withRoot from '../components/hocs/withRoot';
 
 import AppBar from '../components/AppBar';
 import FermenterInfo from '../components/fermenter/FermenterInfo';

@@ -2,7 +2,7 @@
 
 /* Presentational component for a room-grouped list of switches */
 
-import type { KnxAddress, Prefs, Rooms } from '../types';
+import type { KnxAddress, Prefs, Rooms } from '../../types';
 import * as React from 'react';
 
 import {
@@ -28,8 +28,8 @@ import Paper from 'material-ui/Paper';
 import List from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 
-import AddressListItem from '../components/AddrListItem';
-import AddressSwitch from '../components/AddrItemSwitch';
+import AddressListItem from '../address/AddrListItem';
+import AddressSwitch from '../address/AddrItemSwitch';
 
 type Props = {
   addresses: Array<KnxAddress>,

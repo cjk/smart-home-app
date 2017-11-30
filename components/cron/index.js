@@ -2,7 +2,7 @@
 
 // Container-component for interactions with smart-home (cron-) jobs.
 
-import type { Action, Dispatch, Cronjobs as CronjobArray } from '../types';
+import type { Action, Dispatch, Cronjobs as CronjobArray } from '../../types';
 
 import * as React from 'react';
 import { connect } from 'react-redux';

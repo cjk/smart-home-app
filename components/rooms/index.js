@@ -2,15 +2,15 @@
 
 // Container-component for Room-grouped visualizations
 
-import type { State, KnxAddress } from '../types';
+import type { State, KnxAddress } from '../../types';
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import { toggleAddrVal } from '../lib/shared/address-utils';
+import { toggleAddrVal } from '../../lib/shared/address-utils';
 
 // UI: switches grouped by rooms
-import RoomList from '../components/RoomList';
-import ShowOnlyActiveToggle from '../components/ShowOnlyActiveToggle';
+import RoomList from './RoomList';
+import ShowOnlyActiveToggle from '../ShowOnlyActiveToggle';
 
 import { compose, reject } from 'ramda';
 

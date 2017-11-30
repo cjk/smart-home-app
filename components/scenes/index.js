@@ -2,7 +2,7 @@
 
 // Container-component for interactions with smart-home scenes.
 
-import type { Action, Dispatch, Scenes as ScenesType } from '../types';
+import type { Action, Dispatch, Scenes as ScenesType } from '../../types';
 
 import * as React from 'react';
 import { connect } from 'react-redux';

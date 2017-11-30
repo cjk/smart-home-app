@@ -1,6 +1,6 @@
 // @flow
 
-import type { KnxAddress } from '../types';
+import type { KnxAddress } from '../../types';
 import * as React from 'react';
 import { withStyles } from 'material-ui/styles';
 import { ListItem, ListItemText } from 'material-ui/List';
@@ -9,7 +9,7 @@ import Grid from 'material-ui/Grid';
 import { curry } from 'ramda';
 
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
-import VisualizedAddress from '../lib/shared/visualizeAddress';
+import VisualizedAddress from '../../lib/shared/visualizeAddress';
 
 type Props = {
   address: KnxAddress,
