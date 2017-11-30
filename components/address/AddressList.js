@@ -35,7 +35,6 @@ const byHasValue = comparator(
 const listStyles = theme => ({
   addrList: {
     maxWidth: 1024,
-    background: theme.palette.background.paper,
   },
 });
 
