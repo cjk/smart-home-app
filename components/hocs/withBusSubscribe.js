@@ -1,12 +1,12 @@
 // @flow
 
-import type DsClient from '../lib/client';
-import type { Action, Dispatch, SmartHomeState } from '../types';
+import type DsClient from '../../lib/client';
+import type { Action, Dispatch, SmartHomeState } from '../../types';
 
 import logger from 'debug';
 import * as React from 'react';
-import _DsClient from '../lib/client';
-import { createInitialstateReq$ } from '../lib/shared/create-state-streams';
+import _DsClient from '../../lib/client';
+import { createInitialstateReq$ } from '../../lib/shared/create-state-streams';
 
 type Props = {
   dispatch: Dispatch,

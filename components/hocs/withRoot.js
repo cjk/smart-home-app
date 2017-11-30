@@ -6,7 +6,7 @@
 import * as React from 'react';
 import { withStyles, MuiThemeProvider } from 'material-ui/styles';
 import wrapDisplayName from 'recompose/wrapDisplayName';
-import getContext from '../styles/getContext';
+import getContext from '../../styles/getContext';
 
 // Apply some reset
 const styles = theme => ({

@@ -6,11 +6,11 @@ import * as React from 'react';
 import * as fermenterActions from '../lib/fermenter/actions';
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
-import withRoot from '../components/withRoot';
+import withRoot from '../hocs/components/withRoot';
 
 import AppBar from '../components/AppBar';
-import FermenterInfo from '../components/FermenterInfo';
-import FermenterControl from '../components/FermenterControl';
+import FermenterInfo from '../components/fermenter/FermenterInfo';
+import FermenterControl from '../components/fermenter/FermenterControl';
 import Paper from 'material-ui/Paper';
 
 import { compose } from 'ramda';

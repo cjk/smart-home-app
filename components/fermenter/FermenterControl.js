@@ -1,6 +1,6 @@
 // @flow
 
-import type { RunTimeState, Devices } from '../types/fermenter';
+import type { RunTimeState, Devices } from '../../types/fermenter';
 
 import * as React from 'react';
 import { connect } from 'react-redux';

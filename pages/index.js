@@ -6,8 +6,8 @@ import * as appActions from '../lib/app/actions';
 import { bindActionCreators } from 'redux';
 import createStore from '../lib/create-store';
 import withRedux from 'next-redux-wrapper';
-import withRoot from '../components/withRoot';
-import withBusSubscribe from '../components/withBusSubscribe';
+import withRoot from '../components/hocs/withRoot';
+import withBusSubscribe from '../components/hocs/withBusSubscribe';
 
 // UI: Top menu bar
 import AppBar from '../components/AppBar';
