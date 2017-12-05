@@ -9,7 +9,7 @@ import Toolbar from 'material-ui/Toolbar';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
 import HomeIcon from 'material-ui-icons/Home';
-import FloorIcon from 'material-ui-icons/Dashboard';
+import MainIcon from 'material-ui-icons/Dashboard';
 import ConnIndicator from './ConnectionIndicator';
 import { grey, indigo } from 'material-ui/colors';
 
@@ -57,10 +57,10 @@ const MainAppBar = (props: AppBarProps) => {
             </Link>
           </IconButton>
 
-          <IconButton aria-label="Plan" className={classes.floorplan}>
-            <Link href="/floorplan">
+          <IconButton aria-label="Main" className={classes.main}>
+            <Link href="/main">
               <a className={classes.linkText}>
-                <FloorIcon />
+                <MainIcon />
               </a>
             </Link>
           </IconButton>
