@@ -150,3 +150,20 @@ export type Epic = (
 ) => Observable<Action>;
 
 export type Action$ = Observable<Action>;
+
+// https://github.com/zeit/next.js#fetching-data-and-component-lifecycle
+export type NextContext = {
+  pathname: string,
+  query: Object,
+  asPath: string,
+  req: ?{
+    ...http$IncomingMessage,
+    locale: string,
+    localeDataScript: string,
+    messages: Object,
+    supportedLocales: Array<string>,
+  },
+  res: ?http$ServerResponse,
+  jsonPageRes: Object,
+  err: Object,
+};

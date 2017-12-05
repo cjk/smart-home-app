@@ -1,12 +1,19 @@
+// @flow
+
 /* eslint-disable flowtype/require-valid-file-annotation */
 
 // Right now this code is mostly about making Material-UI work with nextjs - see
 // https://github.com/callemall/material-ui/blob/v1-beta/examples/nextjs/components/withRoot.js
+import type { NextContext } from '../../types';
 
 import * as React from 'react';
 import { withStyles, MuiThemeProvider } from 'material-ui/styles';
 import wrapDisplayName from 'recompose/wrapDisplayName';
 import getContext from '../../styles/getContext';
+
+type Props = {
+  children?: React.Node,
+};
 
 // Apply some reset
 const styles = theme => ({
@@ -26,9 +33,9 @@ let AppWrapper = props => props.children;
 
 AppWrapper = withStyles(styles)(AppWrapper);
 
-function withRoot(BaseComponent) {
-  class WithRoot extends React.Component {
-    static getInitialProps(ctx) {
+function withRoot(BaseComponent: React.ComponentType<any>) {
+  class WithRoot extends React.Component<Props> {
+    static getInitialProps(ctx: NextContext) {
       if (BaseComponent.getInitialProps) {
         return BaseComponent.getInitialProps(ctx);
       }
