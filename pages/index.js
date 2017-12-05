@@ -49,12 +49,14 @@ const IndexPage = props => {
 
       {/* Add Gradient */}
       <style global jsx>{`
-      body {
-        background: -moz-linear-gradient(bottom, grey 0, white 160px);
-        background: -webkit-linear-gradient(bottom, grey 0, white 160px);
-        background: linear-gradient(to bottom, grey 0, white 160px);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='grey', endColorstr='white',GradientType=0 );
-      }
+        body {
+          background: linear-gradient(to bottom, grey 0, white 160px);
+          filter: progid:DXImageTransform.Microsoft.gradient(
+              startColorstr='grey',
+              endColorstr='white',
+              GradientType=0
+            );
+        }
       `}</style>
     </div>
   );
