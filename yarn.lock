@@ -2085,9 +2085,9 @@ find-up@^2.0.0, find-up@^2.1.0:
   dependencies:
     locate-path "^2.0.0"
 
-flow-bin@^0.59.0:
-  version "0.59.0"
-  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.59.0.tgz#8c151ee7f09f1deed9bf0b9d1f2e8ab9d470f1bb"
+flow-bin@^0.60.1:
+  version "0.60.1"
+  resolved "https://registry.yarnpkg.com/flow-bin/-/flow-bin-0.60.1.tgz#0f4fa7b49be2a916f18cd946fc4a51e32ffe4b48"
 
 follow-redirects@0.0.7:
   version "0.0.7"
@@ -3449,9 +3449,9 @@ next-redux-wrapper@^1.2.0:
   dependencies:
     object.assign "^4.0.4"
 
-next@^4.1.0:
-  version "4.1.4"
-  resolved "https://registry.yarnpkg.com/next/-/next-4.1.4.tgz#75ab0dd17e843bae0bdcdc9da8f1b3edb5ef5437"
+next@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/next/-/next-4.2.0.tgz#6be59b0d2cf8f0d09dedc15213be9aef883e2579"
   dependencies:
     ansi-html "0.0.7"
     babel-core "6.26.0"
@@ -4602,9 +4602,9 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^2.0.0"
     inherits "^2.0.1"
 
-rxjs@^5.4.2:
-  version "5.5.2"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.2.tgz#28d403f0071121967f18ad665563255d54236ac3"
+rxjs@^5.5.3:
+  version "5.5.3"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.3.tgz#b62227e74b84f4e77bdf440e50b5ee01a1bc7dcd"
   dependencies:
     symbol-observable "^1.0.1"
 
