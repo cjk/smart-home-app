@@ -11,10 +11,13 @@ import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 import {
   allPass,
   compose,
+  curry,
   filter,
   isEmpty,
+  length,
   map,
   sort,
+  take,
   values,
 } from 'ramda';
 
@@ -23,13 +26,11 @@ import Paper from 'material-ui/Paper';
 import List, { ListItem, ListItemText } from 'material-ui/List';
 import Typography from 'material-ui/Typography';
 
-// import AddressSwitch from '../address/AddrItemSwitch';
-
 type Props = {
   addresses: Array<KnxAddress>,
   prefs: Prefs,
   rooms: Rooms,
-  onAddrSwitch: Function,
+  onLightSwitch: Function,
   classes: Object,
 };
 
@@ -46,33 +47,41 @@ const addrListStyles = theme => ({
     background: theme.palette.background.paper,
     textAlign: 'auto',
   },
-  listItem: {},
-  listItemText: {},
 });
 
+const maxShownItems = 6;
+
+// Filter-conditions for addresses to be on the list
 const isOn = addr => addr.value === 1;
 const isLight = addr => addr.func === 'light';
 
-// TODO: Refactor to action-list, like so: https://material-ui-1dab0.firebaseapp.com/demos/lists/#switch
+const eligibleAddresses = filter(allPass([isOn, isLight]));
 
-const LightsList = ({ addresses, classes }: Props) => {
-  const addrItemLst = map(addr => (
-    <ListItem key={addr.id} className={classes.listItem} dense>
+const addrItemLst = curry((onLightSwitch, addresses) =>
+  map(addr => (
+    <ListItem key={addr.id} onClick={() => onLightSwitch(addr)} dense button>
       <VisualizedAddress addr={addr} />
       <ListItemText
         primary={addr.name}
         secondary={`${distanceInWordsToNow(addr.updatedAt)} ago`}
-        className={classes.listItemText}
       />
     </ListItem>
-  ));
+  ))(addresses)
+);
 
+const LightsList = ({ addresses, classes, onLightSwitch }: Props) => {
   const addrItems = compose(
-    addrItemLst,
-    sort((a, b) => b.updatedAt - a.updatedAt),
-    filter(allPass([isOn, isLight])),
+    addrItemLst(onLightSwitch),
+    take(maxShownItems),
+    sort((a, b) => a.updatedAt - b.updatedAt),
+    eligibleAddresses,
     values
   )(addresses);
+
+  const skippedAddressCount = Math.max(
+    0,
+    length(eligibleAddresses(values(addresses))) - maxShownItems
+  );
 
   return (
     <Paper className={classes.root}>
@@ -90,6 +99,13 @@ const LightsList = ({ addresses, classes }: Props) => {
           </ListItem>
         ) : (
           addrItems
+        )}
+        {skippedAddressCount > 0 ? (
+          <ListItem>
+            <ListItemText secondary={`${skippedAddressCount} more skipped`} />
+          </ListItem>
+        ) : (
+          <span />
         )}
       </List>
     </Paper>
