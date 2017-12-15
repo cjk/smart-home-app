@@ -12,12 +12,12 @@ module.exports = {
       env: {
         PORT: 3000,
         BACKEND_ADDR: 'localhost',
-        DEBUG: 'smt:*,error,debug',
+        DEBUG: 'smtApp:*,error,debug',
       },
       env_production: {
         NODE_ENV: 'production',
         BACKEND_ADDR: '192.168.1.28',
-        DEBUG: 'smt:*,error',
+        DEBUG: 'smtApp:*,error',
       },
     },
   ],
