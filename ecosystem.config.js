@@ -6,7 +6,7 @@ module.exports = {
   apps: [
     {
       name: 'SMTHOME-APP',
-      script: 'npm --name "next" -- start',
+      script: 'npm -- run dev',
       kill_timeout: 3000,
       env: {
         PORT: 3000,
@@ -33,7 +33,7 @@ module.exports = {
       repo: 'git@github.com:cjk/smart-home-app.git',
       path: '/home/cjk/apps/smarthome-app',
       'post-deploy':
-        'yarn install && yarn run build && pm2 reload ecosystem.config.js --env production',
+        'yarn install && yarn run build && pm2 reload npm -- start --env production',
     },
   },
 };
