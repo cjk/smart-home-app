@@ -1,8 +1,9 @@
 {
   "name": "SmartHomeApp",
-  "authors": ["Claus Klingberg"],
-  "description":
-  "Universal PWA React-app for controlling your smart home environment.",
+  "authors": [
+    "Claus Klingberg"
+  ],
+  "description": "Universal PWA React-app for controlling your smart home environment.",
   "private": true,
   "scripts": {
     "dev": "next",
@@ -45,7 +46,7 @@
     "babel-plugin-transform-define": "^1.2.0",
     "babel-preset-env": "^1.6.0",
     "eslint-plugin-flowtype": "^2.35.1",
-    "flow-bin": "^0.60.1",
+    "flow-bin": "^0.61.0",
     "webpack-bundle-analyzer": "^2.9.0"
   }
 }

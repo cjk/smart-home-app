@@ -35,6 +35,7 @@ module.exports = {
     'no-shadow': 0, // Shadowing is a nice language feature. Naming is hard.
     'no-underscore-dangle': 0, // Control freaky.
     'react/jsx-closing-bracket-location': 0, // Prettier.
+    'react/jsx-closing-tag-location': 0, // Prettier.
     'react/jsx-filename-extension': 0, // JSX belongs to .js files.
     'react/jsx-indent': 0, // Prettier.
     'react/jsx-indent-props': 0, // Prettier.

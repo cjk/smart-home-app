@@ -32,7 +32,7 @@ const styles = {
   },
 };
 
-class FermenterPage extends React.Component<void, Props, void> {
+class FermenterPage extends React.Component<void, Props> {
   // TODO: No server-side-rendering supported yet :(
   static async getInitialProps(ctx) {
     const { store } = ctx;
