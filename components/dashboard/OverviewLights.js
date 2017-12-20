@@ -54,8 +54,12 @@ const maxShownItems = 6;
 // Filter-conditions for addresses to be on the list
 const isOn = addr => addr.value === 1;
 const isLight = addr => addr.func === 'light';
+const noFeedback = addr => addr.type !== 'fb';
+const onlyButtonControlled = addr => addr.control === 'btn';
 
-const eligibleAddresses = filter(allPass([isOn, isLight]));
+const eligibleAddresses = filter(
+  allPass([isOn, isLight, noFeedback, onlyButtonControlled])
+);
 
 const addrItemLst = curry((onLightSwitch, addresses) =>
   map(addr => (
