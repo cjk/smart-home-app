@@ -20,6 +20,7 @@ export type KnxAddress = {
   func: ?string,
   fbAddr: ?string,
   fbValue: ?string,
+  control: string,
   updatedAt: number,
 };
 
