@@ -9,10 +9,8 @@ import VisualizedAddress from '../../lib/shared/visualizeAddress';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 
 import {
-  allPass,
   compose,
   curry,
-  filter,
   isEmpty,
   length,
   map,
@@ -51,16 +49,6 @@ const addrListStyles = theme => ({
 
 const maxShownItems = 6;
 
-// Filter-conditions for addresses to be on the list
-const isOn = addr => addr.value === 1;
-const isLight = addr => addr.func === 'light';
-const noFeedback = addr => addr.type !== 'fb';
-const onlyButtonControlled = addr => addr.control === 'btn';
-
-const eligibleAddresses = filter(
-  allPass([isOn, isLight, noFeedback, onlyButtonControlled])
-);
-
 const addrItemLst = curry((onLightSwitch, addresses) =>
   map(addr => (
     <ListItem key={addr.id} onClick={() => onLightSwitch(addr)} dense button>
@@ -78,13 +66,12 @@ const LightsList = ({ addresses, classes, onLightSwitch }: Props) => {
     addrItemLst(onLightSwitch),
     take(maxShownItems),
     sort((a, b) => a.updatedAt - b.updatedAt),
-    eligibleAddresses,
     values
   )(addresses);
 
   const skippedAddressCount = Math.max(
     0,
-    length(eligibleAddresses(values(addresses))) - maxShownItems
+    length(values(addresses)) - maxShownItems
   );
 
   return (

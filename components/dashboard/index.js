@@ -10,7 +10,10 @@ import { withStyles } from 'material-ui/styles';
 import Grid from 'material-ui/Grid';
 import OverviewLights from './OverviewLights';
 
-import { toggleAddrVal } from '../../lib/shared/address-utils';
+import {
+  toggleAddrVal,
+  onlyManuallySwitchedLights,
+} from '../../lib/shared/address-utils';
 
 import { compose } from 'ramda';
 
@@ -43,7 +46,7 @@ const Dashboard = ({ addresses, dispatch, classes }: Props) => {
     <Grid container className={classes.root}>
       <Grid item xs={12}>
         <OverviewLights
-          addresses={addresses}
+          addresses={onlyManuallySwitchedLights(addresses)}
           onLightSwitch={onLightSwitch}
           className={classes.control}
         />
