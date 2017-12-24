@@ -45,8 +45,6 @@ const genValue = addr => {
       return addr.value ? 'UP' : 'DOWN';
     case 'contact':
       return addr.value ? 'OPEN' : 'CLOSED';
-    case 'outlet':
-      return addr.value ? 'ON' : 'OFF';
     default:
       return addr.value;
   }
