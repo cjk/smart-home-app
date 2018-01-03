@@ -47,14 +47,14 @@ const Light = ({ id, desc, x, y, isOn, classes }: Props) => (
     {isOn ? (
       <LightIconOn
         className={classes.icon}
-        color={isOn ? 'orange' : 'grey'}
+        color={isOn ? 'accent' : 'inherit'}
         width="20"
         height="20"
       />
     ) : (
       <LightIconOff
         className={classes.icon}
-        color={isOn ? 'orange' : 'grey'}
+        color={isOn ? 'accent' : 'inherit'}
         width="20"
         height="20"
       />

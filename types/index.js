@@ -167,4 +167,7 @@ export type NextContext = {
   res: ?http$ServerResponse,
   jsonPageRes: Object,
   err: Object,
+  // added from next-redux-wrapper:
+  isServer: boolean,
+  store: Object,
 };

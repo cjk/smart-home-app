@@ -1,7 +1,12 @@
 // @flow
 
 import type DsClient from '../../lib/client';
-import type { Action, Dispatch, SmartHomeState } from '../../types';
+import type {
+  Action,
+  Dispatch,
+  NextContext,
+  SmartHomeState,
+} from '../../types';
 
 import logger from 'debug';
 import * as React from 'react';
@@ -18,7 +23,7 @@ const WithBusSubsribe = (
   Page: React.ComponentType<Props>
 ): React.ComponentType<any> =>
   class WithBusSubsribe extends React.Component<Props> {
-    static async getInitialProps(ctx) {
+    static async getInitialProps(ctx: NextContext) {
       let composedInitialProps = {};
 
       if (Page.getInitialProps) {
