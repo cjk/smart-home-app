@@ -1,50 +1,21 @@
 // @flow
 
-/* eslint-disable flowtype/require-valid-file-annotation */
-
 // Right now this code is mostly about making Material-UI work with nextjs - see
-// https://github.com/callemall/material-ui/blob/v1-beta/examples/nextjs/components/withRoot.js
+// https://github.com/mui-org/material-ui/blob/v1-beta/examples/nextjs/src/withRoot.js
 import type { NextContext } from '../../types';
-
 import * as React from 'react';
-import { withStyles, MuiThemeProvider } from 'material-ui/styles';
-import wrapDisplayName from 'recompose/wrapDisplayName';
-import getContext from '../../styles/getContext';
+import { MuiThemeProvider } from 'material-ui/styles';
+import Reboot from 'material-ui/Reboot';
+import getPageContext from '../../lib/shared/getPageContext';
 
 type Props = {
-  children?: React.Node,
+  pageContext: Object,
 };
 
-// Apply some reset
-const styles = theme => ({
-  '@global': {
-    html: {
-      background: theme.palette.background.default,
-      WebkitFontSmoothing: 'antialiased', // Antialiasing.
-      MozOsxFontSmoothing: 'grayscale', // Antialiasing.
-    },
-    body: {
-      margin: 0,
-    },
-  },
-});
-
-let AppWrapper = props => props.children;
-
-AppWrapper = withStyles(styles)(AppWrapper);
-
-function withRoot(BaseComponent: React.ComponentType<any>) {
+function withRoot(Component: React.ComponentType<mixed>) {
   class WithRoot extends React.Component<Props> {
-    static getInitialProps(ctx: NextContext) {
-      if (BaseComponent.getInitialProps) {
-        return BaseComponent.getInitialProps(ctx);
-      }
-
-      return {};
-    }
-
     componentWillMount() {
-      this.styleContext = getContext();
+      this.pageContext = this.props.pageContext || getPageContext();
     }
 
     componentDidMount() {
@@ -55,23 +26,30 @@ function withRoot(BaseComponent: React.ComponentType<any>) {
       }
     }
 
+    pageContext = null;
+
     render() {
+      // MuiThemeProvider makes the theme available down the React tree thanks to React context.
       return (
         <MuiThemeProvider
-          theme={this.styleContext.theme}
-          sheetsManager={this.styleContext.sheetsManager}
+          theme={this.pageContext.theme}
+          sheetsManager={this.pageContext.sheetsManager}
         >
-          <AppWrapper>
-            <BaseComponent {...this.props} />
-          </AppWrapper>
+          {/* Reboot kickstart an elegant, consistent, and simple baseline to build upon. */}
+          <Reboot />
+          <Component {...this.props} />
         </MuiThemeProvider>
       );
     }
   }
 
-  if (process.env.NODE_ENV !== 'production') {
-    WithRoot.displayName = wrapDisplayName(BaseComponent, 'withRoot');
-  }
+  WithRoot.getInitialProps = (ctx: NextContext) => {
+    if (Component.getInitialProps) {
+      return Component.getInitialProps(ctx);
+    }
+
+    return {};
+  };
 
   return WithRoot;
 }

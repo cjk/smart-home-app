@@ -1,13 +1,15 @@
 // Right now this code is mostly about making Material-UI work with nextjs - see
-// https://github.com/callemall/material-ui/blob/v1-beta/examples/nextjs/pages/_document.js
+// https://github.com/mui-org/material-ui/blob/v1-beta/examples/nextjs/pages/_document.js
 
-import * as React from 'react';
+import React from 'react';
 import Document, { Head, Main, NextScript } from 'next/document';
-import { JssProvider } from 'react-jss';
-import getContext from '../styles/getContext';
+import JssProvider from 'react-jss/lib/JssProvider';
+import getPageContext from '../lib/shared/getPageContext';
 
 class MyDocument extends Document {
   render() {
+    const { pageContext } = this.props;
+
     return (
       <html lang="en" dir="ltr">
         <Head>
@@ -18,18 +20,13 @@ class MyDocument extends Document {
             name="viewport"
             content={
               'user-scalable=0, initial-scale=1, ' +
-                     'minimum-scale=1, width=device-width, height=device-height'
+              'minimum-scale=1, width=device-width, height=device-height'
             }
           />
-          {/*
-              manifest.json provides metadata used when your web app is added to the
-              homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
-            */}
-          <link rel="manifest" href="/static/manifest.json" />
           {/* PWA primary color */}
           <meta
             name="theme-color"
-            content={this.props.stylesContext.theme.palette.primary[500]}
+            content={pageContext.theme.palette.primary[500]}
           />
           <link
             rel="stylesheet"
@@ -63,22 +60,27 @@ MyDocument.getInitialProps = ctx => {
   // 1. page.getInitialProps
   // 3. page.render
 
-  // Get the context to collected side effects.
-  const context = getContext();
-  const page = ctx.renderPage(Component => props =>
-    <JssProvider registry={context.sheetsRegistry} jss={context.jss}>
-      <Component {...props} />
+  // Get the context of the page to collected side effects.
+  const pageContext = getPageContext();
+  const page = ctx.renderPage(Component => props => (
+    <JssProvider
+      registry={pageContext.sheetsRegistry}
+      generateClassName={pageContext.generateClassName}
+    >
+      <Component pageContext={pageContext} {...props} />
     </JssProvider>
-  );
+  ));
 
   return {
     ...page,
-    stylesContext: context,
+    pageContext,
     styles: (
       <style
         id="jss-server-side"
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: context.sheetsRegistry.toString() }}
+        dangerouslySetInnerHTML={{
+          __html: pageContext.sheetsRegistry.toString(),
+        }}
       />
     ),
   };
