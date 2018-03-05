@@ -39,6 +39,17 @@ const FermenterTempRangeControl = ({
           name="tempRange"
           aria-label="Temperaturbereich"
           className={classes.selectors}
+          value={[28, 30].toString()}
+          onChange={setTempRange}
+          checked={tempLimitsAsStr === '28,30'}
+        />
+        <Typography>28-30</Typography>
+      </div>
+      <div className={classes.controlCol}>
+        <Radio
+          name="tempRange"
+          aria-label="Temperaturbereich"
+          className={classes.selectors}
           value={[29, 31].toString()}
           onChange={setTempRange}
           checked={tempLimitsAsStr === '29,31'}
