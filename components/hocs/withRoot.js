@@ -2,19 +2,27 @@
 
 // Right now this code is mostly about making Material-UI work with nextjs - see
 // https://github.com/mui-org/material-ui/blob/v1-beta/examples/nextjs/src/withRoot.js
+
 import type { NextContext } from '../../types';
 import * as React from 'react';
 import { MuiThemeProvider } from 'material-ui/styles';
-import Reboot from 'material-ui/Reboot';
+import CssBaseline from 'material-ui/CssBaseline';
 import getPageContext from '../../lib/shared/getPageContext';
 
 type Props = {
-  pageContext: Object,
+  pageContext: {
+    theme: Object,
+    sheetsManager: Map<any>,
+    sheetsRegistry: Object,
+    generateClassName: Function,
+  },
 };
 
-function withRoot(Component: React.ComponentType<mixed>) {
+function withRoot(Component: React.ComponentType<Props>) {
   class WithRoot extends React.Component<Props> {
-    componentWillMount() {
+    constructor(props: Props, context: any) {
+      super(props, context);
+
       this.pageContext = this.props.pageContext || getPageContext();
     }
 
@@ -35,8 +43,8 @@ function withRoot(Component: React.ComponentType<mixed>) {
           theme={this.pageContext.theme}
           sheetsManager={this.pageContext.sheetsManager}
         >
-          {/* Reboot kickstart an elegant, consistent, and simple baseline to build upon. */}
-          <Reboot />
+          {/* CssBaseline kickstarts an elegant, consistent, and simple baseline to build upon. */}
+          <CssBaseline />
           <Component {...this.props} />
         </MuiThemeProvider>
       );
