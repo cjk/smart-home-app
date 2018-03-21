@@ -87,7 +87,7 @@ const FermenterControl = ({
             <CardActions className={classes.devControls}>
               <Button
                 color="default"
-                raised
+                variant="raised"
                 onClick={() => toggleDevice('fermenter')}
               >
                 {fermenterIsRunning() ? <StopIcon /> : <StartIcon />}
