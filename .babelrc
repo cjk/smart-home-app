@@ -1,28 +1,4 @@
 {
-  "env": {
-    "development": {
-      "presets": ["next/babel"],
-      "plugins": [
-        ["dotenv-import", {
-          "path": ".env"
-        }]
-      ]
-    },
-    "production": {
-      "presets": ["next/babel"],
-      "plugins": [
-        ["dotenv-import", {
-          "path": ".env.production"
-        }]
-      ]
-    },
-    "test": {
-      // next/babel does not transpile import/export syntax.
-      // github.com/zeit/next.js/tree/master/examples/with-jest
-      "presets": [["env", { "modules": "commonjs" }], "next/babel"],
-      "plugins": [
-        ["dotenv-import"]
-      ]
-    }
-  }
+  "presets": ["next/babel"],
+  "plugins": [["transform-define", "./env-config.js"]]
 }

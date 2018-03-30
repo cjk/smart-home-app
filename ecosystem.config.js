@@ -10,13 +10,10 @@ module.exports = {
       args: 'run-script start',
       kill_timeout: 3000,
       env: {
-        PORT: 3000,
-        BACKEND_ADDR: 'localhost',
         DEBUG: 'smtApp:*,error,debug',
       },
       env_production: {
         NODE_ENV: 'production',
-        BACKEND_ADDR: '192.168.1.28',
         DEBUG: 'smtApp:*,error',
       },
     },
