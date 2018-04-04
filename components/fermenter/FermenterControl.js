@@ -12,6 +12,7 @@ import Divider from 'material-ui/Divider';
 import Grid from 'material-ui/Grid';
 import StartIcon from 'material-ui-icons/PlayArrow';
 import StopIcon from 'material-ui-icons/Stop';
+
 import FermenterIndicator from './FermenterIndicator';
 import FermenterDevice from './FermenterDevice';
 import FermenterTempRangeControl from './FermenterTempRangeControl';
@@ -31,8 +32,7 @@ const fermenterControlStyles = {
     flexGrow: 1,
     //     flexDirection: 'column',
   },
-  controlItem: {
-  },
+  controlItem: {},
   fermenterDetails: {
     display: 'flex',
     flexDirection: 'column',
@@ -107,7 +107,7 @@ const FermenterControl = ({
         values,
         mapObjIndexed((dev, name) => (
           <Grid item xs={6} sm={3} className={classes.controlItem} key={name}>
-            <FermenterDevice name={name} isOn={dev.isOn} />
+            <FermenterDevice {...dev} name={name} />
           </Grid>
         ))
       )(devices)}
