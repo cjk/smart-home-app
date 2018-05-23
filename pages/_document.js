@@ -1,15 +1,15 @@
 // Right now this code is mostly about making Material-UI work with nextjs - see
 // https://github.com/mui-org/material-ui/blob/v1-beta/examples/nextjs/pages/_document.js
 
-import React from 'react';
-import Document, { Head, Main, NextScript } from 'next/document';
-import JssProvider from 'react-jss/lib/JssProvider';
-import flush from 'styled-jsx/server';
-import getPageContext from '../lib/shared/getPageContext';
+import React from 'react'
+import Document, { Head, Main, NextScript } from 'next/document'
+import JssProvider from 'react-jss/lib/JssProvider'
+import flush from 'styled-jsx/server'
+import getPageContext from '../lib/shared/getPageContext'
 
 class MyDocument extends Document {
   render() {
-    const { pageContext } = this.props;
+    const { pageContext } = this.props
 
     return (
       <html lang="en" dir="ltr">
@@ -39,7 +39,7 @@ class MyDocument extends Document {
           <NextScript />
         </body>
       </html>
-    );
+    )
   }
 }
 
@@ -62,7 +62,7 @@ MyDocument.getInitialProps = ctx => {
   // 3. page.render
 
   // Get the context of the page to collected side effects.
-  const pageContext = getPageContext();
+  const pageContext = getPageContext()
   const page = ctx.renderPage(Component => props => (
     <JssProvider
       registry={pageContext.sheetsRegistry}
@@ -70,7 +70,7 @@ MyDocument.getInitialProps = ctx => {
     >
       <Component pageContext={pageContext} {...props} />
     </JssProvider>
-  ));
+  ))
 
   return {
     ...page,
@@ -87,7 +87,7 @@ MyDocument.getInitialProps = ctx => {
         {flush() || null}
       </React.Fragment>
     ),
-  };
-};
+  }
+}
 
-export default MyDocument;
+export default MyDocument

@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { toggleShowOnlyActive } from '../lib/app/actions';
-import Switch from 'material-ui/Switch';
+import Switch from '@material-ui/core/Switch';
 
 type Props = {
   showActive: boolean,

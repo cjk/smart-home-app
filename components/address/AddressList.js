@@ -19,8 +19,8 @@ import {
 } from 'ramda';
 
 import AddressListItem from './AddrListItem';
-import { withStyles } from 'material-ui/styles';
-import List from 'material-ui/List';
+import { withStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
 
 type Props = {
   addresses: Array<KnxAddress>,

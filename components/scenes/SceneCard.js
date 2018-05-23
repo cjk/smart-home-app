@@ -6,10 +6,10 @@ import type { Scene } from '../../types';
 
 import * as React from 'react';
 
-import { withStyles } from 'material-ui/styles';
-import Card, { CardContent, CardActions } from 'material-ui/Card';
-import { Button } from 'material-ui';
-import Typography from 'material-ui/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Card, { CardContent, CardActions } from '@material-ui/core/Card';
+import { Button } from '@material-ui/core';
+import Typography from '@material-ui/core/Typography';
 import { compose } from 'ramda';
 
 type Props = {

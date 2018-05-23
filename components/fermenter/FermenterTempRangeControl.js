@@ -1,9 +1,9 @@
 // @flow
 
 import * as React from 'react';
-import { withStyles } from 'material-ui/styles';
-import Radio from 'material-ui/Radio';
-import Typography from 'material-ui/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Radio from '@material-ui/core/Radio';
+import Typography from '@material-ui/core/Typography';
 
 const tempRangeControl = theme => ({
   group: {

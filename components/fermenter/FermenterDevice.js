@@ -1,13 +1,13 @@
 // @flow
 import * as React from 'react';
 import * as R from 'ramda';
-import Avatar from 'material-ui/Avatar';
-import Card, { CardContent } from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
+import Avatar from '@material-ui/core/Avatar';
+import Card, { CardContent } from '@material-ui/core/Card';
+import Typography from '@material-ui/core/Typography';
 
 import HeaterIcon from 'material-ui-icons/AcUnit';
 import HumidifierIcon from 'material-ui-icons/Cloud';
-import { green, grey } from 'material-ui/colors';
+import { green, grey } from '@material-ui/core/colors';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 
 type Props = {

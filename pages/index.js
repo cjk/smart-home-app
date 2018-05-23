@@ -1,12 +1,12 @@
-import * as React from 'react';
+import * as React from 'react'
 
-import createStore from '../lib/create-store';
-import withRedux from 'next-redux-wrapper';
-import withRoot from '../components/hocs/withRoot';
-import withBusSubscribe from '../components/hocs/withBusSubscribe';
-import AppBar from '../components/AppBar';
-import Dashboard from '../components/dashboard';
-import { compose } from 'ramda';
+import createStore from '../lib/create-store'
+import withRedux from 'next-redux-wrapper'
+import withRoot from '../components/hocs/withRoot'
+import withBusSubscribe from '../components/hocs/withBusSubscribe'
+import AppBar from '../components/AppBar'
+import Dashboard from '../components/dashboard'
+import { compose } from 'ramda'
 
 const IndexPage = () => (
   <div className="app">
@@ -25,8 +25,8 @@ const IndexPage = () => (
       }
     `}</style>
   </div>
-);
+)
 
 export default compose(withRedux(createStore), withBusSubscribe, withRoot)(
   IndexPage
-);
+)

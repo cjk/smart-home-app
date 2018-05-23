@@ -5,7 +5,7 @@ module.exports = {
     browser: true,
     node: true,
   },
-  extends: ['airbnb', 'plugin:flowtype/recommended'],
+  extends: ['react-tools', 'plugin:flowtype/recommended'],
   plugins: ['flowtype'],
   globals: {
     APP_NAME: true,

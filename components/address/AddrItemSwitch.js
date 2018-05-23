@@ -2,9 +2,9 @@
 
 import type { KnxAddress } from '../../types';
 import * as React from 'react';
-import { withStyles } from 'material-ui/styles';
-import { ListItemSecondaryAction } from 'material-ui/List';
-import Switch from 'material-ui/Switch';
+import { withStyles } from '@material-ui/core/styles';
+import { ListItemSecondaryAction } from '@material-ui/core/List';
+import Switch from '@material-ui/core/Switch';
 
 type Props = {
   switchAction: Function,

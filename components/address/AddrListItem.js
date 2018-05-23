@@ -2,9 +2,9 @@
 
 import type { KnxAddress } from '../../types';
 import * as React from 'react';
-import { withStyles } from 'material-ui/styles';
-import { ListItem, ListItemText } from 'material-ui/List';
-import Grid from 'material-ui/Grid';
+import { withStyles } from '@material-ui/core/styles';
+import { ListItem, ListItemText } from '@material-ui/core/List';
+import Grid from '@material-ui/core/Grid';
 
 import { curry } from 'ramda';
 

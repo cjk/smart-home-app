@@ -1,23 +1,23 @@
 // @flow
 
-import type { RunTimeState, Devices } from '../../types/fermenter';
+import type { RunTimeState, Devices } from '../../types/fermenter'
 
-import * as React from 'react';
-import { connect } from 'react-redux';
+import * as React from 'react'
+import { connect } from 'react-redux'
 
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
-import Card, { CardActions, CardContent } from 'material-ui/Card';
-import Divider from 'material-ui/Divider';
-import Grid from 'material-ui/Grid';
-import StartIcon from 'material-ui-icons/PlayArrow';
-import StopIcon from 'material-ui-icons/Stop';
+import { withStyles } from '@material-ui/core/styles'
+import Button from '@material-ui/core/Button'
+import Card, { CardActions, CardContent } from '@material-ui/core/Card'
+import Divider from '@material-ui/core/Divider'
+import Grid from '@material-ui/core/Grid'
+import StartIcon from '@material-ui/icons/PlayArrow'
+import StopIcon from '@material-ui/icons/Stop'
 
-import FermenterIndicator from './FermenterIndicator';
-import FermenterDevice from './FermenterDevice';
-import FermenterTempRangeControl from './FermenterTempRangeControl';
+import FermenterIndicator from './FermenterIndicator'
+import FermenterDevice from './FermenterDevice'
+import FermenterTempRangeControl from './FermenterTempRangeControl'
 
-import { compose, mapObjIndexed, values } from 'ramda';
+import { compose, mapObjIndexed, values } from 'ramda'
 
 type Props = {
   rts: RunTimeState,
@@ -25,7 +25,7 @@ type Props = {
   classes: Object,
   sendFermenterCmd: Function,
   sendFermenterTempLimits: Function,
-};
+}
 
 const fermenterControlStyles = {
   controlsContainer: {
@@ -55,7 +55,7 @@ const fermenterControlStyles = {
   tempRangeControl: {
     marginTop: 10,
   },
-};
+}
 
 const FermenterControl = ({
   rts,
@@ -64,17 +64,17 @@ const FermenterControl = ({
   sendFermenterCmd,
   sendFermenterTempLimits,
 }: Props) => {
-  const fermenterIsRunning = () => rts.active;
+  const fermenterIsRunning = () => rts.active
 
   const toggleDevice = name => {
     /* Only allow switching fermenter itself on/off for now */
     if (name !== 'fermenter') {
-      return false;
+      return false
     }
     return fermenterIsRunning()
       ? sendFermenterCmd('stop')
-      : sendFermenterCmd('start');
-  };
+      : sendFermenterCmd('start')
+  }
 
   return (
     <Grid container spacing={24} className={classes.controlsContainer}>
@@ -112,8 +112,8 @@ const FermenterControl = ({
         ))
       )(devices)}
     </Grid>
-  );
-};
+  )
+}
 
 export default compose(
   withStyles(fermenterControlStyles),
@@ -121,4 +121,4 @@ export default compose(
     devices: state.fermenter.devices,
     rts: state.fermenter.rts,
   }))
-)(FermenterControl);
+)(FermenterControl)

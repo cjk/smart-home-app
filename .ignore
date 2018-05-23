@@ -1,0 +1,6 @@
+# More ignore-patterns, this time for ripgrep. Though rg honors gitignore-files, some dirs missing in gitignore should
+# not be searched (e.g. flow-typed/)
+.git/
+node_modules/
+yarn.lock
+flow-typed/

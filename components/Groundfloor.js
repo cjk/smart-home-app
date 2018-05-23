@@ -1,14 +1,14 @@
 // @flow
-import type { Dispatch, KnxAddress, Prefs, Rooms, State } from '../types';
+import type { Dispatch, KnxAddress, Prefs, Rooms, State } from '../types'
 
-import * as React from 'react';
-import { connect } from 'react-redux';
-import { withStyles } from 'material-ui/styles';
-import { toggleAddrVal } from '../lib/shared/address-utils';
+import * as React from 'react'
+import { connect } from 'react-redux'
+import { withStyles } from '@material-ui/core/styles'
+import { toggleAddrVal } from '../lib/shared/address-utils'
 
-import { compose } from 'ramda';
+import { compose } from 'ramda'
 
-import Light from './mapIcons/Light';
+import Light from './mapIcons/Light'
 
 type Props = {
   addresses: Array<KnxAddress>,
@@ -16,7 +16,7 @@ type Props = {
   rooms: Rooms,
   classes: Object,
   dispatch: Dispatch,
-};
+}
 
 const styles = {
   furniture: {
@@ -28,15 +28,15 @@ const styles = {
   lightOn: {
     color: 'orange',
   },
-};
+}
 
 const Groundfloor = ({ addresses, dispatch, classes }: Props) => {
-  const isOn = addr => addresses[addr].value;
+  const isOn = addr => addresses[addr].value
   const onLightSwitch = addrId =>
     dispatch({
       type: 'WRITE_GROUP_ADDRESS',
       addr: toggleAddrVal(addresses[addrId]),
-    });
+    })
 
   return (
     <svg
@@ -244,8 +244,8 @@ const Groundfloor = ({ addresses, dispatch, classes }: Props) => {
         />
       </g>
     </svg>
-  );
-};
+  )
+}
 
 export default compose(
   connect((state: State) => ({
@@ -254,4 +254,4 @@ export default compose(
     rooms: state.app.rooms,
   })),
   withStyles(styles)
-)(Groundfloor);
+)(Groundfloor)

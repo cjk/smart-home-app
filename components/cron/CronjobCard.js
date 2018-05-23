@@ -6,9 +6,9 @@ import type { CronJob } from '../../types';
 
 import * as React from 'react';
 
-import { withStyles } from 'material-ui/styles';
-import Card, { CardContent } from 'material-ui/Card';
-import Typography from 'material-ui/Typography';
+import { withStyles } from '@material-ui/core/styles';
+import Card, { CardContent } from '@material-ui/core/Card';
+import Typography from '@material-ui/core/Typography';
 import { compose, isNil } from 'ramda';
 import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
 
