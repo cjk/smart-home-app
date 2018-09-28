@@ -1,27 +1,28 @@
 // @flow
 
-import type { KnxAddress } from '../../types';
-import * as React from 'react';
-import { withStyles } from '@material-ui/core/styles';
-import { ListItemSecondaryAction } from '@material-ui/core/List';
-import Switch from '@material-ui/core/Switch';
+import type { KnxAddress } from '../../types'
+import * as React from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import Switch from '@material-ui/core/Switch'
 
 type Props = {
   switchAction: Function,
   address: KnxAddress,
   classes: Object,
   //   writeGroupAddr: typeof writeGroupAddr,
-};
+}
 
-const styles = (theme) => ({
+const styles = theme => ({
   addrSwitch: {
     //     color: theme.palette.text.secondary,
   },
-});
+})
 
-const AddressSwitch = ({ switchAction, address, classes }: Props) =>
+const AddressSwitch = ({ switchAction, address, classes }: Props) => (
   <ListItemSecondaryAction className={classes.addrSwitch}>
     <Switch onClick={() => switchAction(address)} checked={!!address.value} />
-  </ListItemSecondaryAction>;
+  </ListItemSecondaryAction>
+)
 
-export default withStyles(styles)(AddressSwitch);
+export default withStyles(styles)(AddressSwitch)

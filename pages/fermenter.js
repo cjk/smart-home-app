@@ -1,12 +1,11 @@
 // @flow
+
 import type { FermenterState } from '../types/fermenter'
 import type { Dispatch } from '../types'
 
 import * as React from 'react'
 import * as fermenterActions from '../lib/fermenter/actions'
-import createStore from '../lib/create-store'
-import withRedux from 'next-redux-wrapper'
-import withRoot from '../components/hocs/withRoot'
+import { connect } from 'react-redux'
 
 import AppBar from '../components/AppBar'
 import FermenterInfo from '../components/fermenter/FermenterInfo'
@@ -54,10 +53,7 @@ class FermenterPage extends React.Component<void, Props> {
       <div className="app">
         <AppBar />
         <Paper style={styles.fermenterRoot}>
-          <FermenterControl
-            sendFermenterCmd={sendFermenterCmd}
-            sendFermenterTempLimits={sendFermenterTempLimits}
-          />
+          <FermenterControl sendFermenterCmd={sendFermenterCmd} sendFermenterTempLimits={sendFermenterTempLimits} />
           <FermenterInfo />
         </Paper>
       </div>
@@ -66,6 +62,8 @@ class FermenterPage extends React.Component<void, Props> {
 }
 
 export default compose(
-  withRedux(createStore, null, fermenterActions),
-  withRoot
+  connect(
+    null,
+    fermenterActions
+  )
 )(FermenterPage)

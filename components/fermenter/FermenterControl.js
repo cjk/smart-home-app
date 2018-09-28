@@ -7,7 +7,9 @@ import { connect } from 'react-redux'
 
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
-import Card, { CardActions, CardContent } from '@material-ui/core/Card'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
 import Divider from '@material-ui/core/Divider'
 import Grid from '@material-ui/core/Grid'
 import StartIcon from '@material-ui/icons/PlayArrow'
@@ -57,13 +59,7 @@ const fermenterControlStyles = {
   },
 }
 
-const FermenterControl = ({
-  rts,
-  devices,
-  classes,
-  sendFermenterCmd,
-  sendFermenterTempLimits,
-}: Props) => {
+const FermenterControl = ({ rts, devices, classes, sendFermenterCmd, sendFermenterTempLimits }: Props) => {
   const fermenterIsRunning = () => rts.active
 
   const toggleDevice = name => {
@@ -71,9 +67,7 @@ const FermenterControl = ({
     if (name !== 'fermenter') {
       return false
     }
-    return fermenterIsRunning()
-      ? sendFermenterCmd('stop')
-      : sendFermenterCmd('start')
+    return fermenterIsRunning() ? sendFermenterCmd('stop') : sendFermenterCmd('start')
   }
 
   return (
@@ -85,20 +79,13 @@ const FermenterControl = ({
               <FermenterIndicator isOn={fermenterIsRunning()} />
             </CardContent>
             <CardActions className={classes.devControls}>
-              <Button
-                color="default"
-                variant="raised"
-                onClick={() => toggleDevice('fermenter')}
-              >
+              <Button color="default" variant="raised" onClick={() => toggleDevice('fermenter')}>
                 {fermenterIsRunning() ? <StopIcon /> : <StartIcon />}
               </Button>
 
               <Divider className={classes.tempRangeControl} />
 
-              <FermenterTempRangeControl
-                tempLimits={rts.tempLimits}
-                changeAction={sendFermenterTempLimits}
-              />
+              <FermenterTempRangeControl tempLimits={rts.tempLimits} changeAction={sendFermenterTempLimits} />
             </CardActions>
           </div>
         </Card>

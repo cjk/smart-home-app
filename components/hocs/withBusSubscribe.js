@@ -1,7 +1,7 @@
 // @flow
 
 import type DsClient from '../../lib/client'
-import type { Action, Dispatch, NextContext, SmartHomeState } from '../../types'
+import type { Action, Store, NextContext, SmartHomeState } from '../../types'
 
 import logger from 'debug'
 import * as React from 'react'
@@ -9,14 +9,17 @@ import _DsClient from '../../lib/client'
 import { createInitialstateReq$ } from '../../lib/shared/create-state-streams'
 
 type Props = {
-  dispatch: Dispatch,
+  store: Store,
+  router: any,
+  headManager: any,
+  pageProps: any,
+  Component: React.ComponentType<Props>,
+  isServer: boolean,
 }
 
 const debug = logger('smtApp:withBusSubscribe')
 
-const WithBusSubsribe = (
-  Page: React.ComponentType<Props>
-): React.ComponentType<any> =>
+const WithBusSubsribe = (Page: React.ComponentType<Props>): React.ComponentType<any> =>
   class WithBusSubsribe extends React.Component<Props> {
     static async getInitialProps(ctx: NextContext) {
       let composedInitialProps = {}
@@ -52,7 +55,7 @@ const WithBusSubsribe = (
 
     // your client-only actions go here:
     componentDidMount() {
-      const { dispatch } = this.props
+      const { dispatch } = this.props.store
 
       dispatch(({ type: 'CONNECTION_STATE_START_TRACKING' }: Action))
       dispatch(({ type: 'SUBSCRIBE_TO_BUS' }: Action))

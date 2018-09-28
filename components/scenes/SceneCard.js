@@ -2,21 +2,23 @@
 
 // Presentational-component to visualize a scene
 
-import type { Scene } from '../../types';
+import type { Scene } from '../../types'
 
-import * as React from 'react';
+import * as React from 'react'
 
-import { withStyles } from '@material-ui/core/styles';
-import Card, { CardContent, CardActions } from '@material-ui/core/Card';
-import { Button } from '@material-ui/core';
-import Typography from '@material-ui/core/Typography';
-import { compose } from 'ramda';
+import { withStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import CardActions from '@material-ui/core/CardActions'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+import { compose } from 'ramda'
 
 type Props = {
   scene: Scene,
   onSceneAction: Function,
   classes: Object,
-};
+}
 
 const sceneStyles = theme => ({
   card: {
@@ -31,7 +33,7 @@ const sceneStyles = theme => ({
     marginBottom: 5,
     color: theme.palette.text.secondary,
   },
-});
+})
 
 const SceneCard = ({ scene, onSceneAction, classes }: Props) => (
   <div className="sceneCard">
@@ -54,6 +56,6 @@ const SceneCard = ({ scene, onSceneAction, classes }: Props) => (
       </CardActions>
     </Card>
   </div>
-);
+)
 
-export default compose(withStyles(sceneStyles))(SceneCard);
+export default compose(withStyles(sceneStyles))(SceneCard)

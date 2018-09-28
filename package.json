@@ -1,8 +1,9 @@
 {
   "name": "SmartHomeApp",
-  "authors": ["Claus Klingberg"],
-  "description":
-    "Universal PWA React-app for controlling your smart home environment.",
+  "authors": [
+    "Claus Klingberg"
+  ],
+  "description": "Universal PWA React-app for controlling your smart home environment.",
   "private": true,
   "scripts": {
     "dev": "next",
@@ -13,14 +14,14 @@
     "node": ">=8.0.0"
   },
   "dependencies": {
-    "@material-ui/core": "latest",
-    "@material-ui/icons": "1.0.0",
+    "@material-ui/core": "^3.1.1",
+    "@material-ui/icons": "3.0.1",
     "date-fns": "^1.28.3",
     "debug": "^3.1.0",
     "deepstream.io-client-js": "latest",
     "jss": "^9.8.1",
-    "next": "^6.0.3",
-    "next-redux-wrapper": "^1.3.5",
+    "next": "^7.0.0",
+    "next-redux-wrapper": "^2.0.0",
     "prop-types": "^15.5.10",
     "ramda": "^0.25.0",
     "react": "^16.3.0",
@@ -39,14 +40,14 @@
     "supports-color": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "7.0.0-beta.47",
-    "@babel/core": "7.0.0-beta.47",
-    "@babel/preset-env": "7.0.0-beta.47",
-    "@babel/preset-flow": "^7.0.0-beta.47",
+    "@babel/cli": "7.1.0",
+    "@babel/core": "7.1.0",
+    "@babel/preset-env": "7.1.0",
+    "@babel/preset-flow": "^7.0.0",
     "babel-plugin-transform-define": "^1.2.0",
     "eslint-config-react-tools": "^1.2.5",
     "eslint-plugin-flowtype": "^2.47.1",
-    "flow-bin": "^0.72.0",
-    "webpack-bundle-analyzer": "^2.13.1"
+    "flow-bin": "^0.81.0",
+    "webpack-bundle-analyzer": "^3.0.2"
   }
 }

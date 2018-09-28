@@ -6,7 +6,7 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import { toggleAddrVal } from '../lib/shared/address-utils'
 
-import { compose } from 'ramda'
+import { compose, has } from 'ramda'
 
 import Light from './mapIcons/Light'
 
@@ -47,18 +47,11 @@ const Groundfloor = ({ addresses, dispatch, classes }: Props) => {
       onClick={e => onLightSwitch(e.target.id)}
     >
       <g stroke="#000" className={classes.furniture}>
-        <path
-          d="m290 30v90h-280v470.94h770v-470.94l-250 1.6002v-91.6z"
-          fill="#fff"
-          strokeWidth="1.0188"
-        />
+        <path d="m290 30v90h-280v470.94h770v-470.94l-250 1.6002v-91.6z" fill="#fff" strokeWidth="1.0188" />
         <g fill="none" className={classes.furniture}>
           <path d="m10 470h210v120" strokeWidth=".723px" />
           <path d="m220 470v-180h-210" strokeWidth=".82158px" />
-          <path
-            d="m510 590v-270l-40-40h-50l-75 75 55 55 50-50 60 60"
-            strokeWidth="1px"
-          />
+          <path d="m510 590v-270l-40-40h-50l-75 75 55 55 50-50 60 60" strokeWidth="1px" />
           <path d="m390 590v-50l120-120" strokeWidth="1px" />
         </g>
       </g>
@@ -73,27 +66,9 @@ const Groundfloor = ({ addresses, dispatch, classes }: Props) => {
           className={classes.furniture}
         />
         <g strokeDasharray="0.16125, 0.16125000000000000" strokeWidth=".645">
-          <rect
-            x="570"
-            y="150"
-            width="170"
-            height="70"
-            className={classes.furniture}
-          />
-          <rect
-            x="40"
-            y="470"
-            width="80"
-            height="60"
-            className={classes.furniture}
-          />
-          <rect
-            x="30"
-            y="560"
-            width="190"
-            height="30"
-            className={classes.furniture}
-          />
+          <rect x="570" y="150" width="170" height="70" className={classes.furniture} />
+          <rect x="40" y="470" width="80" height="60" className={classes.furniture} />
+          <rect x="30" y="560" width="190" height="30" className={classes.furniture} />
           <circle opacity="0.10" cx="505.22" cy="274.66" r="25" />
         </g>
         <rect
@@ -130,38 +105,10 @@ const Groundfloor = ({ addresses, dispatch, classes }: Props) => {
         </g>
       </g>
       <g className="actors">
-        <Light
-          id="1/2/4"
-          desc="Deckenleuchte Esszimmer"
-          isOn={isOn('1/2/4')}
-          className="actorIcon"
-          x="650"
-          y="180"
-        />
-        <Light
-          id="1/2/1"
-          desc="4er-Leuchte Küche"
-          className="actorIcon"
-          isOn={isOn('1/2/1')}
-          x="645"
-          y="320"
-        />
-        <Light
-          id="1/2/7"
-          desc="Deckenleuchten Küche"
-          className="actorIcon"
-          isOn={isOn('1/2/7')}
-          x="550"
-          y="430"
-        />
-        <Light
-          id="1/2/13"
-          desc="Wandlampen Wohnzimmer"
-          className="actorIcon"
-          isOn={isOn('1/2/13')}
-          x="760"
-          y="180"
-        />
+        <Light id="1/2/4" desc="Deckenleuchte Esszimmer" isOn={isOn('1/2/4')} className="actorIcon" x="650" y="180" />
+        <Light id="1/2/1" desc="4er-Leuchte Küche" className="actorIcon" isOn={isOn('1/2/1')} x="645" y="320" />
+        <Light id="1/2/7" desc="Deckenleuchten Küche" className="actorIcon" isOn={isOn('1/2/7')} x="550" y="430" />
+        <Light id="1/2/13" desc="Wandlampen Wohnzimmer" className="actorIcon" isOn={isOn('1/2/13')} x="760" y="180" />
         <Light
           id="1/2/14"
           desc="Schrankleuchte Nordwand-Wohnzimmer"
@@ -178,46 +125,11 @@ const Groundfloor = ({ addresses, dispatch, classes }: Props) => {
           x="100"
           y="360"
         />
-        <Light
-          id="1/2/12"
-          desc="Hängelampe Büro / Emma"
-          className="actorIcon"
-          isOn={isOn('1/2/12')}
-          x="100"
-          y="445"
-        />
-        <Light
-          id="1/2/0"
-          desc="Deckenleuchte Technik"
-          className="actorIcon"
-          isOn={isOn('1/2/0')}
-          x="160"
-          y="500"
-        />
-        <Light
-          id="1/2/11"
-          desc="Wandlampe Flur"
-          className="actorIcon"
-          isOn={isOn('1/2/11')}
-          x="220"
-          y="390"
-        />
-        <Light
-          id="1/2/5"
-          desc="Deckenleuchte Flur"
-          className="actorIcon"
-          isOn={isOn('1/2/5')}
-          x="300"
-          y="450"
-        />
-        <Light
-          id="1/2/6"
-          desc="Deckenleuchte Gäste-WC"
-          className="actorIcon"
-          isOn={isOn('1/2/6')}
-          x="440"
-          y="540"
-        />
+        <Light id="1/2/12" desc="Hängelampe Büro / Emma" className="actorIcon" isOn={isOn('1/2/12')} x="100" y="445" />
+        <Light id="1/2/0" desc="Deckenleuchte Technik" className="actorIcon" isOn={isOn('1/2/0')} x="160" y="500" />
+        <Light id="1/2/11" desc="Wandlampe Flur" className="actorIcon" isOn={isOn('1/2/11')} x="220" y="390" />
+        <Light id="1/2/5" desc="Deckenleuchte Flur" className="actorIcon" isOn={isOn('1/2/5')} x="300" y="450" />
+        <Light id="1/2/6" desc="Deckenleuchte Gäste-WC" className="actorIcon" isOn={isOn('1/2/6')} x="440" y="540" />
         <Light
           id="1/2/10"
           desc="Deckenleuchte Wohnzimmer Erker Ost"

@@ -2,21 +2,22 @@
 
 // Presentational-component to visualize a cronjob
 
-import type { CronJob } from '../../types';
+import type { CronJob } from '../../types'
 
-import * as React from 'react';
+import * as React from 'react'
 
-import { withStyles } from '@material-ui/core/styles';
-import Card, { CardContent } from '@material-ui/core/Card';
-import Typography from '@material-ui/core/Typography';
-import { compose, isNil } from 'ramda';
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
+import { withStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardContent from '@material-ui/core/CardContent'
+import Typography from '@material-ui/core/Typography'
+import { compose, isNil } from 'ramda'
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 
 type Props = {
   cronjob: CronJob,
   onCronjobAction: Function,
   classes: Object,
-};
+}
 
 const cronjobStyles = theme => ({
   card: {
@@ -34,7 +35,7 @@ const cronjobStyles = theme => ({
   jobDetails: {
     marginBottom: 6,
   },
-});
+})
 
 const CronjobCard = ({ cronjob, classes }: Props) => (
   <div className="cronjobCard">
@@ -50,14 +51,11 @@ const CronjobCard = ({ cronjob, classes }: Props) => (
           {cronjob.running ? 'running' : 'idle'}
         </Typography>
         <Typography component="p" className={classes.jobDetails}>
-          Last run:{' '}
-          {isNil(cronjob.lastRun)
-            ? ' - '
-            : `${distanceInWordsToNow(cronjob.lastRun)} ago`}
+          Last run: {isNil(cronjob.lastRun) ? ' - ' : `${distanceInWordsToNow(cronjob.lastRun)} ago`}
         </Typography>{' '}
       </CardContent>
     </Card>
   </div>
-);
+)
 
-export default compose(withStyles(cronjobStyles))(CronjobCard);
+export default compose(withStyles(cronjobStyles))(CronjobCard)

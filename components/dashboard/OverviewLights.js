@@ -2,6 +2,8 @@
 
 /* Presentational component for a list of switched-on lights */
 
+// @flow
+
 import type { KnxAddress, Prefs, Rooms } from '../../types'
 
 import * as React from 'react'
@@ -12,7 +14,9 @@ import { compose, curry, isEmpty, length, map, sort, take, values } from 'ramda'
 
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
-import List, { ListItem, ListItemText } from '@material-ui/core/List'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 
 type Props = {
@@ -44,10 +48,7 @@ const addrItemLst = curry((onLightSwitch, addresses) =>
   map(addr => (
     <ListItem key={addr.id} onClick={() => onLightSwitch(addr)} dense button>
       <VisualizedAddress addr={addr} />
-      <ListItemText
-        primary={addr.name}
-        secondary={`${distanceInWordsToNow(addr.updatedAt)} ago`}
-      />
+      <ListItemText primary={addr.name} secondary={`${distanceInWordsToNow(addr.updatedAt)} ago`} />
     </ListItem>
   ))(addresses)
 )
@@ -60,10 +61,7 @@ const LightsList = ({ addresses, classes, onLightSwitch }: Props) => {
     values
   )(addresses)
 
-  const skippedAddressCount = Math.max(
-    0,
-    length(values(addresses)) - maxShownItems
-  )
+  const skippedAddressCount = Math.max(0, length(values(addresses)) - maxShownItems)
 
   return (
     <Paper className={classes.root}>
@@ -73,11 +71,7 @@ const LightsList = ({ addresses, classes, onLightSwitch }: Props) => {
       <List className={classes.addrList}>
         {isEmpty(addrItems) ? (
           <ListItem>
-            <ListItemText
-              inset
-              className={classes.listItemText}
-              primary="-- --"
-            />
+            <ListItemText inset className={classes.listItemText} primary="----" />
           </ListItem>
         ) : (
           addrItems

@@ -4,7 +4,7 @@ import * as React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { compose } from 'ramda'
 
-import LightIconOff from '@material-ui/icons/LightbulbOutline'
+import LightIconOff from '@material-ui/icons/WbIncandescent'
 import LightIconOn from '@material-ui/icons/WbIridescent'
 
 type Props = {
@@ -46,19 +46,9 @@ const Light = ({ id, desc, x, y, isOn, classes }: Props) => (
     />
 
     {isOn ? (
-      <LightIconOn
-        className={classes.icon}
-        color={isOn ? 'secondary' : 'inherit'}
-        width="20"
-        height="20"
-      />
+      <LightIconOn className={classes.icon} color={isOn ? 'secondary' : 'inherit'} width="20" height="20" />
     ) : (
-      <LightIconOff
-        className={classes.icon}
-        color={isOn ? 'secondary' : 'inherit'}
-        width="20"
-        height="20"
-      />
+      <LightIconOff className={classes.icon} color={isOn ? 'secondary' : 'inherit'} width="20" height="20" />
     )}
 
     <desc>{desc}</desc>
