@@ -40,9 +40,7 @@ const iconByConnState = cond([
 const ConnIndicator = ({ connState, connErr, classes }: Props) => (
   <div>
     <Tooltip id="err_tooltip" title={connErr} placement="bottom">
-      <Avatar className={classes.connIndAvatar}>
-        {iconByConnState(connState)}
-      </Avatar>
+      <Avatar className={classes.connIndAvatar}>{iconByConnState(connState)}</Avatar>
     </Tooltip>
   </div>
 )

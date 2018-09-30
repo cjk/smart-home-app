@@ -79,7 +79,9 @@ MyDocument.getInitialProps = ctx => {
         <style
           id="jss-server-side"
           // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: pageContext.sheetsRegistry.toString() }}
+          dangerouslySetInnerHTML={{
+            __html: pageContext.sheetsRegistry.toString(),
+          }}
         />
         {flush() || null}
       </React.Fragment>

@@ -2,46 +2,33 @@
 
 // Presentational-component for history visualizations
 
-import type { KnxAddress } from '../../types';
+import type { KnxAddress } from '../../types'
 
 /* Presentational component to render a simple address-list sorted by most-recently changed */
-import * as React from 'react';
+import * as React from 'react'
 
-import {
-  comparator,
-  complement,
-  compose,
-  isNil,
-  map,
-  pipe,
-  sort,
-  values,
-} from 'ramda';
+import { comparator, complement, compose, isNil, map, pipe, sort, values } from 'ramda'
 
-import AddressListItem from './AddrListItem';
-import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
+import AddressListItem from './AddrListItem'
+import { withStyles } from '@material-ui/core/styles'
+import List from '@material-ui/core/List'
 
 type Props = {
   addresses: Array<KnxAddress>,
   classes: Object,
-};
+}
 
-const hasStatus = complement(isNil);
-const byHasValue = comparator(
-  (a, b) => (isNil(b.value) ? hasStatus(a.value) : a.updatedAt > b.updatedAt)
-);
+const hasStatus = complement(isNil)
+const byHasValue = comparator((a, b) => (isNil(b.value) ? hasStatus(a.value) : a.updatedAt > b.updatedAt))
 
 const listStyles = theme => ({
   addrList: {
     maxWidth: 1024,
   },
-});
+})
 
 const AddressList = ({ addresses, classes }: Props) => {
-  const itemizedAddress = (addr: KnxAddress) => (
-    <AddressListItem key={addr.id} address={addr} />
-  );
+  const itemizedAddress = (addr: KnxAddress) => <AddressListItem key={addr.id} address={addr} />
 
   const addrLstByDate = pipe(
     values,
@@ -51,9 +38,9 @@ const AddressList = ({ addresses, classes }: Props) => {
     //     tap(a => console.log(JSON.stringify(a))),
     map(itemizedAddress),
     values /* NOTE: Make last result an array, otherwise React complains about an Object returned by #mapObjIndexed */
-  );
+  )
 
-  return <List className={classes.addrList}>{addrLstByDate(addresses)}</List>;
-};
+  return <List className={classes.addrList}>{addrLstByDate(addresses)}</List>
+}
 
-export default compose(withStyles(listStyles))(AddressList);
+export default compose(withStyles(listStyles))(AddressList)

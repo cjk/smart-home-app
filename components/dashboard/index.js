@@ -10,10 +10,7 @@ import { withStyles } from '@material-ui/core/styles'
 import Grid from '@material-ui/core/Grid'
 import OverviewLights from './OverviewLights'
 
-import {
-  toggleAddrVal,
-  onlyManuallySwitchedLights,
-} from '../../lib/shared/address-utils'
+import { toggleAddrVal, onlyManuallySwitchedLights } from '../../lib/shared/address-utils'
 
 import { compose } from 'ramda'
 

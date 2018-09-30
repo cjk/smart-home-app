@@ -31,7 +31,7 @@ const styles = {
 }
 
 const Groundfloor = ({ addresses, dispatch, classes }: Props) => {
-  const isOn = addr => addresses[addr].value
+  const isOn = addr => (has(addr, addresses) ? addresses[addr].value : console.warn(`Address <${addr}> not found!`))
   const onLightSwitch = addrId =>
     dispatch({
       type: 'WRITE_GROUP_ADDRESS',
