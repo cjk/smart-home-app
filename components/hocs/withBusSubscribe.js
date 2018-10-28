@@ -5,6 +5,7 @@ import type { Action, Store, NextContext, SmartHomeState } from '../../types'
 
 import logger from 'debug'
 import * as React from 'react'
+import { switchMap, take } from 'rxjs/operators'
 import _DsClient from '../../lib/client'
 import { createInitialstateReq$ } from '../../lib/shared/create-state-streams'
 
@@ -34,8 +35,10 @@ const WithBusSubsribe = (Page: React.ComponentType<Props>): React.ComponentType<
         const dsClient: DsClient = new _DsClient()
         const livestate: SmartHomeState = await dsClient
           .login()
-          .switchMap(() => createInitialstateReq$(dsClient.client))
-          .take(1)
+          .pipe(
+            switchMap(() => createInitialstateReq$(dsClient.client)),
+            take(1)
+          )
           .toPromise()
 
         // Send livestate to the redux-store as well, so it's available client-side

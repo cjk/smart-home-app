@@ -4,11 +4,11 @@ import type {
   Middleware as ReduxMiddleware,
   Reducer as ReduxReducer,
   Store as ReduxStore,
-} from 'redux';
+} from 'redux'
 
-import type { Observable } from 'rxjs';
+import type { Observable } from 'rxjs/Observable'
 
-import type DsClient from '../lib/client';
+import type DsClient from '../lib/client'
 
 export type KnxAddress = {
   id: string,
@@ -22,7 +22,7 @@ export type KnxAddress = {
   fbValue: ?string,
   control: string,
   updatedAt: number,
-};
+}
 
 export type BusEvent = {
   created: number,
@@ -31,28 +31,28 @@ export type BusEvent = {
   src: string,
   dest: string,
   value: string,
-};
+}
 
 type Room = {
   name: string,
   story: string,
-};
+}
 
 export type Rooms = {
   [id: string]: Room,
-};
+}
 
 export type Prefs = {
   rooms: Array<string>,
   showOnlyActive: boolean,
-};
+}
 
-export type AddressMap = { [id: string]: KnxAddress };
+export type AddressMap = { [id: string]: KnxAddress }
 
 export type SmartHomeState = {
   livestate: { [id: string]: KnxAddress },
   eventHistory: Array<BusEvent>,
-};
+}
 
 /* Cronjob types */
 
@@ -63,12 +63,12 @@ export type Task = {
   endedAt: ?number,
   target: string,
   act: string,
-};
+}
 
 export type CrontabTask = {
   targets: Array<string>,
   act: string,
-};
+}
 
 export type CronJob = {
   jobId: string,
@@ -79,18 +79,18 @@ export type CronJob = {
   running: boolean,
   lastRun: ?Date,
   tasks: ?(CrontabTask[]) | ?(Task[]),
-};
+}
 
-export type Cronjobs = Array<CronJob>;
+export type Cronjobs = Array<CronJob>
 
-type SceneId = string;
+type SceneId = string
 
 export type Scene = {
   id: SceneId,
   name: string,
   tasks: Array<CrontabTask>,
-};
-export type Scenes = Array<Scene>;
+}
+export type Scenes = Array<Scene>
 
 export type AppState = {
   prefs: Prefs,
@@ -99,19 +99,19 @@ export type AppState = {
   ui: {
     selectedListTab: number,
   },
-};
+}
 
 export type State = {
   +app: AppState,
   +smartHome: SmartHomeState,
-};
+}
 
 export type Dependencies = {
   getState: () => State,
   client: () => Function,
   clientConnection: DsClient,
   validate: (json: Object) => any,
-};
+}
 
 // Actions
 export type Action =
@@ -135,22 +135,19 @@ export type Action =
   | { type: 'SCHEDULE_CRONJOB', job: CronJob }
   | { type: 'TOGGLE_SHOW_ONLY_ACTIVE', toggleValue: boolean }
   | { type: 'CHANGE_SELECTED_LIST_TAB', value: number }
-  | { type: 'SET_THEME', payload: { theme: string } };
+  | { type: 'SET_THEME', payload: { theme: string } }
 
-export type Middleware = Array<ReduxMiddleware<State, Action>>;
-export type Reducers = { +[name: $Keys<State>]: ReduxReducer<State, Action> };
-export type Store = ReduxStore<State, Action>;
-export type Dispatch = ReduxDispatch<Action>;
+export type Middleware = Array<ReduxMiddleware<State, Action>>
+export type Reducers = { +[name: $Keys<State>]: ReduxReducer<State, Action> }
+export type Store = ReduxStore<State, Action>
+export type Dispatch = ReduxDispatch<Action>
 
 // TODO: Bummer. There are no redux-observable flow definitions yet. Therefore,
 // we have to use .filter instead of .ofType and we have to use
 // https://flow.org/en/docs/lang/refinements.
-export type Epic = (
-  actions$: Observable<Action>,
-  dependencies: Dependencies
-) => Observable<Action>;
+export type Epic = (actions$: Observable<Action>, dependencies: Dependencies) => Observable<Action>
 
-export type Action$ = Observable<Action>;
+export type Action$ = Observable<Action>
 
 // https://github.com/zeit/next.js#fetching-data-and-component-lifecycle
 export type NextContext = {
@@ -170,4 +167,4 @@ export type NextContext = {
   // added from next-redux-wrapper:
   isServer: boolean,
   store: Object,
-};
+}

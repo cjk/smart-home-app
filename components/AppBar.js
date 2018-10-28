@@ -49,6 +49,7 @@ const MainAppBar = (props: AppBarProps) => {
     classes,
     conn: { state: connState, error: connErr },
   } = props
+
   return (
     <div className={classes.root}>
       <AppBar className={classes.appBar}>
