@@ -1,37 +1,37 @@
 // @flow
-import type { State } from '../types';
 
-import * as React from 'react';
-import * as appActions from '../lib/app/actions';
-import { bindActionCreators } from 'redux';
-import createStore from '../lib/create-store';
-import withRedux from 'next-redux-wrapper';
-import withRoot from '../components/hocs/withRoot';
-import withBusSubscribe from '../components/hocs/withBusSubscribe';
+import type { State } from '../types'
+
+import * as React from 'react'
+import * as appActions from '../lib/app/actions'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 
 // UI: Top menu bar
-import AppBar from '../components/AppBar';
-
+import AppBar from '../components/AppBar'
 // UI: Tabs
-import TabBar from 'material-ui/AppBar';
-import Tabs, { Tab } from 'material-ui/Tabs';
-
+import Tabs from '@material-ui/core/Tabs'
+import Tab from '@material-ui/core/Tab'
+import TabBar from '@material-ui/core/AppBar'
 // UI: Groundfloor map (NOTE: no container-component yet)
-import Groundfloor from '../components/Groundfloor';
+import Groundfloor from '../components/Groundfloor'
 // UI: switches grouped by rooms
-import Rooms from '../components/rooms';
+import Rooms from '../components/rooms'
 // UI: Show available scenes to (de)activate
-import Scenes from '../components/scenes';
+import Scenes from '../components/scenes'
 // UI: Show available scenes to (de)activate
-import Cronjobs from '../components/cron';
+import Cronjobs from '../components/cron'
 // UI: Last changed address-log list
-import History from '../components/history';
+import History from '../components/history'
 
-import { compose } from 'ramda';
+import { compose } from 'ramda'
 
 const MainPage = props => {
-  const { changeSelectedListTab, ui: { selectedListTab } } = props;
-  const handleTabChange = (event, value) => changeSelectedListTab(value);
+  const {
+    changeSelectedListTab,
+    ui: { selectedListTab },
+  } = props
+  const handleTabChange = (event, value) => changeSelectedListTab(value)
 
   return (
     <div className="app">
@@ -53,36 +53,32 @@ const MainPage = props => {
 
       {/* Add Gradient */}
       <style global jsx>{`
-      .app {
-        background: linear-gradient(to bottom, grey 0, white 160px);
-        filter: progid:DXImageTransform.Microsoft.gradient(
+        .app {
+          background: linear-gradient(to bottom, grey 0, white 160px);
+          filter: progid:DXImageTransform.Microsoft.gradient(
             startColorstr='grey',
             endColorstr='white',
             GradientType=0
           );
-      }
-    `}</style>
-
+        }
+      `}</style>
     </div>
-  );
-};
+  )
+}
 
 const mapDispatchToProps = dispatch => {
-  const boundActions = bindActionCreators(appActions, dispatch);
+  const boundActions = bindActionCreators(appActions, dispatch)
   return {
     ...boundActions,
     dispatch,
-  };
-};
+  }
+}
 
 export default compose(
-  withRedux(
-    createStore,
+  connect(
     (state: State) => ({
       ui: state.app.ui,
     }),
     mapDispatchToProps
-  ),
-  withBusSubscribe,
-  withRoot
-)(MainPage);
+  )
+)(MainPage)

@@ -1,8 +1,8 @@
-<a href="https://github.org/cjk/smart-home-app"><img alt="Smart-Home-Controller" src="http://i.imgur.com/Y4bMw.jpg" width="200"></a>
+# Smart-Home web-app
 
-## Smart-Home web-app
+## UNMAINTAINED - development moved to `https://github.com/cjk/smart-home-pwa`
 
-A modern PWA web-frontend for your home-automation services
+A web-frontend for your home-automation services
 
 - Provides the frontend to your <a href='https://github.com/cjk/smart-home-backend'>Home-Automation backend</a>
 

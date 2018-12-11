@@ -1,21 +1,22 @@
 // @flow
 
-import type { KnxAddress } from '../../types';
-import * as React from 'react';
-import { withStyles } from 'material-ui/styles';
-import { ListItem, ListItemText } from 'material-ui/List';
-import Grid from 'material-ui/Grid';
+import type { KnxAddress } from '../../types'
+import * as React from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import Grid from '@material-ui/core/Grid'
 
-import { curry } from 'ramda';
+import { curry } from 'ramda'
 
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
-import VisualizedAddress from '../../lib/shared/visualizeAddress';
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
+import VisualizedAddress from '../../lib/shared/visualizeAddress'
 
 type Props = {
   address: KnxAddress,
   classes: Object,
   addrSwitch: React.Element<*>,
-};
+}
 
 const addrLineStyles = theme => ({
   listContainer: {
@@ -26,41 +27,35 @@ const addrLineStyles = theme => ({
   gridContainer: {
     flexWrap: 'nowrap',
   },
-});
+})
 
 // Generate last-updated time in words
-const lastUpdated = timestamp => ` - ${distanceInWordsToNow(timestamp)} ago`;
+const lastUpdated = timestamp => ` - ${distanceInWordsToNow(timestamp)} ago`
 
 const genValue = addr => {
   switch (addr.func) {
     case null:
-      return addr.value;
+      return addr.value
     case 'light':
-      return addr.value ? 'ON' : 'OFF';
+      return addr.value ? 'ON' : 'OFF'
     case 'inhibit':
-      return addr.value ? 'ON' : 'OFF';
+      return addr.value ? 'ON' : 'OFF'
     case 'scene':
-      return addr.value === null ? '?' : addr.value;
+      return addr.value === null ? '?' : addr.value
     case 'shut':
-      return addr.value ? 'UP' : 'DOWN';
+      return addr.value ? 'UP' : 'DOWN'
     case 'contact':
-      return addr.value ? 'OPEN' : 'CLOSED';
+      return addr.value ? 'OPEN' : 'CLOSED'
     default:
-      return addr.value;
+      return addr.value
   }
-};
+}
 
-const genTitle = curry(
-  addr => `${genValue(addr)} ${lastUpdated(addr.updatedAt)}`
-);
+const genTitle = curry(addr => `${genValue(addr)} ${lastUpdated(addr.updatedAt)}`)
 
 const AddressListItem = ({ address, classes, addrSwitch }: Props) => (
   <ListItem dense className={classes.listContainer}>
-    <Grid
-      className={classes.gridContainer}
-      style={{ flexWrap: 'nowrap' }}
-      container
-    >
+    <Grid className={classes.gridContainer} style={{ flexWrap: 'nowrap' }} container>
       <Grid item xs={4} className="gridItem">
         <VisualizedAddress addr={address} />
       </Grid>
@@ -77,6 +72,6 @@ const AddressListItem = ({ address, classes, addrSwitch }: Props) => (
       )}
     </Grid>
   </ListItem>
-);
+)
 
-export default withStyles(addrLineStyles)(AddressListItem);
+export default withStyles(addrLineStyles)(AddressListItem)

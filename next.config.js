@@ -5,6 +5,6 @@
 module.exports = {
   publicRuntimeConfig: {
     // Will be available on both server and client
-    BACKEND_URL: 'localhost'
-  }
-};
+    BACKEND_URL: 'localhost',
+  },
+}

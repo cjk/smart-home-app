@@ -1,10 +1,11 @@
 // @flow
-import * as React from 'react';
-import { withStyles } from 'material-ui/styles';
-import { compose } from 'ramda';
 
-import LightIconOff from 'material-ui-icons/LightbulbOutline';
-import LightIconOn from 'material-ui-icons/WbIridescent';
+import * as React from 'react'
+import { withStyles } from '@material-ui/core/styles'
+import { compose } from 'ramda'
+
+import LightIconOff from '@material-ui/icons/WbIncandescent'
+import LightIconOn from '@material-ui/icons/WbIridescent'
 
 type Props = {
   id: string,
@@ -13,7 +14,7 @@ type Props = {
   x: number,
   y: number,
   classes: Object,
-};
+}
 
 const LightIconStyles = {
   container: {
@@ -24,7 +25,7 @@ const LightIconStyles = {
     overflow: 'visible',
     pointerEvents: 'none',
   },
-};
+}
 
 const Light = ({ id, desc, x, y, isOn, classes }: Props) => (
   <svg
@@ -45,23 +46,13 @@ const Light = ({ id, desc, x, y, isOn, classes }: Props) => (
     />
 
     {isOn ? (
-      <LightIconOn
-        className={classes.icon}
-        color={isOn ? 'secondary' : 'inherit'}
-        width="20"
-        height="20"
-      />
+      <LightIconOn className={classes.icon} color={isOn ? 'secondary' : 'inherit'} width="20" height="20" />
     ) : (
-      <LightIconOff
-        className={classes.icon}
-        color={isOn ? 'secondary' : 'inherit'}
-        width="20"
-        height="20"
-      />
+      <LightIconOff className={classes.icon} color={isOn ? 'secondary' : 'inherit'} width="20" height="20" />
     )}
 
     <desc>{desc}</desc>
   </svg>
-);
+)
 
-export default compose(withStyles(LightIconStyles))(Light);
+export default compose(withStyles(LightIconStyles))(Light)

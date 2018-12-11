@@ -2,27 +2,22 @@
 
 /* Presentational component for a list of switched-on lights */
 
-import type { KnxAddress, Prefs, Rooms } from '../../types';
+// @flow
 
-import * as React from 'react';
-import VisualizedAddress from '../../lib/shared/visualizeAddress';
-import distanceInWordsToNow from 'date-fns/distance_in_words_to_now';
+import type { KnxAddress, Prefs, Rooms } from '../../types'
 
-import {
-  compose,
-  curry,
-  isEmpty,
-  length,
-  map,
-  sort,
-  take,
-  values,
-} from 'ramda';
+import * as React from 'react'
+import VisualizedAddress from '../../lib/shared/visualizeAddress'
+import distanceInWordsToNow from 'date-fns/distance_in_words_to_now'
 
-import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
-import List, { ListItem, ListItemText } from 'material-ui/List';
-import Typography from 'material-ui/Typography';
+import { compose, curry, isEmpty, length, map, sort, take, values } from 'ramda'
+
+import { withStyles } from '@material-ui/core/styles'
+import Paper from '@material-ui/core/Paper'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import Typography from '@material-ui/core/Typography'
 
 type Props = {
   addresses: Array<KnxAddress>,
@@ -30,7 +25,7 @@ type Props = {
   rooms: Rooms,
   onLightSwitch: Function,
   classes: Object,
-};
+}
 
 const addrListStyles = theme => ({
   root: {
@@ -45,21 +40,18 @@ const addrListStyles = theme => ({
     background: theme.palette.background.paper,
     textAlign: 'auto',
   },
-});
+})
 
-const maxShownItems = 6;
+const maxShownItems = 6
 
 const addrItemLst = curry((onLightSwitch, addresses) =>
   map(addr => (
     <ListItem key={addr.id} onClick={() => onLightSwitch(addr)} dense button>
       <VisualizedAddress addr={addr} />
-      <ListItemText
-        primary={addr.name}
-        secondary={`${distanceInWordsToNow(addr.updatedAt)} ago`}
-      />
+      <ListItemText primary={addr.name} secondary={`${distanceInWordsToNow(addr.updatedAt)} ago`} />
     </ListItem>
   ))(addresses)
-);
+)
 
 const LightsList = ({ addresses, classes, onLightSwitch }: Props) => {
   const addrItems = compose(
@@ -67,12 +59,9 @@ const LightsList = ({ addresses, classes, onLightSwitch }: Props) => {
     take(maxShownItems),
     sort((a, b) => a.updatedAt - b.updatedAt),
     values
-  )(addresses);
+  )(addresses)
 
-  const skippedAddressCount = Math.max(
-    0,
-    length(values(addresses)) - maxShownItems
-  );
+  const skippedAddressCount = Math.max(0, length(values(addresses)) - maxShownItems)
 
   return (
     <Paper className={classes.root}>
@@ -82,11 +71,7 @@ const LightsList = ({ addresses, classes, onLightSwitch }: Props) => {
       <List className={classes.addrList}>
         {isEmpty(addrItems) ? (
           <ListItem>
-            <ListItemText
-              inset
-              className={classes.listItemText}
-              primary="-- --"
-            />
+            <ListItemText inset className={classes.listItemText} primary="----" />
           </ListItem>
         ) : (
           addrItems
@@ -100,7 +85,7 @@ const LightsList = ({ addresses, classes, onLightSwitch }: Props) => {
         )}
       </List>
     </Paper>
-  );
-};
+  )
+}
 
-export default compose(withStyles(addrListStyles))(LightsList);
+export default compose(withStyles(addrListStyles))(LightsList)

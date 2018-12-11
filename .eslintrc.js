@@ -5,7 +5,7 @@ module.exports = {
     browser: true,
     node: true,
   },
-  extends: ['airbnb', 'plugin:flowtype/recommended'],
+  extends: ['react-tools', 'plugin:flowtype/recommended'],
   plugins: ['flowtype'],
   globals: {
     APP_NAME: true,
@@ -45,6 +45,7 @@ module.exports = {
     'react/react-in-jsx-scope': 0, // Next.js injects it. Should be default.
     'react/require-default-props': 0, // We don't need it with Flow.
     'react/no-danger': 0, // Control freaky.
+    'space-before-function-paren': 0, // Prettier.
     'template-curly-spacing': 0, // Prettier.
     'react/jsx-boolean-value': 0, // Control freaky.
     // misc (CjK)
@@ -52,4 +53,4 @@ module.exports = {
     'max-len': ['error', 120, { ignoreComments: true }],
     'one-var': 0,
   },
-};
+}
